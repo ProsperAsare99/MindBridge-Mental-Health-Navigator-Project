@@ -8,6 +8,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import ShaderBackground from "@/components/shader-background";
 
 export default function RegisterPage() {
     const [name, setName] = useState("");
