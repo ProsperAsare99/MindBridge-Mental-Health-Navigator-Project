@@ -50,9 +50,9 @@ export default function Home() {
             <span className="text-indigo-200">Understood.</span>
           </h1>
 
-          <p className="max-w-2xl mx-auto text-lg md:text-xl text-indigo-100/80 leading-relaxed">
-            A navigator for tertiary students in Ghana. Get personalized help, track your mood,
-            and access awareness resources tailored to your academic life.
+          <p className="max-w-2xl mx-auto text-xl md:text-2xl font-bold text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] leading-relaxed tracking-wide">
+            A Navigator for Tertiary Students in Ghana. Get Personalized Help, Track your mood,
+            and Access Awareness Resources Tailored to your Academic life.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
