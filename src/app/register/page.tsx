@@ -115,7 +115,9 @@ export default function RegisterPage() {
                                     <option value="UWU">Ashesie University</option>
                                     <option value="ACU">Accra Christian University</option>
                                     <option value="UMAT">University of Mines and Technology</option>
-
+                                    <option value="VVU">Valley View University</option>
+                                    <option value="ATU">Accra Technical University</option>
+                                    <option value="GTUC">Ghana Telecommunication University College</option>
                                     <option value="Other">Other</option>
                                 </select>
                                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
