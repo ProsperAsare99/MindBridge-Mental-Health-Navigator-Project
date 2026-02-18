@@ -3,15 +3,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    apiKey: "AIzaSyBTYGK9h7PfagzugAO2aFjOpnP8h0e-KSM",
+    authDomain: "mindbridge-navigator-project.firebaseapp.com",
+    projectId: "mindbridge-navigator-project",
+    storageBucket: "mindbridge-navigator-project.firebasestorage.app",
+    messagingSenderId: "434966387516",
+    appId: "1:434966387516:web:d35c529e720fdce42d1c39",
 };
-
-console.log("Firebase Config:", firebaseConfig);
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
