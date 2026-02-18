@@ -68,7 +68,7 @@ export default function RegisterPage() {
                 createdAt: new Date(),
             });
 
-            router.push("/dashboard"); // Redirect to dashboard after registration
+            router.push("/dashboard");
         } catch (err: any) {
             console.error(err);
             if (err.code === 'auth/email-already-in-use') {
@@ -79,6 +79,82 @@ export default function RegisterPage() {
                 setError("Failed to create account. Please try again.");
             }
         } finally {
+            setLoading(false);
+        }
+    };
+
+    const setupRecaptcha = () => {
+        if (!window.recaptchaVerifier) {
+            window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                'size': 'invisible',
+                'callback': (response: any) => {
+                    // reCAPTCHA solved
+                }
+            });
+        }
+    };
+
+    const handleSendOtp = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError("");
+
+        if (!phoneNumber) {
+            setError("Please enter a valid phone number.");
+            return;
+        }
+
+        setLoading(true);
+        setupRecaptcha();
+        const appVerifier = window.recaptchaVerifier;
+
+        try {
+            const confirmation = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+            setConfirmationResult(confirmation);
+            setOtpSent(true);
+            setLoading(false);
+        } catch (error: any) {
+            console.error(error);
+            setError("Failed to send verification code. Try again.");
+            setLoading(false);
+        }
+    };
+
+    const handleVerifyOtp = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError("");
+        setLoading(true);
+
+        if (!otp || !confirmationResult) {
+            setError("Please enter the verification code.");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const result = await confirmationResult.confirm(otp);
+            const user = result.user;
+
+            // Save user details to Firestore
+            // Note: Phone auth users don't have email/displayName by default, so we use the form state
+            await updateProfile(user, {
+                displayName: name
+            });
+
+            await setDoc(doc(db, "users", user.uid), {
+                name,
+                email: "", // No email for phone users
+                phoneNumber: user.phoneNumber,
+                institution,
+                studentId,
+                course,
+                createdAt: new Date(),
+            });
+
+            router.push("/dashboard");
+
+        } catch (error: any) {
+            console.error(error);
+            setError("Invalid verification code.");
             setLoading(false);
         }
     };
@@ -131,7 +207,7 @@ export default function RegisterPage() {
                     </div>
                 )}
 
-                <form className="mt-8 space-y-6" onSubmit={handleRegister}>
+                <form className="mt-8 space-y-6" onSubmit={isPhoneSignup ? (otpSent ? handleVerifyOtp : handleSendOtp) : handleRegister}>
                     <div className="space-y-4">
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-indigo-100 mb-1">Full Name</label>
@@ -208,42 +284,114 @@ export default function RegisterPage() {
                             </div>
                         </div>
 
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-indigo-100 mb-1">Email address</label>
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="relative block w-full rounded-lg border border-white/10 bg-white/5 py-2.5 px-3 text-white placeholder-white/30 focus:z-10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm focus:outline-none transition-all"
-                                placeholder="name@example.com"
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-indigo-100 mb-1">Password</label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="relative block w-full rounded-lg border border-white/10 bg-white/5 py-2.5 px-3 text-white placeholder-white/30 focus:z-10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm focus:outline-none transition-all"
-                                placeholder="••••••••"
-                            />
-                        </div>
-                    </div>
-
-                    <div>
-                        <Button
-                            type="submit"
-                            className="w-full h-11 bg-indigo-600 hover:bg-indigo-500 text-white border-0 shadow-lg shadow-indigo-500/30 transition-all hover:scale-[1.02] text-base font-semibold"
-                            disabled={loading}
-                        >
-                            {loading ? "Creating account..." : "Sign up"}
-                        </Button>
+                        {!isPhoneSignup ? (
+                            <>
+                                <div>
+                                    <label htmlFor="email" className="block text-sm font-medium text-indigo-100 mb-1">Email address</label>
+                                    <input
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        required
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="relative block w-full rounded-lg border border-white/10 bg-white/5 py-2.5 px-3 text-white placeholder-white/30 focus:z-10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm focus:outline-none transition-all"
+                                        placeholder="name@example.com"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="password" className="block text-sm font-medium text-indigo-100 mb-1">Password</label>
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        type="password"
+                                        required
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="relative block w-full rounded-lg border border-white/10 bg-white/5 py-2.5 px-3 text-white placeholder-white/30 focus:z-10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm focus:outline-none transition-all"
+                                        placeholder="••••••••"
+                                    />
+                                </div>
+                                <div>
+                                    <Button
+                                        type="submit"
+                                        className="w-full h-11 bg-indigo-600 hover:bg-indigo-500 text-white border-0 shadow-lg shadow-indigo-500/30 transition-all hover:scale-[1.02] text-base font-semibold"
+                                        disabled={loading}
+                                    >
+                                        {loading ? "Creating account..." : "Sign up"}
+                                    </Button>
+                                    <div className="mt-2 text-center">
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsPhoneSignup(true)}
+                                            className="text-sm text-indigo-200 hover:text-white transition-colors flex items-center justify-center w-full"
+                                        >
+                                            <Phone className="w-3 h-3 mr-1" /> Use Phone Number instead
+                                        </button>
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                {!otpSent ? (
+                                    <div>
+                                        <label htmlFor="phoneNumber" className="block text-sm font-medium text-indigo-100 mb-1">Phone Number</label>
+                                        <input
+                                            id="phoneNumber"
+                                            name="phoneNumber"
+                                            type="tel"
+                                            required
+                                            value={phoneNumber}
+                                            onChange={(e) => setPhoneNumber(e.target.value)}
+                                            className="relative block w-full rounded-lg border border-white/10 bg-white/5 py-2.5 px-3 text-white placeholder-white/30 focus:z-10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm focus:outline-none transition-all"
+                                            placeholder="+233 XX XXX XXXX"
+                                        />
+                                        <div id="recaptcha-container"></div>
+                                        <div className="mt-4">
+                                            <Button
+                                                type="submit"
+                                                className="w-full h-11 bg-indigo-600 hover:bg-indigo-500 text-white border-0 shadow-lg shadow-indigo-500/30 transition-all hover:scale-[1.02] text-base font-semibold"
+                                                disabled={loading}
+                                            >
+                                                {loading ? "Sending Code..." : "Send Verification Code"}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <label htmlFor="otp" className="block text-sm font-medium text-indigo-100 mb-1">Verification Code</label>
+                                        <input
+                                            id="otp"
+                                            name="otp"
+                                            type="text"
+                                            required
+                                            value={otp}
+                                            onChange={(e) => setOtp(e.target.value)}
+                                            className="relative block w-full rounded-lg border border-white/10 bg-white/5 py-2.5 px-3 text-white placeholder-white/30 focus:z-10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm focus:outline-none transition-all"
+                                            placeholder=" Enter 6-digit code"
+                                        />
+                                        <div className="mt-4">
+                                            <Button
+                                                type="submit"
+                                                className="w-full h-11 bg-green-600 hover:bg-green-500 text-white border-0 shadow-lg shadow-green-500/30 transition-all hover:scale-[1.02] text-base font-semibold"
+                                                disabled={loading}
+                                            >
+                                                {loading ? "Verifying..." : "Verify & Sign Up"}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )}
+                                <div className="mt-2 text-center">
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsPhoneSignup(false)}
+                                        className="text-sm text-indigo-200 hover:text-white transition-colors flex items-center justify-center w-full"
+                                    >
+                                        <Mail className="w-3 h-3 mr-1" /> Use Email instead
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </form>
 
