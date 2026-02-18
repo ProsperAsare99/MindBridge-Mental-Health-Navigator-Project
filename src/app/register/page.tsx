@@ -27,7 +27,13 @@ export default function RegisterPage() {
         setLoading(true);
 
         try {
+            console.log("Attempting to create user with email:", email);
+            console.log("Auth object config:", auth.app.options);
+
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            console.log("User created:", userCredential.user.uid);
+            console.log("User object auth config:", userCredential.user.providerId);
+
             // Update the user's display name
             await updateProfile(userCredential.user, {
                 displayName: name
