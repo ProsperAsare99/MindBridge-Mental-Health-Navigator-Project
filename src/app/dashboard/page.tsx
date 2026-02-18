@@ -1,12 +1,29 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, BookHeart, AlertCircle } from "lucide-react";
+import { PlusCircle, BookHeart, AlertCircle, School, GraduationCap } from "lucide-react";
 import Link from "next/link";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function DashboardPage() {
     const { user } = useAuth();
+    const [userProfile, setUserProfile] = useState<any>(null);
+
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            if (user?.uid) {
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    setUserProfile(docSnap.data());
+                }
+            }
+        };
+        fetchUserProfile();
+    }, [user]);
 
     // Placeholder data - would eventually come from context/backend
     const timeOfDay = new Date().getHours() < 12 ? "Good morning" : new Date().getHours() < 18 ? "Good afternoon" : "Good evening";
@@ -17,11 +34,25 @@ export default function DashboardPage() {
             <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight text-slate-900">{timeOfDay}, {user?.displayName || "Student"}</h1>
-                    <p className="text-slate-500">Here's what's happening with your wellness today.</p>
+                    <div className="flex items-center gap-2 text-slate-500 mt-1">
+                        {userProfile?.course && (
+                            <span className="flex items-center gap-1 text-sm bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-100">
+                                <BookHeart className="h-3 w-3" />
+                                {userProfile.course}
+                            </span>
+                        )}
+                        {userProfile?.institution && (
+                            <span className="flex items-center gap-1 text-sm bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full border border-slate-200">
+                                <School className="h-3 w-3" />
+                                {userProfile.institution}
+                            </span>
+                        )}
+                        {!userProfile && <p>Here's what's happening with your wellness today.</p>}
+                    </div>
                 </div>
                 <div className="flex items-center gap-3">
                     <Link href="/dashboard/mood">
-                        <Button className="bg-indigo-600 text-white hover:bg-indigo-700">
+                        <Button className="bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm">
                             <PlusCircle className="mr-2 h-4 w-4" />
                             Log Mood
                         </Button>
