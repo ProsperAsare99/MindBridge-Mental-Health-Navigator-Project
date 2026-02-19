@@ -68,10 +68,7 @@ export default function DashboardPage() {
 
     return (
         <div className="min-h-screen relative font-sans text-white selection:bg-indigo-300 selection:text-indigo-900 pb-20">
-            {/* Background Shader - Fixed to cover the whole dashboard area but behind content */}
-            <div className="fixed inset-0 z-0">
-                <ShaderBackground />
-            </div>
+            {/* Background Shader managed by Layout */}
 
             <div className="relative z-10 space-y-8 p-6 md:p-10 max-w-7xl mx-auto">
                 {/* Welcome Header */}
