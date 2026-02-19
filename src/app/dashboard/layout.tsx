@@ -19,6 +19,7 @@ import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { cn } from "@/lib/utils";
 import ShaderBackground from "@/components/shader-background";
+import { ModeToggle } from "@/components/theme-toggle";
 
 export default function DashboardLayout({
     children,
@@ -50,10 +51,10 @@ export default function DashboardLayout({
 
     if (loading) {
         return (
-            <div className="flex min-h-screen items-center justify-center bg-slate-900 text-white">
+            <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
                 <div className="flex flex-col items-center gap-2">
-                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent" />
-                    <p className="text-sm font-medium text-indigo-200">Loading your space...</p>
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+                    <p className="text-sm font-medium text-muted-foreground">Loading your space...</p>
                 </div>
             </div>
         );
@@ -62,9 +63,9 @@ export default function DashboardLayout({
     if (!user) return null; // Will redirect
 
     return (
-        <div className="min-h-screen relative font-sans text-white bg-slate-900 selection:bg-indigo-500/30 selection:text-indigo-200">
-            {/* Background Shader - Global for Dashboard */}
-            <div className="fixed inset-0 z-0">
+        <div className="min-h-screen relative font-sans text-foreground bg-background selection:bg-indigo-500/30 selection:text-indigo-900 dark:selection:text-indigo-200">
+            {/* Background Shader - Only visible in dark mode */}
+            <div className="fixed inset-0 z-0 hidden dark:block opacity-70">
                 <ShaderBackground />
             </div>
 
@@ -78,17 +79,17 @@ export default function DashboardLayout({
 
             {/* Sidebar */}
             <aside className={cn(
-                "fixed inset-y-0 left-0 z-50 w-64 transform border-r border-white/10 bg-slate-900/50 backdrop-blur-xl transition-transform duration-300 ease-in-out lg:translate-x-0",
+                "fixed inset-y-0 left-0 z-50 w-64 transform border-r border-border bg-background/95 dark:bg-slate-900/50 backdrop-blur-xl transition-transform duration-300 ease-in-out lg:translate-x-0",
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             )}>
-                <div className="flex h-16 items-center justify-between px-6 border-b border-white/10">
+                <div className="flex h-16 items-center justify-between px-6 border-b border-border">
                     <Link href="/dashboard" className="flex items-center gap-2 group">
                         <div className="h-8 w-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg group-hover:shadow-indigo-500/25 transition-all">
                             <div className="h-2 w-2 rounded-full bg-white" />
                         </div>
-                        <span className="text-lg font-bold tracking-tight text-white group-hover:text-indigo-200 transition-colors">MindBridge</span>
+                        <span className="text-lg font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">MindBridge</span>
                     </Link>
-                    <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-indigo-200 hover:text-white transition-colors">
+                    <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-foreground hover:text-primary transition-colors">
                         <X className="h-5 w-5" />
                     </button>
                 </div>
@@ -106,23 +107,26 @@ export default function DashboardLayout({
                                     className={cn(
                                         "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 group relative overflow-hidden",
                                         isActive
-                                            ? "text-white bg-indigo-600/20 border border-indigo-500/30 shadow-md shadow-indigo-500/10"
-                                            : "text-indigo-200/70 hover:text-white hover:bg-white/5 border border-transparent"
+                                            ? "text-primary bg-primary/10 border border-primary/20 shadow-sm"
+                                            : "text-muted-foreground hover:text-foreground hover:bg-accent border border-transparent"
                                     )}
                                 >
-                                    {isActive && (
-                                        <div className="absolute inset-0 bg-indigo-500/10 blur-xl rounded-full" />
-                                    )}
-                                    <Icon className={cn("h-5 w-5 relative z-10 transition-transform group-hover:scale-110", isActive ? "text-indigo-400" : "text-current")} />
+                                    <Icon className={cn("h-5 w-5 relative z-10 transition-transform group-hover:scale-110", isActive ? "text-primary" : "text-current")} />
                                     <span className="relative z-10">{item.label}</span>
                                 </Link>
                             );
                         })}
                     </nav>
 
-                    <div className="border-t border-white/10 pt-4 space-y-4">
-                        <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-white/5 border border-white/5 backdrop-blur-sm">
-                            <div className="h-9 w-9 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300">
+                    <div className="border-t border-border pt-4 space-y-4">
+                        {/* Toggle Theme in Sidebar */}
+                        <div className="flex items-center justify-between px-3">
+                            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Theme</span>
+                            <ModeToggle />
+                        </div>
+
+                        <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-accent/50 border border-border backdrop-blur-sm">
+                            <div className="h-9 w-9 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary">
                                 {user.displayName ? (
                                     <span className="font-semibold">{user.displayName[0].toUpperCase()}</span>
                                 ) : (
@@ -130,14 +134,14 @@ export default function DashboardLayout({
                                 )}
                             </div>
                             <div className="flex-1 overflow-hidden">
-                                <p className="truncate text-sm font-medium text-white">{user.displayName || "User"}</p>
-                                <p className="truncate text-xs text-indigo-300/60">{user.email}</p>
+                                <p className="truncate text-sm font-medium text-foreground">{user.displayName || "User"}</p>
+                                <p className="truncate text-xs text-muted-foreground">{user.email}</p>
                             </div>
                         </div>
 
                         <Button
                             variant="ghost"
-                            className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-red-500/10 border border-transparent hover:border-red-500/20 transition-all rounded-xl h-10"
+                            className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-500/10 border border-transparent hover:border-red-500/20 transition-all rounded-xl h-10"
                             onClick={handleSignOut}
                         >
                             <LogOut className="mr-2 h-4 w-4" />
@@ -150,11 +154,14 @@ export default function DashboardLayout({
             {/* Main Content */}
             <div className="lg:pl-64 relative z-10 min-h-screen transition-all duration-300">
                 {/* Topbar (Mobile) */}
-                <header className="sticky top-0 z-30 flex h-16 items-center gap-4 bg-slate-900/80 px-6 backdrop-blur-xl border-b border-white/10 lg:hidden">
-                    <button onClick={() => setIsSidebarOpen(true)} className="text-indigo-200 hover:text-white transition-colors">
-                        <Menu className="h-6 w-6" />
-                    </button>
-                    <span className="font-semibold text-white">Dashboard</span>
+                <header className="sticky top-0 z-30 flex h-16 items-center justify-between bg-background/80 px-6 backdrop-blur-xl border-b border-border lg:hidden">
+                    <div className="flex items-center gap-4">
+                        <button onClick={() => setIsSidebarOpen(true)} className="text-foreground hover:text-primary transition-colors">
+                            <Menu className="h-6 w-6" />
+                        </button>
+                        <span className="font-semibold text-foreground">Dashboard</span>
+                    </div>
+                    <ModeToggle />
                 </header>
 
                 <main className="p-0 animate-in fade-in duration-500">
