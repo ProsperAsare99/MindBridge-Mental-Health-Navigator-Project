@@ -46,7 +46,7 @@ export default function Home() {
           </div>
 
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl md:text-8xl bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 drop-shadow-sm">
-            Your Mind,<br />
+            Your Mind<br />
             <span className="text-indigo-200">Understood.</span>
           </h1>
 
