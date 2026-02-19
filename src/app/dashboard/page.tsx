@@ -33,10 +33,12 @@ export default function DashboardPage() {
         const fetchUserProfile = async () => {
             if (user?.uid) {
                 // Check verification (skip for phone auth which has no email)
+                /* Verification disabled by user request
                 if (user.email && !user.emailVerified) {
                     router.push("/verify-email");
                     return;
                 }
+                */
 
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);

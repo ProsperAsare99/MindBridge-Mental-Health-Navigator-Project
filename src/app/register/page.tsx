@@ -68,10 +68,10 @@ export default function RegisterPage() {
                 createdAt: new Date(),
             });
 
-            // Send verification email
-            await sendEmailVerification(userCredential.user);
+            // Verification email disabled for now
+            // await sendEmailVerification(userCredential.user);
 
-            router.push("/verify-email");
+            router.push("/dashboard");
         } catch (err: any) {
             console.error(err);
             if (err.code === 'auth/email-already-in-use') {

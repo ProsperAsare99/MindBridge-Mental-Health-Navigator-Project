@@ -23,11 +23,7 @@ export default function LoginPage() {
 
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            if (!userCredential.user.emailVerified) {
-                router.push("/verify-email");
-            } else {
-                router.push("/dashboard");
-            }
+            router.push("/dashboard");
         } catch (err: any) {
             console.error(err);
             if (err.code === 'auth/invalid-credential') {
