@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, BookHeart, AlertCircle, School, GraduationCap, Quote } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import ShaderBackground from "@/components/shader-background";
@@ -25,10 +26,18 @@ export default function DashboardPage() {
     const [quoteIndex, setQuoteIndex] = useState(0);
     const [greeting, setGreeting] = useState("");
 
+    const router = useRouter(); // Import useRouter
+
     // Fetch user profile
     useEffect(() => {
         const fetchUserProfile = async () => {
             if (user?.uid) {
+                // Check verification (skip for phone auth which has no email)
+                if (user.email && !user.emailVerified) {
+                    router.push("/verify-email");
+                    return;
+                }
+
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
@@ -37,7 +46,7 @@ export default function DashboardPage() {
             }
         };
         fetchUserProfile();
-    }, [user]);
+    }, [user, router]);
 
     // Set time-based greeting
     useEffect(() => {

@@ -22,8 +22,12 @@ export default function LoginPage() {
         setLoading(true);
 
         try {
-            await signInWithEmailAndPassword(auth, email, password);
-            router.push("/dashboard"); // Redirect to dashboard after login
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            if (!userCredential.user.emailVerified) {
+                router.push("/verify-email");
+            } else {
+                router.push("/dashboard");
+            }
         } catch (err: any) {
             console.error(err);
             if (err.code === 'auth/invalid-credential') {
@@ -38,7 +42,9 @@ export default function LoginPage() {
 
     const handleGoogleSignIn = async () => {
         try {
-            await signInWithPopup(auth, googleProvider);
+            const result = await signInWithPopup(auth, googleProvider);
+            // Google accounts are usually verified, but good to check or ensure flow consistency
+            // if (!result.user.emailVerified) router.push("/verify-email"); // Optional for Google
             router.push("/dashboard");
         } catch (error: any) {
             console.error(error);

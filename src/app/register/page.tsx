@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber, ConfirmationResult } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber, ConfirmationResult, sendEmailVerification } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db, googleProvider } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
@@ -68,7 +68,10 @@ export default function RegisterPage() {
                 createdAt: new Date(),
             });
 
-            router.push("/dashboard");
+            // Send verification email
+            await sendEmailVerification(userCredential.user);
+
+            router.push("/verify-email");
         } catch (err: any) {
             console.error(err);
             if (err.code === 'auth/email-already-in-use') {
@@ -107,8 +110,16 @@ export default function RegisterPage() {
         setupRecaptcha();
         const appVerifier = window.recaptchaVerifier;
 
+        // Format phone number: remove spaces, replace leading 0 with +233
+        let formattedNumber = phoneNumber.replace(/\s+/g, '');
+        if (formattedNumber.startsWith('0')) {
+            formattedNumber = '+233' + formattedNumber.substring(1);
+        } else if (!formattedNumber.startsWith('+')) {
+            formattedNumber = '+233' + formattedNumber;
+        }
+
         try {
-            const confirmation = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+            const confirmation = await signInWithPhoneNumber(auth, formattedNumber, appVerifier);
             setConfirmationResult(confirmation);
             setOtpSent(true);
             setLoading(false);
@@ -347,7 +358,7 @@ export default function RegisterPage() {
                                             value={phoneNumber}
                                             onChange={(e) => setPhoneNumber(e.target.value)}
                                             className="relative block w-full rounded-lg border border-white/10 bg-white/5 py-2.5 px-3 text-white placeholder-white/30 focus:z-10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm focus:outline-none transition-all"
-                                            placeholder="+233 XX XXX XXXX"
+                                            placeholder="e.g. 054 123 4567"
                                         />
                                         <div id="recaptcha-container"></div>
                                         <div className="mt-4">
