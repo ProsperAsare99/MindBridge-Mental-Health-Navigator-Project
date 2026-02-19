@@ -125,7 +125,15 @@ export default function RegisterPage() {
             setLoading(false);
         } catch (error: any) {
             console.error(error);
-            setError("Failed to send verification code. Try again.");
+            if (error.code === 'auth/invalid-phone-number') {
+                setError("Invalid phone number format.");
+            } else if (error.code === 'auth/operation-not-allowed') {
+                setError("SMS/Phone authentication is not enabled or this region is blocked in Firebase Console.");
+            } else if (error.code === 'auth/too-many-requests') {
+                setError("Too many requests. Please try again later.");
+            } else {
+                setError("Failed to send verification code. Try again.");
+            }
             setLoading(false);
         }
     };
