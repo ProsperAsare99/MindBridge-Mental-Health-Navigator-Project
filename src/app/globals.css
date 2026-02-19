@@ -24,11 +24,10 @@
   --foreground: #334155; /* Slate 700 - Softer than pure black */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0f172a; /* Slate 900 */
-    --foreground: #f8fafc; /* Slate 50 */
-  }
+/* Dark mode handled by class */
+.dark {
+  --background: #0f172a; /* Slate 900 */
+  --foreground: #f8fafc; /* Slate 50 */
 }
 
 body {
