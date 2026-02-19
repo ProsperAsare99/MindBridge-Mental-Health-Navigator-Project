@@ -42,6 +42,9 @@ export default function LoginPage() {
             router.push("/dashboard");
         } catch (error: any) {
             console.error(error);
+            if (error.code === 'auth/popup-closed-by-user') {
+                return; // User closed the popup, no need to show error
+            }
             setError("Failed to sign in with Google.");
         }
     };
