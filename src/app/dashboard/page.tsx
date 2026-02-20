@@ -117,14 +117,19 @@ export default function DashboardPage() {
                         <p className="mt-2 text-xs text-indigo-300/60">Start checking in today!</p>
                     </div>
 
-                    {/* Resources Card */}
-                    <div className="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 shadow-xl hover:bg-white/10 transition-all duration-300">
-                        <h3 className="text-sm font-medium text-indigo-200">Saved Resources</h3>
-                        <div className="mt-4 flex items-baseline gap-2">
-                            <span className="text-4xl font-bold text-white group-hover:scale-110 transition-transform duration-300">0</span>
-                            <span className="text-sm text-indigo-200">items</span>
+                    {/* Assessment Card (New) */}
+                    <Link href="/dashboard/assessment">
+                        <div className="group h-full rounded-2xl border border-indigo-400/30 bg-indigo-600/20 backdrop-blur-md p-6 shadow-xl hover:bg-indigo-600/30 transition-all duration-300 cursor-pointer relative overflow-hidden">
+                            <div className="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-40 transition-opacity">
+                                <BookHeart size={48} />
+                            </div>
+                            <h3 className="text-sm font-medium text-indigo-100">Wellness Check</h3>
+                            <div className="mt-4">
+                                <span className="text-lg font-semibold text-white group-hover:underline decoration-indigo-400 underline-offset-4">Take Assessment</span>
+                            </div>
+                            <p className="mt-2 text-xs text-indigo-200/70">Check your mental anxiety & depression levels.</p>
                         </div>
-                    </div>
+                    </Link>
 
                     {/* Motivation Quote Card */}
                     <div className="col-span-full md:col-span-2 rounded-2xl border border-white/10 bg-gradient-to-br from-indigo-600/40 to-purple-600/40 backdrop-blur-xl p-8 shadow-2xl relative overflow-hidden group">
