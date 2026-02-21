@@ -108,7 +108,7 @@ export default function DashboardLayout({
                                         "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 group relative overflow-hidden",
                                         isActive
                                             ? "text-primary bg-primary/10 border border-primary/20 shadow-sm"
-                                            : "text-muted-foreground hover:text-foreground hover:bg-accent border border-transparent"
+                                            : "text-muted-foreground hover:text-foreground hover:bg-primary/10 border border-transparent"
                                     )}
                                 >
                                     <Icon className={cn("h-5 w-5 relative z-10 transition-transform group-hover:scale-110", isActive ? "text-primary" : "text-current")} />
@@ -125,7 +125,7 @@ export default function DashboardLayout({
                             <ModeToggle />
                         </div>
 
-                        <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-accent/50 border border-border backdrop-blur-sm">
+                        <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-primary/5 border border-border backdrop-blur-sm">
                             <div className="h-9 w-9 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary">
                                 {user.displayName ? (
                                     <span className="font-semibold">{user.displayName[0].toUpperCase()}</span>
