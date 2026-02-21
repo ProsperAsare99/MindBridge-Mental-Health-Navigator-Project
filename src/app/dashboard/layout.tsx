@@ -13,7 +13,8 @@ import {
     LogOut,
     Menu,
     X,
-    UserCircle
+    UserCircle,
+    Settings
 } from "lucide-react";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
@@ -47,6 +48,7 @@ export default function DashboardLayout({
         { href: "/dashboard/mood", label: "Mood Tracker", icon: BarChart3 },
         { href: "/dashboard/resources", label: "Resources", icon: BookOpen },
         { href: "/dashboard/crisis", label: "Crisis Support", icon: Phone },
+        { href: "/dashboard/settings", label: "Settings", icon: Settings },
     ];
 
     if (loading) {
