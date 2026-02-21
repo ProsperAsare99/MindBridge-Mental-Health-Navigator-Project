@@ -75,8 +75,8 @@ const UNIVERSITY_RESOURCES = [
             { label: "Counselling Centre", phone: "0245 945 752" },
             { label: "Counselling Centre (Alt)", phone: "0204 999 221" },
         ],
-        email: "deanofstudents@ug.edu.gh",
-        website: "https://www.ug.edu.gh/deanofstudents/",
+        email: "pad@ug.edu.gh",
+        website: "https://www.ug.edu.gh/careers/counselling-services",
     },
     {
         name: "Kwame Nkrumah University of Science and Technology (KNUST)",
@@ -521,3 +521,4 @@ export default function CrisisPage() {
             </div>
         </div>
     );
+}
