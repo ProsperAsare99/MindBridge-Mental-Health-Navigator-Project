@@ -25,6 +25,7 @@ import {
     Dumbbell,
     Download,
     FileText,
+    Check,
 } from "lucide-react";
 
 // ─── Categories ───
@@ -197,6 +198,20 @@ const RECOMMENDED_APPS = [
         url: "https://www.headspace.com/",
         icon: Sparkles,
         tag: "Meditation",
+        features: [
+            "Hundreds of guided meditations for focus, sleep, stress, and anxiety",
+            "Bite-sized sessions from 3 to 20 minutes — perfect between lectures",
+            "Sleep sounds and sleepcasts to help you fall asleep faster",
+            "Focus music designed to boost concentration during study sessions",
+            "SOS exercises for moments of panic, anxiety, or overwhelm",
+        ],
+        freeInfo: "Free 'Basics' course (10 sessions) available to everyone. Many universities offer free Headspace Plus — check if yours does.",
+        howToStart: [
+            "Download Headspace from App Store or Google Play",
+            "Create an account — check if your university email qualifies for free access",
+            "Start with the free 'Basics' course (10 days, 3–10 minutes each)",
+            "Try 'SOS' sessions anytime you feel overwhelmed or panicked",
+        ],
     },
     {
         name: "7 Cups",
@@ -204,6 +219,20 @@ const RECOMMENDED_APPS = [
         url: "https://www.7cups.com/",
         icon: Heart,
         tag: "Chat Support",
+        features: [
+            "Free 1-on-1 chat with trained active listeners — completely anonymous",
+            "Available 24/7 in over 140 languages worldwide",
+            "Community forums where you can share experiences and get peer support",
+            "Self-help guides covering anxiety, depression, relationships, and more",
+            "Growth paths — structured self-improvement exercises you can do at your own pace",
+        ],
+        freeInfo: "The core service (listener chat, community forums, self-help guides) is completely free. Premium therapy is paid but optional.",
+        howToStart: [
+            "Visit 7cups.com or download the app",
+            "Choose to chat as a 'Guest' (anonymous) or create a free account",
+            "Select a topic you want to talk about (stress, relationships, etc.)",
+            "You'll be matched with a trained listener within minutes",
+        ],
     },
     {
         name: "Calm",
@@ -211,6 +240,20 @@ const RECOMMENDED_APPS = [
         url: "https://www.calm.com/",
         icon: Moon,
         tag: "Sleep & Relaxation",
+        features: [
+            "Sleep Stories — bedtime stories narrated by celebrities to help you drift off",
+            "Daily Calm — a new 10-minute guided meditation every day",
+            "Breathing exercises with visual guides for quick stress relief",
+            "Nature sounds and ambient music for study and relaxation",
+            "Body scan meditations for releasing physical tension",
+        ],
+        freeInfo: "A selection of meditations, sleep stories, and breathing exercises are free forever. Premium unlocks the full library.",
+        howToStart: [
+            "Download Calm from App Store or Google Play",
+            "Explore the free content — try 'Breathe' for instant stress relief",
+            "Listen to a free Sleep Story tonight before bed",
+            "Try the '7 Days of Calm' free introductory programme",
+        ],
     },
     {
         name: "Woebot",
@@ -218,6 +261,20 @@ const RECOMMENDED_APPS = [
         url: "https://woebothealth.com/",
         icon: Brain,
         tag: "AI Therapy",
+        features: [
+            "Daily check-ins powered by AI to track your mood patterns over time",
+            "Uses CBT (Cognitive Behavioural Therapy) techniques in conversational format",
+            "Teaches you to identify and challenge negative thought patterns",
+            "Interactive lessons on gratitude, mindfulness, and cognitive reframing",
+            "Completely private — no human reads your conversations",
+        ],
+        freeInfo: "Woebot is free to use. It is a clinically researched tool developed by Stanford psychologists.",
+        howToStart: [
+            "Download Woebot from App Store or Google Play",
+            "Complete the short onboarding questionnaire",
+            "Chat with Woebot daily — it takes only 5–10 minutes",
+            "Over time, review your mood insights and thought patterns in the app",
+        ],
     },
     {
         name: "MindShift CBT",
@@ -225,6 +282,20 @@ const RECOMMENDED_APPS = [
         url: "https://www.anxietycanada.com/resources/mindshift-cbt/",
         icon: Lightbulb,
         tag: "Anxiety Tools",
+        features: [
+            "Built specifically for teens and young adults dealing with anxiety",
+            "Thought journal to identify and challenge anxious thinking patterns",
+            "Coping cards you can customise with your own strategies",
+            "Guided relaxation exercises (breathing, muscle relaxation, visualisation)",
+            "Belief experiments to test whether your anxious predictions come true",
+        ],
+        freeInfo: "Completely free. Developed by Anxiety Canada, a leading non-profit organisation.",
+        howToStart: [
+            "Download MindShift CBT from App Store or Google Play",
+            "Set up your profile and identify your main anxiety areas",
+            "Start with the 'Chill Out' tools for immediate relief",
+            "Use the Thought Journal daily to track and challenge anxious thoughts",
+        ],
     },
     {
         name: "Sanvello",
@@ -232,6 +303,20 @@ const RECOMMENDED_APPS = [
         url: "https://www.sanvello.com/",
         icon: Leaf,
         tag: "Mood Tools",
+        features: [
+            "Daily mood tracking with insights into your emotional patterns",
+            "CBT-based coping tools — thought challenging, guided journaling, goal setting",
+            "Guided meditations and audio lessons on managing anxiety and depression",
+            "Community support with peer groups moderated by professionals",
+            "Progress tracking to see how your mental health improves over time",
+        ],
+        freeInfo: "Free tier includes mood tracking, coping tools, and community access. Premium adds therapy sessions and coaching.",
+        howToStart: [
+            "Download Sanvello from App Store or Google Play",
+            "Complete the initial mood assessment to personalise your experience",
+            "Track your mood daily — it takes less than 30 seconds",
+            "Explore the 'Coping' section for CBT exercises tailored to your needs",
+        ],
     },
 ];
 
@@ -278,6 +363,14 @@ const FREE_BOOKS = [
         category: "CBT & Self-Help",
         color: "from-purple-500/20 to-violet-600/20",
         borderColor: "border-purple-400/20",
+        keyTakeaways: [
+            "Your thoughts, not situations, determine how you feel — changing thoughts changes emotions",
+            "Use 'Thought Records' to identify automatic negative thoughts and test their accuracy",
+            "Depression often involves all-or-nothing thinking — learn to find the middle ground",
+            "Behavioural experiments help you test beliefs rather than just accepting them",
+            "Small, consistent practice of CBT skills leads to lasting emotional change",
+        ],
+        topicsCovered: ["Cognitive Behavioural Therapy basics", "Thought records & mood tracking", "Challenging negative thinking", "Managing depression & anxiety", "Building new core beliefs"],
     },
     {
         title: "The Feeling Good Handbook",
@@ -288,6 +381,14 @@ const FREE_BOOKS = [
         category: "Depression & CBT",
         color: "from-blue-500/20 to-cyan-600/20",
         borderColor: "border-blue-400/20",
+        keyTakeaways: [
+            "There are 10 common cognitive distortions (e.g., all-or-nothing thinking, mind reading, catastrophising)",
+            "Depression is often fueled by distorted thinking — not by reality itself",
+            "The 'Triple Column Technique' helps replace negative thoughts with rational responses",
+            "Procrastination can be overcome by breaking tasks into tiny steps and tracking pleasure/mastery",
+            "Communication skills (empathy, assertiveness) are essential for healthy relationships",
+        ],
+        topicsCovered: ["10 cognitive distortions", "Defeating depression without drugs", "Overcoming anxiety & phobias", "Communication & relationships", "Procrastination & motivation"],
     },
     {
         title: "Stress Management — WHO Guide",
@@ -298,6 +399,14 @@ const FREE_BOOKS = [
         category: "Stress Management",
         color: "from-teal-500/20 to-emerald-600/20",
         borderColor: "border-teal-400/20",
+        keyTakeaways: [
+            "Grounding techniques (5-4-3-2-1 senses exercise) bring you back to the present moment instantly",
+            "Unhooking from difficult thoughts: you are not your thoughts — let them come and go",
+            "Acting on your values even during stressful times gives life meaning and direction",
+            "Being kind to yourself is not weakness — it builds resilience and emotional recovery",
+            "Small daily practices (breathing, movement, connection) compound into major stress reduction",
+        ],
+        topicsCovered: ["Grounding techniques", "Managing difficult emotions", "Values-based action", "Self-compassion practices", "Building social support"],
     },
     {
         title: "The Anxiety & Phobia Workbook",
@@ -308,6 +417,14 @@ const FREE_BOOKS = [
         category: "Anxiety",
         color: "from-amber-500/20 to-orange-600/20",
         borderColor: "border-amber-400/20",
+        keyTakeaways: [
+            "Anxiety disorders are highly treatable — most people improve significantly with the right techniques",
+            "Progressive muscle relaxation (tensing & releasing muscles) reduces physical symptoms of anxiety",
+            "Gradual exposure to fears (starting small) is the most effective way to overcome phobias",
+            "Caffeine, sugar, and lack of exercise significantly worsen anxiety symptoms",
+            "Positive self-talk and affirmations can rewire anxious automatic thoughts over time",
+        ],
+        topicsCovered: ["Types of anxiety disorders", "Relaxation & breathing techniques", "Exposure therapy principles", "Nutrition & lifestyle changes", "Assertiveness & self-esteem"],
     },
     {
         title: "Living Life to the Full",
@@ -318,6 +435,14 @@ const FREE_BOOKS = [
         category: "Life Skills & CBT",
         color: "from-green-500/20 to-lime-600/20",
         borderColor: "border-green-400/20",
+        keyTakeaways: [
+            "The 'vicious cycle' model: thoughts → feelings → behaviours are all connected — change one to change all",
+            "Worry time technique: schedule 15 minutes daily for worrying, then postpone worries outside that time",
+            "Activity scheduling fights low mood — doing things even when unmotivated breaks the depression cycle",
+            "Problem-solving in 5 steps: identify → brainstorm → choose → do → review",
+            "Building confidence starts with noticing what you ALREADY do well, not focusing on failures",
+        ],
+        topicsCovered: ["Understanding the vicious cycle", "Tackling worry & rumination", "Building motivation", "Problem-solving skills", "Improving confidence & assertiveness"],
     },
     {
         title: "Problem Management Plus (PM+)",
@@ -328,6 +453,14 @@ const FREE_BOOKS = [
         category: "Guided Self-Help",
         color: "from-indigo-500/20 to-blue-600/20",
         borderColor: "border-indigo-400/20",
+        keyTakeaways: [
+            "Managing problems effectively: list → prioritise → break into steps → take action → review",
+            "Behavioural activation: scheduling pleasant activities fights the withdrawal that worsens distress",
+            "Slow breathing (inhale 4s, exhale 6s) activates the parasympathetic nervous system within minutes",
+            "Strengthening social support is a core strategy — identify who can help and how",
+            "Even 5 sessions of structured self-help can produce meaningful improvement in mental health",
+        ],
+        topicsCovered: ["Stress management strategies", "Structured problem solving", "Behavioural activation", "Strengthening social support", "Slow breathing techniques"],
     },
     {
         title: "Student Mental Health — Free Guide",
@@ -338,6 +471,14 @@ const FREE_BOOKS = [
         category: "Student Wellness",
         color: "from-rose-500/20 to-pink-600/20",
         borderColor: "border-rose-400/20",
+        keyTakeaways: [
+            "1 in 4 students experience mental health difficulties — you are not alone in this",
+            "Establishing a routine with consistent sleep, meals, and study times protects mental health",
+            "Knowing where to get help BEFORE you need it (counselling services, helplines) is crucial",
+            "Social media comparison is a significant driver of anxiety and low self-esteem in students",
+            "Talking about mental health openly reduces stigma and makes it easier for everyone to seek help",
+        ],
+        topicsCovered: ["Common student mental health issues", "When & where to seek help", "Building daily routines", "Managing social media impact", "Reducing mental health stigma"],
     },
     {
         title: "Self-Help for Anxiety Management (SAM)",
@@ -348,6 +489,14 @@ const FREE_BOOKS = [
         category: "Anxiety & Self-Help",
         color: "from-sky-500/20 to-blue-600/20",
         borderColor: "border-sky-400/20",
+        keyTakeaways: [
+            "Anxiety is a normal human response — it becomes a problem only when it's disproportionate or persistent",
+            "Physical symptoms of anxiety (racing heart, sweating) are caused by adrenaline — they are not dangerous",
+            "Avoidance maintains anxiety long-term — facing fears gradually (with support) is the path to freedom",
+            "Self-monitoring your anxiety levels helps you identify triggers and patterns",
+            "Relaxation techniques combined with cognitive strategies are more effective than either alone",
+        ],
+        topicsCovered: ["Understanding anxiety physiology", "Self-monitoring techniques", "Relaxation exercises", "Cognitive strategies", "Building an anxiety toolkit"],
     },
 ];
 
@@ -385,6 +534,8 @@ export default function ResourcesPage() {
     const [expandedTool, setExpandedTool] = useState<number | null>(null);
     const [tipIndex, setTipIndex] = useState(0);
     const [activeVideo, setActiveVideo] = useState<string | null>(null);
+    const [expandedApp, setExpandedApp] = useState<number | null>(null);
+    const [expandedBook, setExpandedBook] = useState<number | null>(null);
 
     const handlePlayVideo = useCallback((videoId: string) => {
         setActiveVideo((prev) => (prev === videoId ? null : videoId));
@@ -658,41 +809,111 @@ export default function ResourcesPage() {
                         <Smartphone className="h-5 w-5 text-indigo-300" />
                         Recommended Apps & Websites
                     </h2>
+                    <p className="text-xs text-indigo-200/60 -mt-2">
+                        Explore features, what&apos;s free, and how to get started — all without leaving this page.
+                    </p>
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+                        className="space-y-3"
                     >
-                        {RECOMMENDED_APPS.map((app) => {
+                        {RECOMMENDED_APPS.map((app, index) => {
                             const Icon = app.icon;
+                            const isExpanded = expandedApp === index;
                             return (
-                                <motion.a
+                                <motion.div
                                     key={app.name}
                                     variants={cardVariants}
-                                    href={app.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 shadow-xl hover:bg-white/10 transition-all duration-300 block"
+                                    className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-xl overflow-hidden transition-all duration-300"
                                 >
-                                    <div className="flex items-start justify-between gap-2">
+                                    <button
+                                        onClick={() => setExpandedApp(isExpanded ? null : index)}
+                                        className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5 transition-colors"
+                                    >
                                         <div className="flex items-center gap-3">
-                                            <div className="h-10 w-10 rounded-xl bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-indigo-500/25 transition-colors">
+                                            <div className="h-10 w-10 rounded-xl bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center flex-shrink-0">
                                                 <Icon className="h-5 w-5 text-indigo-300" />
                                             </div>
                                             <div>
-                                                <h3 className="font-semibold text-white group-hover:text-indigo-200 transition-colors text-sm">
-                                                    {app.name}
-                                                </h3>
-                                                <span className="text-xs text-indigo-400/60 bg-indigo-500/10 px-2 py-0.5 rounded-full">
-                                                    {app.tag}
-                                                </span>
+                                                <h3 className="font-semibold text-white text-sm">{app.name}</h3>
+                                                <div className="flex items-center gap-2 mt-0.5">
+                                                    <span className="text-xs text-indigo-400/60 bg-indigo-500/10 px-2 py-0.5 rounded-full">
+                                                        {app.tag}
+                                                    </span>
+                                                    <span className="text-xs text-indigo-300/50">{app.description}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <ExternalLink className="h-4 w-4 text-indigo-300/40 group-hover:text-indigo-300 transition-colors flex-shrink-0" />
-                                    </div>
-                                    <p className="text-xs text-indigo-300/60 mt-3 leading-relaxed">{app.description}</p>
-                                </motion.a>
+                                        {isExpanded ? (
+                                            <ChevronUp className="h-4 w-4 text-indigo-300 flex-shrink-0 ml-4" />
+                                        ) : (
+                                            <ChevronDown className="h-4 w-4 text-indigo-300 flex-shrink-0 ml-4" />
+                                        )}
+                                    </button>
+
+                                    <AnimatePresence>
+                                        {isExpanded && (
+                                            <motion.div
+                                                initial={{ opacity: 0, height: 0 }}
+                                                animate={{ opacity: 1, height: "auto" }}
+                                                exit={{ opacity: 0, height: 0 }}
+                                                transition={{ duration: 0.3 }}
+                                                className="px-5 pb-5 border-t border-white/5"
+                                            >
+                                                <div className="pt-4 space-y-5">
+                                                    {/* Key Features */}
+                                                    <div>
+                                                        <h4 className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2">Key Features</h4>
+                                                        <ul className="space-y-2">
+                                                            {app.features.map((feature, fIdx) => (
+                                                                <li key={fIdx} className="flex items-start gap-2 text-sm text-indigo-100/80 leading-relaxed">
+                                                                    <Check className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                                                                    {feature}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+
+                                                    {/* What's Free */}
+                                                    <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
+                                                        <h4 className="text-xs font-semibold text-green-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                                                            <Sparkles className="h-3 w-3" />
+                                                            What&apos;s Free
+                                                        </h4>
+                                                        <p className="text-sm text-green-100/80 leading-relaxed">{app.freeInfo}</p>
+                                                    </div>
+
+                                                    {/* How to Get Started */}
+                                                    <div>
+                                                        <h4 className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2">How to Get Started</h4>
+                                                        <ol className="space-y-2">
+                                                            {app.howToStart.map((step, sIdx) => (
+                                                                <li key={sIdx} className="flex items-start gap-3 text-sm text-indigo-100/80 leading-relaxed">
+                                                                    <span className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-xs font-semibold text-indigo-300">
+                                                                        {sIdx + 1}
+                                                                    </span>
+                                                                    {step}
+                                                                </li>
+                                                            ))}
+                                                        </ol>
+                                                    </div>
+
+                                                    {/* Visit Website link */}
+                                                    <a
+                                                        href={app.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-2 text-sm text-indigo-300 hover:text-indigo-200 transition-colors bg-indigo-500/10 hover:bg-indigo-500/20 px-4 py-2 rounded-xl border border-indigo-500/20"
+                                                    >
+                                                        Visit {app.name}
+                                                        <ExternalLink className="h-3.5 w-3.5" />
+                                                    </a>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </motion.div>
                             );
                         })}
                     </motion.div>
@@ -789,48 +1010,112 @@ export default function ResourcesPage() {
                         Free Books & Guides
                     </h2>
                     <p className="text-xs text-indigo-200/60 -mt-2">
-                        Curated free e-books, workbooks, and guides from trusted organisations. Read or download at no cost.
+                        Explore key insights and topics from each book right here. Click any book to learn more.
                     </p>
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+                        className="space-y-3"
                     >
-                        {FREE_BOOKS.map((book) => (
-                            <motion.a
-                                key={book.title}
-                                variants={cardVariants}
-                                href={book.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`group rounded-2xl border ${book.borderColor} bg-gradient-to-br ${book.color} backdrop-blur-md p-5 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 block relative overflow-hidden`}
-                            >
-                                <div className="absolute top-3 right-3">
-                                    <div className="h-9 w-9 rounded-full bg-white/10 border border-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                                        <FileText className="h-4 w-4 text-indigo-200" />
-                                    </div>
-                                </div>
-                                <div className="pr-12">
-                                    <h3 className="font-semibold text-white group-hover:text-indigo-200 transition-colors text-sm leading-snug">
-                                        {book.title}
-                                    </h3>
-                                    <p className="text-xs text-indigo-300/60 mt-1">{book.author}</p>
-                                </div>
-                                <p className="text-xs text-indigo-100/60 mt-3 leading-relaxed">
-                                    {book.description}
-                                </p>
-                                <div className="mt-3 flex items-center justify-between">
-                                    <span className="text-xs text-indigo-400/60 bg-indigo-500/10 px-2.5 py-1 rounded-full">
-                                        {book.category}
-                                    </span>
-                                    <span className="text-xs text-indigo-300/50 flex items-center gap-1 group-hover:text-indigo-200 transition-colors">
-                                        Read Free
-                                        <ExternalLink className="h-3 w-3" />
-                                    </span>
-                                </div>
-                            </motion.a>
-                        ))}
+                        {FREE_BOOKS.map((book, index) => {
+                            const isExpanded = expandedBook === index;
+                            return (
+                                <motion.div
+                                    key={book.title}
+                                    variants={cardVariants}
+                                    className={`rounded-2xl border ${book.borderColor} bg-gradient-to-br ${book.color} backdrop-blur-md shadow-xl overflow-hidden transition-all duration-300`}
+                                >
+                                    <button
+                                        onClick={() => setExpandedBook(isExpanded ? null : index)}
+                                        className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5 transition-colors"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className="h-10 w-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center flex-shrink-0">
+                                                <FileText className="h-5 w-5 text-indigo-200" />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-semibold text-white text-sm">{book.title}</h3>
+                                                <div className="flex items-center gap-2 mt-0.5">
+                                                    <span className="text-xs text-indigo-300/60">{book.author}</span>
+                                                    <span className="text-xs text-indigo-400/60 bg-indigo-500/10 px-2 py-0.5 rounded-full">
+                                                        {book.category}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {isExpanded ? (
+                                            <ChevronUp className="h-4 w-4 text-indigo-300 flex-shrink-0 ml-4" />
+                                        ) : (
+                                            <ChevronDown className="h-4 w-4 text-indigo-300 flex-shrink-0 ml-4" />
+                                        )}
+                                    </button>
+
+                                    <AnimatePresence>
+                                        {isExpanded && (
+                                            <motion.div
+                                                initial={{ opacity: 0, height: 0 }}
+                                                animate={{ opacity: 1, height: "auto" }}
+                                                exit={{ opacity: 0, height: 0 }}
+                                                transition={{ duration: 0.3 }}
+                                                className="px-5 pb-5 border-t border-white/5"
+                                            >
+                                                <div className="pt-4 space-y-5">
+                                                    {/* About */}
+                                                    <p className="text-sm text-indigo-100/80 leading-relaxed">
+                                                        {book.description}
+                                                    </p>
+
+                                                    {/* Key Takeaways */}
+                                                    <div>
+                                                        <h4 className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                                            <Lightbulb className="h-3 w-3" />
+                                                            Key Takeaways
+                                                        </h4>
+                                                        <ul className="space-y-2">
+                                                            {book.keyTakeaways.map((takeaway, tIdx) => (
+                                                                <li key={tIdx} className="flex items-start gap-2 text-sm text-indigo-100/80 leading-relaxed">
+                                                                    <span className="flex-shrink-0 h-5 w-5 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-xs font-semibold text-indigo-300 mt-0.5">
+                                                                        {tIdx + 1}
+                                                                    </span>
+                                                                    {takeaway}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+
+                                                    {/* Topics Covered */}
+                                                    <div>
+                                                        <h4 className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2">Topics Covered</h4>
+                                                        <div className="flex flex-wrap gap-2">
+                                                            {book.topicsCovered.map((topic, topIdx) => (
+                                                                <span
+                                                                    key={topIdx}
+                                                                    className="text-xs text-indigo-200/70 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full"
+                                                                >
+                                                                    {topic}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Read Full Book link */}
+                                                    <a
+                                                        href={book.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-2 text-sm text-indigo-300 hover:text-indigo-200 transition-colors bg-indigo-500/10 hover:bg-indigo-500/20 px-4 py-2 rounded-xl border border-indigo-500/20"
+                                                    >
+                                                        Read Full Book / Guide
+                                                        <ExternalLink className="h-3.5 w-3.5" />
+                                                    </a>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </motion.div>
+                            );
+                        })}
                     </motion.div>
                 </section>
 
