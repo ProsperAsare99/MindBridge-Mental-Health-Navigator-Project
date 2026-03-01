@@ -27,17 +27,22 @@
 
 :root {
   --background: #f8fafc;
-  /* Slate 50 - Softer than pure white */
-  --foreground: #334155;
-  /* Slate 700 - Softer than pure black */
+  --foreground: #1e293b;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(148, 163, 184, 0.3);
+  --surface-muted: rgba(241, 245, 249, 0.8);
+  --text-secondary: #475569;
+  --text-muted: #64748b;
 }
 
-/* Dark mode handled by class */
 .dark {
   --background: #0f172a;
-  /* Slate 900 */
   --foreground: #f8fafc;
-  /* Slate 50 */
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --surface-muted: rgba(255, 255, 255, 0.05);
+  --text-secondary: #c7d2fe;
+  --text-muted: #a5b4fc;
 }
 
 body {

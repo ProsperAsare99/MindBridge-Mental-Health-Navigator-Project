@@ -66,10 +66,12 @@ export default function DashboardLayout({
 
     return (
         <div className="min-h-screen relative font-sans text-foreground bg-background selection:bg-indigo-500/30 selection:text-indigo-900 dark:selection:text-indigo-200">
-            {/* Background Shader - Only visible in dark mode */}
-            <div className="fixed inset-0 z-0 hidden dark:block opacity-70">
+            {/* Background Shader - visible in both themes */}
+            <div className="fixed inset-0 z-0 opacity-20 dark:opacity-70">
                 <ShaderBackground />
             </div>
+            {/* Light mode overlay — softens shader for readability */}
+            <div className="fixed inset-0 z-0 bg-white/40 dark:bg-transparent pointer-events-none" />
 
             {/* Mobile Sidebar Overlay */}
             {isSidebarOpen && (

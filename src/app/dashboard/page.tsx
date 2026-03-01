@@ -69,25 +69,25 @@ export default function DashboardPage() {
     const currentQuote = MOTIVATION_QUOTES[quoteIndex];
 
     return (
-        <div className="min-h-screen relative font-sans text-white selection:bg-indigo-300 selection:text-indigo-900 pb-20">
+        <div className="min-h-screen relative font-sans text-slate-800 dark:text-white selection:bg-indigo-300 selection:text-indigo-900 pb-20">
             {/* Background Shader managed by Layout */}
 
             <div className="relative z-10 space-y-8 p-6 md:p-10 max-w-7xl mx-auto">
                 {/* Welcome Header */}
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between animate-in fade-in slide-in-from-top-5 duration-700">
                     <div>
-                        <h1 className="text-4xl font-bold tracking-tight text-white drop-shadow-md">
+                        <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white drop-shadow-md">
                             {greeting}, {user?.displayName?.split(" ")[0] || "Student"}
                         </h1>
-                        <div className="flex flex-wrap items-center gap-3 text-indigo-100 mt-2">
+                        <div className="flex flex-wrap items-center gap-3 text-slate-600 dark:text-indigo-100 mt-2">
                             {userProfile?.course && (
-                                <span className="flex items-center gap-1.5 text-xs font-medium bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 shadow-sm">
+                                <span className="flex items-center gap-1.5 text-xs font-medium bg-slate-200/80 dark:bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-slate-300 dark:border-white/10 shadow-sm">
                                     <BookHeart className="h-3.5 w-3.5" />
                                     {userProfile.course}
                                 </span>
                             )}
                             {userProfile?.institution && (
-                                <span className="flex items-center gap-1.5 text-xs font-medium bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 shadow-sm">
+                                <span className="flex items-center gap-1.5 text-xs font-medium bg-slate-200/80 dark:bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-slate-300 dark:border-white/10 shadow-sm">
                                     <School className="h-3.5 w-3.5" />
                                     {userProfile.institution}
                                 </span>
@@ -108,57 +108,57 @@ export default function DashboardPage() {
                 {/* Quick Stats / Overview Grid */}
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                     {/* Mood Card */}
-                    <div className="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 shadow-xl hover:bg-white/10 transition-all duration-300">
-                        <h3 className="text-sm font-medium text-indigo-200">Current Mood Streak</h3>
+                    <div className="group rounded-2xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md p-6 shadow-sm dark:shadow-xl hover:bg-white dark:hover:bg-white/10 transition-all duration-300">
+                        <h3 className="text-sm font-medium text-indigo-600 dark:text-indigo-200">Current Mood Streak</h3>
                         <div className="mt-4 flex items-baseline gap-2">
-                            <span className="text-4xl font-bold text-white group-hover:scale-110 transition-transform duration-300">0</span>
-                            <span className="text-sm text-indigo-200">days</span>
+                            <span className="text-4xl font-bold text-slate-900 dark:text-white group-hover:scale-110 transition-transform duration-300">0</span>
+                            <span className="text-sm text-indigo-600 dark:text-indigo-200">days</span>
                         </div>
-                        <p className="mt-2 text-xs text-indigo-300/60">Start checking in today!</p>
+                        <p className="mt-2 text-xs text-slate-500 dark:text-indigo-300/60">Start checking in today!</p>
                     </div>
 
                     {/* Assessment Card (New) */}
                     <Link href="/dashboard/assessment">
-                        <div className="group h-full rounded-2xl border border-indigo-400/30 bg-indigo-600/20 backdrop-blur-md p-6 shadow-xl hover:bg-indigo-600/30 transition-all duration-300 cursor-pointer relative overflow-hidden">
+                        <div className="group h-full rounded-2xl border border-indigo-300 dark:border-indigo-400/30 bg-indigo-50/80 dark:bg-indigo-600/20 backdrop-blur-md p-6 shadow-sm dark:shadow-xl hover:bg-indigo-100 dark:hover:bg-indigo-600/30 transition-all duration-300 cursor-pointer relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-40 transition-opacity">
                                 <BookHeart size={48} />
                             </div>
-                            <h3 className="text-sm font-medium text-indigo-100">Wellness Check</h3>
+                            <h3 className="text-sm font-medium text-indigo-700 dark:text-indigo-100">Wellness Check</h3>
                             <div className="mt-4">
-                                <span className="text-lg font-semibold text-white group-hover:underline decoration-indigo-400 underline-offset-4">Take Assessment</span>
+                                <span className="text-lg font-semibold text-slate-900 dark:text-white group-hover:underline decoration-indigo-400 underline-offset-4">Take Assessment</span>
                             </div>
-                            <p className="mt-2 text-xs text-indigo-200/70">Check your mental anxiety & depression levels.</p>
+                            <p className="mt-2 text-xs text-indigo-600/70 dark:text-indigo-200/70">Check your mental anxiety & depression levels.</p>
                         </div>
                     </Link>
 
                     {/* Resources Card */}
-                    <div className="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 shadow-xl hover:bg-white/10 transition-all duration-300">
-                        <h3 className="text-sm font-medium text-indigo-200">Saved Resources</h3>
+                    <div className="group rounded-2xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md p-6 shadow-sm dark:shadow-xl hover:bg-white dark:hover:bg-white/10 transition-all duration-300">
+                        <h3 className="text-sm font-medium text-indigo-600 dark:text-indigo-200">Saved Resources</h3>
                         <div className="mt-4 flex items-baseline gap-2">
-                            <span className="text-4xl font-bold text-white group-hover:scale-110 transition-transform duration-300">0</span>
-                            <span className="text-sm text-indigo-200">items</span>
+                            <span className="text-4xl font-bold text-slate-900 dark:text-white group-hover:scale-110 transition-transform duration-300">0</span>
+                            <span className="text-sm text-indigo-600 dark:text-indigo-200">items</span>
                         </div>
                     </div>
 
                     {/* Motivation Quote Card */}
-                    <div className="col-span-full md:col-span-2 rounded-2xl border border-white/10 bg-gradient-to-br from-indigo-600/40 to-purple-600/40 backdrop-blur-xl p-8 shadow-2xl relative overflow-hidden group">
+                    <div className="col-span-full md:col-span-2 rounded-2xl border border-indigo-300/50 dark:border-white/10 bg-gradient-to-br from-indigo-100/90 to-purple-100/90 dark:from-indigo-600/40 dark:to-purple-600/40 backdrop-blur-xl p-8 shadow-lg dark:shadow-2xl relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                             <Quote size={100} fill="currentColor" />
                         </div>
 
                         <div className="relative z-10 flex flex-col justify-center h-full">
                             <div key={quoteIndex} className="animate-in fade-in zoom-in duration-1000">
-                                <p className="text-xl md:text-2xl font-medium leading-relaxed font-serif italic text-white/90">
+                                <p className="text-xl md:text-2xl font-medium leading-relaxed font-serif italic text-slate-800 dark:text-white/90">
                                     "{currentQuote.text}"
                                 </p>
-                                <p className="mt-4 text-sm font-semibold text-indigo-200 uppercase tracking-widest">
+                                <p className="mt-4 text-sm font-semibold text-indigo-700 dark:text-indigo-200 uppercase tracking-widest">
                                     — {currentQuote.author}
                                 </p>
                             </div>
 
                             {/* Progress bar for next quote */}
-                            <div className="absolute bottom-0 left-0 h-1 bg-white/20 w-full">
-                                <div key={quoteIndex} className="h-full bg-indigo-400 animate-[progress_8s_linear_forward]" style={{ width: '100%' }}></div>
+                            <div className="absolute bottom-0 left-0 h-1 bg-indigo-200 dark:bg-white/20 w-full">
+                                <div key={quoteIndex} className="h-full bg-indigo-500 dark:bg-indigo-400 animate-[progress_8s_linear_forward]" style={{ width: '100%' }}></div>
                             </div>
                         </div>
                     </div>
@@ -166,35 +166,35 @@ export default function DashboardPage() {
 
                 {/* Action Sections */}
                 <div className="grid gap-6 md:grid-cols-2">
-                    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 shadow-xl">
-                        <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                            <GraduationCap className="h-5 w-5 text-indigo-300" />
+                    <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-md p-6 shadow-sm dark:shadow-xl">
+                        <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                            <GraduationCap className="h-5 w-5 text-indigo-500 dark:text-indigo-300" />
                             Recommended for You
                         </h2>
                         <div className="space-y-4">
                             {/* Placeholders */}
-                            <div className="p-4 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer group">
-                                <h4 className="font-medium text-indigo-100 group-hover:text-white transition-colors">Exam Stress Relief</h4>
-                                <p className="text-xs text-indigo-300/70 mt-1">5 min read • Techniques for academic anxiety</p>
+                            <div className="p-4 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50/80 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors cursor-pointer group">
+                                <h4 className="font-medium text-slate-700 dark:text-indigo-100 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Exam Stress Relief</h4>
+                                <p className="text-xs text-slate-500 dark:text-indigo-300/70 mt-1">5 min read • Techniques for academic anxiety</p>
                             </div>
-                            <div className="p-4 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer group">
-                                <h4 className="font-medium text-indigo-100 group-hover:text-white transition-colors">Mindful Breathing</h4>
-                                <p className="text-xs text-indigo-300/70 mt-1">10 min video • Grounding exercise</p>
+                            <div className="p-4 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50/80 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors cursor-pointer group">
+                                <h4 className="font-medium text-slate-700 dark:text-indigo-100 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Mindful Breathing</h4>
+                                <p className="text-xs text-slate-500 dark:text-indigo-300/70 mt-1">10 min video • Grounding exercise</p>
                             </div>
                         </div>
-                        <Button variant="ghost" className="w-full mt-6 text-indigo-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10">
+                        <Button variant="ghost" className="w-full mt-6 text-indigo-600 dark:text-indigo-300 hover:text-indigo-700 dark:hover:text-white hover:bg-indigo-50 dark:hover:bg-white/5 border border-transparent hover:border-indigo-200 dark:hover:border-white/10">
                             Explore Library
                         </Button>
                     </div>
 
-                    <div className="rounded-2xl border border-red-500/30 bg-red-900/20 backdrop-blur-md p-6 shadow-xl relative overflow-hidden">
-                        <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-red-500/20 blur-3xl rounded-full pointer-events-none"></div>
+                    <div className="rounded-2xl border border-red-300/50 dark:border-red-500/30 bg-red-50/80 dark:bg-red-900/20 backdrop-blur-md p-6 shadow-sm dark:shadow-xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-red-500/10 dark:bg-red-500/20 blur-3xl rounded-full pointer-events-none"></div>
 
-                        <div className="flex items-center gap-3 text-red-300 mb-4 relative z-10">
+                        <div className="flex items-center gap-3 text-red-500 dark:text-red-300 mb-4 relative z-10">
                             <AlertCircle className="h-6 w-6" />
-                            <h2 className="text-lg font-semibold text-white">Need Help Now?</h2>
+                            <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Need Help Now?</h2>
                         </div>
-                        <p className="text-indigo-100/80 text-sm mb-6 relative z-10 leading-relaxed">
+                        <p className="text-slate-600 dark:text-indigo-100/80 text-sm mb-6 relative z-10 leading-relaxed">
                             If you are in distress or need someone to talk to immediately, support is available 24/7.
                             You are not alone.
                         </p>
