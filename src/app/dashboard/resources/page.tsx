@@ -575,7 +575,7 @@ export default function ResourcesPage() {
                         <BookOpen className="h-8 w-8 text-indigo-400" />
                         Mental Health Resources
                     </h1>
-                    <p className="text-indigo-200/80 text-sm md:text-base leading-relaxed max-w-2xl">
+                    <p className="text-indigo-200 text-sm md:text-base leading-relaxed max-w-2xl">
                         Curated articles, self-help tools, and expert recommendations to support your mental well-being as a student.
                     </p>
                 </motion.div>
@@ -602,7 +602,7 @@ export default function ResourcesPage() {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -20 }}
                                 transition={{ duration: 0.4 }}
-                                className="text-white/90 text-sm md:text-base leading-relaxed"
+                                className="text-white text-sm md:text-base leading-relaxed"
                             >
                                 {QUICK_TIPS[tipIndex]}
                             </motion.p>
@@ -619,13 +619,13 @@ export default function ResourcesPage() {
                 >
                     {/* Search bar */}
                     <div className="relative">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-indigo-300/60" />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-indigo-300/90" />
                         <input
                             type="text"
                             placeholder="Search articles, tools, and resources..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full rounded-xl border border-white/10 bg-white/5 backdrop-blur-md pl-11 pr-4 py-3 text-sm text-white placeholder:text-indigo-300/40 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/30 transition-all"
+                            className="w-full rounded-xl border border-white/10 bg-white/5 backdrop-blur-md pl-11 pr-4 py-3 text-sm text-white placeholder:text-indigo-300/70 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/30 transition-all"
                         />
                     </div>
 
@@ -637,7 +637,7 @@ export default function ResourcesPage() {
                                 onClick={() => setActiveCategory(cat)}
                                 className={`px-4 py-2 rounded-full text-xs font-medium transition-all duration-200 border ${activeCategory === cat
                                     ? "bg-indigo-500/20 text-indigo-200 border-indigo-400/30 shadow-sm"
-                                    : "bg-white/5 text-indigo-300/60 border-white/10 hover:bg-white/10 hover:text-white"
+                                    : "bg-white/5 text-indigo-300/90 border-white/10 hover:bg-white/10 hover:text-white"
                                     }`}
                             >
                                 {cat}
@@ -683,8 +683,8 @@ export default function ResourcesPage() {
                                                             {article.title}
                                                         </h3>
                                                         <div className="flex items-center gap-3 mt-1">
-                                                            <span className="text-xs text-indigo-300/50">{article.readTime}</span>
-                                                            <span className="text-xs text-indigo-300/40 bg-white/5 px-2 py-0.5 rounded-full">{article.category}</span>
+                                                            <span className="text-xs text-indigo-300/80">{article.readTime}</span>
+                                                            <span className="text-xs text-indigo-300/70 bg-white/5 px-2 py-0.5 rounded-full">{article.category}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -694,7 +694,7 @@ export default function ResourcesPage() {
                                                     <ChevronDown className="h-4 w-4 text-indigo-300 flex-shrink-0 mt-1" />
                                                 )}
                                             </div>
-                                            <p className="text-xs text-indigo-100/60 mt-3 leading-relaxed">
+                                            <p className="text-xs text-indigo-100/90 mt-3 leading-relaxed">
                                                 {article.description}
                                             </p>
 
@@ -709,7 +709,7 @@ export default function ResourcesPage() {
                                                         className="mt-4 space-y-3 border-t border-white/10 pt-4"
                                                     >
                                                         {article.content.map((paragraph, pIdx) => (
-                                                            <p key={pIdx} className="text-sm text-indigo-100/80 leading-relaxed">
+                                                            <p key={pIdx} className="text-sm text-indigo-100 leading-relaxed">
                                                                 {paragraph}
                                                             </p>
                                                         ))}
@@ -723,7 +723,7 @@ export default function ResourcesPage() {
                         </AnimatePresence>
 
                         {filteredArticles.length === 0 && (
-                            <div className="col-span-full text-center py-12 text-indigo-300/50">
+                            <div className="col-span-full text-center py-12 text-indigo-300/80">
                                 <Search className="h-8 w-8 mx-auto mb-3 opacity-50" />
                                 <p className="text-sm">No articles match your search. Try different keywords or clear filters.</p>
                             </div>
@@ -737,7 +737,7 @@ export default function ResourcesPage() {
                         <Sparkles className="h-5 w-5 text-indigo-300" />
                         Self-Help Toolkit
                     </h2>
-                    <p className="text-xs text-indigo-200/60 -mt-2">
+                    <p className="text-xs text-indigo-200/90 -mt-2">
                         Hands-on techniques you can practice right now. Tap any card to see the steps.
                     </p>
                     <motion.div
@@ -765,7 +765,7 @@ export default function ResourcesPage() {
                                             </div>
                                             <div>
                                                 <h3 className="font-medium text-white text-sm">{tool.title}</h3>
-                                                <p className="text-xs text-indigo-300/50 mt-0.5">{tool.description}</p>
+                                                <p className="text-xs text-indigo-300/80 mt-0.5">{tool.description}</p>
                                             </div>
                                         </div>
                                         {isExpanded ? (
@@ -786,7 +786,7 @@ export default function ResourcesPage() {
                                             >
                                                 <ol className="pt-4 space-y-3">
                                                     {tool.steps.map((step, sIdx) => (
-                                                        <li key={sIdx} className="flex items-start gap-3 text-sm text-indigo-100/80 leading-relaxed">
+                                                        <li key={sIdx} className="flex items-start gap-3 text-sm text-indigo-100 leading-relaxed">
                                                             <span className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-xs font-semibold text-indigo-300">
                                                                 {sIdx + 1}
                                                             </span>
@@ -809,7 +809,7 @@ export default function ResourcesPage() {
                         <Smartphone className="h-5 w-5 text-indigo-300" />
                         Recommended Apps & Websites
                     </h2>
-                    <p className="text-xs text-indigo-200/60 -mt-2">
+                    <p className="text-xs text-indigo-200/90 -mt-2">
                         Explore features, what&apos;s free, and how to get started — all without leaving this page.
                     </p>
                     <motion.div
@@ -838,10 +838,10 @@ export default function ResourcesPage() {
                                             <div>
                                                 <h3 className="font-semibold text-white text-sm">{app.name}</h3>
                                                 <div className="flex items-center gap-2 mt-0.5">
-                                                    <span className="text-xs text-indigo-400/60 bg-indigo-500/10 px-2 py-0.5 rounded-full">
+                                                    <span className="text-xs text-indigo-400/90 bg-indigo-500/10 px-2 py-0.5 rounded-full">
                                                         {app.tag}
                                                     </span>
-                                                    <span className="text-xs text-indigo-300/50">{app.description}</span>
+                                                    <span className="text-xs text-indigo-300/80">{app.description}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -867,7 +867,7 @@ export default function ResourcesPage() {
                                                         <h4 className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2">Key Features</h4>
                                                         <ul className="space-y-2">
                                                             {app.features.map((feature, fIdx) => (
-                                                                <li key={fIdx} className="flex items-start gap-2 text-sm text-indigo-100/80 leading-relaxed">
+                                                                <li key={fIdx} className="flex items-start gap-2 text-sm text-indigo-100 leading-relaxed">
                                                                     <Check className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
                                                                     {feature}
                                                                 </li>
@@ -881,7 +881,7 @@ export default function ResourcesPage() {
                                                             <Sparkles className="h-3 w-3" />
                                                             What&apos;s Free
                                                         </h4>
-                                                        <p className="text-sm text-green-100/80 leading-relaxed">{app.freeInfo}</p>
+                                                        <p className="text-sm text-green-100 leading-relaxed">{app.freeInfo}</p>
                                                     </div>
 
                                                     {/* How to Get Started */}
@@ -889,7 +889,7 @@ export default function ResourcesPage() {
                                                         <h4 className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2">How to Get Started</h4>
                                                         <ol className="space-y-2">
                                                             {app.howToStart.map((step, sIdx) => (
-                                                                <li key={sIdx} className="flex items-start gap-3 text-sm text-indigo-100/80 leading-relaxed">
+                                                                <li key={sIdx} className="flex items-start gap-3 text-sm text-indigo-100 leading-relaxed">
                                                                     <span className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-xs font-semibold text-indigo-300">
                                                                         {sIdx + 1}
                                                                     </span>
@@ -925,7 +925,7 @@ export default function ResourcesPage() {
                         <Play className="h-5 w-5 text-indigo-300" />
                         Watch & Learn
                     </h2>
-                    <p className="text-xs text-indigo-200/60 -mt-2">
+                    <p className="text-xs text-indigo-200/90 -mt-2">
                         Watch inspiring talks directly here — no need to leave the page.
                     </p>
                     <motion.div
@@ -989,11 +989,11 @@ export default function ResourcesPage() {
                                             {video.title}
                                         </h3>
                                         <div className="flex items-center gap-2 mt-1.5">
-                                            <span className="text-xs text-indigo-300/60">{video.speaker}</span>
-                                            <span className="text-xs text-indigo-300/40">•</span>
-                                            <span className="text-xs text-indigo-300/40">{video.duration}</span>
+                                            <span className="text-xs text-indigo-300/90">{video.speaker}</span>
+                                            <span className="text-xs text-indigo-300/70">•</span>
+                                            <span className="text-xs text-indigo-300/70">{video.duration}</span>
                                         </div>
-                                        <p className="text-xs text-indigo-300/60 mt-2 leading-relaxed">
+                                        <p className="text-xs text-indigo-300/90 mt-2 leading-relaxed">
                                             {video.description}
                                         </p>
                                     </div>
@@ -1009,7 +1009,7 @@ export default function ResourcesPage() {
                         <Download className="h-5 w-5 text-indigo-300" />
                         Free Books & Guides
                     </h2>
-                    <p className="text-xs text-indigo-200/60 -mt-2">
+                    <p className="text-xs text-indigo-200/90 -mt-2">
                         Explore key insights and topics from each book right here. Click any book to learn more.
                     </p>
                     <motion.div
@@ -1037,8 +1037,8 @@ export default function ResourcesPage() {
                                             <div>
                                                 <h3 className="font-semibold text-white text-sm">{book.title}</h3>
                                                 <div className="flex items-center gap-2 mt-0.5">
-                                                    <span className="text-xs text-indigo-300/60">{book.author}</span>
-                                                    <span className="text-xs text-indigo-400/60 bg-indigo-500/10 px-2 py-0.5 rounded-full">
+                                                    <span className="text-xs text-indigo-300/90">{book.author}</span>
+                                                    <span className="text-xs text-indigo-400/90 bg-indigo-500/10 px-2 py-0.5 rounded-full">
                                                         {book.category}
                                                     </span>
                                                 </div>
@@ -1062,7 +1062,7 @@ export default function ResourcesPage() {
                                             >
                                                 <div className="pt-4 space-y-5">
                                                     {/* About */}
-                                                    <p className="text-sm text-indigo-100/80 leading-relaxed">
+                                                    <p className="text-sm text-indigo-100 leading-relaxed">
                                                         {book.description}
                                                     </p>
 
@@ -1074,7 +1074,7 @@ export default function ResourcesPage() {
                                                         </h4>
                                                         <ul className="space-y-2">
                                                             {book.keyTakeaways.map((takeaway, tIdx) => (
-                                                                <li key={tIdx} className="flex items-start gap-2 text-sm text-indigo-100/80 leading-relaxed">
+                                                                <li key={tIdx} className="flex items-start gap-2 text-sm text-indigo-100 leading-relaxed">
                                                                     <span className="flex-shrink-0 h-5 w-5 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-xs font-semibold text-indigo-300 mt-0.5">
                                                                         {tIdx + 1}
                                                                     </span>
@@ -1091,7 +1091,7 @@ export default function ResourcesPage() {
                                                             {book.topicsCovered.map((topic, topIdx) => (
                                                                 <span
                                                                     key={topIdx}
-                                                                    className="text-xs text-indigo-200/70 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full"
+                                                                    className="text-xs text-indigo-200/90 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full"
                                                                 >
                                                                     {topic}
                                                                 </span>
@@ -1126,10 +1126,10 @@ export default function ResourcesPage() {
                     transition={{ duration: 0.6, delay: 0.5 }}
                     className="text-center py-8"
                 >
-                    <p className="text-sm text-indigo-200/50 italic">
+                    <p className="text-sm text-indigo-200/80 italic">
                         "The greatest glory in living lies not in never falling, but in rising every time we fall." — Nelson Mandela
                     </p>
-                    <p className="text-xs text-indigo-300/30 mt-3">
+                    <p className="text-xs text-indigo-300/60 mt-3">
                         These resources are for informational purposes. If you are in crisis, please visit the{" "}
                         <a href="/dashboard/crisis" className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2">
                             Crisis Support
