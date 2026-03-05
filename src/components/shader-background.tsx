@@ -28,7 +28,7 @@ const ShaderBackground = () => {
     const float minorLineFrequency = 1.0;
     const vec4 gridColor = vec4(0.5);
     const float scale = 5.0;
-    const vec4 lineColor = vec4(0.4, 0.2, 0.8, 1.0);
+    const vec4 lineColor = vec4(0.35, 0.18, 0.7, 0.6);
     const float minLineWidth = 0.01;
     const float maxLineWidth = 0.2;
     const float lineSpeed = 1.0 * overallSpeed;
@@ -90,7 +90,7 @@ const ShaderBackground = () => {
         float halfWidth = mix(minLineWidth, maxLineWidth, rand * horizontalFade) / 2.0;
         float offset = random(offsetPosition + offsetTime * (1.0 + normalizedLineIndex)) * mix(minOffsetSpread, maxOffsetSpread, horizontalFade);
         float linePosition = getPlasmaY(space.x, horizontalFade, offset);
-        float line = drawSmoothLine(linePosition, halfWidth, space.y) / 2.0 + drawCrispLine(linePosition, halfWidth * 0.15, space.y);
+        float line = drawSmoothLine(linePosition, halfWidth, space.y) / 4.0 + drawCrispLine(linePosition, halfWidth * 0.15, space.y) * 0.6;
 
         float circleX = mod(float(l) + iTime * lineSpeed, 25.0) - 12.0;
         vec2 circlePosition = vec2(circleX, getPlasmaY(circleX, horizontalFade, offset));
@@ -103,7 +103,7 @@ const ShaderBackground = () => {
       fragColor = mix(bgColor1, bgColor2, uv.x);
       fragColor *= verticalFade;
       fragColor.a = 1.0;
-      fragColor += lines;
+      fragColor += lines * 0.55;
 
       gl_FragColor = fragColor;
     }

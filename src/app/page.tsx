@@ -39,17 +39,19 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 text-center">
-        <div className="max-w-4xl space-y-8 animate-in fade-in zoom-in duration-1000 slide-in-from-bottom-10">
+        {/* Radial dark overlay for text readability */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.3)_40%,transparent_75%)]" />
+        <div className="relative max-w-4xl flex flex-col items-center animate-in fade-in zoom-in duration-1000 slide-in-from-bottom-10">
 
-          <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-indigo-200 backdrop-blur-md mx-auto mb-4">
-            <span className="flex h-2 w-2 rounded-full bg-indigo-400 mr-2 animate-pulse"></span>
-            Context-Aware Mental Health Support
-          </div>
-
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl md:text-8xl bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 drop-shadow-sm">
+          <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl md:text-8xl bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 drop-shadow-sm mb-6">
             Your Mind<br />
             <span className="text-indigo-200">Understood.</span>
           </h1>
+
+          <div className="inline-flex items-center rounded-full border border-indigo-400/20 bg-indigo-500/10 px-4 py-1.5 text-sm text-indigo-200 backdrop-blur-md mb-5">
+            <span className="flex h-2 w-2 rounded-full bg-indigo-400 mr-2 animate-pulse"></span>
+            Context-Aware Mental Health Support
+          </div>
 
           <p className="max-w-2xl mx-auto text-xl md:text-2xl font-bold text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] leading-relaxed tracking-wide">
             A Navigator for Tertiary Students in Ghana. Get Personalized Help, Track your mood,
@@ -79,8 +81,8 @@ export default function Home() {
 
           {/* Scroll indicator */}
           <div className="pt-16 flex flex-col items-center gap-2 animate-bounce">
-            <span className="text-white/30 text-xs tracking-widest uppercase">Scroll to explore</span>
-            <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+            <span className="text-white/70 text-sm font-medium tracking-widest uppercase">Scroll to explore</span>
+            <ArrowRight className="h-5 w-5 text-white/60 rotate-90" />
           </div>
         </div>
       </section>
@@ -193,7 +195,7 @@ export default function Home() {
       </ParallaxSection>
 
       {/* ─── CTA Section ─── */}
-      <ParallaxSection speed={0.2} direction="up" className="min-h-[70vh] py-32 flex items-center">
+      <ParallaxSection speed={0.2} direction="up" className="min-h-screen py-32 flex items-center justify-center">
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-indigo-500/10 to-purple-500/10 backdrop-blur-xl p-12 md:p-20 shadow-2xl shadow-indigo-500/5">
             <div className="flex justify-center mb-8">
@@ -222,13 +224,13 @@ export default function Home() {
               </Link>
             </div>
           </div>
-
-          {/* Footer */}
-          <div className="mt-16 pt-8 border-t border-white/5 text-white/30 text-sm">
-            <p>&copy; 2026 MindBridge. Built with care for the Ghanaian student community.</p>
-          </div>
         </div>
       </ParallaxSection>
+
+      {/* ─── Footer ─── */}
+      <footer className="relative z-10 py-8 text-center border-t border-white/5">
+        <p className="text-white/30 text-sm">&copy; 2026 MindBridge. Built with care for the Ghanaian student community.</p>
+      </footer>
     </div>
   );
 }
