@@ -22,7 +22,7 @@ export default function Home() {
             <Link href="#" className="hover:text-white transition-colors">Contact</Link>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/login">
+            <Link href="/signin">
               <Button variant="ghost" className="text-white hover:bg-white/10 hover:text-white border-white/20">
                 Sign In
               </Button>
@@ -214,7 +214,7 @@ export default function Home() {
                     Create Free Account
                   </Button>
                 </Link>
-                <Link href="/login">
+                <Link href="/signin">
                   <Button size="lg" variant="outline" className="h-14 px-10 text-lg border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm transition-all hover:scale-105">
                     <LogIn className="mr-2 h-5 w-5" />
                     Sign In
