@@ -1,82 +1,154 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import ShaderBackground from "@/components/shader-background";
-import { ArrowRight, LogIn, UserPlus } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  Heart,
+  Sparkles,
+  ChevronRight,
+  Activity,
+  Brain,
+  MessageCircle,
+  ShieldCheck,
+  Star
+} from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen font-sans text-white selection:bg-indigo-300 selection:text-indigo-900">
-      {/* Background Shader */}
-      <ShaderBackground />
+    <div className="relative min-h-screen bg-background font-sans text-foreground selection:bg-primary/20 selection:text-primary overflow-hidden">
+      {/* Soft Background Accents */}
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] h-[40%] w-[40%] rounded-full bg-primary/5 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-secondary/10 blur-[120px]" />
+      </div>
 
-      {/* Navigation - Minimal and Floating */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-full bg-indigo-500/20 backdrop-blur-md border border-white/10 flex items-center justify-center">
-            <div className="h-3 w-3 rounded-full bg-indigo-400" />
+      {/* Navigation - Apple Style */}
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-24">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center gap-2.5"
+        >
+          <div className="h-9 w-9 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+            <Heart className="h-5 w-5 text-white" />
           </div>
-          <span className="text-xl font-semibold tracking-tight text-white/90">MindBridge</span>
-        </div>
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-white/70">
-          <Link href="#" className="hover:text-white transition-colors">About</Link>
-          <Link href="#" className="hover:text-white transition-colors">Resources</Link>
-          <Link href="#" className="hover:text-white transition-colors">Contact</Link>
-        </div>
-        <div className="flex items-center gap-3">
+          <span className="text-xl font-bold tracking-tight text-foreground/90">MindBridge</span>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="hidden md:flex items-center gap-8 text-sm font-semibold text-muted-foreground/80"
+        >
+          {["About", "Resources", "Privacy", "Support"].map((item) => (
+            <Link key={item} href="#" className="hover:text-primary transition-colors duration-300">
+              {item}
+            </Link>
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center gap-3"
+        >
           <Link href="/login">
-            <Button variant="ghost" className="text-white hover:bg-white/10 hover:text-white border-white/20">
+            <Button variant="ghost" className="text-sm font-bold">
               Sign In
             </Button>
           </Link>
           <Link href="/register">
-            <Button className="bg-white text-indigo-900 hover:bg-indigo-50 border-none shadow-lg shadow-indigo-900/20">
+            <Button className="rounded-full px-6 shadow-xl shadow-primary/25">
               Get Started
             </Button>
           </Link>
-        </div>
+        </motion.div>
       </nav>
 
       {/* Hero Section */}
-      <main className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 text-center">
-        <div className="max-w-4xl space-y-8 animate-in fade-in zoom-in duration-1000 slide-in-from-bottom-10">
+      <main className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 pt-20 text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+          className="max-w-5xl space-y-12"
+        >
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-2.5 rounded-full border border-primary/10 bg-primary/5 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary/80 backdrop-blur-sm mx-auto"
+          >
+            <Activity className="h-3.5 w-3.5 animate-pulse" />
+            Designed for Academic Well-being
+          </motion.div>
 
-          <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-indigo-200 backdrop-blur-md mx-auto mb-4">
-            <span className="flex h-2 w-2 rounded-full bg-indigo-400 mr-2 animate-pulse"></span>
-            Context-Aware Mental Health Support
-          </div>
-
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl md:text-8xl bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 drop-shadow-sm">
-            Your Mind<br />
-            <span className="text-indigo-200">Understood.</span>
+          {/* Heading */}
+          <h1 className="text-6xl font-extrabold tracking-tight sm:text-7xl md:text-9xl text-[#1D1D1F] leading-[1.05]">
+            Mindfulness.<br />
+            <span className="text-primary/70">Redefined.</span>
           </h1>
 
-          <p className="max-w-2xl mx-auto text-xl md:text-2xl font-bold text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] leading-relaxed tracking-wide">
-            A Navigator for Tertiary Students in Ghana. Get Personalized Help, Track your mood,
-            and Access Awareness Resources Tailored to your Academic life.
+          {/* Description */}
+          <p className="max-w-2xl mx-auto text-lg md:text-xl font-medium text-muted-foreground leading-relaxed">
+            Navigate the complexities of university life with Ghana's first
+            context-aware support system. Simple tools, deeper understanding.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
-            <Link href="/login" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-lg bg-indigo-600 hover:bg-indigo-500 text-white border-none ring-1 ring-white/20 shadow-xl shadow-indigo-900/30 transition-all hover:scale-105">
-                <LogIn className="mr-2 h-5 w-5" />
-                Sign In
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
+            <Link href="/register" className="w-full sm:w-auto">
+              <Button size="lg" className="h-16 px-10 rounded-full text-lg font-bold shadow-2xl shadow-primary/30">
+                Join MindBridge
+                <ChevronRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-            <Link href="/register" className="w-full sm:w-auto">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-8 text-lg border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm transition-all hover:scale-105">
-                <UserPlus className="mr-2 h-5 w-5" />
-                Create Account
+            <Link href="/resources" className="w-full sm:w-auto">
+              <Button variant="outline" size="lg" className="h-16 px-10 rounded-full text-lg font-bold border-2 border-primary/10">
+                View Resources
               </Button>
             </Link>
           </div>
 
-          <div className="pt-12 flex items-center justify-center gap-8 text-white/40 text-sm">
-            <div className="flex items-center gap-2"><ArrowRight className="h-4 w-4" /> Confidential</div>
-            <div className="flex items-center gap-2"><ArrowRight className="h-4 w-4" /> Context-Aware</div>
-            <div className="flex items-center gap-2"><ArrowRight className="h-4 w-4" /> Always Available</div>
+          {/* Trust Assets */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-40 grayscale hover:grayscale-0 transition-all duration-700"
+          >
+            {[
+              { icon: ShieldCheck, label: "Confidential" },
+              { icon: Brain, label: "AI-Powered" },
+              { icon: Sparkles, label: "Student-Led" },
+              { icon: Star, label: "Highly Rated" }
+            ].map(({ icon: Icon, label }) => (
+              <div key={label} className="flex items-center justify-center gap-2 group">
+                <Icon className="h-5 w-5 group-hover:text-primary transition-colors" />
+                <span className="text-sm font-bold tracking-tight uppercase">{label}</span>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </main>
+
+      {/* Floating Action Button / Quick Mood (Apple Style) */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="fixed bottom-10 right-10 z-50 md:flex hidden"
+      >
+        <div className="group relative">
+          <button className="h-16 w-16 rounded-full bg-white shadow-2xl border border-black/5 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300">
+            <MessageCircle className="h-6 w-6 text-primary" />
+          </button>
+          <div className="absolute bottom-full right-0 mb-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+            <div className="bg-foreground text-background px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shadow-xl">
+              Talk to someone now
+            </div>
           </div>
         </div>
-      </main>
+      </motion.div>
     </div>
   );
 }
