@@ -225,11 +225,16 @@ export default function RegisterPage() {
                                     options={[
                                         { value: "UG LEGON", label: "University of Ghana" },
                                         { value: "KNUST", label: "KNUST" },
-                                        { value: "UCC", label: "UCC" },
-                                        { value: "UEW", label: "UEW" },
-                                        { value: "UDS", label: "UDS" },
+                                        { value: "UCC", label: "University of Cape Coast" },
+                                        { value: "UEW", label: "University of Education, Winneba" },
+                                        { value: "UDS", label: "University for Development Studies" },
                                         { value: "UPSA", label: "UPSA" },
+                                        { value: "UMAT", label: "UMaT" },
+                                        { value: "UENR", label: "UENR" },
+                                        { value: "GCTU", label: "Ghana Communication Technology University" },
                                         { value: "ASHESI", label: "Ashesi University" },
+                                        { value: "CUC", label: "Central University" },
+                                        { value: "RMU", label: "Regional Maritime University" },
                                         { value: "Other", label: "Other" },
                                     ]}
                                     placeholder="Select Institution"
