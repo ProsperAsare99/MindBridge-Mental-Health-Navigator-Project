@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/hooks/use-auth";
 import { db, auth } from "@/lib/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
@@ -11,7 +10,7 @@ import {
     EmailAuthProvider,
     reauthenticateWithCredential,
 } from "firebase/auth";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import {
     User,
     Mail,
@@ -42,7 +41,6 @@ export default function SettingsPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
-    const [theme, setTheme] = useState<"light" | "dark">("dark");
 
     // State
     const [loading, setLoading] = useState(true);
@@ -169,55 +167,40 @@ export default function SettingsPage() {
     }
 
     const inputClasses =
-        "w-full bg-white/5 border-2 border-white/10 rounded-2xl px-5 py-4 text-white font-medium placeholder-white/30 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all shadow-xl backdrop-blur-2xl";
+        "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all";
 
     return (
-        <div className="min-h-screen relative font-sans text-linen pb-20">
-            <div className="relative z-10 space-y-12 p-6 md:p-10 max-w-4xl mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="space-y-4"
-                >
-                    <div className="flex items-center gap-6">
-                        <div className="h-20 w-20 rounded-[2.5rem] bg-indigo-500/10 border-2 border-indigo-400/20 flex items-center justify-center shadow-[0_0_40px_rgba(99,102,241,0.15)] backdrop-blur-xl">
-                            <Save className="h-10 w-10 text-indigo-300" />
-                        </div>
-                        <div>
-                            <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-linen uppercase tracking-widest drop-shadow-2xl opacity-90">
-                                Settings
-                            </h1>
-                            <p className="text-indigo-300 font-bold text-sm md:text-base uppercase tracking-[0.3em] opacity-60 mt-1 italic">
-                                Personalized Dashboard
-                            </p>
-                        </div>
-                    </div>
-                </motion.div>
+        <div className="min-h-screen relative font-sans text-white pb-20">
+            <div className="relative z-10 space-y-8 p-6 md:p-10 max-w-3xl mx-auto">
+                {/* Header */}
+                <div className="animate-in fade-in slide-in-from-top-5 duration-700">
+                    <h1 className="text-3xl font-bold tracking-tight text-white drop-shadow-md">
+                        Settings
+                    </h1>
+                    <p className="text-indigo-200 mt-1">
+                        Manage your profile and account preferences.
+                    </p>
+                </div>
 
                 {/* Profile Section */}
-                <div className="rounded-[4rem] border-2 border-white/5 bg-black/20 backdrop-blur-3xl p-10 md:p-16 shadow-[0_0_60px_rgba(0,0,0,0.5)] space-y-12 animate-in fade-in slide-in-from-bottom-12 duration-1000 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-12 opacity-5 transition-all duration-700 group-hover:scale-110 group-hover:-rotate-12 group-hover:opacity-10">
-                        <User size={300} className="text-indigo-300" />
-                    </div>
-
-                    <div className="flex items-center gap-6 relative z-10">
-                        <div className="h-16 w-16 rounded-2xl bg-indigo-500/10 border-2 border-indigo-400/20 flex items-center justify-center shadow-2xl backdrop-blur-xl">
-                            <User className="h-8 w-8 text-indigo-200" />
+                <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 md:p-8 shadow-xl space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="flex items-center gap-3 mb-2">
+                        <div className="h-10 w-10 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center">
+                            <User className="h-5 w-5 text-indigo-300" />
                         </div>
                         <div>
-                            <h2 className="text-3xl font-black text-linen uppercase tracking-tighter italic opacity-90">
-                                Account Profile
+                            <h2 className="text-lg font-semibold text-white">
+                                Profile Details
                             </h2>
-                            <p className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.4em] opacity-50 mt-1">
-                                Your digital identity
+                            <p className="text-xs text-indigo-300/70">
+                                Update your personal information
                             </p>
                         </div>
                     </div>
 
                     {/* Name */}
-                    <div className="space-y-4 relative z-10">
-                        <label className="flex items-center gap-3 text-[10px] font-black text-linen/20 uppercase tracking-[0.5em] ml-4">
+                    <div className="space-y-2">
+                        <label className="flex items-center gap-2 text-sm font-medium text-indigo-200">
                             <User className="h-4 w-4" /> Full Name
                         </label>
                         <input
@@ -225,236 +208,212 @@ export default function SettingsPage() {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             className={inputClasses}
-                            placeholder="Type your name..."
+                            placeholder="Your full name"
                         />
                     </div>
 
                     {/* Email (read-only) */}
-                    <div className="space-y-4 relative z-10">
-                        <label className="flex items-center gap-3 text-[10px] font-black text-linen/20 uppercase tracking-[0.5em] ml-4">
-                            <Mail className="h-4 w-4" /> Official Email
+                    <div className="space-y-2">
+                        <label className="flex items-center gap-2 text-sm font-medium text-indigo-200">
+                            <Mail className="h-4 w-4" /> Email
                         </label>
-                        <div className="relative group">
-                            <input
-                                type="email"
-                                value={email}
-                                readOnly
-                                className={`${inputClasses} opacity-30 cursor-not-allowed border-white/5 shadow-inner`}
-                            />
-                            <div className="absolute right-8 top-1/2 -translate-y-1/2 text-[9px] font-black text-indigo-400/40 uppercase tracking-[0.3em]">
-                                Protected
-                            </div>
-                        </div>
+                        <input
+                            type="email"
+                            value={email}
+                            readOnly
+                            className={`${inputClasses} opacity-60 cursor-not-allowed`}
+                        />
+                        <p className="text-xs text-indigo-300/50">
+                            Email cannot be changed.
+                        </p>
                     </div>
 
                     {/* Institution */}
-                    <div className="grid md:grid-cols-2 gap-10 relative z-10">
-                        <div className="space-y-4">
-                            <label className="flex items-center gap-3 text-[10px] font-black text-linen/20 uppercase tracking-[0.5em] ml-4">
-                                <School className="h-4 w-4" /> University
-                            </label>
-                            <input
-                                type="text"
-                                value={institution}
-                                onChange={(e) => setInstitution(e.target.value)}
-                                className={inputClasses}
-                                placeholder="Your institution"
-                            />
-                        </div>
+                    <div className="space-y-2">
+                        <label className="flex items-center gap-2 text-sm font-medium text-indigo-200">
+                            <School className="h-4 w-4" /> Institution
+                        </label>
+                        <input
+                            type="text"
+                            value={institution}
+                            onChange={(e) => setInstitution(e.target.value)}
+                            className={inputClasses}
+                            placeholder="Your institution"
+                        />
+                    </div>
 
-                        <div className="space-y-4">
-                            <label className="flex items-center gap-3 text-[10px] font-black text-linen/20 uppercase tracking-[0.5em] ml-4">
-                                <IdCard className="h-4 w-4" /> Student Number
-                            </label>
-                            <input
-                                type="text"
-                                value={studentId}
-                                onChange={(e) => setStudentId(e.target.value)}
-                                className={inputClasses}
-                                placeholder="ID e.g. 1234567"
-                            />
-                        </div>
+                    {/* Student ID */}
+                    <div className="space-y-2">
+                        <label className="flex items-center gap-2 text-sm font-medium text-indigo-200">
+                            <IdCard className="h-4 w-4" /> Student ID
+                        </label>
+                        <input
+                            type="text"
+                            value={studentId}
+                            onChange={(e) => setStudentId(e.target.value)}
+                            className={inputClasses}
+                            placeholder="Your student ID"
+                        />
                     </div>
 
                     {/* Course */}
-                    <div className="space-y-4 relative z-10">
-                        <label className="flex items-center gap-3 text-[10px] font-black text-linen/20 uppercase tracking-[0.5em] ml-4">
-                            <BookHeart className="h-4 w-4" /> Department / Major
+                    <div className="space-y-2">
+                        <label className="flex items-center gap-2 text-sm font-medium text-indigo-200">
+                            <BookHeart className="h-4 w-4" /> Course / Program
                         </label>
                         <input
                             type="text"
                             value={course}
                             onChange={(e) => setCourse(e.target.value)}
                             className={inputClasses}
-                            placeholder="Your program of study"
+                            placeholder="Your course or program"
                         />
                     </div>
 
-                    <div className="flex flex-col gap-8 pt-10 relative z-10">
-                        {profileSuccess && (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.98 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="flex items-center gap-4 text-green-300 font-bold text-sm bg-green-500/10 border-2 border-green-500/20 rounded-[2rem] px-8 py-5 shadow-2xl backdrop-blur-xl"
-                            >
-                                <CheckCircle2 className="h-6 w-6" />
-                                {profileSuccess}
-                            </motion.div>
-                        )}
-                        {profileError && (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.98 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="flex items-center gap-4 text-red-300 font-bold text-sm bg-red-500/10 border-2 border-red-500/20 rounded-[2rem] px-8 py-5 shadow-2xl backdrop-blur-xl"
-                            >
-                                <AlertCircle className="h-6 w-6" />
-                                {profileError}
-                            </motion.div>
-                        )}
+                    {/* Success / Error Messages */}
+                    {profileSuccess && (
+                        <div className="flex items-center gap-2 text-green-300 text-sm bg-green-500/10 border border-green-500/20 rounded-xl px-4 py-3 animate-in fade-in duration-300">
+                            <CheckCircle2 className="h-4 w-4" />
+                            {profileSuccess}
+                        </div>
+                    )}
+                    {profileError && (
+                        <div className="flex items-center gap-2 text-red-300 text-sm bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 animate-in fade-in duration-300">
+                            <AlertCircle className="h-4 w-4" />
+                            {profileError}
+                        </div>
+                    )}
 
-                        <Button
-                            onClick={handleSaveProfile}
-                            disabled={saving}
-                            className="bg-indigo-600/80 hover:bg-indigo-500 text-linen font-black uppercase tracking-[0.3em] px-12 py-6 h-auto rounded-[1.8rem] shadow-[0_0_40px_rgba(99,102,241,0.2)] border border-indigo-400/30 transition-all hover:scale-[1.03] active:scale-95 self-start text-xs"
-                        >
-                            <Save className="mr-4 h-5 w-5" />
-                            {saving ? "Saving Changes..." : "Secure Save"}
-                        </Button>
-                    </div>
+                    <Button
+                        onClick={handleSaveProfile}
+                        disabled={saving}
+                        className="bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/20 border border-indigo-400/50 transition-all hover:scale-105 h-11"
+                    >
+                        <Save className="mr-2 h-4 w-4" />
+                        {saving ? "Saving..." : "Save Changes"}
+                    </Button>
                 </div>
 
                 {/* Password Section — only for email/password users */}
                 {isPasswordUser && (
-                    <div className="rounded-[4rem] border-2 border-white/5 bg-black/20 backdrop-blur-3xl p-10 md:p-16 shadow-[0_0_60px_rgba(0,0,0,0.5)] space-y-12 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-200 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 p-12 opacity-5 transition-all duration-700 group-hover:scale-110 group-hover:-rotate-12 group-hover:opacity-10">
-                            <Lock size={300} className="text-purple-300" />
-                        </div>
-
-                        <div className="flex items-center gap-6 relative z-10">
-                            <div className="h-16 w-16 rounded-2xl bg-purple-500/10 border-2 border-purple-400/20 flex items-center justify-center shadow-2xl backdrop-blur-xl">
-                                <Lock className="h-8 w-8 text-purple-200" />
+                    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 md:p-8 shadow-xl space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div className="flex items-center gap-3 mb-2">
+                            <div className="h-10 w-10 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center">
+                                <Lock className="h-5 w-5 text-indigo-300" />
                             </div>
                             <div>
-                                <h2 className="text-3xl font-black text-linen uppercase tracking-tighter italic opacity-90">
-                                    Security Suite
+                                <h2 className="text-lg font-semibold text-white">
+                                    Change Password
                                 </h2>
-                                <p className="text-[10px] font-black text-purple-400 uppercase tracking-[0.4em] opacity-50 mt-1">
-                                    Manage your vault access
+                                <p className="text-xs text-indigo-300/70">
+                                    Update your account password
                                 </p>
                             </div>
                         </div>
 
-                        <div className="space-y-4 relative z-10">
-                            <label className="flex items-center gap-3 text-[10px] font-black text-linen/20 uppercase tracking-[0.5em] ml-4">
+                        {/* Current Password */}
+                        <div className="space-y-2">
+                            <label className="flex items-center gap-2 text-sm font-medium text-indigo-200">
                                 <Lock className="h-4 w-4" /> Current Password
                             </label>
-                            <div className="relative group">
+                            <div className="relative">
                                 <input
                                     type={showCurrentPassword ? "text" : "password"}
                                     value={currentPassword}
                                     onChange={(e) => setCurrentPassword(e.target.value)}
                                     className={inputClasses}
-                                    placeholder="Verify identity..."
+                                    placeholder="Enter current password"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                                    className="absolute right-8 top-1/2 -translate-y-1/2 text-linen/20 hover:text-linen transition-colors"
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors"
                                 >
                                     {showCurrentPassword ? (
-                                        <EyeOff className="h-6 w-6" />
+                                        <EyeOff className="h-4 w-4" />
                                     ) : (
-                                        <Eye className="h-6 w-6" />
+                                        <Eye className="h-4 w-4" />
                                     )}
                                 </button>
                             </div>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-10 relative z-10">
-                            <div className="space-y-4">
-                                <label className="flex items-center gap-3 text-[10px] font-black text-linen/20 uppercase tracking-[0.5em] ml-4">
-                                    <Lock className="h-4 w-4" /> New Vault Key
-                                </label>
-                                <div className="relative group">
-                                    <input
-                                        type={showNewPassword ? "text" : "password"}
-                                        value={newPassword}
-                                        onChange={(e) => setNewPassword(e.target.value)}
-                                        className={inputClasses}
-                                        placeholder="Min 6 chars..."
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowNewPassword(!showNewPassword)}
-                                        className="absolute right-8 top-1/2 -translate-y-1/2 text-linen/20 hover:text-linen transition-colors"
-                                    >
-                                        {showNewPassword ? (
-                                            <EyeOff className="h-6 w-6" />
-                                        ) : (
-                                            <Eye className="h-6 w-6" />
-                                        )}
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className="space-y-4">
-                                <label className="flex items-center gap-3 text-[10px] font-black text-linen/20 uppercase tracking-[0.5em] ml-4">
-                                    <Lock className="h-4 w-4" /> Repeat New Key
-                                </label>
+                        {/* New Password */}
+                        <div className="space-y-2">
+                            <label className="flex items-center gap-2 text-sm font-medium text-indigo-200">
+                                <Lock className="h-4 w-4" /> New Password
+                            </label>
+                            <div className="relative">
                                 <input
-                                    type="password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    type={showNewPassword ? "text" : "password"}
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
                                     className={inputClasses}
-                                    placeholder="Exactly the same..."
+                                    placeholder="Enter new password (min. 6 characters)"
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowNewPassword(!showNewPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors"
+                                >
+                                    {showNewPassword ? (
+                                        <EyeOff className="h-4 w-4" />
+                                    ) : (
+                                        <Eye className="h-4 w-4" />
+                                    )}
+                                </button>
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-8 pt-10 relative z-10">
-                            {passwordSuccess && (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.98 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="flex items-center gap-4 text-green-300 font-bold text-sm bg-green-500/10 border-2 border-green-500/20 rounded-[2rem] px-8 py-5 shadow-2xl backdrop-blur-xl"
-                                >
-                                    <CheckCircle2 className="h-6 w-6" />
-                                    {passwordSuccess}
-                                </motion.div>
-                            )}
-                            {passwordError && (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.98 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="flex items-center gap-4 text-red-300 font-bold text-sm bg-red-500/10 border-2 border-red-500/20 rounded-[2rem] px-8 py-5 shadow-2xl backdrop-blur-xl"
-                                >
-                                    <AlertCircle className="h-6 w-6" />
-                                    {passwordError}
-                                </motion.div>
-                            )}
-
-                            <Button
-                                onClick={handleChangePassword}
-                                disabled={
-                                    changingPassword ||
-                                    !currentPassword ||
-                                    !newPassword ||
-                                    !confirmPassword
-                                }
-                                className="bg-gradient-to-r from-purple-600/80 to-indigo-700/80 hover:from-purple-500 hover:to-indigo-600 text-linen font-black uppercase tracking-[0.3em] px-12 py-6 h-auto rounded-[1.8rem] shadow-[0_0_40px_rgba(168,85,247,0.2)] border border-purple-400/30 transition-all hover:scale-[1.03] active:scale-95 self-start text-xs"
-                            >
-                                <Lock className="mr-4 h-5 w-5" />
-                                {changingPassword ? "Updating Vault..." : "Reset Password"}
-                            </Button>
+                        {/* Confirm New Password */}
+                        <div className="space-y-2">
+                            <label className="flex items-center gap-2 text-sm font-medium text-indigo-200">
+                                <Lock className="h-4 w-4" /> Confirm New Password
+                            </label>
+                            <input
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                className={inputClasses}
+                                placeholder="Re-enter new password"
+                            />
                         </div>
+
+                        {/* Success / Error Messages */}
+                        {passwordSuccess && (
+                            <div className="flex items-center gap-2 text-green-300 text-sm bg-green-500/10 border border-green-500/20 rounded-xl px-4 py-3 animate-in fade-in duration-300">
+                                <CheckCircle2 className="h-4 w-4" />
+                                {passwordSuccess}
+                            </div>
+                        )}
+                        {passwordError && (
+                            <div className="flex items-center gap-2 text-red-300 text-sm bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 animate-in fade-in duration-300">
+                                <AlertCircle className="h-4 w-4" />
+                                {passwordError}
+                            </div>
+                        )}
+
+                        <Button
+                            onClick={handleChangePassword}
+                            disabled={
+                                changingPassword ||
+                                !currentPassword ||
+                                !newPassword ||
+                                !confirmPassword
+                            }
+                            className="bg-indigo-500 hover:bg-indigo-400 text-white shadow-lg shadow-indigo-500/20 border border-indigo-400/50 transition-all hover:scale-105 h-11"
+                        >
+                            <Lock className="mr-2 h-4 w-4" />
+                            {changingPassword ? "Changing..." : "Change Password"}
+                        </Button>
                     </div>
                 )}
 
                 {/* Info for social sign-in users */}
                 {!isPasswordUser && (
-                    <div className="rounded-[2.5rem] border border-white/5 bg-white/5 backdrop-blur-xl p-8 shadow-2xl flex items-start gap-5 animate-in fade-in duration-700 delay-300">
-                        <AlertCircle className="h-6 w-6 text-indigo-400/60 flex-shrink-0 mt-1" />
-                        <p className="text-sm text-linen/30 font-bold italic tracking-tight">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 shadow-xl flex items-start gap-3 animate-in fade-in duration-500">
+                        <AlertCircle className="h-5 w-5 text-indigo-400 flex-shrink-0 mt-0.5" />
+                        <p className="text-sm text-indigo-200/80">
                             You signed in with a third-party provider (Google or Phone).
                             Password management is handled by your provider.
                         </p>

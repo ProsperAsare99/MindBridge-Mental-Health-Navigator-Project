@@ -5,12 +5,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { SparklesCore } from "@/components/sparkles-core";
+import ShaderBackground from "@/components/shader-background";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -56,19 +53,8 @@ export default function LoginPage() {
 
     return (
         <div className="relative min-h-screen font-sans text-white selection:bg-indigo-300 selection:text-indigo-900 flex flex-col items-center justify-center p-4 overflow-hidden">
-            {/* Background Sparkles */}
-            <div className="fixed inset-0 z-0">
-                <SparklesCore
-                    id="login-sparkles"
-                    background="#0a0118"
-                    minSize={0.6}
-                    maxSize={2.4}
-                    particleDensity={80}
-                    className="w-full h-full"
-                    particleColor="#a78bfa"
-                    speed={1.5}
-                />
-            </div>
+            {/* Background Shader */}
+            <ShaderBackground />
 
             <div className="relative z-10 w-full max-w-md space-y-8 bg-white/10 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/20 animate-in fade-in zoom-in duration-500">
                 <Link href="/" className="inline-flex items-center text-sm text-indigo-200 hover:text-white transition-colors mb-4">
