@@ -181,9 +181,9 @@ export default function DashboardPage() {
                                 <h4 className="font-medium text-indigo-100 group-hover:text-white transition-colors">Exam Stress Relief</h4>
                                 <p className="text-xs text-indigo-300/70 mt-1">5 min read • Techniques for academic anxiety</p>
                             </div>
-                            <div className="p-4 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50/80 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors cursor-pointer group">
-                                <h4 className="font-medium text-slate-700 dark:text-indigo-100 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Mindful Breathing</h4>
-                                <p className="text-xs text-slate-500 dark:text-indigo-300/70 mt-1">10 min video • Grounding exercise</p>
+                            <div className="p-4 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer group">
+                                <h4 className="font-medium text-indigo-100 group-hover:text-white transition-colors">Mindful Breathing</h4>
+                                <p className="text-xs text-indigo-300/70 mt-1">10 min video • Grounding exercise</p>
                             </div>
                         </div>
                         <Button variant="ghost" className="w-full mt-6 text-indigo-300 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10">
