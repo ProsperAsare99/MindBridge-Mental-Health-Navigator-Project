@@ -99,21 +99,6 @@ const ARTICLES = [
         ],
     },
     {
-        title: "Mindfulness for Beginners",
-        description:
-            "A simple, practical introduction to mindfulness meditation — no experience needed. Just 5 minutes a day can reduce stress.",
-        icon: Leaf,
-        category: "Mindfulness" as Category,
-        readTime: "6 min read",
-        color: "from-green-500/20 to-lime-600/20",
-        borderColor: "border-green-400/20",
-        content: [
-            "Mindfulness is the practice of paying attention to the present moment without judgement. Research consistently shows it reduces stress, anxiety, and depressive symptoms.",
-            "Start with just 5 minutes daily: sit comfortably, close your eyes, and focus on your breath. When your mind wanders (it will!), gently bring your attention back. That 'bringing back' is the exercise.",
-            "You can practice mindfulness anywhere — while eating (notice textures and flavours), walking to class (feel your feet on the ground), or even during lectures (fully focus on the speaker).",
-        ],
-    },
-    {
         title: "Understanding Your Emotions",
         description:
             "Emotional literacy is a skill. Learn to name, understand, and work with your feelings rather than being overwhelmed by them.",
@@ -576,14 +561,14 @@ export default function ResourcesPage() {
                     className="space-y-4"
                 >
                     <div className="flex items-center gap-6">
-                        <div className="h-20 w-20 rounded-[2.5rem] bg-indigo-500/10 border-2 border-indigo-400/20 flex items-center justify-center shadow-[0_0_40px_rgba(99,102,241,0.15)] backdrop-blur-xl">
-                            <BookOpen className="h-10 w-10 text-indigo-300" />
+                        <div className="h-20 w-20 rounded-[2.5rem] bg-sage/10 border-2 border-sage/20 flex items-center justify-center shadow-[0_0_40px_rgba(85,115,115,0.15)] backdrop-blur-xl">
+                            <BookOpen className="h-10 w-10 text-sage" />
                         </div>
                         <div>
                             <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-linen uppercase tracking-widest drop-shadow-2xl opacity-90">
                                 Resources
                             </h1>
-                            <p className="text-indigo-300 font-bold text-sm md:text-base uppercase tracking-[0.3em] opacity-60 mt-1 italic">
+                            <p className="text-sage font-bold text-sm md:text-base uppercase tracking-[0.3em] opacity-60 mt-1 italic">
                                 Your Wellness Library
                             </p>
                         </div>
@@ -595,13 +580,13 @@ export default function ResourcesPage() {
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="rounded-[3rem] border border-white/5 bg-gradient-to-r from-indigo-900/40 to-blue-900/40 backdrop-blur-3xl p-10 shadow-2xl relative overflow-hidden group shadow-black/40"
+                    className="rounded-[3rem] border border-white/5 bg-gradient-to-r from-sage/20 to-olive/20 backdrop-blur-3xl p-10 shadow-2xl relative overflow-hidden group shadow-black/40"
                 >
                     <div className="absolute top-0 right-0 p-6 opacity-5 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12 group-hover:opacity-10">
-                        <Lightbulb size={180} className="text-indigo-300" />
+                        <Lightbulb size={180} className="text-sage" />
                     </div>
                     <div className="relative z-10 space-y-6">
-                        <p className="text-[10px] font-black text-indigo-300 uppercase tracking-[0.5em] mb-6 flex items-center gap-3 opacity-70">
+                        <p className="text-[10px] font-black text-sage uppercase tracking-[0.5em] mb-6 flex items-center gap-3 opacity-70">
                             <Sparkles className="h-4 w-4 animate-pulse" />
                             Insight of the day
                         </p>
@@ -645,7 +630,7 @@ export default function ResourcesPage() {
                                 key={cat}
                                 onClick={() => setActiveCategory(cat)}
                                 className={`px-8 py-3.5 rounded-[1.2rem] text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 border-2 ${activeCategory === cat
-                                    ? "bg-indigo-600/20 border-indigo-400/40 text-linen shadow-[0_0_30px_rgba(99,102,241,0.2)] scale-105"
+                                    ? "bg-sage/20 border-sage/40 text-linen shadow-[0_0_30px_rgba(85,115,115,0.2)] scale-105"
                                     : "bg-white/5 text-linen/40 border-white/5 hover:bg-white/10 hover:border-white/20 hover:text-linen"
                                     }`}
                             >

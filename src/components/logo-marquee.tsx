@@ -22,7 +22,7 @@ export default function LogoCarousel() {
     return (
         <div className="flex items-center gap-4 group cursor-pointer">
             {/* Clean logo icon */}
-            <div className="relative h-11 w-11 rounded-2xl bg-sage flex items-center justify-center shadow-lg shadow-sage/5 group-hover:bg-olive transition-colors duration-500">
+            <div className="relative h-11 w-11 rounded-2xl bg-sage flex items-center justify-center shadow-lg shadow-sage/5 group-hover:scale-110 transition-transform duration-500">
                 <div className="h-2.5 w-2.5 rounded-full bg-linen shadow-sm" />
             </div>
 
@@ -34,14 +34,14 @@ export default function LogoCarousel() {
                         : "opacity-100 translate-y-0 blur-0"
                         }`}
                 >
-                    <span className="block text-2xl font-black text-olive uppercase tracking-[0.05em] h-10 leading-10">
+                    <span className="block text-2xl font-black text-linen uppercase tracking-[0.1em] h-10 leading-10">
                         {words[currentIndex]}
                     </span>
                 </div>
             </div>
 
             {/* Separator deco */}
-            <div className="h-4 w-[1px] bg-olive/10 hidden md:block" />
+            <div className="h-4 w-[1px] bg-linen/10 hidden md:block" />
         </div>
     );
 }
