@@ -81,11 +81,12 @@ export default function MoodPage() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
+                className="text-white"
             >
-                <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
+                <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
                     Mood Tracker
                 </h1>
-                <p className="mt-2 text-lg md:text-xl text-muted-foreground font-medium">
+                <p className="mt-2 text-lg md:text-xl text-indigo-100 font-medium">
                     Track your emotions to identify patterns and triggers.
                 </p>
             </motion.div>
@@ -100,49 +101,50 @@ export default function MoodPage() {
                 {stats.map((stat, i) => {
                     const Icon = stat.icon;
                     return (
-                        <div
-                            key={stat.label}
-                            className="rounded-2xl border border-border bg-background/80 dark:bg-slate-800/50 backdrop-blur-sm p-5 shadow-sm hover:shadow-md transition-shadow"
+                        className = "rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 shadow-2xl hover:bg-white/10 transition-all group relative overflow-hidden"
                         >
-                            <div className="flex items-center gap-3 mb-2">
-                                <div className={`p-2 rounded-xl bg-primary/10 ${stat.color}`}>
+                            <div className={`absolute -right-4 -top-4 w-12 h-12 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-all ${stat.color.replace('text-', 'bg-')}`} />
+                            <div className="flex items-center gap-3 mb-2 relative z-10">
+                                <div className={`p-2 rounded-xl bg-white/10 border border-white/10 ${stat.color}`}>
                                     <Icon className="h-5 w-5" />
                                 </div>
-                                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                                <span className="text-sm font-black text-indigo-300 uppercase tracking-widest">
                                     {stat.label}
                                 </span>
                             </div>
-                            <p className="text-3xl font-bold text-foreground">{stat.value}</p>
-                            <p className="text-sm text-muted-foreground mt-1">{stat.description}</p>
+                            <p className="text-3xl font-black text-white relative z-10 drop-shadow-md">{stat.value}</p>
+                            <p className="text-sm font-medium text-indigo-200/60 mt-1 relative z-10">{stat.description}</p>
                         </div>
-                    );
-                })}
-            </motion.div>
+    );
+})}
+            </motion.div >
 
-            {/* Main Content Grid */}
-            <div className="grid gap-8 lg:grid-cols-5">
-                {/* Mood Logger — Left Column (3/5) */}
-                <motion.div
-                    className="lg:col-span-3 space-y-8"
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 }}
+    {/* Main Content Grid */ }
+    < div className = "grid gap-8 lg:grid-cols-5" >
+        {/* Mood Logger — Left Column (3/5) */ }
+        < motion.div
+className = "lg:col-span-3 space-y-8"
+initial = {{ opacity: 0, x: -10 }}
+animate = {{ opacity: 1, x: 0 }}
+transition = {{ duration: 0.4, delay: 0.2 }}
                 >
-                    {/* Mood Check-in Card */}
-                    <div className="rounded-2xl border border-border bg-background/80 dark:bg-slate-800/50 backdrop-blur-sm p-6 md:p-8 shadow-sm">
-                        <div className="flex items-center gap-3 mb-8">
-                            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
-                                <Sparkles className="h-5 w-5 text-white" />
+    {/* Mood Check-in Card */ }
+    < div className = "rounded-2xl border border-white/10 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 backdrop-blur-xl p-6 md:p-10 shadow-2xl text-white relative overflow-hidden" >
+                        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-indigo-500/10 blur-3xl rounded-full" />
+                        <div className="relative z-10">
+                            <div className="flex items-center gap-4 mb-10">
+                                <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] ring-2 ring-white/20">
+                                    <Sparkles className="h-7 w-7 text-white" />
+                                </div>
+                                <div>
+                                    <h2 className="text-3xl md:text-4xl font-black tracking-tight leading-none">
+                                        How are you feeling?
+                                    </h2>
+                                    <p className="text-lg text-indigo-200/80 font-medium mt-1">
+                                        Select your current mood below
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                                    How are you feeling today?
-                                </h2>
-                                <p className="text-base text-muted-foreground">
-                                    Select your current mood below
-                                </p>
-                            </div>
-                        </div>
 
                         {/* Mood Buttons */}
                         <div className="grid grid-cols-5 gap-3 md:gap-4">
@@ -169,9 +171,9 @@ export default function MoodPage() {
                                                 transition={{ duration: 0.3 }}
                                             />
                                         )}
-                                        <Icon className={`h-8 w-8 md:h-10 md:w-10 relative z-10 transition-all ${isSelected ? m.textColor : "text-muted-foreground"
+                                        <Icon className={`h-8 w-8 md:h-10 md:w-10 relative z-10 transition-all ${isSelected ? m.textColor : "text-indigo-200/50"
                                             }`} />
-                                        <span className={`text-sm md:text-base font-bold relative z-10 transition-all ${isSelected ? "text-foreground" : "text-muted-foreground"
+                                        <span className={`text-sm md:text-base font-bold relative z-10 transition-all ${isSelected ? "text-white" : "text-indigo-200/70"
                                             }`}>
                                             {m.label}
                                         </span>
@@ -200,15 +202,15 @@ export default function MoodPage() {
 
                         {/* Note Section */}
                         <div className="mt-8">
-                            <label htmlFor="note" className="block text-base font-bold text-foreground mb-3">
-                                Add a note <span className="text-muted-foreground font-normal">(optional)</span>
+                            <label htmlFor="note" className="block text-base font-bold text-white mb-3">
+                                Add a note <span className="text-indigo-300/60 font-normal">(optional)</span>
                             </label>
                             <textarea
                                 id="note"
                                 rows={4}
                                 value={note}
                                 onChange={(e) => setNote(e.target.value)}
-                                className="block w-full rounded-xl border-2 border-border bg-muted/30 dark:bg-slate-700/30 px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all resize-none"
+                                className="block w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white placeholder:text-indigo-300/40 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all resize-none"
                                 placeholder="What's making you feel this way? Writing it down can help..."
                             />
                         </div>
@@ -221,194 +223,197 @@ export default function MoodPage() {
                         </Button>
                     </div>
 
-                    {/* Weekly Trends Chart */}
-                    <div className="rounded-2xl border border-border bg-background/80 dark:bg-slate-800/50 backdrop-blur-sm p-6 md:p-8 shadow-sm">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-                            <div className="flex items-center gap-3">
-                                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center shadow-lg">
-                                    <TrendingUp className="h-5 w-5 text-white" />
-                                </div>
-                                <div>
-                                    <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                                        Mood Trends
-                                    </h2>
-                                    <p className="text-base text-muted-foreground">
-                                        See how your mood changes over time
-                                    </p>
-                                </div>
-                            </div>
-                            {/* Time range toggle */}
-                            <div className="flex rounded-xl bg-muted dark:bg-slate-700/50 p-1 self-start">
-                                <button
-                                    onClick={() => setActiveTimeRange("week")}
-                                    className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTimeRange === "week"
-                                        ? "bg-background dark:bg-slate-600 text-foreground shadow-sm"
-                                        : "text-muted-foreground hover:text-foreground"
-                                        }`}
-                                >
-                                    Week
-                                </button>
-                                <button
-                                    onClick={() => setActiveTimeRange("month")}
-                                    className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTimeRange === "month"
-                                        ? "bg-background dark:bg-slate-600 text-foreground shadow-sm"
-                                        : "text-muted-foreground hover:text-foreground"
-                                        }`}
-                                >
-                                    Month
-                                </button>
-                            </div>
-                        </div>
+{/* Trends Chart Card */ }
+<div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 md:p-8 shadow-2xl relative overflow-hidden">
+    <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-purple-500/5 blur-[100px] rounded-full" />
+    <div className="relative z-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center shadow-lg">
+                <TrendingUp className="h-6 w-6 text-white" />
+            </div>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+                    Mood Trends
+                </h2>
+                <p className="text-base text-indigo-200/70 font-medium">
+                    Your emotional journey over time
+                </p>
+            </div>
+        </div>
+        {/* Time range toggle */}
+        <div className="flex rounded-xl bg-white/5 p-1 self-start border border-white/10">
+            <button
+                onClick={() => setActiveTimeRange("week")}
+                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTimeRange === "week"
+                    ? "bg-white/10 text-white shadow-sm"
+                    : "text-indigo-300 hover:text-white"
+                    }`}
+            >
+                Week
+            </button>
+            <button
+                onClick={() => setActiveTimeRange("month")}
+                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTimeRange === "month"
+                    ? "bg-white/10 text-white shadow-sm"
+                    : "text-indigo-300 hover:text-white"
+                    }`}
+            >
+                Month
+            </button>
+        </div>
+    </div>
 
-                        <div className="h-[320px] w-full">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
-                                    <defs>
-                                        <linearGradient id="colorMood" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#6366f1" stopOpacity={0.2} />
-                                            <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
-                                        </linearGradient>
-                                    </defs>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-muted)" />
-                                    <XAxis
-                                        dataKey="name"
-                                        axisLine={false}
-                                        tickLine={false}
-                                        tick={{ fill: 'var(--color-muted-foreground)', fontSize: 14, fontWeight: 600 }}
-                                        dy={10}
-                                    />
-                                    <YAxis
-                                        hide
-                                        domain={[1, 5]}
-                                    />
-                                    <Tooltip
-                                        contentStyle={{
-                                            borderRadius: '12px',
-                                            border: '1px solid var(--color-muted)',
-                                            boxShadow: '0 10px 25px -5px rgb(0 0 0 / 0.1)',
-                                            backgroundColor: 'var(--background)',
-                                            color: 'var(--foreground)',
-                                            fontSize: '14px',
-                                            fontWeight: 600,
-                                            padding: '10px 14px',
-                                        }}
-                                        cursor={{ stroke: '#6366f1', strokeWidth: 2 }}
-                                        formatter={(value) => {
-                                            const numVal = typeof value === 'number' ? value : Number(value);
-                                            const moodLabel = moods.find(m => m.value === Math.round(numVal))?.label || String(value);
-                                            return [moodLabel, "Mood"];
-                                        }}
-                                    />
-                                    <Area
-                                        type="monotone"
-                                        dataKey="mood"
-                                        stroke="#6366f1"
-                                        strokeWidth={3}
-                                        fillOpacity={1}
-                                        fill="url(#colorMood)"
-                                        dot={{ r: 5, fill: "#6366f1", strokeWidth: 2, stroke: "var(--background)" }}
-                                        activeDot={{ r: 7, fill: "#6366f1", strokeWidth: 3, stroke: "var(--background)" }}
-                                    />
-                                </AreaChart>
-                            </ResponsiveContainer>
-                        </div>
+    <div className="h-[320px] w-full">
+        <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
+                <defs>
+                    <linearGradient id="moodGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#6366f1" stopOpacity={0.4} />
+                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                    </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <XAxis
+                    dataKey="day"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12, fontWeight: 600 }}
+                    dy={10}
+                />
+                <YAxis
+                    domain={[1, 5]}
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12, fontWeight: 600 }}
+                    ticks={[1, 2, 3, 4, 5]}
+                />
+                <Tooltip
+                    contentStyle={{
+                        backgroundColor: "rgba(30, 41, 59, 0.8)",
+                        backdropFilter: "blur(12px)",
+                        borderRadius: "16px",
+                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                        boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                        color: "#fff",
+                    }}
+                    itemStyle={{ color: "#fff", fontWeight: 700 }}
+                    cursor={{ stroke: '#6366f1', strokeWidth: 2 }}
+                    formatter={(value) => {
+                        const numVal = typeof value === 'number' ? value : Number(value);
+                        const moodLabel = moods.find(m => m.value === Math.round(numVal))?.label || String(value);
+                        return [moodLabel, "Mood"];
+                    }}
+                />
+                <Area
+                    type="monotone"
+                    dataKey="mood"
+                    stroke="#6366f1"
+                    strokeWidth={3}
+                    fillOpacity={1}
+                    fill="url(#colorMood)"
+                    dot={{ r: 5, fill: "#6366f1", strokeWidth: 2, stroke: "var(--background)" }}
+                    activeDot={{ r: 7, fill: "#6366f1", strokeWidth: 3, stroke: "var(--background)" }}
+                />
+            </AreaChart>
+        </ResponsiveContainer>
+    </div>
 
-                        {/* Mood Scale Legend */}
-                        <div className="mt-6 flex items-center justify-center gap-4 flex-wrap">
-                            {moods.map((m) => {
-                                const Icon = m.icon;
-                                return (
-                                    <div key={m.value} className="flex items-center gap-1.5">
-                                        <Icon className={`h-4 w-4 ${m.textColor}`} />
-                                        <span className="text-sm font-semibold text-muted-foreground">{m.value} – {m.label}</span>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </motion.div>
+    {/* Mood Scale Legend */}
+    <div className="mt-6 flex items-center justify-center gap-4 flex-wrap">
+        {moods.map((m) => {
+            const Icon = m.icon;
+            return (
+                <div key={m.value} className="flex items-center gap-1.5">
+                    <Icon className={`h-4 w-4 ${m.textColor}`} />
+                    <span className="text-sm font-semibold text-indigo-200/70">{m.value} – {m.label}</span>
+                </div>
+            );
+        })}
+    </div>
+</div>
+                </motion.div >
 
-                {/* Right Column — Recent Entries (2/5) */}
-                <motion.div
-                    className="lg:col-span-2"
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.3 }}
+    {/* Right Column — Recent Entries (2/5) */ }
+    < motion.div
+className = "lg:col-span-2"
+initial = {{ opacity: 0, x: 10 }}
+animate = {{ opacity: 1, x: 0 }}
+transition = {{ duration: 0.4, delay: 0.3 }}
                 >
-                    <div className="rounded-2xl border border-border bg-background/80 dark:bg-slate-800/50 backdrop-blur-sm p-6 md:p-8 shadow-sm h-full">
-                        <div className="flex items-center gap-3 mb-8">
-                            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
-                                <Clock className="h-5 w-5 text-white" />
+    <div className="rounded-2xl border border-border bg-background/80 dark:bg-slate-800/50 backdrop-blur-sm p-6 md:p-8 shadow-sm h-full">
+        <div className="flex items-center gap-3 mb-8">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
+                <Clock className="h-5 w-5 text-white" />
+            </div>
+            <div>
+                <h2 className="text-2xl md:text-3xl font-bold text-white">
+                    Recent Check-ins
+                </h2>
+                <p className="text-base text-indigo-200">
+                    Your latest mood entries
+                </p>
+            </div>
+        </div>
+
+        <div className="space-y-4">
+            {recentEntries.map((entry, i) => {
+                const moodData = moods.find(m => m.value === entry.mood);
+                const Icon = moodData?.icon || Meh;
+                return (
+                    <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 + i * 0.1 }}
+                        className="group p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all cursor-default"
+                    >
+                        <div className="flex items-start gap-4">
+                            <div className={`p-2.5 rounded-xl ${moodData?.bgColor}`}>
+                                <Icon className={`h-6 w-6 ${moodData?.textColor}`} />
                             </div>
-                            <div>
-                                <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                                    Recent Check-ins
-                                </h2>
-                                <p className="text-base text-muted-foreground">
-                                    Your latest mood entries
+                            <div className="flex-1 min-w-0">
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-base font-bold text-white">
+                                        {entry.day}
+                                    </span>
+                                    <span className="text-sm font-semibold text-indigo-300">
+                                        {entry.time}
+                                    </span>
+                                </div>
+                                <span className={`inline-block text-sm font-bold ${moodData?.textColor} mb-1`}>
+                                    {entry.label}
+                                </span>
+                                <p className="text-sm text-indigo-200/70 leading-relaxed">
+                                    {entry.note}
                                 </p>
                             </div>
                         </div>
-
-                        <div className="space-y-4">
-                            {recentEntries.map((entry, i) => {
-                                const moodData = moods.find(m => m.value === entry.mood);
-                                const Icon = moodData?.icon || Meh;
-                                return (
-                                    <motion.div
-                                        key={i}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.4 + i * 0.1 }}
-                                        className="group p-4 rounded-xl border border-border bg-muted/30 dark:bg-slate-700/20 hover:bg-muted/60 dark:hover:bg-slate-700/40 transition-all cursor-default"
-                                    >
-                                        <div className="flex items-start gap-4">
-                                            <div className={`p-2.5 rounded-xl ${moodData?.bgColor}`}>
-                                                <Icon className={`h-6 w-6 ${moodData?.textColor}`} />
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="flex items-center justify-between mb-1">
-                                                    <span className="text-base font-bold text-foreground">
-                                                        {entry.day}
-                                                    </span>
-                                                    <span className="text-sm font-semibold text-muted-foreground">
-                                                        {entry.time}
-                                                    </span>
-                                                </div>
-                                                <span className={`inline-block text-sm font-bold ${moodData?.textColor} mb-1`}>
-                                                    {entry.label}
-                                                </span>
-                                                <p className="text-sm text-muted-foreground leading-relaxed">
-                                                    {entry.note}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                );
-                            })}
-                        </div>
-
-                        {/* View All Link */}
-                        <button className="mt-6 w-full flex items-center justify-center gap-2 py-3 rounded-xl text-base font-bold text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all">
-                            View All Entries
-                            <ChevronRight className="h-5 w-5" />
-                        </button>
-
-                        {/* Insight Card */}
-                        <div className="mt-6 p-5 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 border border-indigo-200/50 dark:border-indigo-500/30">
-                            <div className="flex items-center gap-2 mb-2">
-                                <Sparkles className="h-5 w-5 text-indigo-500" />
-                                <h3 className="text-base font-bold text-foreground">Weekly Insight</h3>
-                            </div>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                Your mood has been <span className="font-bold text-teal-600 dark:text-teal-400">trending upward</span> this week!
-                                You seem to feel best on <span className="font-bold text-foreground">Fridays</span>. Consider what makes
-                                those days special.
-                            </p>
-                        </div>
-                    </div>
-                </motion.div>
-            </div>
+                    </motion.div>
+                );
+            })}
         </div>
+
+        {/* View All Link */}
+        <button className="mt-6 w-full flex items-center justify-center gap-2 py-3 rounded-xl text-base font-bold text-indigo-400 hover:text-white hover:bg-white/5 transition-all">
+            View All Entries
+            <ChevronRight className="h-5 w-5" />
+        </button>
+
+        {/* Insight Card */}
+        <div className="mt-6 p-5 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 border border-indigo-200/50 dark:border-indigo-500/30">
+            <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-5 w-5 text-indigo-400" />
+                <h3 className="text-base font-bold text-white">Weekly Insight</h3>
+            </div>
+            <p className="text-sm text-indigo-200/70 leading-relaxed">
+                Your mood has been <span className="font-bold text-indigo-400">trending upward</span> this week!
+                You seem to feel best on <span className="font-bold text-white">Fridays</span>. Consider what makes
+                those days special.
+            </p>
+        </div>
+    </div>
+                </motion.div >
+            </div >
+        </div >
     );
 }

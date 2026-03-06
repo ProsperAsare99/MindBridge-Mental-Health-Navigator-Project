@@ -146,17 +146,17 @@ export default function AssessmentPage() {
                         <div className="inline-flex items-center justify-center p-4 bg-white/10 rounded-full mb-4 ring-1 ring-white/20 shadow-lg backdrop-blur-md">
                             <CheckCircle2 className="w-12 h-12 text-green-400" />
                         </div>
-                        <h1 className="text-3xl font-bold tracking-tight">Assessment Complete</h1>
-                        <p className="text-indigo-200">Here is your wellness snapshot based on your responses.</p>
+                        <h1 className="text-3xl font-bold tracking-tight text-white">Assessment Complete</h1>
+                        <p className="text-indigo-100">Here is your wellness snapshot based on your responses.</p>
                     </div>
 
-                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl">
+                    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
                         <div className="flex flex-col items-center justify-center text-center space-y-2 mb-8">
-                            <span className="text-sm font-medium text-indigo-200 uppercase tracking-widest">Your Score</span>
+                            <span className="text-sm font-medium text-indigo-300 uppercase tracking-widest">Your Score</span>
                             <span className="text-6xl font-extrabold text-white drop-shadow-md">{score}</span>
                             <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-semibold border ${severity === 'Severe' || severity === 'Moderately Severe' ? 'bg-red-500/20 text-red-200 border-red-500/30' :
-                                    severity === 'Moderate' ? 'bg-yellow-500/20 text-yellow-200 border-yellow-500/30' :
-                                        'bg-green-500/20 text-green-200 border-green-500/30'
+                                severity === 'Moderate' ? 'bg-yellow-500/20 text-yellow-200 border-yellow-500/30' :
+                                    'bg-green-500/20 text-green-200 border-green-500/30'
                                 }`}>
                                 {severity === 'Severe' || severity === 'Moderately Severe' ? <AlertTriangle className="w-3.5 h-3.5" /> :
                                     severity === 'Moderate' ? <Info className="w-3.5 h-3.5" /> :
@@ -190,7 +190,7 @@ export default function AssessmentPage() {
                         </div>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-indigo-900/40 border border-indigo-500/30 backdrop-blur-sm flex gap-3 text-sm text-indigo-200/80">
+                    <div className="p-4 rounded-xl bg-indigo-900/20 border border-indigo-500/30 backdrop-blur-sm flex gap-3 text-sm text-indigo-100">
                         <AlertCircle className="w-5 h-5 flex-shrink-0 text-indigo-400" />
                         <p>This assessment is for screening purposes only and is not a medical diagnosis. Please consult a professional for a clinical evaluation.</p>
                     </div>
@@ -203,10 +203,10 @@ export default function AssessmentPage() {
         <div className="min-h-screen relative font-sans text-white pb-20 pt-10 px-4 flex flex-col items-center">
 
             <div className="w-full max-w-2xl mb-8 flex items-center justify-between">
-                <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-indigo-200 hover:text-white hover:bg-white/10">
+                <Button variant="ghost" size="sm" onClick={() => router.back()} className="text-indigo-100 hover:text-white hover:bg-white/10">
                     <ChevronLeft className="w-4 h-4 mr-1" /> Exit
                 </Button>
-                <span className="text-sm font-medium text-indigo-200">Question {currentQuestionIndex + 1} of {QUESTIONS.length}</span>
+                <span className="text-sm font-medium text-indigo-100">Question {currentQuestionIndex + 1} of {QUESTIONS.length}</span>
             </div>
 
             {/* Progress Bar */}
@@ -217,7 +217,7 @@ export default function AssessmentPage() {
                 ></div>
             </div>
 
-            <div className="w-full max-w-2xl bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 md:p-12 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500 key={currentQuestionIndex}">
+            <div className="w-full max-w-2xl bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500 key={currentQuestionIndex}">
                 <h2 className="text-xl md:text-2xl font-medium leading-relaxed mb-2 text-white/90">
                     Over the last 2 weeks, how often have you been bothered by...
                 </h2>
@@ -252,7 +252,7 @@ export default function AssessmentPage() {
                         variant="ghost"
                         onClick={handlePrevious}
                         disabled={currentQuestionIndex === 0}
-                        className="text-indigo-200 hover:text-white hover:bg-white/5 disabled:opacity-30"
+                        className="text-indigo-100 hover:text-white hover:bg-white/5 disabled:opacity-30"
                     >
                         <ChevronLeft className="w-4 h-4 mr-2" /> Previous
                     </Button>

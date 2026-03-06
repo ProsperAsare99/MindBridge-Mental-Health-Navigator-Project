@@ -20,7 +20,6 @@ import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { cn } from "@/lib/utils";
 import ShaderBackground from "@/components/shader-background";
-import { ModeToggle } from "@/components/theme-toggle";
 
 export default function DashboardLayout({
     children,
@@ -70,8 +69,6 @@ export default function DashboardLayout({
             <div className="fixed inset-0 z-0 opacity-20 dark:opacity-70">
                 <ShaderBackground />
             </div>
-            {/* Light mode overlay — softens shader for readability */}
-            <div className="fixed inset-0 z-0 bg-white/40 dark:bg-transparent pointer-events-none" />
 
             {/* Mobile Sidebar Overlay */}
             {isSidebarOpen && (
@@ -123,12 +120,6 @@ export default function DashboardLayout({
                     </nav>
 
                     <div className="border-t border-border pt-4 space-y-4">
-                        {/* Toggle Theme in Sidebar */}
-                        <div className="flex items-center justify-between px-3">
-                            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Theme</span>
-                            <ModeToggle />
-                        </div>
-
                         <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-primary/5 border border-border backdrop-blur-sm">
                             <div className="h-9 w-9 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary">
                                 {user.displayName ? (
@@ -165,7 +156,6 @@ export default function DashboardLayout({
                         </button>
                         <span className="font-semibold text-foreground">Dashboard</span>
                     </div>
-                    <ModeToggle />
                 </header>
 
                 <main className="p-0 animate-in fade-in duration-500">

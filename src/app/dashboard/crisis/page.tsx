@@ -248,7 +248,7 @@ export default function CrisisPage() {
             <div className="relative z-10 space-y-8 p-6 md:p-10 max-w-4xl mx-auto">
 
                 {/* Urgent Banner */}
-                <div className="rounded-2xl border border-red-500/30 bg-red-900/30 backdrop-blur-md p-6 shadow-xl relative overflow-hidden animate-in fade-in zoom-in duration-500">
+                <div className="rounded-2xl border border-red-500/30 bg-red-900/20 backdrop-blur-md p-6 shadow-xl relative overflow-hidden animate-in fade-in zoom-in duration-500">
                     <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-red-500/20 blur-3xl rounded-full pointer-events-none" />
                     <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-4">
                         <div className="flex-shrink-0 h-14 w-14 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center">
@@ -287,7 +287,7 @@ export default function CrisisPage() {
                         <Heart className="h-5 w-5 text-indigo-300" />
                         You are not alone. Help is available in Ghana.
                     </h2>
-                    <p className="text-indigo-200/80 mt-1 text-sm leading-relaxed">
+                    <p className="text-indigo-100 mt-1 text-sm leading-relaxed">
                         Reaching out takes courage. Below are confidential resources available to students across Ghana.
                     </p>
                 </div>
@@ -305,8 +305,8 @@ export default function CrisisPage() {
                                 className="rounded-2xl border border-red-500/20 bg-red-900/10 backdrop-blur-md p-5 shadow-xl hover:bg-red-900/20 transition-all duration-300"
                             >
                                 <h4 className="font-semibold text-white text-sm">{line.name}</h4>
-                                <p className="text-xs text-red-200/60 mt-1">{line.description}</p>
-                                <div className="flex items-center gap-1 mt-2 text-xs text-red-200/40">
+                                <p className="text-xs text-red-200 mt-1">{line.description}</p>
+                                <div className="flex items-center gap-1 mt-2 text-xs text-red-300/60">
                                     <Clock className="h-3 w-3" /> {line.available}
                                 </div>
                                 <Button
@@ -334,10 +334,10 @@ export default function CrisisPage() {
                                 key={index}
                                 className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 shadow-xl hover:bg-white/10 transition-all duration-300 group"
                             >
-                                <h4 className="font-semibold text-white group-hover:text-indigo-200 transition-colors text-sm">
+                                <h4 className="font-semibold text-white group-hover:text-white transition-colors text-sm">
                                     {line.name}
                                 </h4>
-                                <p className="text-xs text-indigo-300/60 mt-1 leading-relaxed">{line.description}</p>
+                                <p className="text-xs text-indigo-100 mt-1 leading-relaxed">{line.description}</p>
                                 <div className="flex items-center gap-1 mt-2 text-xs text-indigo-200/50">
                                     <Clock className="h-3 w-3" /> {line.available}
                                 </div>
@@ -360,7 +360,7 @@ export default function CrisisPage() {
                         <Users className="h-5 w-5 text-indigo-300" />
                         University Counselling Centres
                     </h3>
-                    <p className="text-xs text-indigo-200/60 -mt-2">
+                    <p className="text-xs text-indigo-100 -mt-2">
                         Free and confidential support at Ghanaian universities. Tap a card to see all contacts and resources.
                     </p>
 
@@ -377,7 +377,7 @@ export default function CrisisPage() {
                                 >
                                     <div>
                                         <h4 className="font-semibold text-white text-sm">{uni.name}</h4>
-                                        <div className="flex items-center gap-1 mt-1 text-xs text-indigo-300/50">
+                                        <div className="flex items-center gap-1 mt-1 text-xs text-indigo-200">
                                             <MapPin className="h-3 w-3 flex-shrink-0" /> {uni.location}
                                         </div>
                                     </div>
@@ -428,7 +428,7 @@ export default function CrisisPage() {
                                                         className="flex items-center gap-2 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-indigo-500/20 hover:border-indigo-400/30 transition-all duration-200 group"
                                                     >
                                                         <Mail className="h-4 w-4 text-indigo-300 flex-shrink-0" />
-                                                        <span className="text-xs text-indigo-100/80 group-hover:text-indigo-200 transition-colors truncate">{uni.email}</span>
+                                                        <span className="text-xs text-white group-hover:text-indigo-200 transition-colors truncate">{uni.email}</span>
                                                     </a>
                                                 )}
                                                 {uni.website && (
@@ -439,7 +439,7 @@ export default function CrisisPage() {
                                                         className="flex items-center gap-2 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-indigo-500/20 hover:border-indigo-400/30 transition-all duration-200 group"
                                                     >
                                                         <Globe className="h-4 w-4 text-indigo-300 flex-shrink-0" />
-                                                        <span className="text-xs text-indigo-100/80 group-hover:text-indigo-200 transition-colors">Visit Website</span>
+                                                        <span className="text-xs text-white group-hover:text-indigo-200 transition-colors">Visit Website</span>
                                                         <ExternalLink className="h-3 w-3 text-indigo-300/40 flex-shrink-0" />
                                                     </a>
                                                 )}
@@ -501,12 +501,12 @@ export default function CrisisPage() {
                                 className="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 shadow-xl hover:bg-white/10 transition-all duration-300 cursor-pointer block"
                             >
                                 <div className="flex items-start justify-between gap-2">
-                                    <h4 className="font-semibold text-white group-hover:text-indigo-200 transition-colors text-sm">
+                                    <h4 className="font-semibold text-white group-hover:text-white transition-colors text-sm">
                                         {resource.name}
                                     </h4>
-                                    <ExternalLink className="h-4 w-4 text-indigo-300/50 group-hover:text-indigo-300 transition-colors flex-shrink-0" />
+                                    <ExternalLink className="h-4 w-4 text-indigo-300 group-hover:text-indigo-300 transition-colors flex-shrink-0" />
                                 </div>
-                                <p className="text-xs text-indigo-300/60 mt-2 leading-relaxed">{resource.description}</p>
+                                <p className="text-xs text-indigo-100 mt-2 leading-relaxed">{resource.description}</p>
                             </a>
                         ))}
                     </div>
