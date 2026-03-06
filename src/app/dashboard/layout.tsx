@@ -20,7 +20,6 @@ import {
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { cn } from "@/lib/utils";
-import { SparklesCore } from "@/components/sparkles-core";
 
 export default function DashboardLayout({
     children,
@@ -54,10 +53,10 @@ export default function DashboardLayout({
 
     if (loading) {
         return (
-            <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
-                <div className="flex flex-col items-center gap-2">
-                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-                    <p className="text-sm font-medium text-muted-foreground">Loading your space...</p>
+            <div className="flex min-h-screen items-center justify-center bg-[#192231] text-linen">
+                <div className="flex flex-col items-center gap-6">
+                    <div className="h-12 w-12 animate-spin rounded-full border-2 border-sage border-t-transparent" />
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-linen/30 italic">Establishing Neural Link...</p>
                 </div>
             </div>
         );
@@ -71,167 +70,114 @@ export default function DashboardLayout({
             <Link
                 href={href}
                 onClick={() => setIsMobileOpen(false)}
-                title={!isExpanded ? label : undefined}
                 className={cn(
-                    "flex items-center gap-3 rounded-xl px-3 h-11 transition-all duration-200 group",
+                    "flex items-center gap-4 rounded-2xl px-4 h-12 transition-all duration-300 group",
                     isActive
-                        ? "bg-indigo-500/15 text-indigo-300"
-                        : "text-white/40 hover:bg-white/5 hover:text-white/80"
+                        ? "bg-sage text-linen shadow-lg shadow-sage/20"
+                        : "text-linen/40 hover:bg-white/5 hover:text-linen hover:translate-x-1"
                 )}
             >
                 <Icon className={cn(
-                    "h-[18px] w-[18px] shrink-0 transition-transform group-hover:scale-110",
-                    isActive && "text-indigo-400"
+                    "h-[18px] w-[18px] shrink-0",
+                    isActive ? "text-linen" : "text-linen/20 group-hover:text-sage"
                 )} />
                 {isExpanded && (
-                    <span className="text-[13px] font-medium truncate">{label}</span>
+                    <span className="text-sm font-extrabold tracking-tight">{label}</span>
                 )}
             </Link>
         );
     };
 
     return (
-        <div className="min-h-screen relative font-sans text-foreground bg-background selection:bg-indigo-500/30 dark:selection:text-indigo-200">
-            {/* Background Sparkles */}
-            <div className="fixed inset-0 z-0">
-                <SparklesCore
-                    id="dashboard-sparkles"
-                    background="#0a0118"
-                    minSize={0.6}
-                    maxSize={2.4}
-                    particleDensity={80}
-                    className="w-full h-full"
-                    particleColor="#a78bfa"
-                    speed={1.5}
-                />
-            </div>
-
-            {/* Mobile overlay */}
+        <div className="min-h-screen bg-transparent font-sans selection:bg-sage/30 selection:text-linen">
             {isMobileOpen && (
                 <div
-                    className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+                    className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
                     onClick={() => setIsMobileOpen(false)}
                 />
             )}
 
-            {/* ───────── Sidebar ───────── */}
+            {/* Sidebar */}
             <nav
                 className={cn(
-                    "fixed inset-y-0 left-0 z-50 flex flex-col border-r border-white/[0.06] bg-[#080012]/90 backdrop-blur-2xl transition-all duration-300 ease-in-out",
-                    isExpanded ? "lg:w-60" : "lg:w-[68px]",
-                    isMobileOpen ? "translate-x-0 w-60" : "-translate-x-full lg:translate-x-0"
+                    "fixed inset-y-0 left-0 z-50 flex flex-col border-r border-white/5 bg-black/20 backdrop-blur-[40px] transition-all duration-500 ease-in-out",
+                    isExpanded ? "lg:w-72" : "lg:w-[88px]",
+                    isMobileOpen ? "translate-x-0 w-72" : "-translate-x-full lg:translate-x-0"
                 )}
             >
-                {/* ── Brand ── */}
-                <div className="flex h-16 items-center gap-3 px-4 shrink-0">
-                    <Link href="/dashboard" onClick={() => setIsMobileOpen(false)} className="flex items-center gap-3">
-                        <div className="size-9 shrink-0 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 grid place-content-center shadow-lg shadow-indigo-500/20">
-                            <div className="h-2 w-2 rounded-full bg-white" />
+                <div className="flex h-24 items-center gap-4 px-6 shrink-0">
+                    <Link href="/dashboard" className="flex items-center gap-4 group">
+                        <div className="size-10 shrink-0 rounded-2xl bg-sage flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+                            <div className="size-2 rounded-full bg-linen" />
                         </div>
                         {isExpanded && (
-                            <span className="text-[15px] font-bold text-white tracking-wide">MindBridge</span>
+                            <span className="text-xl font-black text-linen uppercase tracking-[0.1em]">MindBridge</span>
                         )}
                     </Link>
-
-                    {/* Mobile close */}
-                    <button onClick={() => setIsMobileOpen(false)} className="ml-auto lg:hidden text-white/40 hover:text-white">
-                        <X className="h-5 w-5" />
-                    </button>
+                    {isMobileOpen && (
+                        <button onClick={() => setIsMobileOpen(false)} className="ml-auto lg:hidden text-linen/30">
+                            <X className="h-5 w-5" />
+                        </button>
+                    )}
                 </div>
 
-                {/* ── Separator ── */}
-                <div className="mx-4 border-t border-white/[0.06]" />
-
-                {/* ── Navigation ── */}
-                <div className="flex-1 overflow-y-auto px-3 py-5 space-y-1.5">
+                <div className="flex-1 overflow-y-auto px-4 py-8 space-y-2">
                     {isExpanded && (
-                        <p className="px-3 pb-2 text-[10px] font-semibold text-white/20 uppercase tracking-[0.15em]">
-                            Menu
-                        </p>
+                        <p className="px-4 pb-4 text-[10px] font-black text-linen/20 uppercase tracking-[0.4em]">Navigator</p>
                     )}
                     {mainNav.map((item) => (
                         <NavItem key={item.href} {...item} />
                     ))}
                 </div>
 
-                {/* ── Bottom section ── */}
-                <div className="mt-auto shrink-0">
-                    {/* Settings */}
-                    <div className="px-3 pb-3">
+                <div className="mt-auto p-4 space-y-6">
+                    <div className="px-4">
                         {isExpanded && (
-                            <p className="px-3 pb-2 text-[10px] font-semibold text-white/20 uppercase tracking-[0.15em]">
-                                Account
-                            </p>
+                            <p className="pb-4 text-[10px] font-black text-linen/20 uppercase tracking-[0.4em]">Personal</p>
                         )}
                         <NavItem href="/dashboard/settings" label="Settings" icon={Settings} />
                     </div>
 
-                    {/* ── Separator ── */}
-                    <div className="mx-4 border-t border-white/[0.06]" />
-
-                    {/* ── User card ── */}
-                    <div className="px-3 py-3">
-                        <div className={cn(
-                            "flex items-center rounded-xl transition-all duration-200",
-                            isExpanded ? "gap-3 px-3 py-2.5 bg-white/[0.03]" : "justify-center py-2"
-                        )}>
-                            <div className="size-8 shrink-0 rounded-full bg-indigo-500/20 border border-indigo-400/20 grid place-content-center text-indigo-300">
-                                {user.displayName ? (
-                                    <span className="text-xs font-bold">{user.displayName[0].toUpperCase()}</span>
-                                ) : (
-                                    <UserCircle className="h-4 w-4" />
-                                )}
+                    <div className={cn(
+                        "rounded-3xl border border-white/5 transition-all p-3",
+                        isExpanded ? "bg-white/5" : "bg-transparent flex justify-center"
+                    )}>
+                        <div className={cn("flex items-center gap-4", !isExpanded && "flex-col")}>
+                            <div className="size-10 shrink-0 rounded-2xl bg-sage/20 flex items-center justify-center border border-white/10 text-linen text-sm font-black">
+                                {user.displayName ? user.displayName[0].toUpperCase() : <UserCircle size={18} />}
                             </div>
                             {isExpanded && (
-                                <>
-                                    <div className="flex-1 min-w-0">
-                                        <p className="truncate text-[13px] font-medium text-white/80">{user.displayName || "User"}</p>
-                                        <p className="truncate text-[10px] text-white/25">{user.email}</p>
-                                    </div>
-                                    <button
-                                        onClick={handleSignOut}
-                                        title="Sign Out"
-                                        className="p-1.5 rounded-lg text-white/20 hover:text-red-400 hover:bg-red-500/10 transition-all"
-                                    >
-                                        <LogOut className="h-3.5 w-3.5" />
-                                    </button>
-                                </>
+                                <div className="flex-1 min-w-0 pr-2">
+                                    <p className="truncate text-sm font-extrabold text-linen">{user.displayName || "Explorer"}</p>
+                                    <button onClick={handleSignOut} className="text-[10px] font-black text-linen/30 hover:text-red-400 transition-colors uppercase tracking-widest">Sign Out</button>
+                                </div>
                             )}
                         </div>
                     </div>
 
-                    {/* ── Collapse toggle (desktop) ── */}
                     <button
                         onClick={() => setIsExpanded(!isExpanded)}
-                        className="hidden lg:flex w-full items-center gap-3 px-3 h-11 border-t border-white/[0.06] text-white/20 hover:text-white/50 hover:bg-white/[0.03] transition-all"
+                        className="hidden lg:flex w-full items-center gap-4 px-4 h-12 text-linen/20 hover:text-sage transition-all border-t border-white/5 pt-6"
                     >
-                        <div className="grid size-11 shrink-0 place-content-center">
-                            <ChevronsRight className={cn(
-                                "h-4 w-4 transition-transform duration-300",
-                                isExpanded && "rotate-180"
-                            )} />
-                        </div>
-                        {isExpanded && (
-                            <span className="text-[13px] font-medium">Collapse</span>
-                        )}
+                        <ChevronsRight className={cn("h-4 w-4 transition-transform duration-500", isExpanded && "rotate-180")} />
+                        {isExpanded && <span className="text-[10px] font-black uppercase tracking-[0.4em]">Toggle Node</span>}
                     </button>
                 </div>
             </nav>
 
-            {/* ───────── Main content ───────── */}
+            {/* Main Area */}
             <div className={cn(
-                "relative z-10 min-h-screen transition-all duration-300",
-                isExpanded ? "lg:pl-60" : "lg:pl-[68px]"
+                "relative z-10 min-h-screen transition-all duration-500 pt-16 lg:pt-0",
+                isExpanded ? "lg:pl-72" : "lg:pl-[88px]"
             )}>
-                {/* Mobile topbar */}
-                <header className="sticky top-0 z-30 flex h-14 items-center gap-4 bg-[#080012]/80 px-5 backdrop-blur-2xl border-b border-white/[0.06] lg:hidden">
-                    <button onClick={() => setIsMobileOpen(true)} className="text-white/50 hover:text-white">
-                        <Menu className="h-5 w-5" />
+                <header className="fixed top-0 left-0 right-0 z-30 flex h-16 items-center gap-4 border-b border-white/5 bg-black/40 px-6 backdrop-blur-xl lg:hidden">
+                    <button onClick={() => setIsMobileOpen(true)} className="text-linen/30">
+                        <Menu className="h-6 w-6" />
                     </button>
-                    <span className="text-sm font-bold text-white tracking-wide">MindBridge</span>
+                    <span className="text-xs font-black text-linen uppercase tracking-[0.3em]">MindBridge Node</span>
                 </header>
 
-                <main className="p-0 animate-in fade-in duration-500">
+                <main className="p-0 animate-in fade-in slide-in-from-bottom-4 duration-1000">
                     {children}
                 </main>
             </div>

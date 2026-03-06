@@ -26,6 +26,9 @@ import {
     Download,
     FileText,
     Check,
+    User,
+    Calendar,
+    ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -562,8 +565,8 @@ export default function ResourcesPage() {
     });
 
     return (
-        <div className="min-h-screen relative font-sans text-white pb-20">
-            <div className="relative z-10 space-y-10 p-6 md:p-10 max-w-6xl mx-auto">
+        <div className="min-h-screen relative font-sans text-linen pb-20">
+            <div className="relative z-10 space-y-12 p-6 md:p-10 max-w-6xl mx-auto">
 
                 {/* ── Header ── */}
                 <motion.div
@@ -572,15 +575,15 @@ export default function ResourcesPage() {
                     transition={{ duration: 0.8 }}
                     className="space-y-4"
                 >
-                    <div className="flex items-center gap-4">
-                        <div className="h-16 w-16 rounded-[2rem] bg-indigo-500/20 border-2 border-indigo-400/30 flex items-center justify-center shadow-[0_0_30px_rgba(99,102,241,0.2)]">
-                            <BookOpen className="h-8 w-8 text-indigo-300" />
+                    <div className="flex items-center gap-6">
+                        <div className="h-20 w-20 rounded-[2.5rem] bg-indigo-500/10 border-2 border-indigo-400/20 flex items-center justify-center shadow-[0_0_40px_rgba(99,102,241,0.15)] backdrop-blur-xl">
+                            <BookOpen className="h-10 w-10 text-indigo-300" />
                         </div>
                         <div>
-                            <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase tracking-widest drop-shadow-2xl">
+                            <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-linen uppercase tracking-widest drop-shadow-2xl opacity-90">
                                 Resources
                             </h1>
-                            <p className="text-indigo-300 font-bold text-sm md:text-base uppercase tracking-widest opacity-80 mt-1">
+                            <p className="text-indigo-300 font-bold text-sm md:text-base uppercase tracking-[0.3em] opacity-60 mt-1 italic">
                                 Your Wellness Library
                             </p>
                         </div>
@@ -589,27 +592,27 @@ export default function ResourcesPage() {
 
                 {/* ── Quick Tip Banner ── */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="rounded-3xl border border-indigo-500/40 bg-gradient-to-r from-indigo-600/30 to-purple-600/30 backdrop-blur-2xl p-8 shadow-2xl relative overflow-hidden group"
+                    className="rounded-[3rem] border border-white/5 bg-gradient-to-r from-indigo-900/40 to-blue-900/40 backdrop-blur-3xl p-10 shadow-2xl relative overflow-hidden group shadow-black/40"
                 >
-                    <div className="absolute top-0 right-0 p-3 opacity-20 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12 group-hover:opacity-40">
-                        <Lightbulb size={120} className="text-indigo-300" />
+                    <div className="absolute top-0 right-0 p-6 opacity-5 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12 group-hover:opacity-10">
+                        <Lightbulb size={180} className="text-indigo-300" />
                     </div>
-                    <div className="relative z-10 space-y-3">
-                        <p className="text-sm font-black text-indigo-300 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
-                            <Sparkles className="h-5 w-5 animate-pulse" />
+                    <div className="relative z-10 space-y-6">
+                        <p className="text-[10px] font-black text-indigo-300 uppercase tracking-[0.5em] mb-6 flex items-center gap-3 opacity-70">
+                            <Sparkles className="h-4 w-4 animate-pulse" />
                             Insight of the day
                         </p>
                         <AnimatePresence mode="wait">
                             <motion.p
                                 key={tipIndex}
-                                initial={{ opacity: 0, y: 10 }}
+                                initial={{ opacity: 0, y: 15 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                transition={{ duration: 0.4 }}
-                                className="text-white text-xl md:text-2xl font-black italic max-w-2xl leading-tight"
+                                exit={{ opacity: 0, y: -15 }}
+                                transition={{ duration: 0.5 }}
+                                className="text-linen text-2xl md:text-3xl font-bold italic max-w-3xl leading-snug tracking-tight opacity-90"
                             >
                                 &ldquo;{QUICK_TIPS[tipIndex]}&rdquo;
                             </motion.p>
@@ -622,28 +625,28 @@ export default function ResourcesPage() {
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className="space-y-4"
+                    className="space-y-6"
                 >
                     {/* Search bar */}
                     <div className="relative group">
-                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-indigo-300 transition-colors group-focus-within:text-white" />
+                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-linen/20 transition-colors group-focus-within:text-indigo-300" />
                         <input
                             type="text"
                             placeholder="Find articles, tools, or guides..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full rounded-2xl border-2 border-white/10 bg-white/5 backdrop-blur-2xl pl-14 pr-6 py-5 text-lg text-white font-medium placeholder:text-indigo-300/50 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all shadow-xl"
+                            className="w-full rounded-[2.5rem] border-2 border-white/5 bg-white/5 backdrop-blur-3xl pl-16 pr-8 py-7 text-xl text-linen font-bold placeholder:text-linen/10 focus:outline-none focus:ring-8 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all shadow-2xl"
                         />
                     </div>
 
-                    <div className="flex flex-wrap gap-2 pt-2">
+                    <div className="flex flex-wrap gap-3 pt-4">
                         {CATEGORIES.map((cat) => (
                             <button
                                 key={cat}
                                 onClick={() => setActiveCategory(cat)}
-                                className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-300 border-2 ${activeCategory === cat
-                                    ? "bg-indigo-600 border-indigo-400 text-white shadow-[0_0_20px_rgba(99,102,241,0.4)] scale-105"
-                                    : "bg-white/5 text-indigo-200 border-white/10 hover:bg-white/10 hover:border-white/30 hover:text-white"
+                                className={`px-8 py-3.5 rounded-[1.2rem] text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 border-2 ${activeCategory === cat
+                                    ? "bg-indigo-600/20 border-indigo-400/40 text-linen shadow-[0_0_30px_rgba(99,102,241,0.2)] scale-105"
+                                    : "bg-white/5 text-linen/40 border-white/5 hover:bg-white/10 hover:border-white/20 hover:text-linen"
                                     }`}
                             >
                                 {cat}
@@ -653,16 +656,16 @@ export default function ResourcesPage() {
                 </motion.div>
 
                 {/* ── Featured Articles ── */}
-                <section className="space-y-6">
-                    <h2 className="text-xl font-black text-white flex items-center gap-3 uppercase tracking-widest">
-                        <BookOpen className="h-6 w-6 text-indigo-400" />
+                <section className="space-y-8">
+                    <h2 className="text-xs font-black text-linen/40 flex items-center gap-4 uppercase tracking-[0.5em] ml-2">
+                        <BookOpen className="h-5 w-5 text-indigo-400/50" />
                         Featured Guides
                     </h2>
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+                        className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
                     >
                         <AnimatePresence mode="popLayout">
                             {filteredArticles.map((article, index) => {
@@ -674,36 +677,36 @@ export default function ResourcesPage() {
                                         key={article.title}
                                         variants={cardVariants}
                                         layout
-                                        exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.3 } }}
-                                        className={`rounded-3xl border-2 ${article.borderColor} bg-gradient-to-br ${article.color} backdrop-blur-xl shadow-2xl overflow-hidden transition-all duration-500 cursor-pointer group/card relative ${isExpanded ? "md:col-span-2 lg:col-span-3 border-indigo-500/40" : "hover:-translate-y-2 hover:shadow-indigo-500/10"}`}
+                                        exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
+                                        className={`rounded-[3rem] border-2 ${isExpanded ? "border-indigo-500/30" : "border-white/5"} bg-gradient-to-br ${article.color} backdrop-blur-3xl shadow-2xl overflow-hidden transition-all duration-700 cursor-pointer group/card relative ${isExpanded ? "md:col-span-2 lg:col-span-3" : "hover:-translate-y-3 hover:shadow-black/60 shadow-black/40"}`}
                                         onClick={() => setExpandedArticle(isExpanded ? null : originalIndex)}
                                     >
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity" />
-                                        <div className="p-8 relative z-10">
-                                            <div className="flex items-start justify-between gap-4">
-                                                <div className="flex items-start gap-5 flex-1">
-                                                    <div className="h-14 w-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center flex-shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-all shadow-xl">
-                                                        <Icon className="h-7 w-7 text-white" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity" />
+                                        <div className="p-10 relative z-10">
+                                            <div className="flex items-start justify-between gap-6">
+                                                <div className="flex items-start gap-6 flex-1">
+                                                    <div className="h-16 w-16 rounded-[1.8rem] bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover/card:scale-110 group-hover/card:rotate-6 transition-all shadow-xl">
+                                                        <Icon className="h-8 w-8 text-linen" />
                                                     </div>
                                                     <div className="flex-1">
-                                                        <h3 className="font-black text-white text-xl italic group-hover/card:text-indigo-200 transition-colors leading-tight">
+                                                        <h3 className="font-extrabold text-linen text-2xl tracking-tighter group-hover/card:text-indigo-200 transition-colors leading-tight opacity-90">
                                                             {article.title}
                                                         </h3>
-                                                        <div className="flex items-center gap-4 mt-2">
-                                                            <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-300 uppercase tracking-widest">
-                                                                <Timer className="h-3.5 w-3.5" /> {article.readTime}
+                                                        <div className="flex items-center gap-5 mt-3">
+                                                            <div className="flex items-center gap-2 text-[10px] font-black text-indigo-300/60 uppercase tracking-widest">
+                                                                <Timer className="h-4 w-4" /> {article.readTime}
                                                             </div>
-                                                            <span className="text-[10px] font-black text-white/50 bg-white/10 px-2.5 py-1 rounded-lg uppercase tracking-widest border border-white/5">{article.category}</span>
+                                                            <span className="text-[9px] font-black text-linen/30 bg-white/5 px-3 py-1.5 rounded-lg uppercase tracking-widest border border-white/5">{article.category}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 {isExpanded ? (
-                                                    <ChevronUp className="h-6 w-6 text-indigo-300 flex-shrink-0 mt-1" />
+                                                    <ChevronUp className="h-8 w-8 text-indigo-300/40 flex-shrink-0 mt-1" />
                                                 ) : (
-                                                    <ChevronDown className="h-6 w-6 text-indigo-300 flex-shrink-0 mt-1" />
+                                                    <ChevronDown className="h-8 w-8 text-indigo-300/40 flex-shrink-0 mt-1" />
                                                 )}
                                             </div>
-                                            <p className="text-base text-indigo-100/90 mt-5 leading-relaxed font-medium">
+                                            <p className="text-lg text-linen/50 mt-8 leading-relaxed font-bold italic">
                                                 {article.description}
                                             </p>
 
@@ -714,16 +717,16 @@ export default function ResourcesPage() {
                                                         initial={{ opacity: 0, height: 0 }}
                                                         animate={{ opacity: 1, height: "auto" }}
                                                         exit={{ opacity: 0, height: 0 }}
-                                                        transition={{ duration: 0.5, ease: "circOut" }}
-                                                        className="mt-8 space-y-6 border-t-2 border-white/10 pt-8"
+                                                        transition={{ duration: 0.6, ease: "circOut" }}
+                                                        className="mt-12 space-y-8 border-t border-white/5 pt-12"
                                                     >
                                                         {article.content.map((paragraph, pIdx) => (
-                                                            <p key={pIdx} className="text-lg text-indigo-50/90 leading-relaxed font-medium italic pl-4 border-l-4 border-indigo-500/30">
+                                                            <p key={pIdx} className="text-xl text-linen/70 leading-relaxed font-bold italic pl-8 border-l-4 border-indigo-500/20">
                                                                 &ldquo;{paragraph}&rdquo;
                                                             </p>
                                                         ))}
-                                                        <div className="pt-4 flex justify-end">
-                                                            <Button className="bg-indigo-600 hover:bg-indigo-500 text-white font-black px-8 py-4 h-auto rounded-xl shadow-lg">
+                                                        <div className="pt-8 flex justify-end">
+                                                            <Button className="bg-indigo-600/80 hover:bg-indigo-500 text-linen font-black px-12 py-5 h-auto rounded-2xl shadow-2xl shadow-indigo-500/20 border border-indigo-400/30 uppercase tracking-[0.2em] text-xs">
                                                                 Mark as Completed
                                                             </Button>
                                                         </div>
@@ -735,30 +738,33 @@ export default function ResourcesPage() {
                                 );
                             })}
                         </AnimatePresence>
-
-                        {filteredArticles.length === 0 && (
-                            <div className="col-span-full text-center py-12 text-indigo-300/80">
-                                <Search className="h-8 w-8 mx-auto mb-3 opacity-50" />
-                                <p className="text-sm">No articles match your search. Try different keywords or clear filters.</p>
-                            </div>
-                        )}
                     </motion.div>
                 </section>
 
+                {filteredArticles.length === 0 && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="text-center py-20 bg-white/5 rounded-[3rem] border-2 border-dashed border-white/5"
+                    >
+                        <Search className="h-12 w-12 mx-auto mb-6 text-linen/20 opacity-50" />
+                        <p className="text-linen/30 font-bold italic tracking-tighter">
+                            No resources found matching your search. Try different keywords or clear filters.
+                        </p>
+                    </motion.div>
+                )}
+
                 {/* ── Self-Help Toolkit ── */}
-                <section className="space-y-6">
-                    <h2 className="text-xl font-black text-white flex items-center gap-3 uppercase tracking-widest">
-                        <Sparkles className="h-6 w-6 text-indigo-400" />
+                <section className="space-y-8">
+                    <h2 className="text-xs font-black text-linen/40 flex items-center gap-4 uppercase tracking-[0.5em] ml-2">
+                        <Sparkles className="h-5 w-5 text-indigo-400/50" />
                         Self-Help Toolkit
                     </h2>
-                    <p className="text-sm text-indigo-200/90 font-medium italic -mt-2">
-                        Hands-on techniques for immediate relief. Tap to explore.
-                    </p>
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className="space-y-3"
+                        className="space-y-4"
                     >
                         {SELF_HELP_TOOLS.map((tool, index) => {
                             const Icon = tool.icon;
@@ -767,25 +773,25 @@ export default function ResourcesPage() {
                                 <motion.div
                                     key={tool.title}
                                     variants={cardVariants}
-                                    className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl overflow-hidden transition-all duration-300 group"
+                                    className="rounded-[2.5rem] border-2 border-white/5 bg-black/20 backdrop-blur-3xl shadow-2xl overflow-hidden transition-all duration-700 group"
                                 >
                                     <button
                                         onClick={() => setExpandedTool(isExpanded ? null : index)}
-                                        className={`w-full flex items-center justify-between p-6 text-left transition-all ${isExpanded ? "bg-white/10" : "hover:bg-white/5"}`}
+                                        className={`w-full flex items-center justify-between p-10 text-left transition-all ${isExpanded ? "bg-white/5" : "hover:bg-white/5"}`}
                                     >
-                                        <div className="flex items-center gap-4">
-                                            <div className="h-12 w-12 rounded-2xl bg-indigo-500/20 border-2 border-indigo-400/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                                                <Icon className="h-6 w-6 text-indigo-300" />
+                                        <div className="flex items-center gap-8">
+                                            <div className="h-16 w-16 rounded-[1.8rem] bg-indigo-500/10 border border-indigo-400/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
+                                                <Icon className="h-8 w-8 text-indigo-300" />
                                             </div>
                                             <div>
-                                                <h3 className="font-black text-white text-lg italic">{tool.title}</h3>
-                                                <p className="text-sm text-indigo-200/60 font-medium">{tool.description}</p>
+                                                <h3 className="font-extrabold text-linen text-2xl tracking-tighter opacity-90 italic">{tool.title}</h3>
+                                                <p className="text-lg text-linen/40 font-bold mt-1 opacity-60 italic">{tool.description}</p>
                                             </div>
                                         </div>
                                         {isExpanded ? (
-                                            <ChevronUp className="h-6 w-6 text-indigo-300 flex-shrink-0 ml-4" />
+                                            <ChevronUp className="h-8 w-8 text-indigo-300/40 flex-shrink-0 ml-4" />
                                         ) : (
-                                            <ChevronDown className="h-6 w-6 text-indigo-300 flex-shrink-0 ml-4" />
+                                            <ChevronDown className="h-8 w-8 text-indigo-300/40 flex-shrink-0 ml-4" />
                                         )}
                                     </button>
 
@@ -795,16 +801,16 @@ export default function ResourcesPage() {
                                                 initial={{ opacity: 0, height: 0 }}
                                                 animate={{ opacity: 1, height: "auto" }}
                                                 exit={{ opacity: 0, height: 0 }}
-                                                transition={{ duration: 0.3 }}
-                                                className="px-5 pb-5 border-t border-white/5"
+                                                transition={{ duration: 0.5, ease: "circOut" }}
+                                                className="px-10 pb-10 border-t border-white/5"
                                             >
-                                                <ol className="pt-4 space-y-3">
+                                                <ol className="pt-8 space-y-6">
                                                     {tool.steps.map((step, sIdx) => (
-                                                        <li key={sIdx} className="flex items-start gap-3 text-sm text-indigo-100 leading-relaxed">
-                                                            <span className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-xs font-semibold text-indigo-300">
+                                                        <li key={sIdx} className="flex items-start gap-6 text-xl text-linen/70 leading-relaxed font-bold italic">
+                                                            <span className="flex-shrink-0 h-10 w-10 rounded-2xl bg-indigo-500/10 border border-indigo-400/20 flex items-center justify-center text-sm font-black text-indigo-300 shadow-xl">
                                                                 {sIdx + 1}
                                                             </span>
-                                                            {step}
+                                                            <span className="pt-1.5">{step}</span>
                                                         </li>
                                                     ))}
                                                 </ol>
@@ -818,19 +824,16 @@ export default function ResourcesPage() {
                 </section>
 
                 {/* ── Recommended Apps & Websites ── */}
-                <section className="space-y-6">
-                    <h2 className="text-xl font-black text-white flex items-center gap-3 uppercase tracking-widest">
-                        <Smartphone className="h-6 w-6 text-indigo-400" />
+                <section className="space-y-8">
+                    <h2 className="text-xs font-black text-linen/40 flex items-center gap-4 uppercase tracking-[0.5em] ml-2">
+                        <Smartphone className="h-5 w-5 text-indigo-400/50" />
                         Curated Tech
                     </h2>
-                    <p className="text-sm text-indigo-200/90 font-medium italic -mt-2">
-                        Explore tools, features, and getting started guides.
-                    </p>
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className="space-y-3"
+                        className="space-y-4"
                     >
                         {RECOMMENDED_APPS.map((app, index) => {
                             const Icon = app.icon;
@@ -839,30 +842,30 @@ export default function ResourcesPage() {
                                 <motion.div
                                     key={app.name}
                                     variants={cardVariants}
-                                    className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl overflow-hidden transition-all duration-300 group"
+                                    className="rounded-[2.5rem] border-2 border-white/5 bg-black/20 backdrop-blur-3xl shadow-2xl overflow-hidden transition-all duration-700 group"
                                 >
                                     <button
                                         onClick={() => setExpandedApp(isExpanded ? null : index)}
-                                        className={`w-full flex items-center justify-between p-6 text-left transition-all ${isExpanded ? "bg-white/10" : "hover:bg-white/5"}`}
+                                        className={`w-full flex items-center justify-between p-10 text-left transition-all ${isExpanded ? "bg-white/5" : "hover:bg-white/5"}`}
                                     >
-                                        <div className="flex items-center gap-4">
-                                            <div className="h-14 w-14 rounded-2xl bg-indigo-500/20 border-2 border-indigo-400/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                                                <Icon className="h-7 w-7 text-indigo-300" />
+                                        <div className="flex items-center gap-8">
+                                            <div className="h-16 w-16 rounded-[1.8rem] bg-indigo-500/10 border border-indigo-400/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
+                                                <Icon className="h-8 w-8 text-indigo-300" />
                                             </div>
                                             <div>
-                                                <h3 className="font-black text-white text-xl italic leading-tight">{app.name}</h3>
-                                                <div className="flex items-center gap-3 mt-1.5">
-                                                    <span className="text-[10px] font-black text-indigo-400 bg-indigo-500/20 px-2.5 py-1 rounded-lg uppercase tracking-widest border border-indigo-500/30">
+                                                <h3 className="font-extrabold text-linen text-2xl tracking-tighter opacity-90 italic leading-tight">{app.name}</h3>
+                                                <div className="flex items-center gap-5 mt-2">
+                                                    <span className="text-[9px] font-black text-indigo-400 bg-indigo-500/10 px-3 py-1.5 rounded-lg uppercase tracking-widest border border-indigo-500/30">
                                                         {app.tag}
                                                     </span>
-                                                    <span className="text-sm text-indigo-200/60 font-medium truncate max-w-[200px]">{app.description}</span>
+                                                    <span className="text-sm text-linen/40 font-bold italic truncate max-w-[200px]">{app.description}</span>
                                                 </div>
                                             </div>
                                         </div>
                                         {isExpanded ? (
-                                            <ChevronUp className="h-6 w-6 text-indigo-300 flex-shrink-0 ml-4" />
+                                            <ChevronUp className="h-8 w-8 text-indigo-300/40 flex-shrink-0 ml-4" />
                                         ) : (
-                                            <ChevronDown className="h-6 w-6 text-indigo-300 flex-shrink-0 ml-4" />
+                                            <ChevronDown className="h-8 w-8 text-indigo-300/40 flex-shrink-0 ml-4" />
                                         )}
                                     </button>
 
@@ -872,17 +875,17 @@ export default function ResourcesPage() {
                                                 initial={{ opacity: 0, height: 0 }}
                                                 animate={{ opacity: 1, height: "auto" }}
                                                 exit={{ opacity: 0, height: 0 }}
-                                                transition={{ duration: 0.3 }}
-                                                className="px-5 pb-5 border-t border-white/5"
+                                                transition={{ duration: 0.5, ease: "circOut" }}
+                                                className="px-10 pb-10 border-t border-white/5"
                                             >
-                                                <div className="pt-4 space-y-5">
+                                                <div className="pt-10 space-y-10">
                                                     {/* Key Features */}
                                                     <div>
-                                                        <h4 className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2">Key Features</h4>
-                                                        <ul className="space-y-2">
+                                                        <h4 className="text-[10px] font-black text-indigo-300 uppercase tracking-[0.4em] mb-6 mb-4">Key Features</h4>
+                                                        <ul className="space-y-4">
                                                             {app.features.map((feature, fIdx) => (
-                                                                <li key={fIdx} className="flex items-start gap-2 text-sm text-indigo-100 leading-relaxed">
-                                                                    <Check className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                                                                <li key={fIdx} className="flex items-start gap-4 text-lg text-linen/70 leading-relaxed font-bold italic">
+                                                                    <Check className="h-6 w-6 text-green-400 flex-shrink-0 mt-0.5" />
                                                                     {feature}
                                                                 </li>
                                                             ))}
@@ -890,24 +893,24 @@ export default function ResourcesPage() {
                                                     </div>
 
                                                     {/* What's Free */}
-                                                    <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
-                                                        <h4 className="text-xs font-semibold text-green-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                                                            <Sparkles className="h-3 w-3" />
+                                                    <div className="rounded-[2rem] bg-green-500/5 border border-green-500/20 p-8 shadow-inner">
+                                                        <h4 className="text-[10px] font-black text-green-300 uppercase tracking-[0.4em] mb-4 flex items-center gap-3">
+                                                            <Sparkles className="h-4 w-4 animate-pulse" />
                                                             What&apos;s Free
                                                         </h4>
-                                                        <p className="text-sm text-green-100 leading-relaxed">{app.freeInfo}</p>
+                                                        <p className="text-lg text-green-100/70 leading-relaxed font-bold italic">{app.freeInfo}</p>
                                                     </div>
 
                                                     {/* How to Get Started */}
                                                     <div>
-                                                        <h4 className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2">How to Get Started</h4>
-                                                        <ol className="space-y-2">
+                                                        <h4 className="text-[10px] font-black text-indigo-300 uppercase tracking-[0.4em] mb-6 mb-4">How to Get Started</h4>
+                                                        <ol className="space-y-4">
                                                             {app.howToStart.map((step, sIdx) => (
-                                                                <li key={sIdx} className="flex items-start gap-3 text-sm text-indigo-100 leading-relaxed">
-                                                                    <span className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-xs font-semibold text-indigo-300">
+                                                                <li key={sIdx} className="flex items-start gap-6 text-lg text-linen/70 leading-relaxed font-bold italic">
+                                                                    <span className="flex-shrink-0 h-10 w-10 rounded-2xl bg-indigo-500/10 border border-indigo-400/20 flex items-center justify-center text-sm font-black text-indigo-300 shadow-xl">
                                                                         {sIdx + 1}
                                                                     </span>
-                                                                    {step}
+                                                                    <span className="pt-1.5">{step}</span>
                                                                 </li>
                                                             ))}
                                                         </ol>
@@ -918,10 +921,10 @@ export default function ResourcesPage() {
                                                         href={app.url}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-2 text-sm text-indigo-300 hover:text-indigo-200 transition-colors bg-indigo-500/10 hover:bg-indigo-500/20 px-4 py-2 rounded-xl border border-indigo-500/20"
+                                                        className="inline-flex items-center gap-4 text-[10px] font-black text-indigo-300 hover:text-indigo-200 transition-all bg-indigo-500/10 hover:bg-indigo-500/20 px-10 py-5 rounded-[1.5rem] border border-indigo-400/30 uppercase tracking-[0.3em] shadow-2xl hover:scale-105 active:scale-95"
                                                     >
                                                         Visit {app.name}
-                                                        <ExternalLink className="h-3.5 w-3.5" />
+                                                        <ExternalLink className="h-4 w-4" />
                                                     </a>
                                                 </div>
                                             </motion.div>
@@ -934,19 +937,16 @@ export default function ResourcesPage() {
                 </section>
 
                 {/* ── Video Resources ── */}
-                <section className="space-y-6">
-                    <h2 className="text-xl font-black text-white flex items-center gap-3 uppercase tracking-widest">
-                        <Play className="h-6 w-6 text-indigo-400" />
+                <section className="space-y-8">
+                    <h2 className="text-xs font-black text-linen/40 flex items-center gap-4 uppercase tracking-[0.5em] ml-2">
+                        <Play className="h-5 w-5 text-indigo-400/50" />
                         Watch & Learn
                     </h2>
-                    <p className="text-sm text-indigo-200/90 font-medium italic -mt-2">
-                        Inspiring talks and sessions, available right here.
-                    </p>
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className="grid gap-4 md:grid-cols-2"
+                        className="grid gap-8 md:grid-cols-2"
                     >
                         {VIDEO_RESOURCES.map((video) => {
                             const isPlaying = activeVideo === video.videoId;
@@ -954,7 +954,7 @@ export default function ResourcesPage() {
                                 <motion.div
                                     key={video.title}
                                     variants={cardVariants}
-                                    className="rounded-[32px] border-2 border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl overflow-hidden transition-all duration-500 group relative"
+                                    className="rounded-[3rem] border-2 border-white/5 bg-black/20 backdrop-blur-3xl shadow-2xl overflow-hidden transition-all duration-700 group relative shadow-black/40 hover:-translate-y-3 hover:shadow-black/60"
                                 >
                                     {/* Video Player / Thumbnail */}
                                     <div className="relative w-full aspect-video bg-black/40">
@@ -976,21 +976,21 @@ export default function ResourcesPage() {
                                                 <img
                                                     src={`https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`}
                                                     alt={video.title}
-                                                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                                                    className="w-full h-full object-cover opacity-60 group-hover:opacity-90 transition-opacity duration-700"
                                                     onError={(e) => {
                                                         (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`;
                                                     }}
                                                 />
                                                 {/* Dark gradient overlay */}
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60" />
                                                 {/* Play button */}
                                                 <div className="absolute inset-0 flex items-center justify-center">
-                                                    <div className="h-16 w-16 rounded-full bg-red-600/90 border-2 border-white/20 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-red-500 transition-all duration-300">
-                                                        <Play className="h-7 w-7 text-white ml-1" fill="white" />
+                                                    <div className="h-20 w-20 rounded-full bg-indigo-600/30 border-2 border-white/20 flex items-center justify-center shadow-2xl group-hover:scale-125 group-hover:bg-indigo-500/40 transition-all duration-700 backdrop-blur-sm">
+                                                        <Play className="h-8 w-8 text-linen ml-1" fill="currentColor" />
                                                     </div>
                                                 </div>
                                                 {/* Duration badge */}
-                                                <div className="absolute bottom-3 right-3 bg-black/70 text-white text-xs font-medium px-2 py-1 rounded-md">
+                                                <div className="absolute bottom-6 right-6 bg-black/80 text-linen text-[10px] font-black px-3 py-1.5 rounded-lg border border-white/10 uppercase tracking-widest shadow-2xl backdrop-blur-xl">
                                                     {video.duration}
                                                 </div>
                                             </button>
@@ -998,16 +998,19 @@ export default function ResourcesPage() {
                                     </div>
 
                                     {/* Video Info */}
-                                    <div className="p-4">
-                                        <h3 className="font-semibold text-white text-sm leading-snug">
+                                    <div className="p-10 space-y-4">
+                                        <h3 className="font-extrabold text-linen text-xl leading-tight italic opacity-90 group-hover:text-indigo-200 transition-colors">
                                             {video.title}
                                         </h3>
-                                        <div className="flex items-center gap-2 mt-1.5">
-                                            <span className="text-xs text-indigo-300/90">{video.speaker}</span>
-                                            <span className="text-xs text-indigo-300/70">•</span>
-                                            <span className="text-xs text-indigo-300/70">{video.duration}</span>
+                                        <div className="flex items-center gap-5">
+                                            <div className="flex items-center gap-3">
+                                                <div className="h-8 w-8 rounded-full bg-indigo-500/10 border border-indigo-400/20 flex items-center justify-center">
+                                                    <User className="h-4 w-4 text-indigo-300" />
+                                                </div>
+                                                <span className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em]">{video.speaker}</span>
+                                            </div>
                                         </div>
-                                        <p className="text-xs text-indigo-300/90 mt-2 leading-relaxed">
+                                        <p className="text-lg text-linen/40 mt-6 leading-relaxed font-bold italic line-clamp-2">
                                             {video.description}
                                         </p>
                                     </div>
@@ -1018,19 +1021,16 @@ export default function ResourcesPage() {
                 </section>
 
                 {/* ── Free Books & Guides ── */}
-                <section className="space-y-6">
-                    <h2 className="text-xl font-black text-white flex items-center gap-3 uppercase tracking-widest">
-                        <Download className="h-6 w-6 text-indigo-400" />
+                <section className="space-y-8">
+                    <h2 className="text-xs font-black text-linen/40 flex items-center gap-4 uppercase tracking-[0.5em] ml-2">
+                        <Download className="h-5 w-5 text-indigo-400/50" />
                         Guided Reading
                     </h2>
-                    <p className="text-sm text-indigo-200/90 font-medium italic -mt-2">
-                        Deep dives into evidence-based strategies and workbooks.
-                    </p>
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className="space-y-3"
+                        className="space-y-4"
                     >
                         {FREE_BOOKS.map((book, index) => {
                             const isExpanded = expandedBook === index;
@@ -1038,30 +1038,30 @@ export default function ResourcesPage() {
                                 <motion.div
                                     key={book.title}
                                     variants={cardVariants}
-                                    className={`rounded-3xl border-2 ${book.borderColor} bg-gradient-to-br ${book.color} backdrop-blur-xl shadow-2xl overflow-hidden transition-all duration-500 group relative`}
+                                    className={`rounded-[2.5rem] border-2 ${book.borderColor} bg-gradient-to-br ${book.color} backdrop-blur-3xl shadow-2xl overflow-hidden transition-all duration-700 group relative shadow-black/40`}
                                 >
                                     <button
                                         onClick={() => setExpandedBook(isExpanded ? null : index)}
-                                        className={`w-full flex items-center justify-between p-6 text-left transition-all ${isExpanded ? "bg-white/10" : "hover:bg-white/5"}`}
+                                        className={`w-full flex items-center justify-between p-10 text-left transition-all ${isExpanded ? "bg-white/5" : "hover:bg-white/5"}`}
                                     >
-                                        <div className="flex items-center gap-4">
-                                            <div className="h-14 w-14 rounded-2xl bg-white/10 border-2 border-white/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-xl">
-                                                <FileText className="h-7 w-7 text-white" />
+                                        <div className="flex items-center gap-8">
+                                            <div className="h-16 w-16 rounded-[1.8rem] bg-white/5 border-2 border-white/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
+                                                <FileText className="h-8 w-8 text-linen" />
                                             </div>
                                             <div>
-                                                <h3 className="font-black text-white text-xl italic leading-tight">{book.title}</h3>
-                                                <div className="flex items-center gap-3 mt-1.5">
-                                                    <span className="text-sm font-bold text-indigo-200/60 uppercase tracking-widest">{book.author}</span>
-                                                    <span className="text-[10px] font-black text-indigo-400 bg-indigo-500/20 px-2.5 py-1 rounded-lg uppercase tracking-widest border border-indigo-500/30">
+                                                <h3 className="font-extrabold text-linen text-2xl tracking-tighter opacity-90 italic leading-tight">{book.title}</h3>
+                                                <div className="flex items-center gap-5 mt-2">
+                                                    <span className="text-[10px] font-black text-linen/40 uppercase tracking-[0.3em] italic">{book.author}</span>
+                                                    <span className="text-[9px] font-black text-linen/30 bg-white/5 px-3 py-1.5 rounded-lg uppercase tracking-widest border border-white/10">
                                                         {book.category}
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
                                         {isExpanded ? (
-                                            <ChevronUp className="h-6 w-6 text-indigo-300 flex-shrink-0 ml-4" />
+                                            <ChevronUp className="h-8 w-8 text-linen/30 flex-shrink-0 ml-4" />
                                         ) : (
-                                            <ChevronDown className="h-6 w-6 text-indigo-300 flex-shrink-0 ml-4" />
+                                            <ChevronDown className="h-8 w-8 text-linen/30 flex-shrink-0 ml-4" />
                                         )}
                                     </button>
 
@@ -1071,28 +1071,28 @@ export default function ResourcesPage() {
                                                 initial={{ opacity: 0, height: 0 }}
                                                 animate={{ opacity: 1, height: "auto" }}
                                                 exit={{ opacity: 0, height: 0 }}
-                                                transition={{ duration: 0.3 }}
-                                                className="px-5 pb-5 border-t border-white/5"
+                                                transition={{ duration: 0.5, ease: "circOut" }}
+                                                className="px-10 pb-10 border-t border-white/5"
                                             >
-                                                <div className="pt-4 space-y-5">
+                                                <div className="pt-10 space-y-10">
                                                     {/* About */}
-                                                    <p className="text-sm text-indigo-100 leading-relaxed">
-                                                        {book.description}
+                                                    <p className="text-xl text-linen/70 leading-relaxed font-bold italic pl-8 border-l-4 border-white/10">
+                                                        &ldquo;{book.description}&rdquo;
                                                     </p>
 
                                                     {/* Key Takeaways */}
                                                     <div>
-                                                        <h4 className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                                                            <Lightbulb className="h-3 w-3" />
+                                                        <h4 className="text-[10px] font-black text-linen/40 uppercase tracking-[0.4em] mb-6 flex items-center gap-3">
+                                                            <Lightbulb className="h-4 w-4" />
                                                             Key Takeaways
                                                         </h4>
-                                                        <ul className="space-y-2">
+                                                        <ul className="space-y-4">
                                                             {book.keyTakeaways.map((takeaway, tIdx) => (
-                                                                <li key={tIdx} className="flex items-start gap-2 text-sm text-indigo-100 leading-relaxed">
-                                                                    <span className="flex-shrink-0 h-5 w-5 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-xs font-semibold text-indigo-300 mt-0.5">
+                                                                <li key={tIdx} className="flex items-start gap-4 text-lg text-linen/70 leading-relaxed font-bold italic">
+                                                                    <span className="flex-shrink-0 h-10 w-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-sm font-black text-linen mt-0.5 shadow-xl">
                                                                         {tIdx + 1}
                                                                     </span>
-                                                                    {takeaway}
+                                                                    <span className="pt-1.5">{takeaway}</span>
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -1100,12 +1100,12 @@ export default function ResourcesPage() {
 
                                                     {/* Topics Covered */}
                                                     <div>
-                                                        <h4 className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2">Topics Covered</h4>
-                                                        <div className="flex flex-wrap gap-2">
+                                                        <h4 className="text-[10px] font-black text-linen/40 uppercase tracking-[0.4em] mb-6">Topics Covered</h4>
+                                                        <div className="flex flex-wrap gap-3">
                                                             {book.topicsCovered.map((topic, topIdx) => (
                                                                 <span
                                                                     key={topIdx}
-                                                                    className="text-xs text-indigo-200/90 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full"
+                                                                    className="text-[10px] font-black text-linen/50 bg-white/5 border border-white/10 px-4 py-2 rounded-xl uppercase tracking-widest"
                                                                 >
                                                                     {topic}
                                                                 </span>
@@ -1118,10 +1118,10 @@ export default function ResourcesPage() {
                                                         href={book.url}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-2 text-sm text-indigo-300 hover:text-indigo-200 transition-colors bg-indigo-500/10 hover:bg-indigo-500/20 px-4 py-2 rounded-xl border border-indigo-500/20"
+                                                        className="inline-flex items-center gap-4 text-[10px] font-black text-linen hover:text-white transition-all bg-white/5 hover:bg-white/10 px-10 py-5 rounded-[1.5rem] border border-white/10 uppercase tracking-[0.3em] shadow-2xl hover:scale-105 active:scale-95"
                                                     >
                                                         Read Full Book / Guide
-                                                        <ExternalLink className="h-3.5 w-3.5" />
+                                                        <ExternalLink className="h-4 w-4" />
                                                     </a>
                                                 </div>
                                             </motion.div>
@@ -1138,19 +1138,19 @@ export default function ResourcesPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.5 }}
-                    className="text-center py-16 space-y-6"
+                    className="text-center py-20 space-y-8"
                 >
-                    <div className="max-w-3xl mx-auto p-10 rounded-[40px] border-2 border-white/10 bg-white/5 backdrop-blur-3xl shadow-[0_0_50px_rgba(0,0,0,0.3)] relative overflow-hidden group">
-                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
-                        <p className="text-2xl md:text-3xl font-black text-white italic leading-tight group-hover:scale-105 transition-transform duration-700">
+                    <div className="max-w-4xl mx-auto p-16 rounded-[4rem] border-2 border-white/5 bg-black/20 backdrop-blur-3xl shadow-[0_0_80px_rgba(0,0,0,0.6)] relative overflow-hidden group shadow-black/80">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent shadow-[0_0_20px_rgba(99,102,241,0.5)]" />
+                        <p className="text-3xl md:text-4xl font-black text-linen italic leading-snug group-hover:scale-105 transition-transform duration-1000 tracking-tighter opacity-90">
                             &ldquo;The greatest glory in living lies not in never falling, but in rising every time we fall.&rdquo;
                         </p>
-                        <p className="text-indigo-300 uppercase tracking-[0.4em] font-black text-sm mt-6">— Nelson Mandela</p>
+                        <p className="text-indigo-400 uppercase tracking-[0.6em] font-black text-[10px] mt-10 opacity-60">— Nelson Mandela</p>
                     </div>
 
-                    <p className="text-indigo-200/50 font-medium max-w-xl mx-auto leading-relaxed">
-                        These resources are for informational purposes. If you are in crisis, please visit our{" "}
-                        <a href="/dashboard/crisis" className="text-indigo-400 hover:text-white font-black underline underline-offset-8 decoration-2 transition-all">
+                    <p className="text-linen/20 font-bold italic max-w-2xl mx-auto leading-relaxed text-sm tracking-tight pt-10 border-t border-white/5">
+                        These resources are for educational purposes. If you are experiencing immediate distress, please connect with our specialists at the{" "}
+                        <a href="/dashboard/crisis" className="text-indigo-400 hover:text-linen font-black underline underline-offset-8 decoration-2 transition-all">
                             Crisis Support Centre
                         </a>
                     </p>
