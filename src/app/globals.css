@@ -29,6 +29,7 @@
 }
 
 :root {
+  color-scheme: light dark;
   --background: #f7f8f7;
   /* Soft Sage-tinted Gray for better contrast */
   --foreground: #1d1d1f;

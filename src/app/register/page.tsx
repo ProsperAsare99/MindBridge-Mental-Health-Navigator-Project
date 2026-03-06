@@ -224,17 +224,17 @@ export default function RegisterPage() {
                                         required
                                         value={institution}
                                         onChange={(e) => setInstitution(e.target.value)}
-                                        className="w-full bg-muted/30 border border-primary/5 rounded-2xl py-4 pl-12 pr-10 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/20 transition-all appearance-none cursor-pointer"
+                                        className="w-full bg-muted/30 dark:bg-[#1c1c1e] border border-primary/5 rounded-2xl py-4 pl-12 pr-10 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/20 transition-all appearance-none cursor-pointer text-foreground dark:text-[#f5f5f7]"
                                     >
-                                        <option value="" disabled className="bg-card text-foreground">Select Institution</option>
-                                        <option value="UG LEGON" className="bg-card text-foreground">University of Ghana</option>
-                                        <option value="KNUST" className="bg-card text-foreground">KNUST</option>
-                                        <option value="UCC" className="bg-card text-foreground">UCC</option>
-                                        <option value="UEW" className="bg-card text-foreground">UEW</option>
-                                        <option value="UDS" className="bg-card text-foreground">UDS</option>
-                                        <option value="UPSA" className="bg-card text-foreground">UPSA</option>
-                                        <option value="ASHESI" className="bg-card text-foreground">Ashesi University</option>
-                                        <option value="Other" className="bg-card text-foreground">Other</option>
+                                        <option value="" disabled className="bg-white dark:bg-[#1c1c1e] text-foreground dark:text-[#f5f5f7]">Select Institution</option>
+                                        <option value="UG LEGON" className="bg-white dark:bg-[#1c1c1e] text-foreground dark:text-[#f5f5f7]">University of Ghana</option>
+                                        <option value="KNUST" className="bg-white dark:bg-[#1c1c1e] text-foreground dark:text-[#f5f5f7]">KNUST</option>
+                                        <option value="UCC" className="bg-white dark:bg-[#1c1c1e] text-foreground dark:text-[#f5f5f7]">UCC</option>
+                                        <option value="UEW" className="bg-white dark:bg-[#1c1c1e] text-foreground dark:text-[#f5f5f7]">UEW</option>
+                                        <option value="UDS" className="bg-white dark:bg-[#1c1c1e] text-foreground dark:text-[#f5f5f7]">UDS</option>
+                                        <option value="UPSA" className="bg-white dark:bg-[#1c1c1e] text-foreground dark:text-[#f5f5f7]">UPSA</option>
+                                        <option value="ASHESI" className="bg-white dark:bg-[#1c1c1e] text-foreground dark:text-[#f5f5f7]">Ashesi University</option>
+                                        <option value="Other" className="bg-white dark:bg-[#1c1c1e] text-foreground dark:text-[#f5f5f7]">Other</option>
                                     </select>
                                     <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground rotate-90" />
                                 </div>
