@@ -156,8 +156,8 @@ export default function CrisisPage() {
                 {/* Primary Emergency Lines */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {[
-                        { name: "Police Emergency", num: "191", desc: "For security & danger", icon: Shield, color: "bg-red-600 shadow-red-600/30" },
-                        { name: "Ambulance National", num: "193", desc: "For medical emergencies", icon: Phone, color: "bg-red-500 shadow-red-500/30" }
+                        { name: "Police Emergency", num: "191", desc: "For security & danger", icon: Shield, color: "bg-red-600 hover:bg-red-700 shadow-red-600/20" },
+                        { name: "Ambulance National", num: "193", desc: "For medical emergencies", icon: Phone, color: "bg-red-500 hover:bg-red-600 shadow-red-500/20" }
                     ].map((btn, i) => (
                         <motion.button
                             key={btn.num}
@@ -169,15 +169,15 @@ export default function CrisisPage() {
                             className={`flex items-center justify-between p-6 rounded-[2rem] text-white shadow-premium transition-all ${btn.color}`}
                         >
                             <div className="flex items-center gap-4 text-left">
-                                <div className="h-12 w-12 rounded-2xl bg-white/20 flex items-center justify-center">
+                                <div className="h-12 w-12 rounded-2xl bg-white/10 flex items-center justify-center">
                                     <btn.icon size={24} />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] font-bold uppercase tracking-widest opacity-80">{btn.name}</p>
+                                    <p className="text-[10px] font-bold uppercase tracking-widest opacity-90">{btn.name}</p>
                                     <p className="text-2xl font-black">Call {btn.num}</p>
                                 </div>
                             </div>
-                            <ArrowUpRight size={20} className="opacity-50" />
+                            <ArrowUpRight size={20} className="opacity-70" />
                         </motion.button>
                     ))}
                 </div>
@@ -259,10 +259,15 @@ export default function CrisisPage() {
                                                 <p className="text-xs text-muted-foreground font-medium leading-relaxed">{uni.description}</p>
                                                 <div className="grid gap-3 sm:grid-cols-2">
                                                     {uni.contacts.map((c, j) => (
-                                                        <Button key={j} onClick={() => handleCall(c.phone)} variant="outline" className="h-12 justify-between rounded-xl border-secondary/20 hover:bg-secondary/5 font-bold group">
-                                                            <span className="text-[10px] uppercase tracking-widest">{c.label}</span>
+                                                        <Button
+                                                            key={j}
+                                                            onClick={() => handleCall(c.phone)}
+                                                            variant="outline"
+                                                            className="h-12 justify-between rounded-xl border-primary/20 hover:bg-primary/10 font-bold group"
+                                                        >
+                                                            <span className="text-[10px] uppercase tracking-widest opacity-70">{c.label}</span>
                                                             <div className="flex items-center gap-2">
-                                                                <span className="text-xs text-secondary">{c.phone}</span>
+                                                                <span className="text-xs">{c.phone}</span>
                                                                 <Phone size={14} className="group-hover:translate-x-0.5 transition-transform" />
                                                             </div>
                                                         </Button>

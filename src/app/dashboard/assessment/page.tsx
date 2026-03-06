@@ -132,7 +132,7 @@ export default function AssessmentPage() {
                             </Link>
                             {score > 9 && (
                                 <Link href="/dashboard/crisis">
-                                    <Button variant="secondary" className="w-full h-14 rounded-2xl font-bold bg-secondary/10 hover:bg-secondary/20 text-secondary border-secondary/20 transition-all">
+                                    <Button variant="secondary" className="w-full h-14 rounded-2xl font-bold transition-all">
                                         Immediate Support <ArrowRight size={18} className="ml-2" />
                                     </Button>
                                 </Link>
@@ -201,8 +201,8 @@ export default function AssessmentPage() {
                                 key={opt.value}
                                 onClick={() => handleOptionSelect(opt.value)}
                                 className={`w-full group text-left p-6 md:p-8 rounded-[2rem] border transition-all relative ${answers[currentQuestionIndex] === opt.value
-                                        ? "bg-primary border-primary shadow-xl shadow-primary/20 scale-[1.02]"
-                                        : "bg-muted/30 border-primary/5 hover:border-primary/30 hover:bg-muted/50"
+                                    ? "bg-primary border-primary shadow-xl shadow-primary/20 scale-[1.02]"
+                                    : "bg-muted/30 border-primary/5 hover:border-primary/30 hover:bg-muted/50"
                                     }`}
                             >
                                 <div className="flex items-center justify-between">

@@ -13,7 +13,7 @@ const buttonVariants = cva(
                 secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
                 outline: "border-2 border-primary/20 bg-transparent hover:bg-primary/5 text-primary",
                 ghost: "hover:bg-primary/10 text-primary",
-                glass: "bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20",
+                glass: "bg-foreground/5 backdrop-blur-md border border-foreground/10 text-foreground hover:bg-foreground/15",
             },
             size: {
                 sm: "h-9 px-4 rounded-xl text-xs",

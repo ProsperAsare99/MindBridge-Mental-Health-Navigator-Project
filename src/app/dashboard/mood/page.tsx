@@ -130,8 +130,8 @@ export default function MoodPage() {
                                             key={m.value}
                                             onClick={() => setSelectedMood(m.value)}
                                             className={`flex flex-col items-center gap-4 p-4 rounded-[2rem] transition-all group relative ${isSelected
-                                                    ? "bg-primary/10 border-2 border-primary shadow-lg shadow-primary/10"
-                                                    : "bg-muted/30 border-2 border-transparent hover:border-primary/20 hover:bg-muted/50"
+                                                ? "bg-primary/10 border-2 border-primary shadow-lg shadow-primary/10"
+                                                : "bg-muted/30 border-2 border-transparent hover:border-primary/20 hover:bg-muted/50"
                                                 }`}
                                         >
                                             <div className={`h-12 w-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 ${isSelected ? "text-primary" : "text-muted-foreground"}`}>
@@ -193,24 +193,27 @@ export default function MoodPage() {
                                                 <stop offset="95%" stopColor="var(--primary)" stopOpacity={0} />
                                             </linearGradient>
                                         </defs>
-                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="opacity-[0.05]" />
                                         <XAxis
                                             dataKey="name"
                                             axisLine={false}
                                             tickLine={false}
-                                            tick={{ fontSize: 10, fontWeight: 700, fill: "var(--muted-foreground)" }}
+                                            tick={{ fontSize: 10, fontWeight: 700, fill: "currentColor" }}
+                                            className="text-muted-foreground"
                                             dy={10}
                                         />
                                         <Tooltip
                                             contentStyle={{
                                                 borderRadius: '20px',
-                                                border: '1px solid rgba(var(--primary), 0.1)',
+                                                border: '1px solid currentColor',
+                                                borderOpacity: 0.1,
                                                 boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
                                                 backdropFilter: 'blur(10px)',
-                                                background: 'rgba(255,255,255,0.8)',
+                                                background: 'var(--card)',
+                                                color: 'var(--foreground)',
                                                 fontSize: '12px',
                                                 fontWeight: 'bold'
-                                            }}
+                                            } as any}
                                         />
                                         <Area
                                             type="monotone"

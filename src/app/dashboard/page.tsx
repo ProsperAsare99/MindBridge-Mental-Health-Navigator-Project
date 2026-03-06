@@ -230,7 +230,7 @@ export default function DashboardPage() {
                     </div>
 
                     <div className="md:col-span-2">
-                        <Card className="h-full border-none bg-[#fff5f5] text-[#c53030] shadow-xl shadow-red-500/5 relative overflow-hidden group">
+                        <Card className="h-full border-red-500/10 bg-red-500/5 text-red-600 dark:text-red-400 shadow-xl shadow-red-500/5 relative overflow-hidden group">
                             <CardHeader>
                                 <CardTitle className="text-lg flex items-center gap-2">
                                     <AlertCircle className="h-5 w-5" />
@@ -238,11 +238,11 @@ export default function DashboardPage() {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-6">
-                                <p className="text-sm font-medium leading-relaxed">
+                                <p className="text-sm font-medium leading-relaxed opacity-80">
                                     If you're feeling overwhelmed or in immediate distress, our crisis support team is here for you 24/7.
                                 </p>
                                 <Link href="/dashboard/crisis">
-                                    <Button className="w-full h-12 bg-[#c53030] hover:bg-[#9b1c1c] text-white border-none rounded-2xl shadow-lg shadow-red-900/20">
+                                    <Button className="w-full h-12 bg-red-600 hover:bg-red-700 text-white border-none rounded-2xl shadow-lg shadow-red-900/20">
                                         Get Support Now
                                     </Button>
                                 </Link>

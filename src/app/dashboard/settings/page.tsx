@@ -328,7 +328,7 @@ export default function SettingsPage() {
                                     onClick={handleChangePassword}
                                     disabled={changingPassword || !currentPassword}
                                     variant="secondary"
-                                    className="h-14 px-10 rounded-2xl font-bold bg-secondary/10 hover:bg-secondary/20 text-secondary border-secondary/20"
+                                    className="h-14 px-10 rounded-2xl font-bold"
                                 >
                                     <Lock className="mr-2 h-4 w-4" /> {changingPassword ? "Updating..." : "Change Password"}
                                 </Button>
