@@ -101,7 +101,9 @@ export default function MoodPage() {
                 {stats.map((stat, i) => {
                     const Icon = stat.icon;
                     return (
-                        className = "rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 shadow-2xl hover:bg-white/10 transition-all group relative overflow-hidden"
+                        <div
+                            key={stat.label}
+                            className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 shadow-2xl hover:bg-white/10 transition-all group relative overflow-hidden"
                         >
                             <div className={`absolute -right-4 -top-4 w-12 h-12 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-all ${stat.color.replace('text-', 'bg-')}`} />
                             <div className="flex items-center gap-3 mb-2 relative z-10">
@@ -115,21 +117,21 @@ export default function MoodPage() {
                             <p className="text-3xl font-black text-white relative z-10 drop-shadow-md">{stat.value}</p>
                             <p className="text-sm font-medium text-indigo-200/60 mt-1 relative z-10">{stat.description}</p>
                         </div>
-    );
-})}
-            </motion.div >
+                    );
+                })}
+            </motion.div>
 
-    {/* Main Content Grid */ }
-    < div className = "grid gap-8 lg:grid-cols-5" >
-        {/* Mood Logger — Left Column (3/5) */ }
-        < motion.div
-className = "lg:col-span-3 space-y-8"
-initial = {{ opacity: 0, x: -10 }}
-animate = {{ opacity: 1, x: 0 }}
-transition = {{ duration: 0.4, delay: 0.2 }}
+            {/* Main Content Grid */}
+            <div className="grid gap-8 lg:grid-cols-5">
+                {/* Mood Logger — Left Column (3/5) */}
+                <motion.div
+                    className="lg:col-span-3 space-y-8"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
                 >
-    {/* Mood Check-in Card */ }
-    < div className = "rounded-2xl border border-white/10 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 backdrop-blur-xl p-6 md:p-10 shadow-2xl text-white relative overflow-hidden" >
+                    {/* Mood Check-in Card */}
+                    <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 backdrop-blur-xl p-6 md:p-10 shadow-2xl text-white relative overflow-hidden">
                         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-indigo-500/10 blur-3xl rounded-full" />
                         <div className="relative z-10">
                             <div className="flex items-center gap-4 mb-10">
@@ -146,274 +148,279 @@ transition = {{ duration: 0.4, delay: 0.2 }}
                                 </div>
                             </div>
 
-                        {/* Mood Buttons */}
-                        <div className="grid grid-cols-5 gap-3 md:gap-4">
+                            {/* Mood Buttons */}
+                            <div className="grid grid-cols-5 gap-3 md:gap-4">
+                                {moods.map((m) => {
+                                    const Icon = m.icon;
+                                    const isSelected = selectedMood === m.value;
+                                    return (
+                                        <motion.button
+                                            key={m.value}
+                                            onClick={() => setSelectedMood(m.value)}
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            className={`relative flex flex-col items-center gap-3 p-4 md:p-5 rounded-2xl transition-all duration-300 cursor-pointer border-2 ${isSelected
+                                                ? `${m.bgColor} border-white/40 ${m.textColor} shadow-[0_0_20px_rgba(255,255,255,0.1)]`
+                                                : "border-transparent bg-white/5 hover:bg-white/10"
+                                                }`}
+                                        >
+                                            {isSelected && (
+                                                <motion.div
+                                                    className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${m.color} opacity-20`}
+                                                    layoutId="moodHighlight"
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 0.2 }}
+                                                    transition={{ duration: 0.3 }}
+                                                />
+                                            )}
+                                            <Icon className={`h-8 w-8 md:h-10 md:w-10 relative z-10 transition-all ${isSelected ? m.textColor : "text-indigo-200/50"
+                                                }`} />
+                                            <span className={`text-sm md:text-base font-bold relative z-10 transition-all ${isSelected ? "text-white" : "text-indigo-200/70"
+                                                }`}>
+                                                {m.label}
+                                            </span>
+                                        </motion.button>
+                                    );
+                                })}
+                            </div>
+
+                            {/* Selected Mood Feedback */}
+                            <AnimatePresence>
+                                {selectedMoodData && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: "auto" }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="mt-6 overflow-hidden md:mt-10"
+                                    >
+                                        <div className={`p-5 rounded-2xl ${selectedMoodData.bgColor} border border-white/10 shadow-lg backdrop-blur-md bg-opacity-20`}>
+                                            <p className={`text-xl font-bold ${selectedMoodData.textColor} flex items-center gap-2`}>
+                                                <selectedMoodData.icon className="h-6 w-6" />
+                                                You&apos;re feeling <span className="underline decoration-wavy decoration-2 underline-offset-4">{selectedMoodData.label}</span>
+                                            </p>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+
+                            {/* Note Section */}
+                            <div className="mt-8 md:mt-10">
+                                <label htmlFor="note" className="block text-lg font-bold text-white mb-4">
+                                    Add a note <span className="text-indigo-300/40 font-normal text-sm ml-2">(optional)</span>
+                                </label>
+                                <textarea
+                                    id="note"
+                                    rows={4}
+                                    value={note}
+                                    onChange={(e) => setNote(e.target.value)}
+                                    className="block w-full rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-lg text-white placeholder:text-indigo-300/30 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all resize-none shadow-inner"
+                                    placeholder="What's making you feel this way? Writing it down can help..."
+                                />
+                            </div>
+
+                            <Button
+                                className="w-full mt-8 md:mt-10 h-16 text-xl font-black bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-400 hover:to-pink-400 text-white rounded-2xl shadow-[0_0_30px_rgba(99,102,241,0.3)] hover:shadow-[0_0_40px_rgba(168,85,247,0.4)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                                disabled={!selectedMood}
+                            >
+                                Save Check-in
+                            </Button>
+                        </div>
+                    </div>
+
+                    {/* Trends Chart Card */}
+                    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 md:p-8 shadow-2xl relative overflow-hidden">
+                        <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-purple-500/5 blur-[100px] rounded-full" />
+                        <div className="relative z-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div className="flex items-center gap-4">
+                                <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center shadow-lg">
+                                    <TrendingUp className="h-6 w-6 text-white" />
+                                </div>
+                                <div>
+                                    <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+                                        Mood Trends
+                                    </h2>
+                                    <p className="text-base text-indigo-200/70 font-medium">
+                                        Your emotional journey over time
+                                    </p>
+                                </div>
+                            </div>
+                            {/* Time range toggle */}
+                            <div className="flex rounded-xl bg-white/5 p-1 self-start border border-white/10">
+                                <button
+                                    onClick={() => setActiveTimeRange("week")}
+                                    className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTimeRange === "week"
+                                        ? "bg-white/10 text-white shadow-sm"
+                                        : "text-indigo-300 hover:text-white"
+                                        }`}
+                                >
+                                    Week
+                                </button>
+                                <button
+                                    onClick={() => setActiveTimeRange("month")}
+                                    className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTimeRange === "month"
+                                        ? "bg-white/10 text-white shadow-sm"
+                                        : "text-indigo-300 hover:text-white"
+                                        }`}
+                                >
+                                    Month
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="h-[320px] w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <AreaChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
+                                    <defs>
+                                        <linearGradient id="moodGradient" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="#6366f1" stopOpacity={0.4} />
+                                            <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                                        </linearGradient>
+                                    </defs>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                                    <XAxis
+                                        dataKey="name"
+                                        axisLine={false}
+                                        tickLine={false}
+                                        tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12, fontWeight: 600 }}
+                                        dy={10}
+                                    />
+                                    <YAxis
+                                        domain={[1, 5]}
+                                        axisLine={false}
+                                        tickLine={false}
+                                        tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12, fontWeight: 600 }}
+                                        ticks={[1, 2, 3, 4, 5]}
+                                    />
+                                    <Tooltip
+                                        contentStyle={{
+                                            backgroundColor: "rgba(30, 41, 59, 0.8)",
+                                            backdropFilter: "blur(12px)",
+                                            borderRadius: "16px",
+                                            border: "1px solid rgba(255, 255, 255, 0.1)",
+                                            boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                                            color: "#fff",
+                                        }}
+                                        itemStyle={{ color: "#fff", fontWeight: 700 }}
+                                        cursor={{ stroke: '#6366f1', strokeWidth: 2 }}
+                                        formatter={(value) => {
+                                            const numVal = typeof value === 'number' ? value : Number(value);
+                                            const moodLabel = moods.find(m => m.value === Math.round(numVal))?.label || String(value);
+                                            return [moodLabel, "Mood"];
+                                        }}
+                                    />
+                                    <Area
+                                        type="monotone"
+                                        dataKey="mood"
+                                        stroke="#818cf8"
+                                        strokeWidth={4}
+                                        fillOpacity={1}
+                                        fill="url(#moodGradient)"
+                                        animationDuration={2000}
+                                        dot={{ fill: '#818cf8', strokeWidth: 2, r: 4, stroke: '#6366f1' }}
+                                        activeDot={{ r: 6, strokeWidth: 0 }}
+                                    />
+                                </AreaChart>
+                            </ResponsiveContainer>
+                        </div>
+
+                        {/* Mood Scale Legend */}
+                        <div className="mt-6 flex items-center justify-center gap-4 flex-wrap">
                             {moods.map((m) => {
                                 const Icon = m.icon;
-                                const isSelected = selectedMood === m.value;
                                 return (
-                                    <motion.button
-                                        key={m.value}
-                                        onClick={() => setSelectedMood(m.value)}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                        className={`relative flex flex-col items-center gap-3 p-4 md:p-5 rounded-2xl transition-all duration-300 cursor-pointer border-2 ${isSelected
-                                            ? `${m.bgColor} border-current ${m.textColor} shadow-lg`
-                                            : "border-transparent hover:border-border bg-muted/50 dark:bg-slate-700/30 hover:bg-muted"
-                                            }`}
+                                    <div key={m.value} className="flex items-center gap-1.5">
+                                        <Icon className={`h-4 w-4 ${m.textColor}`} />
+                                        <span className="text-sm font-semibold text-indigo-200/70">{m.value} – {m.label}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* Right Column — Recent Entries (2/5) */}
+                <motion.div
+                    className="lg:col-span-2 space-y-6"
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                >
+                    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 md:p-8 shadow-2xl h-full relative overflow-hidden">
+                        <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-amber-500/5 blur-[80px] rounded-full" />
+
+                        <div className="relative z-10 flex items-center gap-3 mb-8">
+                            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 flex items-center justify-center shadow-lg">
+                                <Clock className="h-5 w-5 text-white" />
+                            </div>
+                            <div>
+                                <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+                                    Recent entries
+                                </h2>
+                                <p className="text-base text-indigo-200/70 font-medium">
+                                    Your latest snapshots
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4 relative z-10">
+                            {recentEntries.map((entry, i) => {
+                                const moodData = moods.find(m => m.value === entry.mood);
+                                const Icon = moodData?.icon || Meh;
+                                return (
+                                    <motion.div
+                                        key={i}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.4 + i * 0.1 }}
+                                        className="group p-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all cursor-default"
                                     >
-                                        {isSelected && (
-                                            <motion.div
-                                                className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${m.color} opacity-10`}
-                                                layoutId="moodHighlight"
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 0.1 }}
-                                                transition={{ duration: 0.3 }}
-                                            />
-                                        )}
-                                        <Icon className={`h-8 w-8 md:h-10 md:w-10 relative z-10 transition-all ${isSelected ? m.textColor : "text-indigo-200/50"
-                                            }`} />
-                                        <span className={`text-sm md:text-base font-bold relative z-10 transition-all ${isSelected ? "text-white" : "text-indigo-200/70"
-                                            }`}>
-                                            {m.label}
-                                        </span>
-                                    </motion.button>
+                                        <div className="flex items-start gap-4">
+                                            <div className={`p-2.5 rounded-xl ${moodData?.bgColor} bg-opacity-20 border border-white/10`}>
+                                                <Icon className={`h-6 w-6 ${moodData?.textColor}`} />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center justify-between mb-1">
+                                                    <span className="text-base font-bold text-white">
+                                                        {entry.day}
+                                                    </span>
+                                                    <span className="text-xs font-semibold text-indigo-300 opacity-60">
+                                                        {entry.time}
+                                                    </span>
+                                                </div>
+                                                <span className={`inline-block text-sm font-bold ${moodData?.textColor} mb-1 bg-white/5 px-2 rounded-md`}>
+                                                    {entry.label}
+                                                </span>
+                                                <p className="text-sm text-indigo-100/70 leading-relaxed italic">
+                                                    &ldquo;{entry.note}&rdquo;
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </motion.div>
                                 );
                             })}
                         </div>
 
-                        {/* Selected Mood Feedback */}
-                        <AnimatePresence>
-                            {selectedMoodData && (
-                                <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: "auto" }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    className="mt-6 overflow-hidden"
-                                >
-                                    <div className={`p-4 rounded-xl ${selectedMoodData.bgColor} border border-border`}>
-                                        <p className={`text-lg font-semibold ${selectedMoodData.textColor}`}>
-                                            You&apos;re feeling <span className="capitalize">{selectedMoodData.label}</span>
-                                        </p>
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                        {/* View All Link */}
+                        <button className="relative z-10 mt-6 w-full flex items-center justify-center gap-2 py-4 rounded-2xl text-base font-bold text-indigo-300 hover:text-white hover:bg-white/10 transition-all border border-white/5">
+                            View All Entries
+                            <ChevronRight className="h-5 w-5" />
+                        </button>
 
-                        {/* Note Section */}
-                        <div className="mt-8">
-                            <label htmlFor="note" className="block text-base font-bold text-white mb-3">
-                                Add a note <span className="text-indigo-300/60 font-normal">(optional)</span>
-                            </label>
-                            <textarea
-                                id="note"
-                                rows={4}
-                                value={note}
-                                onChange={(e) => setNote(e.target.value)}
-                                className="block w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white placeholder:text-indigo-300/40 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all resize-none"
-                                placeholder="What's making you feel this way? Writing it down can help..."
-                            />
+                        {/* Insight Card */}
+                        <div className="relative z-10 mt-8 p-6 rounded-2xl bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-pink-500/10 border border-white/10 shadow-inner">
+                            <div className="flex items-center gap-2 mb-3">
+                                <Sparkles className="h-5 w-5 text-indigo-400" />
+                                <h3 className="text-lg font-black text-white uppercase tracking-wider text-sm">Vital Insight</h3>
+                            </div>
+                            <p className="text-sm text-indigo-100/80 leading-relaxed">
+                                Your mood has been <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">trending upward</span> this week!
+                                You seem to feel best on <span className="font-bold text-white">Fridays</span>. Consider what makes
+                                those days special.
+                            </p>
                         </div>
-
-                        <Button
-                            className="w-full mt-6 h-14 text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                            disabled={!selectedMood}
-                        >
-                            Save Check-in
-                        </Button>
                     </div>
-
-{/* Trends Chart Card */ }
-<div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 md:p-8 shadow-2xl relative overflow-hidden">
-    <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-purple-500/5 blur-[100px] rounded-full" />
-    <div className="relative z-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center shadow-lg">
-                <TrendingUp className="h-6 w-6 text-white" />
-            </div>
-            <div>
-                <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-                    Mood Trends
-                </h2>
-                <p className="text-base text-indigo-200/70 font-medium">
-                    Your emotional journey over time
-                </p>
+                </motion.div>
             </div>
         </div>
-        {/* Time range toggle */}
-        <div className="flex rounded-xl bg-white/5 p-1 self-start border border-white/10">
-            <button
-                onClick={() => setActiveTimeRange("week")}
-                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTimeRange === "week"
-                    ? "bg-white/10 text-white shadow-sm"
-                    : "text-indigo-300 hover:text-white"
-                    }`}
-            >
-                Week
-            </button>
-            <button
-                onClick={() => setActiveTimeRange("month")}
-                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTimeRange === "month"
-                    ? "bg-white/10 text-white shadow-sm"
-                    : "text-indigo-300 hover:text-white"
-                    }`}
-            >
-                Month
-            </button>
-        </div>
-    </div>
-
-    <div className="h-[320px] w-full">
-        <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
-                <defs>
-                    <linearGradient id="moodGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#6366f1" stopOpacity={0.4} />
-                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
-                    </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis
-                    dataKey="day"
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12, fontWeight: 600 }}
-                    dy={10}
-                />
-                <YAxis
-                    domain={[1, 5]}
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12, fontWeight: 600 }}
-                    ticks={[1, 2, 3, 4, 5]}
-                />
-                <Tooltip
-                    contentStyle={{
-                        backgroundColor: "rgba(30, 41, 59, 0.8)",
-                        backdropFilter: "blur(12px)",
-                        borderRadius: "16px",
-                        border: "1px solid rgba(255, 255, 255, 0.1)",
-                        boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-                        color: "#fff",
-                    }}
-                    itemStyle={{ color: "#fff", fontWeight: 700 }}
-                    cursor={{ stroke: '#6366f1', strokeWidth: 2 }}
-                    formatter={(value) => {
-                        const numVal = typeof value === 'number' ? value : Number(value);
-                        const moodLabel = moods.find(m => m.value === Math.round(numVal))?.label || String(value);
-                        return [moodLabel, "Mood"];
-                    }}
-                />
-                <Area
-                    type="monotone"
-                    dataKey="mood"
-                    stroke="#6366f1"
-                    strokeWidth={3}
-                    fillOpacity={1}
-                    fill="url(#colorMood)"
-                    dot={{ r: 5, fill: "#6366f1", strokeWidth: 2, stroke: "var(--background)" }}
-                    activeDot={{ r: 7, fill: "#6366f1", strokeWidth: 3, stroke: "var(--background)" }}
-                />
-            </AreaChart>
-        </ResponsiveContainer>
-    </div>
-
-    {/* Mood Scale Legend */}
-    <div className="mt-6 flex items-center justify-center gap-4 flex-wrap">
-        {moods.map((m) => {
-            const Icon = m.icon;
-            return (
-                <div key={m.value} className="flex items-center gap-1.5">
-                    <Icon className={`h-4 w-4 ${m.textColor}`} />
-                    <span className="text-sm font-semibold text-indigo-200/70">{m.value} – {m.label}</span>
-                </div>
-            );
-        })}
-    </div>
-</div>
-                </motion.div >
-
-    {/* Right Column — Recent Entries (2/5) */ }
-    < motion.div
-className = "lg:col-span-2"
-initial = {{ opacity: 0, x: 10 }}
-animate = {{ opacity: 1, x: 0 }}
-transition = {{ duration: 0.4, delay: 0.3 }}
-                >
-    <div className="rounded-2xl border border-border bg-background/80 dark:bg-slate-800/50 backdrop-blur-sm p-6 md:p-8 shadow-sm h-full">
-        <div className="flex items-center gap-3 mb-8">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
-                <Clock className="h-5 w-5 text-white" />
-            </div>
-            <div>
-                <h2 className="text-2xl md:text-3xl font-bold text-white">
-                    Recent Check-ins
-                </h2>
-                <p className="text-base text-indigo-200">
-                    Your latest mood entries
-                </p>
-            </div>
-        </div>
-
-        <div className="space-y-4">
-            {recentEntries.map((entry, i) => {
-                const moodData = moods.find(m => m.value === entry.mood);
-                const Icon = moodData?.icon || Meh;
-                return (
-                    <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 + i * 0.1 }}
-                        className="group p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all cursor-default"
-                    >
-                        <div className="flex items-start gap-4">
-                            <div className={`p-2.5 rounded-xl ${moodData?.bgColor}`}>
-                                <Icon className={`h-6 w-6 ${moodData?.textColor}`} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <div className="flex items-center justify-between mb-1">
-                                    <span className="text-base font-bold text-white">
-                                        {entry.day}
-                                    </span>
-                                    <span className="text-sm font-semibold text-indigo-300">
-                                        {entry.time}
-                                    </span>
-                                </div>
-                                <span className={`inline-block text-sm font-bold ${moodData?.textColor} mb-1`}>
-                                    {entry.label}
-                                </span>
-                                <p className="text-sm text-indigo-200/70 leading-relaxed">
-                                    {entry.note}
-                                </p>
-                            </div>
-                        </div>
-                    </motion.div>
-                );
-            })}
-        </div>
-
-        {/* View All Link */}
-        <button className="mt-6 w-full flex items-center justify-center gap-2 py-3 rounded-xl text-base font-bold text-indigo-400 hover:text-white hover:bg-white/5 transition-all">
-            View All Entries
-            <ChevronRight className="h-5 w-5" />
-        </button>
-
-        {/* Insight Card */}
-        <div className="mt-6 p-5 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 border border-indigo-200/50 dark:border-indigo-500/30">
-            <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="h-5 w-5 text-indigo-400" />
-                <h3 className="text-base font-bold text-white">Weekly Insight</h3>
-            </div>
-            <p className="text-sm text-indigo-200/70 leading-relaxed">
-                Your mood has been <span className="font-bold text-indigo-400">trending upward</span> this week!
-                You seem to feel best on <span className="font-bold text-white">Fridays</span>. Consider what makes
-                those days special.
-            </p>
-        </div>
-    </div>
-                </motion.div >
-            </div >
-        </div >
     );
 }
