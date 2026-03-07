@@ -78,19 +78,8 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          className="max-w-5xl space-y-12"
+          className="max-w-5xl space-y-12 flex flex-col items-center"
         >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2.5 rounded-full border border-primary/10 bg-primary/5 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary/80 backdrop-blur-sm mx-auto"
-          >
-            <Activity className="h-3.5 w-3.5 animate-pulse" />
-            Designed for Academic Well-being
-          </motion.div>
-
           {/* Heading */}
           <ParallaxSection speed={0.15}>
             <h1 className="text-6xl font-extrabold tracking-tight sm:text-7xl md:text-9xl text-foreground leading-[1.05]">
@@ -98,6 +87,18 @@ export default function Home() {
               <span className="text-primary/80">Understood.</span>
             </h1>
           </ParallaxSection>
+
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, duration: 0.8 }}
+            className="inline-flex items-center gap-2.5 rounded-full border border-primary/10 bg-primary/5 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary/80 backdrop-blur-sm shadow-sm"
+          >
+            <Activity className="h-3.5 w-3.5 animate-pulse" />
+            Designed for Academic Well-being
+          </motion.div>
 
           <ParallaxSection speed={0.1}>
             <p className="max-w-2xl mx-auto text-lg md:text-xl font-medium text-muted-foreground leading-relaxed">
@@ -205,41 +206,77 @@ export default function Home() {
                 content={
                   <div className="w-[300px] p-8 text-left bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 shadow-2xl">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="h-10 w-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                      <div className="h-10 w-10 rounded-xl bg-primary/20 flex items-center justify-center relative">
                         <Activity className="h-5 w-5 text-primary" />
+                        <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red-500 border-2 border-white animate-pulse" />
                       </div>
                       <div>
-                        <div className="text-[10px] font-black uppercase tracking-widest text-primary/60">Live Analytics</div>
+                        <div className="flex items-center gap-2">
+                          <div className="text-[10px] font-black uppercase tracking-widest text-primary/60">Live Analytics</div>
+                          <div className="h-1 w-1 rounded-full bg-red-500 animate-ping" />
+                        </div>
                         <div className="text-sm font-bold text-black">Academic Pulse</div>
                       </div>
                     </div>
 
                     <div className="space-y-4 mb-8">
-                      <div className="h-2 w-full bg-black/5 rounded-full overflow-hidden">
+                      <div className="h-3 w-full bg-black/5 rounded-full overflow-hidden relative">
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: "75%" }}
-                          transition={{ duration: 1.5, delay: 1 }}
-                          className="h-full bg-primary"
-                        />
+                          transition={{ duration: 2, ease: "circOut", delay: 0.5 }}
+                          className="h-full bg-primary relative"
+                        >
+                          <motion.div
+                            initial={{ x: "-100%" }}
+                            animate={{ x: "200%" }}
+                            transition={{ repeat: Infinity, duration: 2, ease: "linear", repeatDelay: 1 }}
+                            className="absolute inset-y-0 w-20 bg-gradient-to-r from-transparent via-white/50 to-transparent"
+                          />
+                        </motion.div>
                       </div>
                       <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-black/40">
-                        <span>Well-being Score</span>
-                        <span className="text-primary">75%</span>
+                        <motion.span
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          transition={{ delay: 1.5 }}
+                        >Well-being Score</motion.span>
+                        <motion.span
+                          initial={{ opacity: 0, y: 5 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 1.8 }}
+                          className="text-primary text-xs"
+                        >75%</motion.span>
                       </div>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-black/5 border border-black/5">
-                      <p className="text-xs font-medium text-black/60 italic leading-relaxed">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 2.2 }}
+                      className="p-4 rounded-2xl bg-black/5 border border-black/5 relative overflow-hidden group/box"
+                    >
+                      <motion.div
+                        className="absolute inset-0 bg-primary/5 translate-x-[-100%]"
+                        whileInView={{ x: "100%" }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                      />
+                      <p className="text-xs font-medium text-black/60 italic leading-relaxed relative z-10">
                         "Your engagement levels are steady this week. Consider a 15-minute mindfulness session before your afternoon lecture."
                       </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="mt-8 pt-6 border-t border-black/5 flex justify-between items-center">
+                    <div className="mt-8 pt-6 border-t border-black/5 flex justify-between items-center opacity-60">
                       <div className="text-[10px] font-black uppercase tracking-widest text-black/40">Session ID: #MB-0492</div>
                       <div className="flex -space-x-2">
                         {[1, 2, 3].map(i => (
-                          <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-primary/10" />
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, scale: 0 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 2.5 + (i * 0.1) }}
+                            className="h-6 w-6 rounded-full border-2 border-white bg-primary/20"
+                          />
                         ))}
                       </div>
                     </div>
