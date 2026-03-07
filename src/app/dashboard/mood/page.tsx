@@ -175,7 +175,7 @@ export default function MoodPage() {
                                         <button
                                             key={t}
                                             onClick={() => setActiveTimeRange(t.toLowerCase() as any)}
-                                            className={`px-4 py-1.5 rounded-full text-[10px] font-bold transition-all ${activeTimeRange === t.toLowerCase() ? "bg-background shadow-md text-primary" : "text-muted-foreground hover:text-foreground"
+                                            className={`px-4 py-1.5 rounded-full text-[10px] font-bold transition-all ${activeTimeRange === t.toLowerCase() ? "bg-card shadow-sm text-primary ring-1 ring-primary/10" : "text-muted-foreground hover:text-foreground"
                                                 }`}
                                         >
                                             {t}
