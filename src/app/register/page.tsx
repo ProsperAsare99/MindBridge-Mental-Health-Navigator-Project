@@ -255,6 +255,10 @@ export default function RegisterPage() {
                                         { value: "PENTECOST", label: "Pentecost University" },
                                         { value: "ALL_NATIONS", label: "All Nations University" },
                                         { value: "RMU", label: "Regional Maritime University (RMU)" },
+                                        { value: "COE", label: "College of Education (COE)" },
+                                        { value: "NMTC", label: "Nursing & Midwifery Training College (NMTC)" },
+                                        { value: "POLICE_TRAINING", label: "Police Training School" },
+                                        { value: "MILITARY_ACADEMY", label: "Ghana Military Academy" },
                                         { value: "Other", label: "Other Institution" },
                                     ]}
                                     placeholder="Select Institution"

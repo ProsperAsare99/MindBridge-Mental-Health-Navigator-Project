@@ -218,7 +218,7 @@ const VIDEO_RESOURCES = [
     { title: "Vulnerability Power", speaker: "Brené Brown", id: "iCvmsMzlF7o" },
     { title: "10 Mindful Minutes", speaker: "Andy Puddicombe", id: "qzR62JJCMBQ" },
     { title: "Emotional First Aid", speaker: "Guy Winch", id: "F2hc2FLOdhI" },
-    { title: "The JOURNEY of RESILIENCE", speaker: "Simon Sinek", id: "5p31Y8r83Is" }
+    { title: "The JOURNEY of RESILIENCE", speaker: "Simon Sinek", id: "rkZl2gsLUp4" }
 ];
 
 // ─── Free Books ───

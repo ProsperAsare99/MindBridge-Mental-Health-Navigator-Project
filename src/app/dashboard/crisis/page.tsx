@@ -26,18 +26,21 @@ const EMERGENCY_LINES = [
         number: "193",
         description: "For medical emergencies across Ghana. Free to call.",
         available: "24/7",
+        website: "https://nas.gov.gh"
     },
     {
         name: "Ghana Police Emergency",
         number: "191",
         description: "For immediate safety concerns or life-threatening situations.",
         available: "24/7",
+        website: "https://police.gov.gh"
     },
     {
         name: "Domestic Violence & Victim Support (DOVVSU)",
         number: "0302-773906",
         description: "Support for victims of domestic violence, abuse, and assault.",
         available: "24/7",
+        website: "https://police.gov.gh/dovvsu"
     },
 ];
 
@@ -47,18 +50,28 @@ const MENTAL_HEALTH_LINES = [
         number: "0800-123-456",
         description: "Free mental health support and referral service operated by the Mental Health Authority of Ghana.",
         available: "Mon-Fri 8am-5pm",
+        website: "https://mha.gov.gh"
     },
     {
         name: "Ghana Psychological Association",
         number: "030-250-0065",
         description: "Referrals to licensed psychologists and mental health professionals across Ghana.",
         available: "Mon-Fri 9am-5pm",
+        website: "https://ghanapsychology.org"
+    },
+    {
+        name: "BasicNeeds Ghana",
+        number: "030-250-1994",
+        description: "Mental health and development organization providing community-based support.",
+        available: "Mon-Fri 8am-5pm",
+        website: "https://basicneedsghana.org"
     },
     {
         name: "Befrienders Worldwide – Ghana",
         number: "233-244-846-328",
         description: "Confidential emotional support for those in distress or at risk of suicide.",
         available: "24/7",
+        website: "https://befrienders.org"
     },
 ];
 
@@ -67,20 +80,22 @@ const UNIVERSITY_RESOURCES = [
         name: "University of Ghana (UG)",
         location: "Legon Campus, Accra",
         centre: "Careers and Counselling Centre",
-        description: "Professional counselling services for all UG students. Walk-in and appointment-based sessions for academic stress, relationship issues, grief, and mental health.",
+        description: "Professional counselling services for all UG students. Walk-in and appointment-based sessions for academic stress, relationship issues, grief, and mental health. Also runs peer counselling.",
         contacts: [
             { label: "Counselling Centre", phone: "0245 945 752" },
+            { label: "Counselling Centre (Alt)", phone: "0204 999 221" },
         ],
-        email: "pad@ug.edu.gh",
-        website: "https://www.ug.edu.gh/careers/counselling-services",
+        email: "deanofstudents@ug.edu.gh",
+        website: "https://www.ug.edu.gh/deanofstudents/",
     },
     {
         name: "KNUST",
         location: "Kumasi, Ashanti Region",
         centre: "KNUST Counselling Center (KCC)",
-        description: "Mental health facility with professional counselors and clinical psychologists. Offers individual and group counselling and crisis intervention.",
+        description: "Mental health facility with professional counselors and clinical psychologists. Offers individual and group counselling, crisis intervention, academic counselling, career guidance, and psychological assessments.",
         contacts: [
             { label: "Counselling Centre", phone: "050 644 9747" },
+            { label: "Counselling Centre (Alt)", phone: "059 439 97772" },
         ],
         email: "counsellingcentre@knust.edu.gh",
         website: "https://www.knust.edu.gh/students/counselling",
@@ -89,23 +104,156 @@ const UNIVERSITY_RESOURCES = [
         name: "UCC",
         location: "Cape Coast, Central Region",
         centre: "Counselling Unit",
-        description: "Counselling for UCC students covering academic, vocational, and social/personal issues. Provides trauma counselling and stress management.",
+        description: "Counselling for UCC students covering academic, vocational, and social/personal issues. Provides trauma counselling, stress management, peer-led support groups, and referral services.",
         contacts: [
             { label: "Counselling Unit", phone: "033 209 6884" },
+            { label: "University Main Line", phone: "033 213 2440" },
         ],
         email: "counselling@ucc.edu.gh",
         website: "https://www.ucc.edu.gh/",
     },
     {
+        name: "University of Education, Winneba (UEW)",
+        location: "Winneba, Central Region",
+        centre: "University Counselling Centre",
+        description: "Psychological and academic counselling for UEW students. Located adjacent to the old Library (opposite Taxi Rank), North Campus. Offers orientation counselling, crisis support, and referrals.",
+        contacts: [
+            { label: "Counselling Centre", phone: "020 204 1040" },
+            { label: "Counselling Centre (Alt)", phone: "020 166 5951" },
+            { label: "Director", phone: "024 351 6659" },
+        ],
+        email: "counselling@uew.edu.gh",
+        website: "https://www.uew.edu.gh/",
+    },
+    {
+        name: "University for Development Studies (UDS)",
+        location: "Tamale, Northern Region",
+        centre: "Office of the Dean of Students' Affairs",
+        description: "Counselling services across all UDS campuses. Offers crisis intervention, personal development programmes, group therapy, and referral to the Tamale Teaching Hospital.",
+        contacts: [
+            { label: "University Main Line", phone: "037 209 3697" },
+            { label: "University (Alt)", phone: "054 544 7445" },
+            { label: "Dean of Students", phone: "024 453 3268" },
+        ],
+        email: "mayamga@uds.edu.gh",
+        website: "https://www.uds.edu.gh/",
+    },
+    {
+        name: "GIMPA",
+        location: "Greenhill, Achimota, Accra",
+        centre: "Student Affairs & Counselling",
+        description: "Counselling support for GIMPA students. Individual sessions for personal and academic challenges. Career counselling and referral services also available.",
+        contacts: [
+            { label: "Main Line", phone: "030 240 1681" },
+            { label: "Main Line (Alt)", phone: "030 240 1682" },
+        ],
+        email: "info@gimpa.edu.gh",
+        website: "https://www.gimpa.edu.gh/",
+    },
+    {
         name: "Ashesi University",
         location: "Berekuso, Eastern Region",
         centre: "Counselling & Coaching Center",
-        description: "Trained on-campus counsellors available for confidential sessions in English and French. Mental health awareness campaigns and wellness weeks.",
+        description: "Trained on-campus counsellors available for confidential sessions in English and French. Mental health awareness campaigns, peer support networks, and wellness weeks.",
         contacts: [
             { label: "Counselling & Coaching", phone: "030 261 0330" },
+            { label: "Counselling (French & English)", phone: "024 880 7992" },
         ],
         email: "studentlife@ashesi.edu.gh",
         website: "https://www.ashesi.edu.gh/student-life",
+    },
+    {
+        name: "UPSA",
+        location: "Legon, Accra",
+        centre: "Student Services Unit",
+        description: "Counselling services for UPSA students covering academic, emotional, and personal challenges. Workshops on stress management and exam preparation routinely held.",
+        contacts: [
+            { label: "Main Line", phone: "030 393 7542" },
+            { label: "Student Helpdesk", phone: "020 838 1583" },
+        ],
+        email: "info@upsa.edu.gh",
+        website: "https://www.upsa.edu.gh/",
+    },
+    {
+        name: "GCTU",
+        location: "Tesano, Accra",
+        centre: "Student Affairs Office",
+        description: "Counselling support for GCTU students. Offers individual sessions for personal development, career guidance, and mental health support.",
+        contacts: [
+            { label: "Student Affairs", phone: "030 220 0623" },
+        ],
+        email: "studentaffairs@gctu.edu.gh",
+        website: "https://www.gctu.edu.gh/",
+    },
+    {
+        name: "University of Health and Allied Sciences (UHAS)",
+        location: "Ho, Volta Region",
+        centre: "Student Affairs – Counselling Services",
+        description: "Counselling and wellness services for UHAS students. Located at Ground Floor, Central Administration building. Close ties with Ho Teaching Hospital for psychiatric referrals.",
+        contacts: [
+            { label: "Student Affairs", phone: "020 836 5644" },
+            { label: "Student Affairs (Alt)", phone: "036 229 0046" },
+        ],
+        email: "studentaffairs@uhas.edu.gh",
+        website: "https://www.uhas.edu.gh/",
+    },
+    {
+        name: "Accra College of Education (AcCE)",
+        location: "East Legon, Accra",
+        centre: "Student Affairs & Counselling",
+        description: "Comprehensive support for teacher trainees. Offers academic, personal, and professional development counselling.",
+        contacts: [
+            { label: "General Enquiries", phone: "020 608 8310" },
+            { label: "Student Affairs", phone: "024 484 7359" },
+        ],
+        email: "info@acce.edu.gh",
+        website: "https://acce.edu.gh",
+    },
+    {
+        name: "Korle-Bu Nursing & Midwifery Training College",
+        location: "Korle-Bu, Accra",
+        centre: "Student Support Services",
+        description: "Specialized support for healthcare trainees. Focuses on stress management, clinical anxiety, and academic excellence.",
+        contacts: [
+            { label: "Main Office", phone: "030 266 6361" },
+        ],
+        email: "info@kbnmtc.edu.gh",
+        website: "https://kbnmtc.edu.gh",
+    },
+    {
+        name: "Ghana Police Training School",
+        location: "Tesano, Accra",
+        centre: "NPATS Guidance & Counselling",
+        description: "Mental health and resilience training for recruits and officers. Confidential support for work-related stress and personal challenges.",
+        contacts: [
+            { label: "Main Line", phone: "030 222 8744" },
+        ],
+        email: "info@police.gov.gh",
+        website: "https://police.gov.gh",
+    },
+    {
+        name: "Ghana Armed Forces (GAF) Academy",
+        location: "Teshie, Accra",
+        centre: "GAF Counselling Centre",
+        description: "Dedicated mental health support for military personnel and cadets. Extensive resources for PTSD, resilience, and family support.",
+        contacts: [
+            { label: "GAF Counselling", phone: "030 277 5701" },
+        ],
+        email: "info@af.mil.gh",
+        website: "https://af.mil.gh",
+    },
+];
+
+const ONLINE_RESOURCES = [
+    {
+        name: "Mental Health Authority Ghana",
+        url: "https://www.mha.gov.gh/",
+        description: "Official government body overseeing mental health services in Ghana.",
+    },
+    {
+        name: "7 Cups (Free Online Chat)",
+        url: "https://www.7cups.com/",
+        description: "Free online chat with trained listeners for emotional support. Available worldwide.",
     },
 ];
 
@@ -206,9 +354,22 @@ export default function CrisisPage() {
                                         </div>
                                     </div>
                                     <p className="text-xs text-muted-foreground font-medium leading-relaxed">{line.description}</p>
-                                    <div className="flex items-center gap-2 pt-2">
-                                        <Clock size={12} className="text-primary group-hover:text-red-500 transition-colors" />
-                                        <span className="text-[10px] font-bold text-muted-foreground">{line.available}</span>
+                                    <div className="flex items-center justify-between pt-2">
+                                        <div className="flex items-center gap-2">
+                                            <Clock size={12} className="text-primary group-hover:text-red-500 transition-colors" />
+                                            <span className="text-[10px] font-bold text-muted-foreground">{line.available}</span>
+                                        </div>
+                                        {(line as any).website && (
+                                            <a
+                                                href={(line as any).website}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                onClick={(e) => e.stopPropagation()}
+                                                className="flex items-center gap-1 text-[9px] font-bold text-primary uppercase tracking-widest hover:text-red-500 transition-colors"
+                                            >
+                                                <Globe size={12} /> Website
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
                             </motion.div>
@@ -282,6 +443,36 @@ export default function CrisisPage() {
                                     )}
                                 </AnimatePresence>
                             </motion.div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* National Online Resources */}
+                <div className="space-y-6">
+                    <div className="flex items-center justify-between ml-1">
+                        <h3 className="font-bold text-foreground/90">National Online Resources</h3>
+                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Web & Chat Support</span>
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                        {ONLINE_RESOURCES.map((resource, i) => (
+                            <a
+                                key={i}
+                                href={resource.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="bg-card glass rounded-[2rem] p-6 border border-primary/10 shadow-premium group hover:border-primary/30 transition-all flex flex-col justify-between"
+                            >
+                                <div className="space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <h4 className="font-bold text-foreground/90 text-sm group-hover:text-primary transition-colors">{resource.name}</h4>
+                                        <ExternalLink size={14} className="text-muted-foreground group-hover:text-primary transition-all" />
+                                    </div>
+                                    <p className="text-xs text-muted-foreground font-medium leading-relaxed">{resource.description}</p>
+                                </div>
+                                <div className="flex items-center gap-2 pt-4 text-[10px] font-bold text-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">
+                                    Visit Website <ArrowUpRight size={12} />
+                                </div>
+                            </a>
                         ))}
                     </div>
                 </div>
