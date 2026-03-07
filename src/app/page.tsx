@@ -204,134 +204,81 @@ export default function Home() {
                 hoverColor="#f8faff"
                 className="h-[500px]"
                 content={
-                  <div className="w-[340px] p-6 text-left bg-white/5 backdrop-blur-[20px] rounded-[2rem] border border-white/20 shadow-[0_32px_64px_rgba(0,0,0,0.3)] overflow-hidden relative group/card">
-                    {/* Background Glows */}
-                    <div className="absolute -top-24 -right-24 h-48 w-48 bg-primary/20 blur-[60px] rounded-full" />
-                    <div className="absolute -bottom-24 -left-24 h-48 w-48 bg-secondary/20 blur-[60px] rounded-full" />
-
-                    {/* Header: Live Status */}
-                    <div className="flex items-center justify-between mb-8 relative z-10">
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-2xl bg-primary/10 flex items-center justify-center relative border border-primary/20">
-                          <Activity className="h-5 w-5 text-primary" />
-                          <div className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500 border border-white animate-pulse" />
-                        </div>
-                        <div>
-                          <div className="text-[10px] font-black uppercase tracking-widest text-primary/60 mb-0.5 flex items-center gap-1.5">
-                            Real-time Pulse
-                            <span className="h-1 w-1 rounded-full bg-red-500 animate-ping" />
-                          </div>
-                          <div className="text-base font-bold text-black dark:text-white">Academic Performance</div>
-                        </div>
+                  <div className="w-[300px] p-8 text-left bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 shadow-2xl">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="h-10 w-10 rounded-xl bg-primary/20 flex items-center justify-center relative">
+                        <Activity className="h-5 w-5 text-primary" />
+                        <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red-500 border-2 border-white animate-pulse" />
                       </div>
-                      <div className="text-right">
-                        <div className="text-[20px] font-black text-primary leading-none">94<span className="text-[10px] opacity-60 ml-0.5">%</span></div>
-                        <div className="text-[9px] font-black uppercase tracking-tighter text-black/40 dark:text-white/40">Efficiency</div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <div className="text-[10px] font-black uppercase tracking-widest text-primary/60">Live Analytics</div>
+                          <div className="h-1 w-1 rounded-full bg-red-500 animate-ping" />
+                        </div>
+                        <div className="text-sm font-bold text-black">Academic Pulse</div>
                       </div>
                     </div>
 
-                    {/* Main Pulse Metric: SVG Sparkline */}
-                    <div className="mb-8 relative z-10 bg-black/5 dark:bg-white/5 p-4 rounded-2xl border border-black/5 dark:border-white/5">
-                      <div className="flex justify-between items-end mb-4">
-                        <div>
-                          <div className="text-[10px] font-black uppercase tracking-widest text-black/40 dark:text-white/40 mb-1">Focus Flow</div>
-                          <div className="text-xl font-extrabold text-black dark:text-white">Optimal</div>
-                        </div>
-                        <div className="flex items-end gap-1 h-8">
-                          {[0.4, 0.7, 0.5, 0.9, 0.6, 1, 0.8].map((h, i) => (
-                            <motion.div
-                              key={i}
-                              initial={{ height: 0 }}
-                              whileInView={{ height: `${h * 100}%` }}
-                              transition={{ duration: 1, delay: 1 + i * 0.1, repeat: Infinity, repeatType: "reverse", repeatDelay: Math.random() }}
-                              className="w-1.5 rounded-full bg-primary/40"
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      <div className="h-16 w-full relative">
-                        <svg viewBox="0 0 100 40" className="w-full h-full overflow-visible">
-                          <defs>
-                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" stopColor="#3b82f6" stopOpacity="0" />
-                              <stop offset="50%" stopColor="#3b82f6" stopOpacity="1" />
-                              <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
-                            </linearGradient>
-                          </defs>
-                          <motion.path
-                            initial={{ pathLength: 0, opacity: 0 }}
-                            whileInView={{ pathLength: 1, opacity: 1 }}
-                            transition={{ duration: 2.5, ease: "easeInOut", delay: 0.5 }}
-                            d="M0 25 Q 15 10, 30 25 T 60 25 T 90 10 T 130 30"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            className="text-primary"
-                          />
-                          <motion.path
+                    <div className="space-y-4 mb-8">
+                      <div className="h-3 w-full bg-black/5 rounded-full overflow-hidden relative">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: "75%" }}
+                          transition={{ duration: 2, ease: "circOut", delay: 0.5 }}
+                          className="h-full bg-primary relative"
+                        >
+                          <motion.div
                             initial={{ x: "-100%" }}
-                            animate={{ x: "100%" }}
-                            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                            d="M0 25 Q 15 10, 30 25 T 60 25 T 90 10 T 130 30"
-                            fill="none"
-                            stroke="url(#gradient)"
-                            strokeWidth="4"
+                            animate={{ x: "200%" }}
+                            transition={{ repeat: Infinity, duration: 2, ease: "linear", repeatDelay: 1 }}
+                            className="absolute inset-y-0 w-20 bg-gradient-to-r from-transparent via-white/50 to-transparent"
                           />
-                        </svg>
+                        </motion.div>
+                      </div>
+                      <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-black/40">
+                        <motion.span
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          transition={{ delay: 1.5 }}
+                        >Well-being Score</motion.span>
+                        <motion.span
+                          initial={{ opacity: 0, y: 5 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 1.8 }}
+                          className="text-primary text-xs"
+                        >75%</motion.span>
                       </div>
                     </div>
 
-                    {/* Secondary Metrics */}
-                    <div className="grid grid-cols-2 gap-4 mb-8 relative z-10">
-                      <div className="p-3 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 group-hover/card:bg-primary/5 transition-colors">
-                        <div className="text-[9px] font-black uppercase tracking-widest text-black/40 dark:text-white/40 mb-1">Social Battery</div>
-                        <div className="flex items-center gap-2">
-                          <Heart className="h-3 w-3 text-secondary animate-pulse" />
-                          <span className="text-sm font-extrabold text-black dark:text-white">High</span>
-                        </div>
-                      </div>
-                      <div className="p-3 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 group-hover/card:bg-primary/5 transition-colors">
-                        <div className="text-[9px] font-black uppercase tracking-widest text-black/40 dark:text-white/40 mb-1">Restfulness</div>
-                        <div className="flex items-center gap-2">
-                          <Activity className="h-3 w-3 text-primary" />
-                          <span className="text-sm font-extrabold text-black dark:text-white">8.4h</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* AI Feedback Box - Premium Glass Layer */}
                     <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 2.5 }}
-                      className="p-4 rounded-2xl bg-primary/10 border border-primary/20 relative overflow-hidden backdrop-blur-md"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 2.2 }}
+                      className="p-4 rounded-2xl bg-black/5 border border-black/5 relative overflow-hidden group/box"
                     >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Sparkles className="h-3 w-3 text-primary" />
-                        <span className="text-[9px] font-black uppercase tracking-widest text-primary">MindBridge AI</span>
-                      </div>
-                      <p className="text-[11px] font-medium text-black/80 dark:text-white/80 leading-relaxed italic">
-                        "Your flow state peaked 2 hours ago. A 10-minute break now will maximize your retention for the next study block."
+                      <motion.div
+                        className="absolute inset-0 bg-primary/5 translate-x-[-100%]"
+                        whileInView={{ x: "100%" }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                      />
+                      <p className="text-xs font-medium text-black/60 italic leading-relaxed relative z-10">
+                        "Your engagement levels are steady this week. Consider a 15-minute mindfulness session before your afternoon lecture."
                       </p>
                     </motion.div>
 
-                    {/* Footer - Session Info */}
-                    <div className="mt-6 pt-5 border-t border-black/5 dark:border-white/5 flex justify-between items-center relative z-10">
-                      <div className="flex items-center gap-2">
-                        <div className="flex -space-x-2">
-                          {[1, 2, 3].map(i => (
-                            <motion.div
-                              key={i}
-                              initial={{ opacity: 0, x: -10 }}
-                              whileInView={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 2.8 + i * 0.1 }}
-                              className="h-6 w-6 rounded-full border-2 border-white dark:border-zinc-900 bg-primary/20 ring-2 ring-primary/5"
-                            />
-                          ))}
-                        </div>
-                        <span className="text-[9px] font-bold text-black/40 dark:text-white/40">+12 Peers Online</span>
+                    <div className="mt-8 pt-6 border-t border-black/5 flex justify-between items-center opacity-60">
+                      <div className="text-[10px] font-black uppercase tracking-widest text-black/40">Session ID: #MB-0492</div>
+                      <div className="flex -space-x-2">
+                        {[1, 2, 3].map(i => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, scale: 0 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 2.5 + (i * 0.1) }}
+                            className="h-6 w-6 rounded-full border-2 border-white bg-primary/20"
+                          />
+                        ))}
                       </div>
-                      <div className="text-[10px] font-black text-primary uppercase tracking-widest animate-pulse">Live Tracking</div>
                     </div>
                   </div>
                 }
