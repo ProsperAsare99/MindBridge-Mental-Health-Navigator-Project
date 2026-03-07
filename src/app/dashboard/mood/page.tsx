@@ -170,7 +170,7 @@ export default function MoodPage() {
                         >
                             <div className="flex items-center justify-between">
                                 <h3 className="font-bold text-foreground/90">Activity Flow</h3>
-                                <div className="flex bg-muted/50 rounded-full p-1 border border-primary/5">
+                                <div className="flex bg-muted rounded-full p-1 border border-primary/5">
                                     {["Week", "Month"].map((t) => (
                                         <button
                                             key={t}
