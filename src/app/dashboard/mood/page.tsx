@@ -189,25 +189,24 @@ export default function MoodPage() {
                                     <AreaChart data={weekData}>
                                         <defs>
                                             <linearGradient id="moodGradient" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.2} />
-                                                <stop offset="95%" stopColor="var(--primary)" stopOpacity={0} />
+                                                <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.2} />
+                                                <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0} />
                                             </linearGradient>
                                         </defs>
-                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="opacity-[0.05]" />
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-muted-foreground)" className="opacity-[0.1]" />
                                         <XAxis
                                             dataKey="name"
                                             axisLine={false}
                                             tickLine={false}
-                                            tick={{ fontSize: 10, fontWeight: 700, fill: "currentColor" }}
+                                            tick={{ fontSize: 10, fontWeight: 700, fill: "var(--color-muted-foreground)" }}
                                             className="text-muted-foreground"
                                             dy={10}
                                         />
                                         <Tooltip
                                             contentStyle={{
                                                 borderRadius: '20px',
-                                                border: '1px solid currentColor',
-                                                borderOpacity: 0.1,
-                                                boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
+                                                border: '1px solid var(--color-primary)',
+                                                boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
                                                 backdropFilter: 'blur(10px)',
                                                 background: 'var(--card)',
                                                 color: 'var(--foreground)',
@@ -218,7 +217,7 @@ export default function MoodPage() {
                                         <Area
                                             type="monotone"
                                             dataKey="mood"
-                                            stroke="var(--primary)"
+                                            stroke="var(--color-primary)"
                                             strokeWidth={4}
                                             fillOpacity={1}
                                             fill="url(#moodGradient)"
