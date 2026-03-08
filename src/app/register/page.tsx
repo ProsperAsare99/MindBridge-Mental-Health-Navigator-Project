@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { useAuth } from "@/hooks/use-auth";
+import { GoogleLogin } from '@react-oauth/google';
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { ArrowLeft, Phone, Mail, User, Lock, School, GraduationCap, IdCard, ChevronRight } from "lucide-react";
@@ -33,6 +35,7 @@ export default function RegisterPage() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const { loginWithGoogle } = useAuth();
 
     useEffect(() => {
         return () => {
@@ -74,8 +77,19 @@ export default function RegisterPage() {
         setError("Phone registration is temporarily disabled during backend migration.");
     };
 
-    const handleGoogleSignIn = () => {
-        setError("Google Sign-In is temporarily disabled during backend migration.");
+    const handleGoogleSuccess = async (credentialResponse: any) => {
+        if (!credentialResponse.credential) return;
+
+        setLoading(true);
+        setError("");
+        try {
+            await loginWithGoogle(credentialResponse.credential);
+            router.push("/dashboard");
+        } catch (err: any) {
+            setError(err.message || "Google Sign-In failed.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -331,18 +345,15 @@ export default function RegisterPage() {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-4">
-                        <Button
-                            type="button"
-                            onClick={handleGoogleSignIn}
-                            variant="secondary"
-                            className="w-full h-14 rounded-2xl font-bold"
-                        >
-                            <svg className="mr-3 h-4 w-4" viewBox="0 0 488 512">
-                                <path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
-                            </svg>
-                            Google Account
-                        </Button>
+                    <div className="flex justify-center">
+                        <GoogleLogin
+                            onSuccess={handleGoogleSuccess}
+                            onError={() => setError("Google Sign-In failed.")}
+                            theme="outline"
+                            size="large"
+                            shape="pill"
+                            width="100%"
+                        />
                     </div>
 
                     <div className="text-center mt-12 pt-8 border-t border-primary/5">

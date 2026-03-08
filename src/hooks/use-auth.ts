@@ -48,5 +48,17 @@ export function useAuth() {
         setUser(null);
     };
 
-    return { user, loading, logout, refreshUser: fetchUser };
+    const loginWithGoogle = async (idToken: string) => {
+        try {
+            const res = await api.post('/auth/google', { idToken });
+            api.setToken(res.token);
+            await fetchUser();
+            return res;
+        } catch (error) {
+            console.error('Google login failed:', error);
+            throw error;
+        }
+    };
+
+    return { user, loading, logout, refreshUser: fetchUser, loginWithGoogle };
 }
