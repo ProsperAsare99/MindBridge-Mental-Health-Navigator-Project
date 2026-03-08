@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/hooks/use-auth";
-import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Mail, Lock, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
@@ -36,38 +36,20 @@ export default function LoginPage() {
         }
     };
 
-    const handleGoogleSignIn = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-            setLoading(true);
-            setError("");
-            try {
-                // In a production app with @react-oauth/google, 
-                // you usually get an access token or an ID token.
-                // We'll use the access token to get user info if needed,
-                // OR better yet, use the 'implicit' flow to get an ID token.
-                // For simplicity with this library, it often returns an access_token.
-                // However, our backend expects an idToken.
+    const handleGoogleSuccess = async (credentialResponse: any) => {
+        if (!credentialResponse.credential) return;
 
-                // Note: @react-oauth/google `useGoogleLogin` returns access_token by default.
-                // To get an ID token, you usually need the 'code' or use the Google Identity Services directly.
-                // But for this project, let's assume we use the access_token for now or 
-                // I will adjust the backend to handle access_token if possible.
-                // Actually, most backend libs prefer idToken.
-
-                // Let's use the fetch-based approach to get user info 
-                // if we only have access_token, or better, use the ID token.
-
-                // If the user has a Client ID, we should really use the CredentialResponse 
-                // which PROVIDES an idToken.
-                setError("Google Login requires a valid Client ID in your .env. If you added it, please ensure you are using a 'Credential' flow.");
-            } catch (err: any) {
-                setError("Google Login failed. Please try again.");
-            } finally {
-                setLoading(false);
-            }
-        },
-        onError: () => setError("Google Sign-In failed.")
-    });
+        setLoading(true);
+        setError("");
+        try {
+            await loginWithGoogle(credentialResponse.credential);
+            router.push("/dashboard");
+        } catch (err: any) {
+            setError(err.message || "Google Sign-In failed.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 selection:bg-primary/20 overflow-hidden relative">
@@ -166,17 +148,16 @@ export default function LoginPage() {
                         </div>
                     </div>
 
-                    <Button
-                        type="button"
-                        onClick={handleGoogleSignIn}
-                        variant="secondary"
-                        className="w-full h-14 rounded-2xl font-bold"
-                    >
-                        <svg className="mr-3 h-4 w-4" viewBox="0 0 488 512">
-                            <path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
-                        </svg>
-                        Google Account
-                    </Button>
+                    <div className="flex justify-center">
+                        <GoogleLogin
+                            onSuccess={handleGoogleSuccess}
+                            onError={() => setError("Google Sign-In failed.")}
+                            theme="outline"
+                            size="large"
+                            shape="pill"
+                            width="100%"
+                        />
+                    </div>
 
                     <div className="text-center mt-10 space-y-2">
                         <p className="text-xs font-medium text-muted-foreground">

@@ -12,11 +12,6 @@ import { ArrowLeft, Phone, Mail, User, Lock, School, GraduationCap, IdCard, Chev
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/brand/Logo";
 
-declare global {
-    interface Window {
-        recaptchaVerifier: RecaptchaVerifier;
-    }
-}
 
 export default function RegisterPage() {
     const [name, setName] = useState("");
@@ -29,7 +24,6 @@ export default function RegisterPage() {
     const [isPhoneSignup, setIsPhoneSignup] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState("");
     const [otp, setOtp] = useState("");
-    const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
     const [otpSent, setOtpSent] = useState(false);
 
     const [error, setError] = useState("");
@@ -37,13 +31,6 @@ export default function RegisterPage() {
     const router = useRouter();
     const { loginWithGoogle } = useAuth();
 
-    useEffect(() => {
-        return () => {
-            if (window.recaptchaVerifier) {
-                window.recaptchaVerifier.clear();
-            }
-        }
-    }, []);
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
