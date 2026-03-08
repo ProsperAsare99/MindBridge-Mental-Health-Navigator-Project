@@ -5,7 +5,7 @@ const content = `generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -36,4 +36,4 @@ model Assessment {
 }
 `;
 fs.writeFileSync('prisma/schema.prisma', content, { encoding: 'ascii' });
-console.log('Schema updated to include googleId (SQLite)');
+console.log('Schema updated to use env(DATABASE_URL)');
