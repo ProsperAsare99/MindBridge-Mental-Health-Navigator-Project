@@ -133,6 +133,29 @@ export const googleLogin = async (req: Request, res: Response) => {
     }
 };
 
+export const anonymousLogin = async (req: Request, res: Response) => {
+    try {
+        const anonymousId = crypto.randomBytes(8).toString('hex');
+        const email = `anon_${anonymousId}@mindbridge.guest`;
+
+        const user = await prisma.user.create({
+            data: {
+                email,
+                name: "Guest User",
+                isAnonymous: true,
+                isVerified: true
+            }
+        });
+
+        const token = jwt.sign({ userId: user.id, email: user.email, isAnonymous: true }, JWT_SECRET, { expiresIn: '1d' });
+
+        res.json({ user, token });
+    } catch (error) {
+        console.error('Anonymous Login Error:', error);
+        res.status(500).json({ error: 'Server error during anonymous login' });
+    }
+};
+
 export const resendVerification = async (req: Request, res: Response) => {
     const { email } = req.body;
 

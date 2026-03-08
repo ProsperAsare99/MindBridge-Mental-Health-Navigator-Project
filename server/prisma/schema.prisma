@@ -18,6 +18,7 @@ model User {
   phoneNumber        String?
   googleId           String?      @unique
   isVerified         Boolean      @default(false)
+  isAnonymous        Boolean      @default(false)
   verificationToken  String?
   createdAt          DateTime     @default(now())
   updatedAt          DateTime     @updatedAt

@@ -7,7 +7,7 @@ import { api } from "@/lib/api";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
-import { ArrowLeft, Phone, Mail, User, Lock, School, GraduationCap, IdCard, ChevronRight } from "lucide-react";
+import { ArrowLeft, Phone, Mail, User, Lock, School, GraduationCap, IdCard, ChevronRight, UserCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/brand/Logo";
 
@@ -28,7 +28,7 @@ export default function RegisterPage() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const { loginWithGoogle } = useAuth();
+    const { loginWithGoogle, loginAnonymously } = useAuth();
 
 
     const handleRegister = async (e: React.FormEvent) => {
@@ -355,6 +355,25 @@ export default function RegisterPage() {
                                 />
                             </svg>
                             <span className="text-sm font-bold">Google</span>
+                        </Button>
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            onClick={async () => {
+                                setLoading(true);
+                                try {
+                                    await loginAnonymously();
+                                } catch (err: any) {
+                                    setError(err.message || "Anonymous login failed.");
+                                } finally {
+                                    setLoading(false);
+                                }
+                            }}
+                            disabled={loading}
+                            className="w-full h-12 rounded-2xl flex items-center justify-center gap-3 border border-primary/5 hover:bg-primary/5 transition-all active:scale-95"
+                        >
+                            <UserCircle className="h-5 w-5 text-muted-foreground" />
+                            <span className="text-sm font-bold text-muted-foreground">Continue Anonymously</span>
                         </Button>
                     </div>
 

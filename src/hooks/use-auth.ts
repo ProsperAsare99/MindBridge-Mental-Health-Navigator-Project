@@ -48,8 +48,6 @@ export function useAuth() {
 
     const loginWithGoogle = async (idToken?: string) => {
         try {
-            // If idToken is provided, it might be from the old GoogleLogin component
-            // But NextAuth's signIn('google') is preferred.
             if (idToken) {
                 const res = await api.post('/auth/google', { idToken });
                 api.setToken(res.token);
@@ -59,6 +57,26 @@ export function useAuth() {
             }
         } catch (error) {
             console.error('Google login failed:', error);
+            throw error;
+        }
+    };
+
+    const loginAnonymously = async () => {
+        try {
+            const res = await api.post('/auth/anonymous', {});
+            if (res.token) {
+                api.setToken(res.token);
+                // We use NextAuth credentials provider internally for our custom session
+                await signIn("credentials", {
+                    email: res.user.email,
+                    password: "anonymous_no_password", // The authorize callback handles this
+                    redirect: true,
+                    callbackUrl: "/dashboard"
+                });
+            }
+            return res;
+        } catch (error) {
+            console.error('Anonymous login failed:', error);
             throw error;
         }
     };
