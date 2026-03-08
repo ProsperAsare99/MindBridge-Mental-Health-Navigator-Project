@@ -21,7 +21,7 @@ export default function LoginPage() {
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('registered') === 'true') {
-            setSuccessMessage("Account created! Please check your email to verify your account before signing in.");
+            setSuccessMessage("Account created successfully! You can now sign in.");
         }
     }, []);
 
@@ -34,10 +34,6 @@ export default function LoginPage() {
             await loginWithCredentials(email, password);
             router.push("/dashboard");
         } catch (err: any) {
-            if (err.message && err.message.includes("PLEASE_VERIFY_EMAIL")) {
-                router.push(`/verify-email?email=${encodeURIComponent(email)}`);
-                return;
-            }
             console.error('Login error detail:', err);
             setError(err.message || "Failed to sign in. Please try again.");
         } finally {

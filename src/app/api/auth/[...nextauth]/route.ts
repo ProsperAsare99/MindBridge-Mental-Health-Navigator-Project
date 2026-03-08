@@ -40,8 +40,12 @@ export const authOptions: NextAuthOptions = {
                     throw new Error("Invalid credentials");
                 }
 
+                // Auto-verify user if they are not already
                 if (!user.isVerified) {
-                    throw new Error("PLEASE_VERIFY_EMAIL");
+                    await prisma.user.update({
+                        where: { id: user.id },
+                        data: { isVerified: true }
+                    });
                 }
 
                 return {

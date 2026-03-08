@@ -46,8 +46,6 @@ export default function RegisterPage() {
                 course
             });
 
-            // Since the backend requires email verification, we don't log in immediately
-            // Instead, we show a success message or redirect to login with a query param
             router.push("/login?registered=true");
         } catch (err: any) {
             console.error(err);

@@ -21,7 +21,6 @@ export const register = async (req: Request, res: Response) => {
         }
 
         const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
-        const verificationToken = crypto.randomBytes(32).toString('hex');
 
         const user = await prisma.user.create({
             data: {
@@ -32,12 +31,9 @@ export const register = async (req: Request, res: Response) => {
                 studentId,
                 course,
                 phoneNumber,
-                verificationToken,
-                isVerified: false
+                isVerified: true
             }
         });
-
-        await sendVerificationEmail(email, verificationToken);
 
         const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
 
@@ -62,8 +58,12 @@ export const login = async (req: Request, res: Response) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
+        // Auto-verify user if they are not already
         if (!user.isVerified) {
-            return res.status(401).json({ error: 'Please verify your email before logging in.' });
+            user = await prisma.user.update({
+                where: { id: user.id },
+                data: { isVerified: true }
+            });
         }
 
         const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
@@ -114,12 +114,14 @@ export const googleLogin = async (req: Request, res: Response) => {
                     isVerified: true, // Google emails are already verified
                 }
             });
-        } else if (!user.googleId) {
-            // Link googleId to existing email account
-            user = await prisma.user.update({
-                where: { id: user.id },
-                data: { googleId, isVerified: true }
-            });
+        } else {
+            // Ensure google user is verified and googleId is linked
+            if (!user.isVerified || !user.googleId) {
+                user = await prisma.user.update({
+                    where: { id: user.id },
+                    data: { googleId, isVerified: true }
+                });
+            }
         }
 
         const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
