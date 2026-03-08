@@ -19,7 +19,6 @@ export function useAuth() {
     const loading = status === "loading";
 
     const user = useMemo<User | null>(() => {
-        console.log('useAuth: deriving user', { status, sessionUser: session?.user });
         if (!session?.user) return null;
 
         return {

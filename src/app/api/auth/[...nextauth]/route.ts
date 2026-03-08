@@ -53,12 +53,11 @@ export const authOptions: NextAuthOptions = {
                     name: user.name,
                     isVerified: true,
                 };
-                console.log('NextAuth: authorize success', updatedUser);
                 return updatedUser;
             },
         }),
     ],
-    debug: true,
+    debug: false,
     pages: {
         signIn: "/login",
     },
@@ -67,7 +66,6 @@ export const authOptions: NextAuthOptions = {
     },
     callbacks: {
         async jwt({ token, user }: { token: any; user: any }) {
-            console.log('NextAuth: jwt callback', { token, user });
             if (user) {
                 token.id = user.id;
                 token.isVerified = user.isVerified;
@@ -75,7 +73,6 @@ export const authOptions: NextAuthOptions = {
             return token;
         },
         async session({ session, token }: { session: any; token: any }) {
-            console.log('NextAuth: session callback', { session, token });
             if (token && session.user) {
                 (session.user as any).id = token.id;
                 (session.user as any).isVerified = token.isVerified;
