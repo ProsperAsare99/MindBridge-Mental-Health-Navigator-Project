@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 import prisma from '../lib/prisma';
 import { AuthRequest } from '../middleware/auth';
+import { sendVerificationEmail } from '../utils/emailService';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_fallback_secret_for_development';
 
@@ -16,6 +18,7 @@ export const register = async (req: Request, res: Response) => {
         }
 
         const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
+        const verificationToken = crypto.randomBytes(32).toString('hex');
 
         const user = await prisma.user.create({
             data: {
@@ -25,9 +28,13 @@ export const register = async (req: Request, res: Response) => {
                 institution,
                 studentId,
                 course,
-                phoneNumber
+                phoneNumber,
+                verificationToken,
+                isVerified: false
             }
         });
+
+        await sendVerificationEmail(email, verificationToken);
 
         const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
 
@@ -52,12 +59,47 @@ export const login = async (req: Request, res: Response) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
+        if (!user.isVerified) {
+            return res.status(401).json({ error: 'Please verify your email before logging in.' });
+        }
+
         const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
 
         res.json({ user, token });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error during login' });
+    }
+};
+
+export const verifyEmail = async (req: Request, res: Response) => {
+    const { token } = req.query;
+
+    if (!token || typeof token !== 'string') {
+        return res.status(400).json({ error: 'Invalid or missing token' });
+    }
+
+    try {
+        const user = await prisma.user.findFirst({
+            where: { verificationToken: token }
+        });
+
+        if (!user) {
+            return res.status(400).json({ error: 'Invalid or expired token' });
+        }
+
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                isVerified: true,
+                verificationToken: null
+            }
+        });
+
+        res.json({ message: 'Email verified successfully! You can now log in.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error during verification' });
     }
 };
 
