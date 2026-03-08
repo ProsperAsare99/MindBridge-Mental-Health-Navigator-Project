@@ -31,8 +31,10 @@ export default function LoginPage() {
         setLoading(true);
 
         try {
-            await loginWithCredentials(email, password);
-            router.push("/dashboard");
+            const result = await loginWithCredentials(email, password);
+            if (result?.ok) {
+                window.location.href = "/dashboard";
+            }
         } catch (err: any) {
             console.error('Login error detail:', err);
             setError(err.message || "Failed to sign in. Please try again.");

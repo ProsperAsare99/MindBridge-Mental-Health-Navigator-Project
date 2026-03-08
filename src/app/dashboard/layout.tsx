@@ -34,10 +34,12 @@ export default function DashboardLayout({
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
+        console.log('DashboardLayout: session state', { user, loading, pathname });
         if (!loading && !user) {
+            console.log('DashboardLayout: No user found, redirecting to /login');
             router.replace("/login");
         }
-    }, [user, loading, router]);
+    }, [user, loading, router, pathname]);
 
     const handleSignOut = async () => {
         await signOut({ callbackUrl: "/" });

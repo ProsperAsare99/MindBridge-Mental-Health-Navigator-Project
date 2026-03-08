@@ -26,7 +26,7 @@ export function useAuth() {
                 email: session.user.email || "",
                 name: session.user.name || "",
                 displayName: session.user.name || "",
-                isVerified: (session.user as any).isVerified || false,
+                isVerified: (session.user as any).isVerified ?? true,
                 ...(session.user as any)
             });
         } else {
@@ -49,7 +49,7 @@ export function useAuth() {
                 api.setToken(res.token);
                 return res;
             } else {
-                return await signIn("google");
+                return await signIn("google", { callbackUrl: "/dashboard" });
             }
         } catch (error) {
             console.error('Google login failed:', error);
