@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSession, signIn, signOut } from "next-auth/react";
 import { api } from '@/lib/api';
 
 export interface User {
@@ -9,56 +10,71 @@ export interface User {
     studentId?: string;
     course?: string;
     phoneNumber?: string;
-    displayName?: string; // For compatibility with existing UI
+    displayName?: string;
 }
 
 export function useAuth() {
+    const { data: session, status } = useSession();
     const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
-
-    const fetchUser = async () => {
-        const token = api.getToken();
-        if (!token) {
-            setUser(null);
-            setLoading(false);
-            return;
-        }
-
-        try {
-            const userData = await api.get('/auth/me');
-            setUser({
-                ...userData,
-                displayName: userData.name // Mapping for UI compatibility
-            });
-        } catch (error) {
-            console.error('Failed to fetch user:', error);
-            api.setToken(null);
-            setUser(null);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const loading = status === "loading";
 
     useEffect(() => {
-        fetchUser();
-    }, []);
+        if (session?.user) {
+            setUser({
+                id: (session.user as any).id || "",
+                email: session.user.email || "",
+                name: session.user.name || "",
+                displayName: session.user.name || "",
+                ...(session.user as any)
+            });
+        } else {
+            setUser(null);
+        }
+    }, [session]);
 
-    const logout = () => {
+    const logout = async () => {
+        await signOut({ redirect: false });
         api.setToken(null);
         setUser(null);
     };
 
-    const loginWithGoogle = async (idToken: string) => {
+    const loginWithGoogle = async (idToken?: string) => {
         try {
-            const res = await api.post('/auth/google', { idToken });
-            api.setToken(res.token);
-            await fetchUser();
-            return res;
+            // If idToken is provided, it might be from the old GoogleLogin component
+            // But NextAuth's signIn('google') is preferred.
+            if (idToken) {
+                const res = await api.post('/auth/google', { idToken });
+                api.setToken(res.token);
+                return res;
+            } else {
+                return await signIn("google");
+            }
         } catch (error) {
             console.error('Google login failed:', error);
             throw error;
         }
     };
 
-    return { user, loading, logout, refreshUser: fetchUser, loginWithGoogle };
+    const loginWithCredentials = async (email: string, password: string) => {
+        const result = await signIn("credentials", {
+            email,
+            password,
+            redirect: false,
+        });
+
+        if (result?.error) {
+            throw new Error(result.error);
+        }
+
+        return result;
+    };
+
+    return {
+        user,
+        loading,
+        logout,
+        loginWithGoogle,
+        loginWithCredentials,
+        isAuthenticated: !!session
+    };
 }
