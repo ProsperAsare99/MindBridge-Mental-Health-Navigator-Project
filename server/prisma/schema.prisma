@@ -16,6 +16,7 @@ model User {
   studentId          String?
   course             String?
   phoneNumber        String?
+  googleId           String?      @unique
   isVerified         Boolean      @default(false)
   verificationToken  String?
   createdAt          DateTime     @default(now())

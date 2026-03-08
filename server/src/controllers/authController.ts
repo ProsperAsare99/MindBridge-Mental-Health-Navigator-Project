@@ -5,6 +5,9 @@ import crypto from 'crypto';
 import prisma from '../lib/prisma';
 import { AuthRequest } from '../middleware/auth';
 import { sendVerificationEmail } from '../utils/emailService';
+import { OAuth2Client } from 'google-auth-library';
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_fallback_secret_for_development';
 
@@ -69,6 +72,62 @@ export const login = async (req: Request, res: Response) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error during login' });
+    }
+};
+
+export const googleLogin = async (req: Request, res: Response) => {
+    const { idToken } = req.body;
+
+    if (!idToken) {
+        return res.status(400).json({ error: 'ID Token is required' });
+    }
+
+    try {
+        const ticket = await googleClient.verifyIdToken({
+            idToken,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+
+        const payload = ticket.getPayload();
+        if (!payload || !payload.email) {
+            return res.status(400).json({ error: 'Invalid Google token' });
+        }
+
+        const { email, sub: googleId, name, picture } = payload;
+
+        // Find or create user
+        let user = await prisma.user.findFirst({
+            where: {
+                OR: [
+                    { googleId },
+                    { email }
+                ]
+            }
+        });
+
+        if (!user) {
+            user = await prisma.user.create({
+                data: {
+                    email,
+                    googleId,
+                    name,
+                    isVerified: true, // Google emails are already verified
+                }
+            });
+        } else if (!user.googleId) {
+            // Link googleId to existing email account
+            user = await prisma.user.update({
+                where: { id: user.id },
+                data: { googleId, isVerified: true }
+            });
+        }
+
+        const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
+
+        res.json({ user, token });
+    } catch (error) {
+        console.error('Google Auth Error:', error);
+        res.status(500).json({ error: 'Server error during Google login' });
     }
 };
 
