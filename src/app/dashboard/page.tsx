@@ -134,12 +134,14 @@ export default function DashboardPage() {
                                         transition={{ duration: 0.5 }}
                                         className="space-y-4"
                                     >
-                                        <p className="text-xl font-medium font-serif italic text-foreground/80 leading-relaxed">
+                                        <p className="text-2xl md:text-3xl font-extrabold font-serif italic text-foreground tracking-tight leading-tight">
                                             "{currentQuote.text}"
                                         </p>
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-xs font-bold uppercase tracking-widest text-primary/60">— {currentQuote.author}</span>
-                                            <Quote className="h-4 w-4 text-primary/20" />
+                                        <div className="flex items-center justify-between pt-2">
+                                            <span className="text-sm font-black uppercase tracking-[0.2em] text-primary">
+                                                — {currentQuote.author}
+                                            </span>
+                                            <Quote className="h-8 w-8 text-primary opacity-20" strokeWidth={3} />
                                         </div>
                                     </motion.div>
                                 </AnimatePresence>

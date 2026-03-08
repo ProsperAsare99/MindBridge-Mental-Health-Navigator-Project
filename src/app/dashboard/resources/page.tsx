@@ -393,7 +393,7 @@ export default function ResourcesPage() {
                                 href={app.url}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="bg-card glass rounded-[2rem] p-6 border border-primary/10 flex flex-col gap-4 group hover:scale-[1.02] hover:border-primary/30 transition-all shadow-premium"
+                                className="bg-card glass rounded-[2rem] p-6 border border-primary/10 flex flex-col gap-4 group hover:scale-[1.02] hover:border-primary/30 transition-all shadow-premium active:scale-[0.98]"
                             >
                                 <div className="flex items-center justify-between">
                                     <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react";
 import { api } from '@/lib/api';
 
@@ -29,6 +29,16 @@ export function useAuth() {
             isVerified: (session.user as any).isVerified ?? true,
             ...(session.user as any)
         };
+    }, [session, status]);
+
+    // Synchronize NextAuth token with API client
+    useEffect(() => {
+        const token = (session?.user as any)?.accessToken;
+        if (token) {
+            api.setToken(token);
+        } else if (status === "unauthenticated") {
+            api.setToken(null);
+        }
     }, [session, status]);
 
     const logout = async () => {

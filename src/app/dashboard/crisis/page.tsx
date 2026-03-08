@@ -16,7 +16,8 @@ import {
     MapPin,
     Mail,
     ArrowUpRight,
-    Sparkles
+    Sparkles,
+    Quote
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -393,7 +394,7 @@ export default function CrisisPage() {
                             >
                                 <button
                                     onClick={() => setExpandedUni(expandedUni === i ? null : i)}
-                                    className="w-full flex items-center justify-between p-6 hover:bg-muted/30 transition-colors text-left"
+                                    className="w-full flex items-center justify-between p-6 hover:bg-muted/30 transition-all text-left active:scale-[0.98]"
                                 >
                                     <div className="flex items-center gap-4">
                                         <div className="h-10 w-10 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
@@ -498,11 +499,14 @@ export default function CrisisPage() {
                     </div>
                 </div>
 
-                {/* Quote */}
-                <div className="text-center pt-8">
-                    <p className="text-xs text-muted-foreground/60 italic font-medium leading-relaxed">
-                        "Wo nkoa wo nti me nsa yare3, 3y3 s3 wob3 bisa mmoa y3." <br />
-                        <span className="not-italic opacity-80 mt-1 block tracking-tight">— It is okay to ask for help.</span>
+                <div className="text-center pt-8 space-y-4">
+                    <p className="text-lg md:text-xl text-primary/80 italic font-bold leading-relaxed max-w-lg mx-auto">
+                        <Quote className="h-4 w-4 inline-block mr-2 mb-2 rotate-180 opacity-50" />
+                        "Wo nkoa wo nti me nsa yare3, 3y3 s3 wob3 bisa mmoa y3."
+                        <Quote className="h-4 w-4 inline-block ml-2 mb-2 opacity-50" />
+                    </p>
+                    <p className="text-xs font-black text-muted-foreground uppercase tracking-[0.2em] opacity-80">
+                        — It is okay to ask for help.
                     </p>
                 </div>
             </div>

@@ -334,12 +334,12 @@ export default function AssessmentPage() {
                                     </div>
                                 </div>
 
-                                <div className="p-8 rounded-[2rem] bg-card/50 border border-primary/5 space-y-4">
+                                <div className="p-8 rounded-[2rem] bg-primary/5 border border-primary/10 space-y-4">
                                     <div className="flex items-center gap-2 justify-center md:justify-start text-primary">
-                                        <Info size={18} />
-                                        <span className="text-sm font-bold uppercase tracking-wider">Expert Analysis</span>
+                                        <Info size={20} strokeWidth={2.5} />
+                                        <span className="text-xs font-black uppercase tracking-[0.2em]">Expert Analysis</span>
                                     </div>
-                                    <p className="text-foreground/80 font-medium leading-relaxed italic">
+                                    <p className="text-xl md:text-2xl font-bold text-foreground leading-relaxed italic">
                                         "{analysis.desc}"
                                     </p>
                                 </div>

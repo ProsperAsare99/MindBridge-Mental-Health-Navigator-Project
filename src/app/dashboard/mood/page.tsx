@@ -129,7 +129,7 @@ export default function MoodPage() {
                                         <button
                                             key={m.value}
                                             onClick={() => setSelectedMood(m.value)}
-                                            className={`flex flex-col items-center gap-4 p-4 rounded-[2rem] transition-all group relative ${isSelected
+                                            className={`flex flex-col items-center gap-4 p-4 rounded-[2rem] transition-all group relative active:scale-95 ${isSelected
                                                 ? "bg-primary/10 border-2 border-primary shadow-lg shadow-primary/10"
                                                 : "bg-muted/30 border-2 border-transparent hover:border-primary/20 hover:bg-muted/50"
                                                 }`}

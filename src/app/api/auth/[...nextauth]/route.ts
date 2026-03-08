@@ -22,38 +22,34 @@ export const authOptions: NextAuthOptions = {
                     throw new Error("Invalid credentials");
                 }
 
-                const user = await prisma.user.findUnique({
-                    where: { email: credentials.email },
-                });
-
-                if (!user || !user.password) {
-                    throw new Error("User not found");
-                }
-
-                const isCorrectPassword = await bcrypt.compare(
-                    credentials.password,
-                    user.password
-                );
-
-                if (!isCorrectPassword) {
-                    throw new Error("Invalid credentials");
-                }
-
-                // Auto-verify user if they are not already
-                if (!user.isVerified) {
-                    await prisma.user.update({
-                        where: { id: user.id },
-                        data: { isVerified: true }
+                try {
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api'}/auth/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(credentials),
                     });
-                }
 
-                const updatedUser = {
-                    id: user.id,
-                    email: user.email,
-                    name: user.name,
-                    isVerified: true,
-                };
-                return updatedUser;
+                    if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.error || "Login failed");
+                    }
+
+                    const data = await response.json();
+
+                    if (data.user && data.token) {
+                        return {
+                            id: data.user.id,
+                            email: data.user.email,
+                            name: data.user.name,
+                            isVerified: data.user.isVerified ?? true,
+                            accessToken: data.token,
+                        };
+                    }
+                    return null;
+                } catch (error: any) {
+                    console.error("NextAuth Authorize Error:", error);
+                    throw new Error(error.message || "Authentication failed");
+                }
             },
         }),
     ],
@@ -69,6 +65,7 @@ export const authOptions: NextAuthOptions = {
             if (user) {
                 token.id = user.id;
                 token.isVerified = user.isVerified;
+                token.accessToken = user.accessToken;
             }
             return token;
         },
@@ -76,6 +73,7 @@ export const authOptions: NextAuthOptions = {
             if (token && session.user) {
                 (session.user as any).id = token.id;
                 (session.user as any).isVerified = token.isVerified;
+                (session.user as any).accessToken = token.accessToken;
             }
             return session;
         },
