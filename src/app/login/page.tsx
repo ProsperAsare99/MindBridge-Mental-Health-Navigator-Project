@@ -29,7 +29,7 @@ export default function LoginPage() {
             api.setToken(res.token);
             router.push("/dashboard");
         } catch (err: any) {
-            console.error(err);
+            console.error('Login error detail:', err);
             setError(err.message || "Failed to sign in. Please try again.");
         } finally {
             setLoading(false);

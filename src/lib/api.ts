@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api';
 
 class ApiClient {
     private token: string | null = null;
@@ -32,7 +32,13 @@ class ApiClient {
             ...options.headers,
         };
 
-        const response = await fetch(url, { ...options, headers });
+        let response;
+        try {
+            response = await fetch(url, { ...options, headers });
+        } catch (error: any) {
+            console.error('Fetch error:', error);
+            throw new Error(`Connection failed: ${error.message}. Is the backend server running?`);
+        }
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
