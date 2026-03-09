@@ -4,6 +4,7 @@ import prisma from '../lib/prisma';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+console.log('Oracle: AI Controller initialized. API Key present:', !!process.env.GEMINI_API_KEY);
 
 export const chatWithOracle = async (req: AuthRequest, res: Response) => {
     const { message } = req.body;
@@ -14,12 +15,14 @@ export const chatWithOracle = async (req: AuthRequest, res: Response) => {
 
     try {
         if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
+        console.log('Oracle: Request for user', req.user.userId);
 
         // 1. Fetch User Profile for personalization
         const user = await prisma.user.findUnique({
             where: { id: req.user.userId },
-            select: { displayName: true }
+            select: { name: true }
         });
+        console.log('Oracle: User profile found', user?.name);
 
         // 2. Fetch User Context (recent moods)
         const recentMoods = await prisma.mood.findMany({
@@ -36,7 +39,7 @@ export const chatWithOracle = async (req: AuthRequest, res: Response) => {
         });
 
         // Reverse to get chronological order for prompt
-        const historyContext = recentChats.reverse().map(chat =>
+        const historyContext = recentChats.reverse().map((chat: any) =>
             `${chat.role === 'user' ? 'User' : 'The Oracle'}: ${chat.content}`
         ).join('\n');
 
@@ -51,7 +54,7 @@ export const chatWithOracle = async (req: AuthRequest, res: Response) => {
 Your essence is a blend of a compassionate therapist, a wise mentor, and a calm sanctuary.
 
 USER PROFILE:
-- Name: ${user?.displayName || 'Student'}
+- Name: ${user?.name || 'Student'}
 - ${moodContext}
 
 CORE GUIDELINES FOR HELPFULNESS:
@@ -75,16 +78,20 @@ USER'S NEW MESSAGE:
 
 THE ORACLE'S RESPONSE:`;
 
+        console.log('Oracle: Generating content with Gemini...');
         const result = await model.generateContent(systemInstructions);
         const responseText = result.response.text();
+        console.log('Oracle: Gemini response received');
 
         // 5. Save messages to database
+        console.log('Oracle: Saving messages to DB...');
         await prisma.chatMessage.createMany({
             data: [
                 { userId: req.user.userId, content: message, role: 'user' },
                 { userId: req.user.userId, content: responseText, role: 'assistant' }
             ]
         });
+        console.log('Oracle: Messages saved');
 
         res.json({ response: responseText });
     } catch (error) {
