@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { api } from "@/lib/api";
+import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import {
     XAxis,
@@ -28,19 +30,62 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function MoodPage() {
+    const { user, loading } = useAuth();
     const [selectedMood, setSelectedMood] = useState<number | null>(null);
     const [note, setNote] = useState("");
     const [activeTimeRange, setActiveTimeRange] = useState<"week" | "month">("week");
+    const [moodHistory, setMoodHistory] = useState<any[]>([]);
+    const [moodStats, setMoodStats] = useState({ average: 0, count: 0, streak: 0 });
 
-    const weekData = [
-        { name: "Mon", mood: 3 },
-        { name: "Tue", mood: 4 },
-        { name: "Wed", mood: 2 },
-        { name: "Thu", mood: 4 },
-        { name: "Fri", mood: 5 },
-        { name: "Sat", mood: 4 },
-        { name: "Sun", mood: 3 },
-    ];
+    const fetchMoodData = async () => {
+        if (loading || !user) return;
+        try {
+            const history = await api.get('/moods');
+            const statsData = await api.get('/moods/stats');
+            setMoodHistory(history);
+            setMoodStats(statsData);
+        } catch (error) {
+            console.error("Error fetching mood data:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchMoodData();
+    }, [user, loading]);
+
+    const weekData = useMemo(() => {
+        if (moodHistory.length === 0) return [
+            { name: "Mon", mood: 0 }, { name: "Tue", mood: 0 }, { name: "Wed", mood: 0 },
+            { name: "Thu", mood: 0 }, { name: "Fri", mood: 0 }, { name: "Sat", mood: 0 }, { name: "Sun", mood: 0 }
+        ];
+
+        // Group by day for the last 7 days
+        const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const last7Days = Array.from({ length: 7 }, (_, i) => {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            return {
+                name: days[d.getDay()],
+                date: d.toDateString(),
+                val: 0,
+                count: 0
+            };
+        }).reverse();
+
+        moodHistory.forEach(m => {
+            const mDate = new Date(m.createdAt).toDateString();
+            const day = last7Days.find(d => d.date === mDate);
+            if (day) {
+                day.val += m.value;
+                day.count++;
+            }
+        });
+
+        return last7Days.map(d => ({
+            name: d.name,
+            mood: d.count > 0 ? parseFloat((d.val / d.count).toFixed(1)) : 0
+        }));
+    }, [moodHistory]);
 
     const moods = [
         { value: 1, icon: CloudRain, label: "Awful", color: "text-slate-500", bgColor: "bg-slate-500/10" },
@@ -51,10 +96,27 @@ export default function MoodPage() {
     ];
 
     const stats = [
-        { label: "Weekly Average", value: "3.6", icon: TrendingUp, color: "text-primary" },
-        { label: "Check-ins", value: "12", icon: Calendar, color: "text-secondary" },
-        { label: "Active Streak", value: "5-Day", icon: Sparkles, color: "text-primary" },
+        { label: "Weekly Average", value: moodStats.average.toString(), icon: TrendingUp, color: "text-primary" },
+        { label: "Check-ins", value: moodStats.count.toString(), icon: Calendar, color: "text-secondary" },
+        { label: "Active Streak", value: `${moodStats.streak}-Day`, icon: Sparkles, color: "text-primary" },
     ];
+
+    const handleLogEntry = async () => {
+        if (selectedMood === null) return;
+        try {
+            await api.post('/moods', {
+                value: selectedMood,
+                note
+            });
+            setSelectedMood(null);
+            setNote("");
+            alert("Mood logged successfully!");
+            fetchMoodData(); // Refresh
+        } catch (error) {
+            console.error('Error logging mood:', error);
+            alert("Failed to log mood. Please try again.");
+        }
+    };
 
     return (
         <div className="min-h-screen relative pb-20 selection:bg-primary/10">
@@ -155,7 +217,10 @@ export default function MoodPage() {
                                 />
                             </div>
 
-                            <Button className="h-14 w-full rounded-2xl font-bold shadow-xl shadow-primary/20 scale-100 active:scale-[0.98] transition-transform">
+                            <Button
+                                onClick={handleLogEntry}
+                                className="h-14 w-full rounded-2xl font-bold shadow-xl shadow-primary/20 scale-100 active:scale-[0.98] transition-transform"
+                            >
                                 Log Entry <ArrowUpRight className="ml-2" size={18} />
                             </Button>
                         </motion.div>
@@ -228,21 +293,30 @@ export default function MoodPage() {
 
                             <div className="space-y-4 pt-4">
                                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Recent Fluctuations</p>
-                                {[
-                                    { label: "Today", val: "Good", time: "2:30 PM", icon: Smile },
-                                    { label: "Yesterday", val: "Okay", time: "9:15 PM", icon: Meh }
-                                ].map((entry) => (
-                                    <div key={entry.label} className="flex items-center justify-between p-4 rounded-2xl bg-muted/30 border border-primary/5 group hover:bg-muted/50 transition-colors">
-                                        <div className="flex items-center gap-3">
-                                            <entry.icon size={18} className="text-primary" />
-                                            <div>
-                                                <p className="text-xs font-bold text-foreground/90">{entry.label}</p>
-                                                <p className="text-[10px] text-muted-foreground">{entry.val}</p>
+                                {moodHistory.slice(0, 3).map((entry, idx) => {
+                                    const moodMeta = moods.find(m => m.value === entry.value);
+                                    const Icon = moodMeta?.icon || Smile;
+                                    const date = new Date(entry.createdAt);
+                                    return (
+                                        <div key={idx} className="flex items-center justify-between p-4 rounded-2xl bg-muted/30 border border-primary/5 group hover:bg-muted/50 transition-colors">
+                                            <div className="flex items-center gap-3">
+                                                <Icon size={18} className="text-primary" />
+                                                <div>
+                                                    <p className="text-xs font-bold text-foreground/90">
+                                                        {date.toLocaleDateString('en-US', { weekday: 'short' })}
+                                                    </p>
+                                                    <p className="text-[10px] text-muted-foreground">{moodMeta?.label || 'Unknown'}</p>
+                                                </div>
                                             </div>
+                                            <span className="text-[10px] font-bold text-muted-foreground">
+                                                {date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                                            </span>
                                         </div>
-                                        <span className="text-[10px] font-bold text-muted-foreground">{entry.time}</span>
-                                    </div>
-                                ))}
+                                    );
+                                })}
+                                {moodHistory.length === 0 && (
+                                    <p className="text-center text-xs text-muted-foreground py-4 italic">No logs yet. Start tracking your mood!</p>
+                                )}
                             </div>
                         </motion.div>
                     </div>

@@ -140,13 +140,16 @@ export default function DashboardLayout({
                     <div className="space-y-6">
                         {/* Profile Card Mini - Hidden for Anonymous Users */}
                         {!user.isAnonymous && (
-                            <div className="p-4 rounded-3xl bg-muted/40 border border-primary/5 backdrop-blur-md">
+                            <div
+                                onClick={() => router.push("/dashboard/profile")}
+                                className="p-4 rounded-3xl bg-muted/40 border border-primary/5 backdrop-blur-md hover:bg-muted/60 hover:border-primary/20 transition-all duration-300 cursor-pointer group"
+                            >
                                 <div className="flex items-center gap-3 mb-4">
-                                    <div className="h-10 w-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold">
+                                    <div className="h-10 w-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold group-hover:scale-105 transition-transform">
                                         {user.displayName ? user.displayName[0].toUpperCase() : <UserCircle className="h-6 w-6" />}
                                     </div>
                                     <div className="flex-1 overflow-hidden">
-                                        <p className="truncate text-sm font-bold text-foreground">{user.displayName || "Student"}</p>
+                                        <p className="truncate text-sm font-bold text-foreground group-hover:text-primary transition-colors">{user.displayName || "Student"}</p>
                                         <div className="flex items-center gap-1.5">
                                             <div className="h-1.5 w-1.5 rounded-full bg-green-500" />
                                             <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Active</span>
@@ -155,7 +158,13 @@ export default function DashboardLayout({
                                 </div>
                                 <div className="flex items-center justify-between pt-2 border-t border-primary/5">
                                     <ModeToggle />
-                                    <Link href="/dashboard/settings">
+                                    <Link
+                                        href="/dashboard/settings"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setIsSidebarOpen(false);
+                                        }}
+                                    >
                                         <Button variant="ghost" size="sm" className="h-8 w-8 p-0 rounded-xl">
                                             <Settings className="h-4 w-4" />
                                         </Button>

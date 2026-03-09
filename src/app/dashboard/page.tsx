@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
+import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
@@ -33,10 +34,24 @@ const MOTIVATION_QUOTES = [
 ];
 
 export default function DashboardPage() {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
     const [quoteIndex, setQuoteIndex] = useState(0);
     const [greeting, setGreeting] = useState("");
+    const [moodStats, setMoodStats] = useState({ average: 0, count: 0, streak: 0 });
     const router = useRouter();
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            if (loading || !user) return;
+            try {
+                const stats = await api.get('/moods/stats');
+                setMoodStats(stats);
+            } catch (error) {
+                console.error("Error fetching dashboard stats:", error);
+            }
+        };
+        fetchStats();
+    }, [user, loading]);
 
     useEffect(() => {
         const hour = new Date().getHours();
@@ -157,13 +172,13 @@ export default function DashboardPage() {
                                 </CardHeader>
                                 <CardContent className="flex flex-col justify-between pt-2 h-[calc(100%-80px)]">
                                     <div className="flex items-baseline gap-2">
-                                        <span className="text-5xl font-black text-primary">0</span>
+                                        <span className="text-5xl font-black text-primary">{moodStats.streak}</span>
                                         <span className="text-sm font-bold text-muted-foreground uppercase">Days</span>
                                     </div>
                                     <div className="mt-8 flex flex-col gap-4">
                                         <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
                                             <Activity className="h-3 w-3" />
-                                            Start checking in!
+                                            {moodStats.count > 0 ? `${moodStats.count} total check-ins` : "Start checking in!"}
                                         </div>
                                         <Button size="sm" variant="outline" className="rounded-xl w-full h-10 font-bold border-primary/20 hover:bg-primary/5 text-primary">
                                             Check Trends

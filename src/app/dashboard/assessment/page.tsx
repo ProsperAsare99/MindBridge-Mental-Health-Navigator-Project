@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { api } from "@/lib/api";
 import {
     ClipboardList,
     ArrowRight,
@@ -72,6 +73,59 @@ const ASSESSMENT_DATA = {
             if (score <= 9) return { level: "Mild", color: "text-blue-500", desc: "Your score suggests mild anxiety. Practice grounding exercises." };
             if (score <= 14) return { level: "Moderate", color: "text-amber-500", desc: "Your score suggests moderate anxiety. Professional guidance may be beneficial." };
             return { level: "Severe", color: "text-red-500", desc: "Your score suggests severe anxiety. Please consider connecting with a counselor." };
+        }
+    },
+    stress: {
+        title: "PSS-10 (Stress Scale)",
+        category: "Clinical",
+        questions: [
+            "In the last month, how often have you been upset because of something that happened unexpectedly?",
+            "In the last month, how often have you felt that you were unable to control the important things in your life?",
+            "In the last month, how often have you felt nervous and 'stressed'?",
+            "In the last month, how often have you felt confident about your ability to handle your personal problems?",
+            "In the last month, how often have you felt that things were going your way?",
+            "In the last month, how often have you found that you could not cope with all the things that you had to do?",
+            "In the last month, how often have you been able to control irritations in your life?",
+            "In the last month, how often have you felt that you were on top of things?",
+            "In the last month, how often have you been angered because of things that were outside of your control?",
+            "In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?"
+        ],
+        options: [
+            { label: "Never", value: 0 },
+            { label: "Almost Never", value: 1 },
+            { label: "Sometimes", value: 2 },
+            { label: "Fairly Often", value: 3 },
+            { label: "Very Often", value: 4 }
+        ],
+        getAnalysis: (score: number) => {
+            if (score <= 13) return { level: "Low", color: "text-emerald-500", desc: "You are handling stress well." };
+            if (score <= 26) return { level: "Moderate", color: "text-amber-500", desc: "You are experiencing a moderate level of stress." };
+            return { level: "High", color: "text-red-500", desc: "You are under significant stress. Consider relaxation techniques or support." };
+        }
+    },
+    sleep: {
+        title: "AIS (Sleep Quality)",
+        category: "Clinical",
+        questions: [
+            "Sleep induction (time taken to fall asleep)",
+            "Awakenings during the night",
+            "Final awakening earlier than desired",
+            "Total sleep duration",
+            "Overall quality of sleep",
+            "Sense of well-being during the day",
+            "Functioning (physical and mental) during the day",
+            "Sleepiness during the day"
+        ],
+        options: [
+            { label: "No problem", value: 0 },
+            { label: "Minor problem", value: 1 },
+            { label: "Marked problem", value: 2 },
+            { label: "Serious problem", value: 3 }
+        ],
+        getAnalysis: (score: number) => {
+            if (score <= 5) return { level: "Good", color: "text-emerald-500", desc: "Your sleep quality appears healthy." };
+            if (score <= 9) return { level: "Fair", color: "text-amber-500", desc: "Some sleep disturbances noted." };
+            return { level: "Poor", color: "text-red-500", desc: "Significant sleep issues. Consider improving sleep hygiene." };
         }
     }
 };
@@ -167,6 +221,26 @@ export default function AssessmentPage() {
 
     const score = useMemo(() => answers.reduce((a, b) => a + b, 0), [answers]);
     const analysis = useMemo(() => activeAssessment?.getAnalysis(score), [score, activeAssessment]);
+
+    const saveAssessment = async () => {
+        if (!activeId || !analysis) return;
+        try {
+            await api.post('/assessments', {
+                type: activeId,
+                score,
+                severity: analysis.level
+            });
+            console.log("Assessment saved successfully");
+        } catch (error) {
+            console.error("Error saving assessment:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (isFinished) {
+            saveAssessment();
+        }
+    }, [isFinished]);
 
     return (
         <div className="min-h-screen relative pb-20 selection:bg-primary/10">
