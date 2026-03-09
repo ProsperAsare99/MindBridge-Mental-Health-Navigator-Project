@@ -3,6 +3,7 @@ import cors from 'cors';
 import authRoutes from './routes/authRoutes';
 import assessmentRoutes from './routes/assessmentRoutes';
 import moodRoutes from './routes/moodRoutes';
+import aiRoutes from './routes/aiRoutes';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
 app.use('/api/assessments', assessmentRoutes);
 app.use('/api/moods', moodRoutes);
+app.use('/api/ai', aiRoutes);
 
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date() });
