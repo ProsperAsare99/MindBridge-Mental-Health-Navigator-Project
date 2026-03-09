@@ -2,6 +2,7 @@
 
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import {
     User,
     Mail,
@@ -19,6 +20,7 @@ import { motion } from "framer-motion";
 
 export default function ProfilePage() {
     const { user } = useAuth();
+    const router = useRouter();
 
     if (!user) return null;
 
@@ -64,7 +66,10 @@ export default function ProfilePage() {
                             <div className="h-24 w-24 rounded-[1.8rem] bg-primary/10 border border-primary/20 flex items-center justify-center text-primary text-3xl font-black">
                                 {user.displayName ? user.displayName[0].toUpperCase() : "U"}
                             </div>
-                            <button className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center shadow-lg border-2 border-background hover:scale-110 transition-transform">
+                            <button
+                                onClick={() => router.push("/dashboard/settings")}
+                                className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center shadow-lg border-2 border-background hover:scale-110 active:scale-95 transition-all"
+                            >
                                 <Camera size={14} />
                             </button>
                         </div>
@@ -84,7 +89,10 @@ export default function ProfilePage() {
                                     </div>
                                 </div>
                             </div>
-                            <Button className="rounded-2xl font-bold h-12 px-6 shadow-xl shadow-primary/20 group">
+                            <Button
+                                onClick={() => router.push("/dashboard/settings")}
+                                className="rounded-2xl font-bold h-12 px-6 shadow-xl shadow-primary/20 hover:shadow-primary/30 active:scale-95 transition-all group"
+                            >
                                 <Edit3 size={16} className="mr-2 group-hover:rotate-12 transition-transform" />
                                 Edit Profile
                             </Button>

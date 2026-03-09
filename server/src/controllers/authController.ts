@@ -251,8 +251,27 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
 
         res.json(user);
     } catch (error) {
-        console.error(error);
+        console.error('Update Profile Error:', error);
         res.status(500).json({ error: 'Server error updating profile' });
+    }
+};
+
+export const uploadAvatar = async (req: AuthRequest, res: Response) => {
+    try {
+        if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
+        if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+
+        const imageUrl = `/uploads/avatars/${req.file.filename}`;
+
+        const user = await prisma.user.update({
+            where: { id: req.user.userId },
+            data: { image: imageUrl }
+        });
+
+        res.json({ user, imageUrl });
+    } catch (error) {
+        console.error('Avatar Upload Error:', error);
+        res.status(500).json({ error: 'Server error during avatar upload' });
     }
 };
 

@@ -19,6 +19,7 @@ model User {
   googleId           String?      @unique
   isVerified         Boolean      @default(false)
   isAnonymous        Boolean      @default(false)
+  image              String?
   verificationToken  String?
   createdAt          DateTime     @default(now())
   updatedAt          DateTime     @updatedAt
