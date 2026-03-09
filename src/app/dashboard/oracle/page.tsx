@@ -18,18 +18,22 @@ import {
     Compass,
     Stars,
     Wind,
-    ArrowDown
+    ArrowDown,
+    Activity,
+    Heart
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
 import ReactMarkdown from "react-markdown";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface Message {
     id: string;
     content: string;
     role: 'user' | 'assistant';
     createdAt: string;
+    suggestions?: string[];
 }
 
 const SUGGESTED_PROMPTS = [
@@ -73,10 +77,27 @@ export default function OraclePage() {
         }
     }, [messages, showScrollDown]);
 
+    const parseAIResponse = (text: string) => {
+        const followUpMatch = text.match(/FOLLOW_UP:\s*(.*)/);
+        let suggestions: string[] = [];
+        let content = text;
+
+        if (followUpMatch) {
+            suggestions = followUpMatch[1].split('|').map(s => s.trim());
+            content = text.split('FOLLOW_UP:')[0].trim();
+        }
+
+        return { content, suggestions };
+    };
+
     const fetchHistory = async () => {
         try {
             const h = await api.get('/ai/history');
-            setMessages(h);
+            const parsedHistory = h.map((msg: any) => {
+                const { content, suggestions } = parseAIResponse(msg.content);
+                return { ...msg, content, suggestions };
+            });
+            setMessages(parsedHistory);
         } catch (error) {
             console.error("Failed to fetch history:", error);
         } finally {
@@ -102,7 +123,7 @@ export default function OraclePage() {
         setIsLoading(true);
 
         const tempId = Date.now().toString();
-        setMessages(prev => [...prev, {
+        setMessages(prev => [...prev.map(m => ({ ...m, suggestions: [] })), {
             id: tempId,
             content: messageToSend.trim(),
             role: 'user',
@@ -111,10 +132,13 @@ export default function OraclePage() {
 
         try {
             const res = await api.post('/ai/chat', { message: messageToSend.trim() });
+            const { content, suggestions } = parseAIResponse(res.response);
+
             setMessages(prev => [...prev, {
                 id: (Date.now() + 1).toString(),
-                content: res.response,
+                content,
                 role: 'assistant',
+                suggestions,
                 createdAt: new Date().toISOString()
             }]);
         } catch (error) {
@@ -142,15 +166,6 @@ export default function OraclePage() {
                     transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                     className="absolute top-[-10%] right-[-10%] h-[50%] w-[50%] rounded-full bg-primary blur-[120px]"
                 />
-                <motion.div
-                    animate={{
-                        scale: [1.2, 1, 1.2],
-                        rotate: [0, -90, 0],
-                        opacity: [0.03, 0.06, 0.03]
-                    }}
-                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                    className="absolute bottom-[-10%] left-[-10%] h-[50%] w-[50%] rounded-full bg-secondary blur-[120px]"
-                />
             </div>
 
             {/* Header */}
@@ -165,24 +180,30 @@ export default function OraclePage() {
                     <div>
                         <h1 className="text-2xl font-black text-foreground tracking-tighter flex items-center gap-2">
                             The Oracle
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase tracking-widest border border-primary/10">AI Guide</span>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase tracking-widest border border-primary/10">Interactive</span>
                         </h1>
-                        <p className="text-xs text-muted-foreground font-medium uppercase tracking-[0.2em] opacity-60">Insight · Empathy · Clarity</p>
+                        <p className="text-xs text-muted-foreground font-medium uppercase tracking-[0.2em] opacity-60">Wisdom · Guidance · Reflection</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
+                    <Link href="/dashboard/mood">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="rounded-2xl h-11 px-6 font-bold text-primary hover:bg-primary/5 transition-all text-xs uppercase cursor-pointer border border-primary/20"
+                        >
+                            <Activity className="w-4 h-4 mr-2" />
+                            Vibe Check
+                        </Button>
+                    </Link>
                     <Button
                         variant="ghost"
                         size="sm"
                         onClick={handleClearView}
-                        className="rounded-2xl h-11 px-6 font-bold text-muted-foreground hover:text-foreground hover:bg-primary/5 transition-all text-xs uppercase cursor-pointer"
+                        className="rounded-2xl h-11 px-6 font-bold text-muted-foreground hover:text-foreground hover:bg-white/5 transition-all text-xs uppercase cursor-pointer"
                     >
                         <PlusCircle className="w-4 h-4 mr-2" />
-                        New Path
-                    </Button>
-                    <div className="h-6 w-px bg-primary/10 mx-1 hidden sm:block"></div>
-                    <Button variant="ghost" size="icon" className="rounded-2xl h-11 w-11 text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all hidden sm:flex">
-                        <History className="w-5 h-5" />
+                        New Session
                     </Button>
                 </div>
             </header>
@@ -196,11 +217,8 @@ export default function OraclePage() {
                     <AnimatePresence mode="popLayout">
                         {isFetchingHistory ? (
                             <div className="flex flex-col items-center justify-center h-full space-y-6">
-                                <div className="relative">
-                                    <div className="absolute inset-0 bg-primary/20 blur-xl animate-pulse rounded-full"></div>
-                                    <Loader2 className="w-12 h-12 text-primary animate-spin relative" />
-                                </div>
-                                <p className="text-xs font-bold tracking-[0.3em] uppercase text-muted-foreground animate-pulse">Consulting the Infinite</p>
+                                <Loader2 className="w-12 h-12 text-primary animate-spin" />
+                                <p className="text-xs font-bold tracking-[0.3em] uppercase text-muted-foreground animate-pulse">Consulting the Oracle...</p>
                             </div>
                         ) : messages.length === 0 ? (
                             <motion.div
@@ -209,36 +227,21 @@ export default function OraclePage() {
                                 className="flex flex-col items-center justify-center min-h-full py-12 text-center"
                             >
                                 <div className="relative mb-12">
-                                    <div className="absolute -inset-16 bg-primary/5 rounded-full blur-[100px]" />
-                                    <motion.div
-                                        animate={{
-                                            rotate: 360,
-                                            scale: [1, 1.1, 1]
-                                        }}
-                                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                                    >
-                                        <Stars className="relative text-primary/40 w-24 h-24 stroke-[1.5]" />
-                                    </motion.div>
+                                    <Stars className="relative text-primary/40 w-24 h-24 stroke-[1.5]" />
                                 </div>
-                                <h2 className="text-4xl md:text-5xl font-black text-foreground mb-4 tracking-tighter">Your journey starts with a breath.</h2>
-                                <p className="text-lg text-muted-foreground font-serif italic max-w-xl mx-auto mb-12 opacity-80 underline decoration-primary/20 decoration-2 underline-offset-8">
-                                    How can I guide your thoughts today?
+                                <h2 className="text-4xl md:text-5xl font-black text-foreground mb-4 tracking-tighter">What's on your mind?</h2>
+                                <p className="text-lg text-muted-foreground font-serif italic max-w-xl mx-auto mb-12 opacity-80 decoration-primary/20 decoration-2 underline-offset-8">
+                                    I am here to listen and guide.
                                 </p>
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-3xl">
                                     {SUGGESTED_PROMPTS.map((item, idx) => (
                                         <motion.button
                                             key={idx}
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: 0.1 * idx }}
                                             whileHover={{ y: -5, scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
                                             onClick={() => handleSend(item.prompt)}
-                                            className={cn(
-                                                "flex items-start p-6 text-left border border-primary/5 rounded-[2rem] transition-all group relative overflow-hidden",
-                                                "bg-background/40 backdrop-blur-md hover:bg-background/60 hover:border-primary/20 hover:shadow-premium"
-                                            )}
+                                            className="flex items-start p-6 text-left border border-primary/5 rounded-[2rem] bg-background/40 backdrop-blur-md hover:bg-background/60 hover:border-primary/20 hover:shadow-premium group"
                                         >
                                             <div className={cn("p-3 rounded-2xl bg-gradient-to-br mr-4 mt-0.5", item.color)}>
                                                 <item.icon className="w-5 h-5 text-foreground group-hover:scale-110 transition-transform" />
@@ -254,67 +257,72 @@ export default function OraclePage() {
                         ) : (
                             <div className="space-y-12 max-w-4xl mx-auto">
                                 {messages.map((msg) => (
-                                    <motion.div
-                                        key={msg.id}
-                                        initial={{ opacity: 0, y: 30, scale: 0.98 }}
-                                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                                        transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-                                        className={cn(
-                                            "flex group",
-                                            msg.role === 'user' ? 'justify-end' : 'justify-start'
-                                        )}
-                                    >
-                                        <div className={cn(
-                                            "flex gap-5 max-w-[90%] sm:max-w-[85%]",
-                                            msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'
-                                        )}>
+                                    <div key={msg.id} className="space-y-4">
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 30 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className={cn(
+                                                "flex group",
+                                                msg.role === 'user' ? 'justify-end' : 'justify-start'
+                                            )}
+                                        >
                                             <div className={cn(
-                                                "w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg border relative transition-transform group-hover:scale-105",
-                                                msg.role === 'user'
-                                                    ? "bg-primary text-white border-primary/20 rotate-3"
-                                                    : "bg-surface-above border-primary/10 text-primary -rotate-3"
+                                                "flex gap-5 max-w-[90%] sm:max-w-[85%]",
+                                                msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'
                                             )}>
-                                                {msg.role === 'user' ? <User className="w-5 h-5" /> : <Bot className="w-6 h-6" />}
-                                            </div>
+                                                <div className={cn(
+                                                    "w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg border relative",
+                                                    msg.role === 'user' ? "bg-primary text-white border-primary/20" : "bg-surface-above border-primary/10 text-primary"
+                                                )}>
+                                                    {msg.role === 'user' ? <User className="w-5 h-5" /> : <Bot className="w-6 h-6" />}
+                                                </div>
 
-                                            <div className={cn(
-                                                "relative p-6 px-7 rounded-[2.5rem] text-base leading-relaxed transition-all shadow-premium",
-                                                msg.role === 'user'
-                                                    ? "bg-primary/10 border border-primary/20 text-foreground rounded-tr-none"
-                                                    : "bg-background/80 backdrop-blur-2xl text-foreground/90 border border-primary/10 rounded-tl-none font-sans"
-                                            )}>
                                                 <div className={cn(
-                                                    "prose prose-invert prose-p:leading-relaxed prose-headings:font-black prose-headings:tracking-tighter prose-p:my-2 overflow-hidden",
-                                                    msg.role === 'assistant' ? "font-medium" : "font-semibold"
+                                                    "relative p-6 px-7 rounded-[2.5rem] text-base shadow-premium",
+                                                    msg.role === 'user'
+                                                        ? "bg-primary/10 border border-primary/20 text-foreground rounded-tr-none"
+                                                        : "bg-background/80 backdrop-blur-2xl text-foreground/90 border border-primary/10 rounded-tl-none"
                                                 )}>
-                                                    <ReactMarkdown>{msg.content}</ReactMarkdown>
-                                                </div>
-                                                <div className={cn(
-                                                    "mt-3 text-[9px] font-black uppercase tracking-[0.2em] opacity-0 group-hover:opacity-40 transition-opacity flex items-center gap-2",
-                                                    msg.role === 'user' ? "justify-end" : "justify-start"
-                                                )}>
-                                                    <div className="w-4 h-[1px] bg-foreground/20" />
-                                                    {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                    <div className="prose prose-invert prose-sm max-w-none">
+                                                        <ReactMarkdown>{msg.content}</ReactMarkdown>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </motion.div>
+                                        </motion.div>
+
+                                        {/* Suggestions for Assistant Messages */}
+                                        {msg.role === 'assistant' && msg.suggestions && msg.suggestions.length > 0 && (
+                                            <motion.div
+                                                initial={{ opacity: 0, x: 20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                className="flex flex-wrap gap-2 ml-16"
+                                            >
+                                                {msg.suggestions.map((s, idx) => (
+                                                    <Button
+                                                        key={idx}
+                                                        variant="outline"
+                                                        size="sm"
+                                                        onClick={() => handleSend(s)}
+                                                        className="rounded-full bg-primary/5 border-primary/10 hover:bg-primary/10 text-xs font-semibold py-4"
+                                                    >
+                                                        {s}
+                                                    </Button>
+                                                ))}
+                                            </motion.div>
+                                        )}
+                                    </div>
                                 ))}
 
                                 {isLoading && (
-                                    <motion.div
-                                        initial={{ opacity: 0, x: -10 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        className="flex justify-start items-center gap-4 pl-1"
-                                    >
-                                        <div className="w-11 h-11 rounded-2xl bg-surface-above border border-primary/10 flex items-center justify-center text-primary/40 -rotate-3">
-                                            <Bot className="w-6 h-6 animate-pulse" />
+                                    <motion.div className="flex justify-start items-center gap-4 pl-1 animate-pulse">
+                                        <div className="w-11 h-11 rounded-2xl bg-surface-above border border-primary/10 flex items-center justify-center text-primary/40">
+                                            <Bot className="w-6 h-6" />
                                         </div>
-                                        <div className="px-6 py-4 bg-background/40 backdrop-blur-md rounded-full border border-primary/5 shadow-inner">
+                                        <div className="px-6 py-4 bg-background/40 backdrop-blur-md rounded-full border border-primary/5">
                                             <div className="flex space-x-2">
-                                                <motion.div animate={{ scale: [1, 1.3, 1], opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0 }} className="w-2 h-2 bg-primary rounded-full" />
-                                                <motion.div animate={{ scale: [1, 1.3, 1], opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0.2 }} className="w-2 h-2 bg-primary rounded-full" />
-                                                <motion.div animate={{ scale: [1, 1.3, 1], opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0.4 }} className="w-2 h-2 bg-primary rounded-full" />
+                                                <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" />
+                                                <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce delay-75" />
+                                                <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce delay-150" />
                                             </div>
                                         </div>
                                     </motion.div>
@@ -323,20 +331,6 @@ export default function OraclePage() {
                         )}
                     </AnimatePresence>
                 </main>
-
-                <AnimatePresence>
-                    {showScrollDown && (
-                        <motion.button
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 10 }}
-                            onClick={scrollToBottom}
-                            className="absolute bottom-4 left-1/2 -translate-x-1/2 p-3 bg-primary text-white rounded-full shadow-lg z-20 hover:scale-110 transition-transform active:scale-95"
-                        >
-                            <ArrowDown size={20} />
-                        </motion.button>
-                    )}
-                </AnimatePresence>
             </div>
 
             {/* Input Area */}
@@ -351,62 +345,24 @@ export default function OraclePage() {
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            placeholder="Share your depths... (e.g., I'm feeling overwhelmed today)"
+                            placeholder="Share your thoughts..."
                             disabled={isLoading}
                             className="flex-1 bg-transparent border-none py-4 px-6 text-base text-foreground placeholder:text-muted-foreground/50 focus:outline-none disabled:opacity-50 font-medium tracking-tight"
                         />
                         <button
                             type="submit"
                             disabled={!input.trim() || isLoading}
-                            className={cn(
-                                "group/btn relative mr-1 h-14 px-8 rounded-[1.8rem] bg-primary font-black text-white overflow-hidden transition-all active:scale-95",
-                                "disabled:bg-muted disabled:text-muted-foreground disabled:grayscale disabled:opacity-30 disabled:hover:scale-100",
-                                "hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/30"
-                            )}
+                            className="relative mr-1 h-14 px-8 rounded-[1.8rem] bg-primary font-black text-white hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/30 disabled:opacity-30"
                         >
-                            <span className="relative z-10 flex items-center gap-3 tracking-[0.15em] uppercase text-xs">
-                                {isLoading ? (
-                                    <>
-                                        <Loader2 className="w-4 h-4 animate-spin" />
-                                        <span>Consulting</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <span>Summon</span>
-                                        <Send className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                                    </>
-                                )}
-                            </span>
-                            <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
+                            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
                         </button>
                     </div>
                 </form>
-                <div className="mt-5 flex items-center justify-center gap-3">
-                    <div className="h-px w-8 bg-primary/20" />
-                    <span className="text-[10px] text-muted-foreground uppercase font-black tracking-[0.3em] opacity-40">
-                        Sanctuary of Reflection · Secure Wisdom Path
-                    </span>
-                    <div className="h-px w-8 bg-primary/20" />
-                </div>
             </footer>
 
             <style jsx global>{`
-                .custom-scrollbar::-webkit-scrollbar {
-                    width: 6px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-track {
-                    background: transparent;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: rgba(var(--primary), 0.1);
-                    border-radius: 10px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: rgba(var(--primary), 0.2);
-                }
-                .scrollbar-hide::-webkit-scrollbar {
-                    display: none;
-                }
+                .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+                .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(var(--primary), 0.1); border-radius: 10px; }
             `}</style>
         </div>
     );
