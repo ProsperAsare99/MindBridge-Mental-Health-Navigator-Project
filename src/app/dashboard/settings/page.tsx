@@ -23,7 +23,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function SettingsPage() {
-    const { user } = useAuth();
+    const { user, loading, updateProfile } = useAuth();
 
     // Profile fields
     const [name, setName] = useState("");
@@ -39,8 +39,7 @@ export default function SettingsPage() {
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
 
-    // State
-    const [loading, setLoading] = useState(true);
+    // Feedback state
     const [saving, setSaving] = useState(false);
     const [changingPassword, setChangingPassword] = useState(false);
     const [profileSuccess, setProfileSuccess] = useState("");
@@ -57,7 +56,6 @@ export default function SettingsPage() {
             setInstitution(user.institution || "");
             setStudentId(user.studentId || "");
             setCourse(user.course || "");
-            setLoading(false);
         }
     }, [user]);
 
@@ -67,7 +65,7 @@ export default function SettingsPage() {
         setProfileSuccess("");
 
         try {
-            await api.post('/auth/profile', { name, institution, studentId, course });
+            await updateProfile({ name, institution, studentId, course });
             setProfileSuccess("Profile updated successfully!");
             setTimeout(() => setProfileSuccess(""), 4000);
         } catch (err: any) {

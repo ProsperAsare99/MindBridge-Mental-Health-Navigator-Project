@@ -50,6 +50,24 @@ export function useAuth() {
         api.setToken(null);
     };
 
+    const updateProfile = async (data: Partial<User>) => {
+        try {
+            const res = await api.post('/auth/profile', data);
+            // Force session update
+            await update({
+                ...session,
+                user: {
+                    ...(session?.user || {}),
+                    ...res
+                }
+            });
+            return res;
+        } catch (error) {
+            console.error('Profile update failed:', error);
+            throw error;
+        }
+    };
+
     const updateAvatar = async (file: File) => {
         const formData = new FormData();
         formData.append('avatar', file);
@@ -124,6 +142,7 @@ export function useAuth() {
         user,
         loading,
         logout,
+        updateProfile,
         updateAvatar,
         loginWithGoogle,
         loginAnonymously,
