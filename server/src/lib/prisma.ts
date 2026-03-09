@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'; // nudge
+import { PrismaClient } from '../generated/client';
 
 const prisma = new PrismaClient();
 
