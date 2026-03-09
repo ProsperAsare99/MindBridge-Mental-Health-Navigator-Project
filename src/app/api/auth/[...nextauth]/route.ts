@@ -40,6 +40,7 @@ export const authOptions: NextAuthOptions = {
                             email: data.user.email,
                             name: data.user.name,
                             isVerified: data.user.isVerified ?? true,
+                            isAnonymous: data.user.isAnonymous ?? false,
                             accessToken: data.token || credentials.accessToken,
                         };
                     }
@@ -67,6 +68,7 @@ export const authOptions: NextAuthOptions = {
                             email: data.user.email,
                             name: data.user.name,
                             isVerified: data.user.isVerified ?? true,
+                            isAnonymous: data.user.isAnonymous ?? false,
                             accessToken: data.token,
                         };
                     }
@@ -90,6 +92,7 @@ export const authOptions: NextAuthOptions = {
             if (user) {
                 token.id = user.id;
                 token.isVerified = user.isVerified;
+                token.isAnonymous = user.isAnonymous;
                 token.accessToken = user.accessToken;
             }
             return token;
@@ -98,6 +101,7 @@ export const authOptions: NextAuthOptions = {
             if (token && session.user) {
                 (session.user as any).id = token.id;
                 (session.user as any).isVerified = token.isVerified;
+                (session.user as any).isAnonymous = token.isAnonymous;
                 (session.user as any).accessToken = token.accessToken;
             }
             return session;
