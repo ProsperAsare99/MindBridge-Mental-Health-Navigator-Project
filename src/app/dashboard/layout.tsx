@@ -183,6 +183,12 @@ export default function DashboardLayout({
                             </div>
                         )}
 
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 px-4 text-[10px] font-bold text-muted-foreground/50 uppercase tracking-widest border-t border-primary/5 pt-4">
+                            <Link href="/about" className="hover:text-primary transition-colors">About</Link>
+                            <Link href="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
+                            <Link href="/support" className="hover:text-primary transition-colors">Support</Link>
+                        </div>
+
                         <Button
                             variant="ghost"
                             size="sm"

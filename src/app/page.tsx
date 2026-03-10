@@ -46,9 +46,14 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           className="hidden md:flex items-center gap-8 text-sm font-bold text-muted-foreground"
         >
-          {["About", "Resources", "Privacy", "Support"].map((item) => (
-            <Link key={item} href="#" className="hover:text-primary transition-colors duration-300">
-              {item}
+          {[
+            { label: "About", href: "/about" },
+            { label: "Resources", href: "/resources" },
+            { label: "Privacy", href: "/privacy" },
+            { label: "Support", href: "/support" }
+          ].map((item) => (
+            <Link key={item.label} href={item.href} className="hover:text-primary transition-colors duration-300">
+              {item.label}
             </Link>
           ))}
         </motion.div>
@@ -301,7 +306,6 @@ export default function Home() {
         </motion.div>
       </main>
 
-      {/* Floating Action Button / Quick Mood (Apple Style) */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -318,6 +322,52 @@ export default function Home() {
           </div>
         </div>
       </motion.div>
+
+      {/* Footer */}
+      <footer className="relative z-10 border-t border-border/50 pt-24 pb-12 px-6 md:px-24 bg-background/30 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div className="col-span-1 md:col-span-2 space-y-6">
+              <Logo size="md" />
+              <p className="text-muted-foreground font-medium max-w-sm leading-relaxed">
+                Ghana's first context-aware support system designed to navigate the complexities of university life with precision and empathy.
+              </p>
+            </div>
+            
+            <div className="space-y-6">
+              <h4 className="text-sm font-black uppercase tracking-widest text-foreground">Platform</h4>
+              <ul className="space-y-4 text-sm font-bold text-muted-foreground">
+                <li><Link href="/about" className="hover:text-primary transition-colors">About Mission</Link></li>
+                <li><Link href="/resources" className="hover:text-primary transition-colors">Resources</Link></li>
+                <li><Link href="/support" className="hover:text-primary transition-colors">Support Center</Link></li>
+              </ul>
+            </div>
+
+            <div className="space-y-6">
+              <h4 className="text-sm font-black uppercase tracking-widest text-foreground">Legal</h4>
+              <ul className="space-y-4 text-sm font-bold text-muted-foreground">
+                <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
+                <li><Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link></li>
+                <li><Link href="#" className="hover:text-primary transition-colors">Cookie Policy</Link></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="pt-12 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="text-xs font-black uppercase tracking-widest text-muted-foreground/50">
+              © 2026 MindBridge. Ghanaian Excellence.
+            </div>
+            <div className="flex gap-6">
+              {/* Social Placeholders */}
+              {[1, 2, 3].map(i => (
+                <div key={i} className="h-8 w-8 rounded-lg bg-primary/5 border border-primary/10 flex items-center justify-center hover:bg-primary/10 transition-colors cursor-pointer">
+                  <div className="h-3 w-3 rounded-full bg-primary/40" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
