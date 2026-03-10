@@ -16,14 +16,16 @@ import {
     AlertCircle,
     Eye,
     EyeOff,
-    ChevronRight,
+    X,
     Sparkles,
     ShieldCheck
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function SettingsPage() {
     const { user, loading, updateProfile } = useAuth();
+    const router = useRouter();
 
     // Profile fields
     const [name, setName] = useState("");
@@ -128,12 +130,24 @@ export default function SettingsPage() {
                     animate={{ opacity: 1, y: 0 }}
                     className="space-y-4"
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest border border-primary/10">
-                        <ShieldCheck size={12} /> Account Center
+                    <div className="flex justify-between items-start">
+                        <div className="space-y-4">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest border border-primary/10">
+                                <ShieldCheck size={12} /> Account Center
+                            </div>
+                            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground/90">
+                                Profile <span className="text-primary">& Security</span>
+                            </h1>
+                        </div>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => router.push("/dashboard")}
+                            className="h-12 w-12 rounded-2xl bg-muted/50 hover:bg-muted transition-colors"
+                        >
+                            <X size={20} className="text-muted-foreground" />
+                        </Button>
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground/90">
-                        Profile <span className="text-primary">& Security</span>
-                    </h1>
                     <p className="text-muted-foreground text-sm font-medium leading-relaxed max-w-2xl">
                         Manage your personal identity, academic details, and secure your account settings.
                     </p>

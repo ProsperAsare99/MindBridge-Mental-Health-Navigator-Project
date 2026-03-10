@@ -145,11 +145,11 @@ export default function DashboardLayout({
                     <div className="p-4 space-y-4 border-t border-primary/5">
                         {/* Profile Card Mini - Hidden for Anonymous Users */}
                         {!user.isAnonymous && (
-                            <div
-                                onClick={() => router.push("/dashboard/profile")}
-                                className="p-3 rounded-2xl bg-muted/20 border border-primary/5 backdrop-blur-md hover:bg-muted/40 hover:border-primary/10 transition-all duration-300 cursor-pointer group"
-                            >
-                                <div className="flex items-center gap-3 mb-3">
+                            <div className="p-3 rounded-2xl bg-muted/20 border border-primary/5 backdrop-blur-md hover:bg-muted/40 hover:border-primary/10 transition-all duration-300 group">
+                                <div
+                                    onClick={() => router.push("/dashboard/profile")}
+                                    className="flex items-center gap-3 mb-3 cursor-pointer"
+                                >
                                     <div className="h-9 w-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold group-hover:scale-105 transition-transform overflow-hidden">
                                         {user.image ? (
                                             <img
@@ -173,10 +173,7 @@ export default function DashboardLayout({
                                     <ModeToggle />
                                     <Link
                                         href="/dashboard/settings"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setIsSidebarOpen(false);
-                                        }}
+                                        onClick={() => setIsSidebarOpen(false)}
                                     >
                                         <Button variant="ghost" size="sm" className="h-7 w-7 p-0 rounded-lg">
                                             <Settings className="h-3.5 w-3.5" />
