@@ -53,12 +53,12 @@ export function useAuth() {
     const updateProfile = async (data: Partial<User>) => {
         try {
             const res = await api.post('/auth/profile', data);
-            // Force session update
             await update({
-                ...session,
                 user: {
-                    ...(session?.user || {}),
-                    ...res
+                    name: res.name,
+                    institution: res.institution,
+                    studentId: res.studentId,
+                    course: res.course
                 }
             });
             return res;
@@ -74,11 +74,8 @@ export function useAuth() {
 
         try {
             const res = await api.post('/auth/avatar', formData);
-            // Force session update
             await update({
-                ...session,
                 user: {
-                    ...(session?.user || {}),
                     image: res.imageUrl
                 }
             });
