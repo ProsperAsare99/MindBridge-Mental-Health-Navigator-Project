@@ -19,6 +19,7 @@ import {
     RotateCcw
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 // Clinical Data & Questions
 const ASSESSMENT_DATA = {
@@ -379,9 +380,11 @@ export default function AssessmentPage() {
                                         MindBridge uses industry-standard encryption. Your assessment results are never shared and are used only to personalize your wellness path.
                                     </p>
                                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                                        <Button variant="ghost" className="text-primary font-bold gap-2 p-0 h-auto hover:bg-transparent hover:underline">
-                                            View Privacy Policy <ChevronRight size={16} />
-                                        </Button>
+                                        <Link href="/privacy">
+                                            <Button variant="ghost" className="text-primary font-bold gap-2 p-0 h-auto hover:bg-transparent hover:underline">
+                                                View Privacy Policy <ChevronRight size={16} />
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
                             </motion.div>

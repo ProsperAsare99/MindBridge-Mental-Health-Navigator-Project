@@ -254,10 +254,13 @@ export default function LoginPage() {
                         </Button>
                     </motion.div>
 
-                    <motion.div variants={itemVariants} className="text-center mt-12 py-6 border-t border-white/5">
+                    <motion.div variants={itemVariants} className="text-center mt-12 py-6 border-t border-white/5 space-y-4">
                         <p className="text-xs font-bold text-muted-foreground/60">
                             New Navigator? <Link href="/register" className="text-primary font-black hover:underline underline-offset-8 transition-all px-2">Initialize Profile</Link>
                         </p>
+                        <Link href="/privacy" className="block text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/30 hover:text-primary transition-all">
+                            Review Privacy Security
+                        </Link>
                     </motion.div>
                 </motion.div>
             </motion.div>

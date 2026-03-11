@@ -492,10 +492,13 @@ export default function RegisterPage() {
                         </Button>
                     </motion.div>
 
-                    <motion.div variants={itemVariants} className="text-center mt-14 pt-8 border-t border-white/5">
+                    <motion.div variants={itemVariants} className="text-center mt-14 pt-8 border-t border-white/5 space-y-4">
                         <p className="text-xs font-bold text-muted-foreground/60">
                             Already Authenticated? <Link href="/login" className="text-primary font-black hover:underline underline-offset-8 transition-all px-2">Log In Here</Link>
                         </p>
+                        <Link href="/privacy" className="block text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/30 hover:text-primary transition-all">
+                            Review Privacy Security
+                        </Link>
                     </motion.div>
                 </motion.div>
             </motion.div>

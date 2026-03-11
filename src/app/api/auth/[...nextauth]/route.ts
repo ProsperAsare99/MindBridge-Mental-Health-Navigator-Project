@@ -109,6 +109,7 @@ export const authOptions: NextAuthOptions = {
                 token.studentId = user.studentId;
                 token.course = user.course;
                 token.image = user.image;
+                token.phoneNumber = user.phoneNumber;
             }
             
             // Handle manual session updates
@@ -121,6 +122,7 @@ export const authOptions: NextAuthOptions = {
                    if (session.user.studentId) token.studentId = session.user.studentId;
                    if (session.user.course) token.course = session.user.course;
                    if (session.user.image) token.image = session.user.image;
+                   if (session.user.phoneNumber) token.phoneNumber = session.user.phoneNumber;
                 }
             }
             
@@ -137,6 +139,7 @@ export const authOptions: NextAuthOptions = {
                 session.user.course = token.course;
                 session.user.image = token.image;
                 session.user.name = token.name;
+                session.user.phoneNumber = token.phoneNumber;
             }
             return session;
         },

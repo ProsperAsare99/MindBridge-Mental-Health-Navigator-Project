@@ -33,6 +33,7 @@ export default function SettingsPage() {
     const [institution, setInstitution] = useState("");
     const [studentId, setStudentId] = useState("");
     const [course, setCourse] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
 
     // Password fields
     const [currentPassword, setCurrentPassword] = useState("");
@@ -58,6 +59,7 @@ export default function SettingsPage() {
             setInstitution(user.institution || "");
             setStudentId(user.studentId || "");
             setCourse(user.course || "");
+            setPhoneNumber(user.phoneNumber || "");
         }
     }, [user]);
 
@@ -67,7 +69,7 @@ export default function SettingsPage() {
         setProfileSuccess("");
 
         try {
-            await updateProfile({ name, institution, studentId, course });
+            await updateProfile({ name, institution, studentId, course, phoneNumber });
             setProfileSuccess("Profile updated successfully!");
             setTimeout(() => setProfileSuccess(""), 4000);
         } catch (err: any) {
@@ -224,6 +226,32 @@ export default function SettingsPage() {
                                         onChange={(e) => setStudentId(e.target.value)}
                                         className="w-full bg-muted/50 border border-border rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all text-foreground placeholder:text-muted-foreground"
                                         placeholder="Add student ID"
+                                    />
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Course / Major</label>
+                                <div className="relative group">
+                                    <BookHeart className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                                    <input
+                                        type="text"
+                                        value={course}
+                                        onChange={(e) => setCourse(e.target.value)}
+                                        className="w-full bg-muted/50 border border-border rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all text-foreground placeholder:text-muted-foreground"
+                                        placeholder="Add course / major"
+                                    />
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Phone Number</label>
+                                <div className="relative group">
+                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                                    <input
+                                        type="tel"
+                                        value={phoneNumber}
+                                        onChange={(e) => setPhoneNumber(e.target.value)}
+                                        className="w-full bg-muted/50 border border-border rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all text-foreground placeholder:text-muted-foreground"
+                                        placeholder="Add phone number"
                                     />
                                 </div>
                             </div>

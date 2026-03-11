@@ -58,7 +58,8 @@ export function useAuth() {
                     name: res.name,
                     institution: res.institution,
                     studentId: res.studentId,
-                    course: res.course
+                    course: res.course,
+                    phoneNumber: res.phoneNumber
                 }
             });
             return res;
