@@ -75,6 +75,9 @@ export const authOptions: NextAuthOptions = {
                     return null;
                 } catch (error: any) {
                     console.error("NextAuth Authorize Error:", error);
+                    if (error.message.includes("fetch failed") || error.code === "ECONNREFUSED") {
+                        throw new Error("Backend server unreachable. Please ensure the backend server is running (npm run dev:all).");
+                    }
                     throw new Error(error.message || "Authentication failed");
                 }
             },

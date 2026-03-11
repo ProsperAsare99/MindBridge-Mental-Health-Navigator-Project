@@ -49,30 +49,20 @@ The project is built with a decoupled architecture, separating the concerns of t
 2.  **Environment Variables**:
     Create a `.env` file in the root directory and the `server` directory based on the provided examples (if available) or existing configurations.
 
-3.  **Frontend Setup**:
+3.  **Unified Development (Recommended)**:
     ```bash
-    # Install dependencies
+    # Install all dependencies (root and server)
     npm install
+    cd server && npm install && cd ..
     
-    # Run development server
-    npm run dev
+    # Run both frontend and backend concurrently
+    npm run dev:all
     ```
-    The frontend will be available at `http://localhost:3000`.
+    The frontend will be at `http://localhost:3000` and backend API at `http://localhost:5000`.
 
-4.  **Backend Setup**:
-    ```bash
-    cd server
-    
-    # Install dependencies
-    npm install
-    
-    # Generate Prisma client
-    npx prisma generate
-    
-    # Run development server
-    npm run dev
-    ```
-    The backend API will typically be available at `http://localhost:5000` (check `server/src/index.ts` for the exact port).
+4.  **Individual Setup (Manual)**:
+    - **Frontend**: `npm run dev`
+    - **Backend**: `cd server && npm run dev`
 
 ---
 
