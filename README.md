@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MindBridge: Mental Health Navigator
 
-## Getting Started
+MindBridge is a comprehensive AI-powered mental health platform designed to provide accessible, personalized support and resources. It combines modern web technologies with advanced AI to guide users through their mental wellness journey.
 
-First, run the development server:
+## 🏗️ Architecture
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+The project is built with a decoupled architecture, separating the concerns of the user interface and the core business logic/data management.
+
+-   **Frontend**: A high-performance, interactive web application built with [Next.js](https://nextjs.org/).
+-   **Backend**: A robust REST API built with [Node.js](https://nodejs.org/) and [Express.js](https://expressjs.com/), managing authentication, AI integrations, and data persistence.
+-   **Database**: Managed through [Prisima ORM](https://www.prisma.io/), providing type-safe database access and migrations.
+
+## 🚀 Key Technologies
+
+### Frontend
+-   **Framework**: Next.js 15+ (App Router)
+-   **Library**: React 19
+-   **Styling**: Tailwind CSS 4
+-   **Animations**: Framer Motion & Three.js (for immersive 3D elements)
+-   **Components**: Radix UI & Lucide Icons
+-   **Authentication**: Next-Auth & Google OAuth
+-   **State/Data**: Firebase Integration
+
+### Backend
+-   **Environment**: Node.js & TypeScript
+-   **Web Framework**: Express.js
+-   **Database ORM**: Prisma
+-   **Authentication**: JWT (JSON Web Tokens) & Bcryptjs
+-   **AI Integration**: Google Generative AI (Gemini Pro)
+-   **Utilities**: Nodemailer (emails), Multer (file uploads)
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+-   [Node.js](https://nodejs.org/) (v18 or higher recommended)
+-   [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+-   A database instance (PostgreSQL/MySQL recommended for Prisma)
+
+### Installation & Setup
+
+1.  **Clone the repository**:
+    ```bash
+    git clone <repository-url>
+    cd MindBridge-Mental-Health-Navigator-Project
+    ```
+
+2.  **Environment Variables**:
+    Create a `.env` file in the root directory and the `server` directory based on the provided examples (if available) or existing configurations.
+
+3.  **Frontend Setup**:
+    ```bash
+    # Install dependencies
+    npm install
+    
+    # Run development server
+    npm run dev
+    ```
+    The frontend will be available at `http://localhost:3000`.
+
+4.  **Backend Setup**:
+    ```bash
+    cd server
+    
+    # Install dependencies
+    npm install
+    
+    # Generate Prisma client
+    npx prisma generate
+    
+    # Run development server
+    npm run dev
+    ```
+    The backend API will typically be available at `http://localhost:5000` (check `server/src/index.ts` for the exact port).
+
+---
+
+## 📂 Project Structure
+
+```text
+.
+├── src/                # Frontend source code (Next.js)
+│   ├── app/            # App Router pages and layouts
+│   ├── components/     # Reusable UI components
+│   ├── hooks/          # Custom React hooks
+│   └── lib/            # Shared utilities and configurations
+├── server/             # Backend source code (Express.js)
+│   ├── src/            # TypeScript source files
+│   │   ├── controllers/# Request handlers
+│   │   ├── routes/     # API route definitions
+│   │   ├── middleware/ # Custom Express middleware
+│   │   └── lib/        # Backend-specific utilities
+│   └── prisma/         # Database schema and migrations
+├── public/             # Static assets
+└── prisma/             # Root-level prisma config (if applicable)
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
