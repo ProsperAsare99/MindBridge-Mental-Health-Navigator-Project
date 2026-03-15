@@ -26,6 +26,7 @@ import { ModeToggle } from "@/components/theme-toggle";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearch } from "@/components/providers/SearchProvider";
 import { Search } from "lucide-react";
+import { DistressButton } from "@/components/ui/distress-button";
 
 export default function DashboardLayout({
     children,
@@ -276,6 +277,7 @@ export default function DashboardLayout({
                 <main className="animate-in fade-in duration-1000">
                     {children}
                 </main>
+                <DistressButton />
             </div>
         </div>
     );

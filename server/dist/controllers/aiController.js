@@ -33,16 +33,21 @@ const chatWithOracle = async (req, res) => {
         });
         // Reverse to get chronological order for prompt
         const historyContext = recentChats.reverse().map((chat) => `${chat.role === 'user' ? 'User' : 'The Oracle'}: ${chat.content}`).join('\n');
-        const moodContext = recentMoods.length > 0
-            ? `Recent emotional trends (1-5 scale): ${recentMoods.map(m => `${m.value}${m.note ? ` (${m.note})` : ''}`).join(', ')}.`
-            : 'No recent mood data recorded yet.';
+        let moodContext = 'No recent mood data recorded yet.';
+        if (recentMoods.length > 0) {
+            const avgMood = (recentMoods.reduce((acc, m) => acc + m.value, 0) / recentMoods.length).toFixed(1);
+            const recentNotes = recentMoods.filter(m => m.note).map(m => `"${m.note}"`).join(', ');
+            moodContext = `Average mood over the last ${recentMoods.length} check-ins: ${avgMood}/5. `;
+            if (recentNotes)
+                moodContext += `Recent journal notes: ${recentNotes}.`;
+        }
         // 4. Prepare the sophisticated prompt
         const systemInstructions = `You are "The Oracle", a highly empathetic, wise, and supportive AI mental health navigator for university students. 
 Your essence is a blend of a compassionate therapist, a wise mentor, and a calm sanctuary.
 
 USER PROFILE:
 - Name: ${user?.name || 'Student'}
-- ${moodContext}
+- Mood Context: ${moodContext}
 
 CORE GUIDELINES FOR HELPFULNESS:
 1. PERSONALIZATION: Address the student by name occasionally. Reference their mood trends if relevant.
