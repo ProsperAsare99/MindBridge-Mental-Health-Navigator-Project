@@ -106,6 +106,6 @@ export const getChatHistory = async (req: AuthRequest, res: Response) => {
         res.json(history);
     } catch (error) {
         console.error('Fetch Chat History Error:', error);
-        res.status(500).json({ error: 'Failed to fetch your wisdom path.' });
+        res.status(500).json({ error: 'Failed to fetch your wisdom path.', details: error instanceof Error ? error.message : String(error) });
     }
 };
