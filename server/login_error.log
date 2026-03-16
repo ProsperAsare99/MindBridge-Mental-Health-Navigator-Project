@@ -1,0 +1,23 @@
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\asare\Desktop\MindBridge-Mental-Health-Navigator-Project\server\src\controllers\authController.ts:51:38
+
+  48 const { email, password } = req.body;
+  49 
+  50 try {
+→ 51     let user = await prisma.user.findUnique(
+Timed out fetching a new connection from the connection pool. More info: http://pris.ly/d/connection-pool (Current connection pool timeout: 10, connection limit: 5)
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\asare\Desktop\MindBridge-Mental-Health-Navigator-Project\server\src\controllers\authController.ts:51:38
+
+  48 const { email, password } = req.body;
+  49 
+  50 try {
+→ 51     let user = await prisma.user.findUnique(
+Timed out fetching a new connection from the connection pool. More info: http://pris.ly/d/connection-pool (Current connection pool timeout: 10, connection limit: 5)
+    at Vn.handleRequestError (C:\Users\asare\Desktop\MindBridge-Mental-Health-Navigator-Project\server\src\generated\client\runtime\library.js:121:7339)
+    at Vn.handleAndLogRequestError (C:\Users\asare\Desktop\MindBridge-Mental-Health-Navigator-Project\server\src\generated\client\runtime\library.js:121:6663)
+    at Vn.request (C:\Users\asare\Desktop\MindBridge-Mental-Health-Navigator-Project\server\src\generated\client\runtime\library.js:121:6370)
+    at async l (C:\Users\asare\Desktop\MindBridge-Mental-Health-Navigator-Project\server\src\generated\client\runtime\library.js:130:9617)
+    at async login (C:\Users\asare\Desktop\MindBridge-Mental-Health-Navigator-Project\server\src\controllers\authController.ts:51:20)
