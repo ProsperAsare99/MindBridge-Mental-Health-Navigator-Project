@@ -17,11 +17,33 @@ import {
     ArrowUpRight,
     SearchX,
     Sparkles,
+    Brain,
+    Zap,
+    GraduationCap,
+    Lightbulb,
+    Moon,
+    Users,
+    Leaf,
+    Dumbbell,
+    Heart,
+    Wind,
+    Repeat,
+    Timer,
+    PenLine,
+    Smile,
+    MessageSquare,
+    Target,
+    Stethoscope
 } from "lucide-react";
+
+const IconMap: Record<string, any> = {
+    Brain, Zap, GraduationCap, Lightbulb, Moon, Users, Leaf, Dumbbell, Heart,
+    Wind, Repeat, Timer, PenLine, Smile, MessageSquare, Target, Stethoscope, Sparkles
+};
 
 interface ResourceHubProps {
     articles: any[];
-    categories: string[];
+    categories: string[] | any;
     selfHelpTools: any[];
     recommendedApps: any[];
     videoResources: any[];
@@ -88,7 +110,7 @@ export function ResourceHub({
                     />
                 </div>
                 <div className="flex flex-wrap gap-2">
-                    {categories.map((cat) => (
+                    {categories.map((cat: string) => (
                         <button
                             key={cat}
                             onClick={() => setActiveCategory(cat)}
@@ -107,7 +129,7 @@ export function ResourceHub({
                 <AnimatePresence mode="popLayout">
                     {filteredArticles.length > 0 ? (
                         filteredArticles.map((article, index) => {
-                            const Icon = article.icon;
+                            const Icon = IconMap[article.icon] || BookOpen;
                             const isExpanded = expandedArticle === index;
                             return (
                                 <motion.div
@@ -175,32 +197,35 @@ export function ResourceHub({
                     <Sparkles className="text-primary" /> Self-Help Toolkit
                 </h2>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {selfHelpTools.map((tool, i) => (
-                        <motion.div key={i} className="bg-card glass rounded-[2rem] border border-primary/10 shadow-premium overflow-hidden group">
-                            <button onClick={() => setExpandedTool(expandedTool === i ? null : i)} className="w-full p-6 text-left flex items-center justify-between">
-                                <div className="flex items-center gap-4">
-                                    <div className="h-10 w-10 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:rotate-12 transition-transform">
-                                        <tool.icon size={18} />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-sm text-foreground/90">{tool.title}</h4>
-                                        <p className="text-[10px] font-semibold text-muted-foreground">{tool.description}</p>
-                                    </div>
-                                </div>
-                                {expandedTool === i ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                            </button>
-                            {expandedTool === i && (
-                                <div className="p-6 pt-0 border-t border-primary/5 space-y-3">
-                                    {tool.steps.map((s: string, j: number) => (
-                                        <div key={j} className="flex gap-3 text-xs font-medium text-foreground/70">
-                                            <span className="text-primary font-bold">{j + 1}.</span>
-                                            <p>{s}</p>
+                    {selfHelpTools.map((tool, i) => {
+                        const ToolIcon = IconMap[tool.icon] || BookOpen;
+                        return (
+                            <motion.div key={i} className="bg-card glass rounded-[2rem] border border-primary/10 shadow-premium overflow-hidden group">
+                                <button onClick={() => setExpandedTool(expandedTool === i ? null : i)} className="w-full p-6 text-left flex items-center justify-between">
+                                    <div className="flex items-center gap-4">
+                                        <div className="h-10 w-10 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:rotate-12 transition-transform">
+                                            <ToolIcon size={18} />
                                         </div>
-                                    ))}
-                                </div>
-                            )}
-                        </motion.div>
-                    ))}
+                                        <div>
+                                            <h4 className="font-bold text-sm text-foreground/90">{tool.title}</h4>
+                                            <p className="text-[10px] font-semibold text-muted-foreground">{tool.description}</p>
+                                        </div>
+                                    </div>
+                                    {expandedTool === i ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                                </button>
+                                {expandedTool === i && (
+                                    <div className="p-6 pt-0 border-t border-primary/5 space-y-3">
+                                        {tool.steps.map((s: string, j: number) => (
+                                            <div key={j} className="flex gap-3 text-xs font-medium text-foreground/70">
+                                                <span className="text-primary font-bold">{j + 1}.</span>
+                                                <p>{s}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </motion.div>
+                        );
+                    })}
                 </div>
             </div>
 
@@ -210,32 +235,35 @@ export function ResourceHub({
                     <Smartphone className="text-primary" /> Recommended Tools
                 </h2>
                 <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    {recommendedApps.map((app, i) => (
-                        <a
-                            key={i}
-                            href={app.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="bg-card glass rounded-[2rem] p-6 border border-primary/10 flex flex-col gap-4 group hover:scale-[1.02] hover:border-primary/30 transition-all shadow-premium active:scale-[0.98]"
-                        >
-                            <div className="flex items-center justify-between">
-                                <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
-                                    <app.icon size={22} />
+                    {recommendedApps.map((app, i) => {
+                        const AppIcon = IconMap[app.icon] || Smartphone;
+                        return (
+                            <a
+                                key={i}
+                                href={app.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="bg-card glass rounded-[2rem] p-6 border border-primary/10 flex flex-col gap-4 group hover:scale-[1.02] hover:border-primary/30 transition-all shadow-premium active:scale-[0.98]"
+                            >
+                                <div className="flex items-center justify-between">
+                                    <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                                        <AppIcon size={22} />
+                                    </div>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-primary/40 group-hover:text-primary transition-colors">{app.tag}</span>
                                 </div>
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-primary/40 group-hover:text-primary transition-colors">{app.tag}</span>
-                            </div>
-                            <div className="space-y-1 flex-1">
-                                <h4 className="font-bold text-foreground/90 flex items-center justify-between">
-                                    {app.name}
-                                    <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                                </h4>
-                                <p className="text-xs text-muted-foreground font-medium leading-relaxed">{app.desc}</p>
-                            </div>
-                            <div className="pt-2 flex items-center gap-1 text-[9px] font-bold text-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">
-                                Open Tool <ArrowUpRight size={10} />
-                            </div>
-                        </a>
-                    ))}
+                                <div className="space-y-1 flex-1">
+                                    <h4 className="font-bold text-foreground/90 flex items-center justify-between">
+                                        {app.name}
+                                        <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </h4>
+                                    <p className="text-xs text-muted-foreground font-medium leading-relaxed">{app.desc}</p>
+                                </div>
+                                <div className="pt-2 flex items-center gap-1 text-[9px] font-bold text-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">
+                                    Open Tool <ArrowUpRight size={10} />
+                                </div>
+                            </a>
+                        );
+                    })}
                 </div>
             </div>
 

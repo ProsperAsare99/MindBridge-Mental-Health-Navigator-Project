@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
@@ -36,7 +36,7 @@ export default function MoodPage() {
     const [moodHistory, setMoodHistory] = useState<any[]>([]);
     const [moodStats, setMoodStats] = useState({ average: 0, count: 0, streak: 0 });
 
-    const fetchMoodData = async () => {
+    const fetchMoodData = useCallback(async () => {
         if (loading || !user) return;
         try {
             const history = await api.get('/moods');
@@ -46,11 +46,11 @@ export default function MoodPage() {
         } catch (error) {
             console.error("Error fetching mood data:", error);
         }
-    };
+    }, [user, loading]);
 
     useEffect(() => {
         fetchMoodData();
-    }, [user, loading]);
+    }, [fetchMoodData]);
 
     const weekData = useMemo(() => {
         if (moodHistory.length === 0) return [
@@ -100,7 +100,7 @@ export default function MoodPage() {
         { label: "Active Streak", value: `${moodStats.streak}-Day`, icon: Sparkles, color: "text-primary" },
     ];
 
-    const handleLogEntry = async () => {
+    const handleLogEntry = useCallback(async () => {
         if (selectedMood === null) return;
         try {
             await api.post('/moods', {
@@ -115,7 +115,7 @@ export default function MoodPage() {
             console.error('Error logging mood:', error);
             alert("Failed to log mood. Please try again.");
         }
-    };
+    }, [selectedMood, note, fetchMoodData]);
 
     return (
         <div className="min-h-screen relative pb-20 selection:bg-primary/10">

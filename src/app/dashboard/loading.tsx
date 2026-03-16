@@ -23,9 +23,9 @@ export default function DashboardLoading() {
 
         {/* Stats Grid Skeleton */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <DashboardItem className="md:col-span-2 h-48 glass rounded-[2rem] animate-pulse" />
-          <DashboardItem className="h-48 glass rounded-[2rem] animate-pulse" />
-          <DashboardItem className="h-48 glass rounded-[2rem] animate-pulse" />
+          <DashboardItem className="md:col-span-2 h-48 glass rounded-[2rem] animate-pulse"><div /></DashboardItem>
+          <DashboardItem className="h-48 glass rounded-[2rem] animate-pulse"><div /></DashboardItem>
+          <DashboardItem className="h-48 glass rounded-[2rem] animate-pulse"><div /></DashboardItem>
         </div>
 
         {/* Recommended & Crisis Skeleton */}
