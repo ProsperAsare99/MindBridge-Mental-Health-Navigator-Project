@@ -1,10 +1,8 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { MotionDiv, MotionMain, MotionSection } from "@/components/motion-wrappers";
 import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
-import { useSearch } from "@/components/providers/SearchProvider";
+import { SearchTrigger } from "@/components/search/search-trigger";
 import { 
   HelpCircle, 
   MessageSquare, 
@@ -19,7 +17,6 @@ import {
 } from "lucide-react";
 
 export default function SupportPage() {
-  const { toggle } = useSearch();
   const categories = [
     {
       title: "Getting Started",
@@ -69,7 +66,7 @@ export default function SupportPage() {
     <div className="relative min-h-screen bg-background font-sans text-foreground selection:bg-primary/20 overflow-x-hidden">
       {/* Background Accents (Aurora Style) */}
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <motion.div 
+        <MotionDiv 
           animate={{ 
             scale: [1, 1.2, 1],
             x: [0, 50, 0],
@@ -78,7 +75,7 @@ export default function SupportPage() {
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           className="absolute top-[-10%] right-[-10%] h-[60%] w-[60%] rounded-full bg-primary/10 blur-[130px]" 
         />
-        <motion.div 
+        <MotionDiv 
           animate={{ 
             scale: [1.2, 1, 1.2],
             x: [0, -40, 0],
@@ -90,7 +87,7 @@ export default function SupportPage() {
       </div>
 
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-24 backdrop-blur-md bg-background/50 border-b border-border/50">
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-2.5 outline-none"
@@ -98,9 +95,9 @@ export default function SupportPage() {
           <Link href="/" className="hover:opacity-80 transition-opacity">
             <Logo size="md" />
           </Link>
-        </motion.div>
+        </MotionDiv>
 
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
         >
@@ -110,10 +107,10 @@ export default function SupportPage() {
               Back to Home
             </Button>
           </Link>
-        </motion.div>
+        </MotionDiv>
       </nav>
 
-      <motion.main 
+      <MotionMain 
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -121,7 +118,7 @@ export default function SupportPage() {
       >
         {/* Hero Section */}
         <section className="max-w-4xl mx-auto mb-20 text-center">
-          <motion.div variants={itemVariants} className="space-y-8">
+          <MotionDiv variants={itemVariants} className="space-y-8">
             <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-primary backdrop-blur-md">
               <HelpCircle className="h-3.5 w-3.5" />
               Support Center
@@ -135,25 +132,16 @@ export default function SupportPage() {
             </p>
 
             {/* Global Search Trigger */}
-            <motion.div variants={itemVariants} className="max-w-xl mx-auto pt-8">
-              <button 
-                onClick={toggle}
-                className="w-full h-20 px-8 rounded-[2.5rem] glass border border-white/10 flex items-center gap-6 group hover:border-primary/40 transition-all text-left backdrop-blur-3xl shadow-premium"
-              >
-                <Search className="h-7 w-7 text-muted-foreground group-hover:text-primary transition-colors group-hover:scale-110" />
-                <span className="text-xl font-medium text-muted-foreground/50">How can we help today?</span>
-                <div className="ml-auto flex items-center gap-1.5 px-3 py-1 rounded-xl bg-primary/5 border border-primary/10 text-xs font-black uppercase tracking-widest opacity-40 group-hover:opacity-100">
-                  ⌘K
-                </div>
-              </button>
-            </motion.div>
-          </motion.div>
+            <MotionDiv variants={itemVariants} className="max-w-xl mx-auto pt-8">
+              <SearchTrigger />
+            </MotionDiv>
+          </MotionDiv>
         </section>
 
         {/* Categories Grid */}
         <section className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 mb-32 pt-20">
           {categories.map((cat, i) => (
-            <motion.div
+            <MotionDiv
               key={cat.title}
               variants={itemVariants}
               className="p-10 rounded-[3rem] glass border border-white/10 shadow-premium group hover:border-primary/40 transition-all cursor-pointer backdrop-blur-2xl"
@@ -163,12 +151,12 @@ export default function SupportPage() {
               </div>
               <h3 className="text-3xl font-black mb-4 tracking-tight">{cat.title}</h3>
               <p className="text-lg text-muted-foreground font-medium leading-relaxed">{cat.description}</p>
-            </motion.div>
+            </MotionDiv>
           ))}
         </section>
 
         {/* Contact Strip */}
-        <motion.section variants={itemVariants} className="max-w-5xl mx-auto">
+        <MotionSection variants={itemVariants} className="max-w-5xl mx-auto">
           <div className="rounded-[4rem] glass border border-white/5 p-12 md:p-24 flex flex-col lg:flex-row items-center justify-between gap-12 text-center lg:text-left overflow-hidden relative shadow-premium backdrop-blur-3xl">
             <div className="absolute top-0 left-0 w-96 h-96 bg-secondary/20 blur-[130px] pointer-events-none" />
             <div className="space-y-8 relative z-10">
@@ -189,8 +177,8 @@ export default function SupportPage() {
               </Button>
             </div>
           </div>
-        </motion.section>
-      </motion.main>
+        </MotionSection>
+      </MotionMain>
 
       <footer className="border-t border-border/50 py-12 px-6 md:px-24 mt-20">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
