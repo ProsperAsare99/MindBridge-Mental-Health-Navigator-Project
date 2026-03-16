@@ -28,14 +28,14 @@ export default function Home() {
   const { toggle } = useSearch();
 
   return (
-    <div className="relative min-h-screen bg-background font-sans text-foreground selection:bg-primary/20 selection:text-primary overflow-hidden">
+    <div style={{ backgroundColor: '#BDD8E9' }} className="relative min-h-screen font-sans text-foreground selection:bg-primary/20 selection:text-primary overflow-hidden">
       {/* Soft Background Accents */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <ParallaxSection speed={0.05} direction="down" className="absolute top-[-10%] left-[-10%] h-[40%] w-[40%]">
-          <div className="h-full w-full rounded-full bg-primary/5 blur-[120px]" />
+          <div className="h-full w-full rounded-full bg-[#7BBDE8]/30 blur-[120px]" />
         </ParallaxSection>
         <ParallaxSection speed={0.1} direction="up" className="absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%]">
-          <div className="h-full w-full rounded-full bg-secondary/10 blur-[120px]" />
+          <div className="h-full w-full rounded-full bg-[#6EA2B3]/20 blur-[120px]" />
         </ParallaxSection>
       </div>
 
