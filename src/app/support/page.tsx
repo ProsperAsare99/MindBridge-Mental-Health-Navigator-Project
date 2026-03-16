@@ -1,5 +1,8 @@
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
-import { MotionDiv, MotionMain, MotionSection } from "@/components/motion-wrappers";
+import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { SearchTrigger } from "@/components/search/search-trigger";
@@ -18,6 +21,8 @@ import {
 import { AuroraBackground } from "@/components/animations/aurora-background";
 
 export default function SupportPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
   const categories = [
     {
       title: "Getting Started",
@@ -68,7 +73,7 @@ export default function SupportPage() {
       <AuroraBackground primaryColor="bg-primary/10" secondaryColor="bg-secondary/15" />
 
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-24 backdrop-blur-md bg-background/50 border-b border-border/50">
-        <MotionDiv
+        <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-2.5 outline-none"
@@ -76,9 +81,9 @@ export default function SupportPage() {
           <Link href="/" className="hover:opacity-80 transition-opacity">
             <Logo size="md" />
           </Link>
-        </MotionDiv>
+        </motion.div>
 
-        <MotionDiv
+        <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
         >
@@ -88,10 +93,10 @@ export default function SupportPage() {
               Back to Home
             </Button>
           </Link>
-        </MotionDiv>
+        </motion.div>
       </nav>
 
-      <MotionMain 
+      <motion.main 
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -99,7 +104,7 @@ export default function SupportPage() {
       >
         {/* Hero Section */}
         <section className="max-w-4xl mx-auto mb-20 text-center">
-          <MotionDiv variants={itemVariants} className="space-y-8">
+          <motion.div variants={itemVariants} className="space-y-8">
             <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-primary backdrop-blur-md">
               <HelpCircle className="h-3.5 w-3.5" />
               Support Center
@@ -113,16 +118,18 @@ export default function SupportPage() {
             </p>
 
             {/* Global Search Trigger */}
-            <MotionDiv variants={itemVariants} className="max-w-xl mx-auto pt-8">
-              <SearchTrigger />
-            </MotionDiv>
-          </MotionDiv>
+            <motion.div variants={itemVariants} className="max-w-xl mx-auto pt-8">
+              <div className="relative group max-w-2xl">
+                <SearchTrigger />
+              </div>
+            </motion.div>
+          </motion.div>
         </section>
 
         {/* Categories Grid */}
         <section className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 mb-32 pt-20">
           {categories.map((cat, i) => (
-            <MotionDiv
+            <motion.div
               key={cat.title}
               variants={itemVariants}
               className="p-10 rounded-[3rem] glass border border-white/10 shadow-premium group hover:border-primary/40 transition-all cursor-pointer backdrop-blur-2xl"
@@ -132,12 +139,12 @@ export default function SupportPage() {
               </div>
               <h3 className="text-3xl font-black mb-4 tracking-tight">{cat.title}</h3>
               <p className="text-lg text-muted-foreground font-medium leading-relaxed">{cat.description}</p>
-            </MotionDiv>
+            </motion.div>
           ))}
         </section>
 
         {/* Contact Strip */}
-        <MotionSection variants={itemVariants} className="max-w-5xl mx-auto">
+        <motion.section variants={itemVariants} className="max-w-5xl mx-auto">
           <div className="rounded-[4rem] glass border border-white/5 p-12 md:p-24 flex flex-col lg:flex-row items-center justify-between gap-12 text-center lg:text-left overflow-hidden relative shadow-premium backdrop-blur-3xl">
             <div className="absolute top-0 left-0 w-96 h-96 bg-secondary/20 blur-[130px] pointer-events-none" />
             <div className="space-y-8 relative z-10">
@@ -158,8 +165,8 @@ export default function SupportPage() {
               </Button>
             </div>
           </div>
-        </MotionSection>
-      </MotionMain>
+        </motion.section>
+      </motion.main>
 
       <footer className="border-t border-border/50 py-12 px-6 md:px-24 mt-20">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">

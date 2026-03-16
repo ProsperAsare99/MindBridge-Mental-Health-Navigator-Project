@@ -1,19 +1,11 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useAuth } from "@/hooks/use-auth";
-import { api } from "@/lib/api";
+import { getAuthSession, serverApi } from "@/lib/server-api";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     PlusCircle,
-    BookHeart,
     AlertCircle,
-    School,
     Quote,
-    Calendar,
     ArrowUpRight,
-    Search,
     BrainCircuit,
     Compass,
     Activity,
@@ -24,104 +16,33 @@ import {
     Info
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { redirect } from "next/navigation";
+import { MotivationalCarousel } from "@/components/dashboard/motivational-carousel";
+import { GreetingHeader } from "@/components/dashboard/greeting-header";
+import { DashboardContainer, DashboardItem } from "@/components/dashboard/dashboard-animations";
 
-const MOTIVATION_QUOTES = [
-    { text: "You don't have to control your thoughts. You just have to stop letting them control you.", author: "Dan Millman" },
-    { text: "Your present circumstances don't determine where you can go; they merely determine where you start.", author: "Nido Qubein" },
-    { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-    { text: "Act as if what you do makes a difference. It does.", author: "William James" },
-    { text: "Happiness is not something ready made. It comes from your own actions.", author: "Dalai Lama" },
-    { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
-    { text: "You are capable of more than you know.", author: "Glinda, The Wizard of Oz" }
-];
+export default async function DashboardPage() {
+    const session = await getAuthSession();
+    
+    if (!session) {
+        redirect("/login");
+    }
 
-export default function DashboardPage() {
-    const { user, loading } = useAuth();
-    const [quoteIndex, setQuoteIndex] = useState(0);
-    const [greeting, setGreeting] = useState("");
-    const [moodStats, setMoodStats] = useState({ average: 0, count: 0, streak: 0 });
-    const router = useRouter();
+    const user = session.user as any;
+    let moodStats = { average: 0, count: 0, streak: 0 };
 
-    useEffect(() => {
-        const fetchStats = async () => {
-            if (loading || !user) return;
-            try {
-                const stats = await api.get('/moods/stats');
-                setMoodStats(stats);
-            } catch (error) {
-                console.error("Error fetching dashboard stats:", error);
-            }
-        };
-        fetchStats();
-    }, [user, loading]);
-
-    useEffect(() => {
-        const hour = new Date().getHours();
-        if (hour < 12) setGreeting("Good morning");
-        else if (hour < 18) setGreeting("Good afternoon");
-        else setGreeting("Good evening");
-    }, []);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setQuoteIndex((prev) => (prev + 1) % MOTIVATION_QUOTES.length);
-        }, 10000);
-        return () => clearInterval(interval);
-    }, []);
-
-    const currentQuote = MOTIVATION_QUOTES[quoteIndex];
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                type: "spring" as const,
-                stiffness: 300,
-                damping: 24
-            }
-        }
-    };
+    try {
+        moodStats = await serverApi('/moods/stats');
+    } catch (error) {
+        console.error("Error fetching dashboard stats on server:", error);
+    }
 
     return (
         <div className="min-h-screen pb-20 px-4 md:px-10 pt-24 md:pt-10 max-w-7xl mx-auto selection:bg-primary/20">
-            <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="space-y-10"
-            >
+            <DashboardContainer>
                 {/* Clean Header Section */}
-                <motion.div variants={itemVariants} className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-                    <div className="space-y-2">
-                        <motion.div
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="flex items-center gap-2 text-primary font-bold tracking-widest text-[10px] uppercase"
-                        >
-                            <Calendar className="h-3 w-3" />
-                            {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-                        </motion.div>
-                        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground/90">
-                            {greeting}, <span className="text-primary">{user?.displayName?.split(" ")[0] || "Student"}</span>
-                        </h1>
-                        <p className="text-muted-foreground font-medium max-w-md">
-                            Welcome back. Here's how your mental well-being is trending today.
-                        </p>
-                    </div>
+                <DashboardItem className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                    <GreetingHeader displayName={user?.name?.split(" ")[0]} />
                     <div className="flex items-center gap-3">
                         <div className="hidden lg:flex flex-col items-end mr-4">
                             <div className="text-[10px] font-black uppercase tracking-widest text-primary/60 flex items-center gap-1.5">
@@ -137,10 +58,10 @@ export default function DashboardPage() {
                             </Button>
                         </Link>
                     </div>
-                </motion.div>
+                </DashboardItem>
 
                 {/* Persuasive Task Support: Next Best Action & Praise */}
-                <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <DashboardItem className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="md:col-span-2 p-1 rounded-[2rem] bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 animate-pulse-slow">
                         <div className="h-full w-full glass rounded-[1.9rem] p-8 flex flex-col md:flex-row items-center gap-8 border-none">
                             <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
@@ -184,11 +105,11 @@ export default function DashboardPage() {
                             <Users size={120} className="text-primary" />
                         </div>
                     </Card>
-                </motion.div>
+                </DashboardItem>
 
                 {/* Main Stats Grid */}
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                    <motion.div variants={itemVariants} className="md:col-span-2">
+                    <DashboardItem className="md:col-span-2">
                         <Card className="h-full glass border-primary/20 bg-primary/5 overflow-hidden group">
                             <CardHeader className="pb-2">
                                 <CardTitle className="text-lg flex items-center gap-2">
@@ -198,31 +119,12 @@ export default function DashboardPage() {
                                 <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-1">A space for your thoughts</CardTitle>
                             </CardHeader>
                             <CardContent className="pt-4">
-                                <AnimatePresence mode="wait">
-                                    <motion.div
-                                        key={quoteIndex}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -10 }}
-                                        transition={{ duration: 0.5 }}
-                                        className="space-y-4"
-                                    >
-                                        <p className="text-2xl md:text-3xl font-extrabold font-serif italic text-foreground tracking-tight leading-tight">
-                                            "{currentQuote.text}"
-                                        </p>
-                                        <div className="flex items-center justify-between pt-2">
-                                            <span className="text-sm font-black uppercase tracking-[0.2em] text-primary">
-                                                — {currentQuote.author}
-                                            </span>
-                                            <Quote className="h-8 w-8 text-primary opacity-20" strokeWidth={3} />
-                                        </div>
-                                    </motion.div>
-                                </AnimatePresence>
+                                <MotivationalCarousel />
                             </CardContent>
                         </Card>
-                    </motion.div>
+                    </DashboardItem>
 
-                    <motion.div variants={itemVariants}>
+                    <DashboardItem>
                         <Link href="/dashboard/mood">
                             <Card className="h-full group hover:shadow-2xl transition-all duration-500 glass border-secondary/20 bg-secondary/5 cursor-pointer overflow-hidden relative">
                                 <CardHeader className="pb-2">
@@ -248,9 +150,9 @@ export default function DashboardPage() {
                                 </div>
                             </Card>
                         </Link>
-                    </motion.div>
+                    </DashboardItem>
 
-                    <motion.div variants={itemVariants}>
+                    <DashboardItem>
                         <Link href="/dashboard/assessment">
                             <Card className="h-full glass border-primary/10 bg-primary/5 group hover:bg-primary/10 transition-all duration-500 cursor-pointer overflow-hidden relative">
                                 <CardHeader className="relative z-10">
@@ -274,11 +176,11 @@ export default function DashboardPage() {
                                 </div>
                             </Card>
                         </Link>
-                    </motion.div>
+                    </DashboardItem>
                 </div>
 
                 {/* Featured Sections */}
-                <motion.div variants={itemVariants} className="grid md:grid-cols-5 gap-8">
+                <DashboardItem className="grid md:grid-cols-5 gap-8">
                     <div className="md:col-span-3 space-y-6">
                         <div className="flex items-center justify-between">
                             <h2 className="text-xl font-extrabold text-foreground/80 tracking-tight">Recommended Resources</h2>
@@ -291,14 +193,13 @@ export default function DashboardPage() {
                                 { title: "Exam Stress Survival", time: "5 min", color: "bg-primary/5" },
                                 { title: "The Power of Sleep", time: "8 min", color: "bg-secondary/5" }
                             ].map((res) => (
-                                <motion.div
-                                    whileHover={{ y: -4 }}
+                                <div
                                     key={res.title}
-                                    className={`p-5 rounded-2xl border border-border glass ${res.color} group cursor-pointer hover:shadow-xl transition-all duration-500`}
+                                    className={`p-5 rounded-2xl border border-border glass ${res.color} group cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-500`}
                                 >
                                     <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{res.time} Read</span>
                                     <h4 className="text-base font-bold text-foreground mt-1 group-hover:text-primary transition-colors">{res.title}</h4>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -323,10 +224,10 @@ export default function DashboardPage() {
                             </CardContent>
                         </Card>
                     </div>
-                </motion.div>
+                </DashboardItem>
 
                 {/* Credibility & Ethics Footer Support */}
-                <motion.div variants={itemVariants} className="pt-10 border-t border-primary/5">
+                <DashboardItem className="pt-10 border-t border-primary/5">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6 opacity-40 hover:opacity-100 transition-opacity duration-500">
                         <div className="flex items-center gap-4">
                             <div className="h-10 w-10 rounded-xl bg-muted flex items-center justify-center">
@@ -341,8 +242,8 @@ export default function DashboardPage() {
                             MindBridge is a supportive resource and does not provide clinical diagnoses. For professional psychiatric or psychological emergencies, please use the Crisis Support button.
                         </p>
                     </div>
-                </motion.div>
-            </motion.div>
+                </DashboardItem>
+            </DashboardContainer>
         </div>
     );
 }

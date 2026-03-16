@@ -1,5 +1,8 @@
+"use client";
+
+import React from "react";
 import Link from "next/link";
-import { MotionDiv, MotionMain, MotionSection } from "@/components/motion-wrappers";
+import { motion } from "framer-motion";
 import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { 
@@ -60,7 +63,7 @@ export default function PrivacyPage() {
       <AuroraBackground />
 
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-24 backdrop-blur-md bg-background/50 border-b border-border/50">
-        <MotionDiv
+        <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-2.5 outline-none"
@@ -68,9 +71,9 @@ export default function PrivacyPage() {
           <Link href="/" className="hover:opacity-80 transition-opacity">
             <Logo size="md" />
           </Link>
-        </MotionDiv>
+        </motion.div>
 
-        <MotionDiv
+        <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
         >
@@ -80,10 +83,10 @@ export default function PrivacyPage() {
               Back to Home
             </Button>
           </Link>
-        </MotionDiv>
+        </motion.div>
       </nav>
 
-      <MotionMain 
+      <motion.main 
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -91,7 +94,7 @@ export default function PrivacyPage() {
       >
         {/* Header */}
         <section className="mb-20 text-center md:text-left">
-          <MotionDiv variants={itemVariants} className="space-y-6">
+          <motion.div variants={itemVariants} className="space-y-6">
             <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-primary backdrop-blur-md">
               <ShieldCheck className="h-3.5 w-3.5" />
               Privacy First
@@ -103,13 +106,13 @@ export default function PrivacyPage() {
             <p className="text-xl md:text-2xl font-medium text-muted-foreground max-w-2xl leading-relaxed">
               At MindBridge, we believe that mental health support must be built on a foundation of absolute trust and transparency.
             </p>
-          </MotionDiv>
+          </motion.div>
         </section>
 
         {/* Policy Sections */}
         <section className="grid gap-6 mb-24">
           {sections.map((section, i) => (
-            <MotionDiv
+            <motion.div
               key={section.title}
               variants={itemVariants}
               className="p-8 md:p-12 rounded-[2.5rem] glass border border-white/10 shadow-premium group hover:border-primary/30 transition-all flex flex-col md:flex-row gap-8 items-start backdrop-blur-2xl"
@@ -126,12 +129,12 @@ export default function PrivacyPage() {
                   {section.content}
                 </p>
               </div>
-            </MotionDiv>
+            </motion.div>
           ))}
         </section>
 
         {/* Trust Badge */}
-        <MotionSection variants={itemVariants} className="text-center">
+        <motion.section variants={itemVariants} className="text-center">
           <div className="p-10 md:p-16 rounded-[4rem] bg-primary/5 border border-primary/20 border-dashed inline-block relative overflow-hidden group">
             <div className="absolute inset-0 bg-primary/5 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-700" />
             <div className="flex flex-col items-center gap-6 relative z-10">
@@ -144,8 +147,8 @@ export default function PrivacyPage() {
               </div>
             </div>
           </div>
-        </MotionSection>
-      </MotionMain>
+        </motion.section>
+      </motion.main>
 
       <footer className="border-t border-border/50 py-12 px-6 md:px-24 mt-20">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
