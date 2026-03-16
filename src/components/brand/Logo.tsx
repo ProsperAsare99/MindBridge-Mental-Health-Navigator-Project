@@ -49,7 +49,7 @@ export function Logo({
                 whileHover={{ scale: 1.05, rotate: 2 }}
                 whileTap={{ scale: 0.95 }}
                 className={cn(
-                    "relative flex items-center justify-center overflow-hidden transition-all duration-500 shadow-premium border border-primary/5",
+                    "relative flex items-center justify-center overflow-hidden transition-[transform,background-color,border-color,box-shadow] duration-500 shadow-premium border border-primary/5",
                     containerSizes[size],
                     videoSrc ? "bg-black" : "bg-[#0A1A1A] group-hover:bg-[#0D2424]"
                 )}
@@ -61,7 +61,7 @@ export function Logo({
                         loop
                         muted
                         playsInline
-                        className="absolute inset-0 w-full h-full object-cover z-0 opacity-80 group-hover:opacity-100 transition-opacity"
+                        className="absolute inset-0 w-full h-full object-cover z-0 opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                     >
                         <source src={videoSrc} type="video/mp4" />
                     </video>

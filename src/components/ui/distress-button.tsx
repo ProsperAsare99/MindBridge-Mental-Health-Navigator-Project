@@ -18,7 +18,7 @@ export function DistressButton() {
                     <div className="absolute -inset-2 rounded-full bg-red-500/30 blur-md animate-pulse group-hover:bg-red-500/50 transition-colors duration-500"></div>
                     
                     {/* The button itself */}
-                    <button className="relative flex items-center justify-center h-14 w-14 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-2xl shadow-red-900/50 hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-red-400/20">
+                    <button className="relative flex items-center justify-center h-14 w-14 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-2xl shadow-red-900/50 hover:scale-110 active:scale-95 transition-[transform,background-color,box-shadow,border-color] duration-300 border-2 border-red-400/20">
                         <AlertCircle className="h-6 w-6" strokeWidth={2.5} />
                     </button>
                     

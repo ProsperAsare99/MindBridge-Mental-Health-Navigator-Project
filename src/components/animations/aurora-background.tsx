@@ -20,7 +20,7 @@ export function AuroraBackground({
           y: [0, 30, 0]
         }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className={`absolute top-[-10%] right-[-10%] h-[60%] w-[60%] rounded-full ${primaryColor} blur-[130px]`}
+        className={`absolute top-[-10%] right-[-10%] h-[60%] w-[60%] rounded-full ${primaryColor} blur-[130px] will-change-transform`}
       />
       <motion.div 
         animate={{ 

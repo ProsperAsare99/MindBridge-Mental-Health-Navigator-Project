@@ -47,7 +47,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
             {/* Bottom progress - very minimal */}
             <div className="absolute bottom-24 w-32 h-[1px] bg-olive/5 overflow-hidden rounded-full">
                 <div
-                    className={`h-full bg-sage transition-all duration-[2500ms] ease-linear w-full`}
+                    className={`h-full bg-sage transition-transform duration-[2500ms] ease-linear w-full will-change-transform`}
                     style={{ transform: phase === "enter" ? "translateX(-100%)" : "translateX(0%)" }}
                 />
             </div>

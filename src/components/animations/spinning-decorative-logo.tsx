@@ -16,7 +16,7 @@ export function SpinningDecorativeLogo() {
            rotate: { duration: 20, repeat: Infinity, ease: "linear" },
            scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
          }}
-         className="absolute inset-0 border-2 border-dashed border-primary/20 rounded-full m-12"
+         className="absolute inset-0 border-2 border-dashed border-primary/20 rounded-full m-12 will-change-transform"
        />
     </div>
   );
