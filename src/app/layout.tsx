@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/providers/SessionProvider";
 import { SearchProvider } from "@/components/providers/SearchProvider";
 import dynamic from "next/dynamic";
-const CommandMenu = dynamic(() => import("@/components/search/command-menu"), {
+const DynamicCommandMenu = dynamic(() => import("@/components/search/command-menu-component"), {
   ssr: false,
 });
 
@@ -45,7 +45,7 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               {children}
-              <CommandMenu />
+              <DynamicCommandMenu />
             </ThemeProvider>
           </SearchProvider>
         </AuthProvider>
