@@ -4,10 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/providers/SessionProvider";
 import { SearchProvider } from "@/components/providers/SearchProvider";
-import dynamic from "next/dynamic";
-const DynamicCommandMenu = dynamic(() => import("@/components/search/command-menu-component"), {
-  ssr: false,
-});
+import { CommandMenu } from "@/components/search/command-menu";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,7 +42,7 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               {children}
-              <DynamicCommandMenu />
+              <CommandMenu />
             </ThemeProvider>
           </SearchProvider>
         </AuthProvider>
