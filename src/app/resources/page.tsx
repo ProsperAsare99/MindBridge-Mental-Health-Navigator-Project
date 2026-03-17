@@ -28,7 +28,8 @@ import {
   FileText,
   Video
 } from "lucide-react";
-import VideoPlayer from "@/components/video-player";
+import dynamic from "next/dynamic";
+const VideoPlayer = dynamic(() => import("@/components/video-player"), { ssr: false });
 
 // --- Data (Shared or copied for simplicity in this dedicated page) ---
 const ARTICLES = [
@@ -236,67 +237,69 @@ export default function ResourcesPage() {
         {/* Featured Articles */}
         <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-32">
           <AnimatePresence mode="popLayout">
-            {filteredArticles.length > 0 ? (
-              filteredArticles.map((article, index) => {
-                const Icon = article.icon;
-                const isExpanded = expandedArticle === index;
-                return (
-                  <motion.div
-                    key={article.title}
-                    layout
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className={`glass rounded-[2rem] shadow-premium group overflow-hidden ${isExpanded ? "md:col-span-2 lg:col-span-3" : "hover:scale-[1.02] transition-transform"}`}
-                  >
-                    <div className="p-8">
-                      <div className="flex items-start justify-between">
-                        <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                          <Icon size={24} />
+            {useMemo(() => (
+              filteredArticles.length > 0 ? (
+                filteredArticles.map((article, index) => {
+                  const Icon = article.icon;
+                  const isExpanded = expandedArticle === index;
+                  return (
+                    <motion.div
+                      key={article.title}
+                      layout
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      className={`glass rounded-[2rem] shadow-premium group overflow-hidden ${isExpanded ? "md:col-span-2 lg:col-span-3" : "hover:scale-[1.02] transition-transform"}`}
+                    >
+                      <div className="p-8">
+                        <div className="flex items-start justify-between">
+                          <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                            <Icon size={24} />
+                          </div>
+                          <button onClick={() => setExpandedArticle(isExpanded ? null : index)} className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-primary/5 text-muted-foreground hover:text-primary transition-colors">
+                            {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                          </button>
                         </div>
-                        <button onClick={() => setExpandedArticle(isExpanded ? null : index)} className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-primary/5 text-muted-foreground hover:text-primary transition-colors">
-                          {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                        </button>
+                        <div className="mt-6 space-y-2">
+                          <p className="text-[9px] font-bold text-primary uppercase tracking-widest">{article.category} • {article.readTime}</p>
+                          <h3 className="text-xl font-bold text-foreground/90 group-hover:text-primary transition-colors">{article.title}</h3>
+                          <p className="text-sm text-muted-foreground font-medium line-clamp-2">{article.description}</p>
+                        </div>
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="mt-8 pt-8 border-t border-primary/10 space-y-4">
+                              {article.content.map((p, i) => <p key={i} className="text-sm text-foreground/70 leading-relaxed font-medium">{p}</p>)}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
-                      <div className="mt-6 space-y-2">
-                        <p className="text-[9px] font-bold text-primary uppercase tracking-widest">{article.category} • {article.readTime}</p>
-                        <h3 className="text-xl font-bold text-foreground/90 group-hover:text-primary transition-colors">{article.title}</h3>
-                        <p className="text-sm text-muted-foreground font-medium line-clamp-2">{article.description}</p>
-                      </div>
-                      <AnimatePresence>
-                        {isExpanded && (
-                          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="mt-8 pt-8 border-t border-primary/10 space-y-4">
-                            {article.content.map((p, i) => <p key={i} className="text-sm text-foreground/70 leading-relaxed font-medium">{p}</p>)}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </motion.div>
-                );
-              })
-            ) : (
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="col-span-full py-20 flex flex-col items-center justify-center space-y-4 glass rounded-[2rem] border border-dashed border-primary/20"
-              >
-                <div className="h-20 w-20 rounded-full bg-primary/5 flex items-center justify-center text-primary/40">
-                  <Search size={40} />
-                </div>
-                <div className="text-center">
-                  <h3 className="text-lg font-bold text-foreground/80">No matches found</h3>
-                  <p className="text-sm text-muted-foreground max-w-xs mx-auto">We couldn't find any articles matching "{searchQuery}". Try a different keyword.</p>
-                </div>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => setSearchQuery("")}
-                  className="rounded-xl font-bold"
+                    </motion.div>
+                  );
+                })
+              ) : (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="col-span-full py-20 flex flex-col items-center justify-center space-y-4 glass rounded-[2rem] border border-dashed border-primary/20"
                 >
-                  Clear Search
-                </Button>
-              </motion.div>
-            )}
+                  <div className="h-20 w-20 rounded-full bg-primary/5 flex items-center justify-center text-primary/40">
+                    <Search size={40} />
+                  </div>
+                  <div className="text-center">
+                    <h3 className="text-lg font-bold text-foreground/80">No matches found</h3>
+                    <p className="text-sm text-muted-foreground max-w-xs mx-auto">We couldn't find any articles matching "{searchQuery}". Try a different keyword.</p>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => setSearchQuery("")}
+                    className="rounded-xl font-bold"
+                  >
+                    Clear Search
+                  </Button>
+                </motion.div>
+              )
+            ), [filteredArticles, expandedArticle, searchQuery])}
           </AnimatePresence>
         </section>
 

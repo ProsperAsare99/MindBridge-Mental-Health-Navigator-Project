@@ -13,7 +13,7 @@ const QUICK_LINKS = [
   { title: "University Services", href: "/dashboard", icon: Sparkles, color: "text-secondary", bg: "bg-secondary/10" },
 ];
 
-export function CommandMenu() {
+export default function CommandMenu() {
   const { isOpen, setIsOpen } = useSearch();
   const [query, setQuery] = useState("");
   const router = useRouter();

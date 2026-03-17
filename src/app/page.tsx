@@ -21,8 +21,10 @@ import {
   Star,
   Search
 } from "lucide-react";
+const AuroraBackground = dynamic(() => import("@/components/aurora-background"), { ssr: false });
 import { Logo } from "@/components/brand/Logo";
 import { useSearch } from "@/components/providers/SearchProvider";
+import { useMemo } from "react";
 
 export default function Home() {
   const { toggle } = useSearch();
@@ -195,7 +197,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-8 text-left order-2 md:order-1">
-              {[
+              {useMemo(() => [
                 {
                   title: "Smart Mood Tracking",
                   description: "Monitor your emotional well-being over time with our context-aware analytics.",
@@ -228,7 +230,7 @@ export default function Home() {
                     <p className="text-sm text-muted-foreground font-medium leading-relaxed">{feature.description}</p>
                   </div>
                 </motion.div>
-              ))}
+              )), [])}
             </div>
 
             <div className="order-1 md:order-2 flex justify-center">

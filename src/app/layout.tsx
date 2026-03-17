@@ -4,7 +4,10 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/providers/SessionProvider";
 import { SearchProvider } from "@/components/providers/SearchProvider";
-import { CommandMenu } from "@/components/search/command-menu";
+import dynamic from "next/dynamic";
+const CommandMenu = dynamic(() => import("@/components/search/command-menu"), {
+  ssr: false,
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
