@@ -34,26 +34,26 @@
 
   /* New Global Theme - Light Mode (NEUTRAL & GOLD) */
   --background: #edede9; /* Parchment - Base surface */
-  --foreground: #1a1a1a; /* Pure Charcoal - Maximum readability */
+  --foreground: #0f0f10; /* Pure Carbon - Signature Dark */
 
   --primary: #c5a059; /* Antique Gold - Replaces Dusk Blue */
   --primary-foreground: #ffffff;
 
   --secondary: #d5bdaf; /* Almond Silk */
-  --secondary-foreground: #1a1a1a;
+  --secondary-foreground: #0f0f10;
 
   --muted: #f1f1f1; 
   --muted-foreground: #71717a; /* Neutral Zinc Zinc subtext */
 
   --accent: #e3d5ca; 
-  --accent-foreground: #1a1a1a;
+  --accent-foreground: #0f0f10;
 
   --border: #d6ccc2; 
   --input: #d6ccc2;
   --ring: #c5a059;
 
   --card: #f5ebe0; 
-  --card-foreground: #1a1a1a;
+  --card-foreground: #0f0f10;
   --surface-above: #e0e1dd;
 }
 

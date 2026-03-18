@@ -51,7 +51,7 @@ export function Logo({
                 className={cn(
                     "relative flex items-center justify-center overflow-hidden transition-[transform,background-color,border-color,box-shadow] duration-500 shadow-premium border border-primary/5",
                     containerSizes[size],
-                    videoSrc ? "bg-black" : "bg-[#0A1A1A] group-hover:bg-[#0D2424]"
+                    videoSrc ? "bg-black" : "bg-[#0f0f10] group-hover:bg-[#0f0f10]/80"
                 )}
             >
                 {/* MP4 Video Logo Support */}

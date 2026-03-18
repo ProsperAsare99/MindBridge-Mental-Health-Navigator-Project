@@ -81,7 +81,7 @@ export default function Home() {
               className="h-12 w-12 rounded-full hover:bg-primary/10 group transition-all"
               onClick={toggle}
             >
-              <Search className="h-6 w-6 text-primary group-hover:scale-110 transition-transform" />
+              <Search className="h-6 w-6 text-foreground/80 group-hover:text-primary group-hover:scale-110 transition-all duration-300" />
             </Button>
             <Link href="/login">
               <Button variant="ghost" className="text-sm font-bold text-foreground/90 hover:text-primary">
@@ -162,7 +162,7 @@ export default function Home() {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
               <Link href="/register" className="w-full sm:w-auto">
-                <Button size="lg" className="h-16 px-10 rounded-full text-lg font-bold shadow-2xl bg-primary text-primary-foreground hover:bg-primary/90">
+                <Button size="lg" className="h-16 px-10 rounded-full text-lg font-bold shadow-2xl bg-primary text-[#0f0f10] hover:bg-primary/90">
                   Join MindBridge
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Button>
