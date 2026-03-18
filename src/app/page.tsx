@@ -51,7 +51,7 @@ export default function Home() {
               <Logo size="md" />
             </Link>
           </motion.div>
-  
+
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -69,15 +69,15 @@ export default function Home() {
               </Link>
             ))}
           </motion.div>
-  
+
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center gap-5"
           >
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               className="h-12 w-12 rounded-full hover:bg-primary/10 group transition-all"
               onClick={toggle}
             >
@@ -99,44 +99,51 @@ export default function Home() {
 
       {/* Hero Section */}
       <main className="relative z-10 min-h-screen">
-        {/* Hero Background Image with Overlay */}
-        <div className="absolute inset-x-0 top-0 h-[90vh] overflow-hidden z-0">
+        {/* Top Visual Banner (Tiles BG) */}
+        <div className="relative h-[80vh] overflow-hidden">
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: 'url("/images/hero-background.jpg")' }}
-          />
-          {/* Multi-layered dark overlay for depth and focus */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-background" />
-          <div className="absolute inset-0 bg-black/10" /> 
+            className="absolute inset-0 z-0"
+          >
+            <div 
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: 'url("/images/hero-background-tiles.jpg")' }}
+            />
+            {/* Multi-layered dark overlay for depth and focus */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-background" />
+            <div className="absolute inset-0 bg-black/10" /> 
+          </motion.div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0.5, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          className="relative z-10 flex flex-col items-center justify-center px-4 pt-44 lg:pt-64 pb-20 text-center max-w-7xl mx-auto space-y-12"
-        >
-          <div className="relative z-10 space-y-12 flex flex-col items-center py-16 px-8 rounded-[4rem]">
-            {/* Heading */}
-            <ParallaxSection speed={0.15}>
-              <h1 className="text-6xl font-extrabold tracking-tight sm:text-7xl md:text-9xl text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] leading-[1.05]">
-                Your Mind,<br />
-                <span className="text-primary drop-shadow-lg">Understood.</span>
-              </h1>
-            </ParallaxSection>
-  
+        {/* Actionable Content Section */}
+        <div className="relative z-10 flex flex-col items-center justify-center px-4 pt-12 pb-20 text-center max-w-7xl mx-auto space-y-12">
+          <div className="space-y-12 flex flex-col items-center py-8 px-8">
+            {/* Main Heading */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+              className="relative z-10 space-y-4"
+            >
+              <ParallaxSection speed={0.15}>
+                <h1 className="text-6xl font-extrabold tracking-tight sm:text-7xl md:text-9xl text-foreground leading-[1.05]">
+                  Your Mind,<br />
+                  <span className="text-primary">Understood.</span>
+                </h1>
+              </ParallaxSection>
+            </motion.div>
+
             {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.8 }}
-              className="inline-flex items-center gap-2.5 rounded-full border border-primary/50 bg-black/60 px-6 py-2.5 text-xs font-black uppercase tracking-[0.2em] text-primary backdrop-blur-md shadow-[0_0_20px_rgba(174,145,100,0.2)]"
+              className="inline-flex items-center gap-3.5 rounded-full border border-white/10 bg-[#0a0a0b] px-10 py-4 text-xs font-black uppercase tracking-[0.35em] text-primary shadow-2xl shadow-primary/5 hover:border-primary/30 transition-all duration-500 group"
             >
-              <Activity className="h-4 w-4 animate-pulse text-primary" />
+              <Activity className="h-4 w-4 animate-pulse text-primary group-hover:scale-110 transition-transform" />
               Designed for Academic Well-being
             </motion.div>
   
@@ -146,39 +153,39 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-                className="max-w-3xl mx-auto text-xl md:text-2xl font-semibold text-white leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                className="max-w-3xl mx-auto text-xl md:text-2xl font-semibold text-foreground/80 leading-relaxed"
               >
-                Navigate the complexities of university life with <span className="text-primary font-bold">Ghana's first Context-Aware Support System.</span> <span className="text-white font-extrabold pb-0.5 border-b-2 border-primary/60">Simple tools, deeper understanding.</span>
+                Navigate the complexities of university life with <span className="text-primary font-bold">Ghana's first Context-Aware Support System.</span> <span className="text-foreground font-extrabold pb-0.5 border-b-2 border-primary/60">Simple tools, deeper understanding.</span>
               </motion.p>
             </ParallaxSection>
   
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
               <Link href="/register" className="w-full sm:w-auto">
-                <Button size="lg" className="h-16 px-10 rounded-full text-lg font-bold shadow-2xl bg-primary text-black hover:bg-primary/90">
+                <Button size="lg" className="h-16 px-10 rounded-full text-lg font-bold shadow-2xl bg-primary text-primary-foreground hover:bg-primary/90">
                   Join MindBridge
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link href="/resources" className="w-full sm:w-auto">
-                <Button variant="outline" size="lg" className="h-16 px-10 rounded-full text-lg font-bold border-2 border-primary/30 bg-black/40 text-white hover:bg-black/60 transition-all backdrop-blur-md shadow-xl">
+                <Button variant="outline" size="lg" className="h-16 px-10 rounded-full text-lg font-bold border-2 border-primary/30 bg-transparent text-foreground hover:bg-primary/5 transition-all backdrop-blur-md">
                   View Resources
                 </Button>
               </Link>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* 3D Interactive Section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="w-full max-w-7xl mx-auto mt-32 px-4"
+          className="w-full max-w-7xl mx-auto mt-16 px-4"
         >
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Interactive <span className="text-primary">Experience</span></h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 text-foreground">Interactive <span className="text-primary">Experience</span></h2>
             <p className="text-muted-foreground font-medium max-w-xl mx-auto">Explore our innovative tools designed to help you navigate your academic journey with clarity and confidence.</p>
           </div>
 
@@ -201,8 +208,8 @@ export default function Home() {
                   icon: ShieldCheck
                 },
                 {
-                  title: "Real-time Analysis",
-                  description: "Receive instant, expert-level feedback on your mental well-being and academic pulse.",
+                  title: "Visual Mood Insights",
+                  description: "Deep-dive into your emotional patterns with graphical mood trends and data-driven assessments.",
                   icon: Sparkles
                 }
               ].map((feature, i) => (
@@ -218,7 +225,7 @@ export default function Home() {
                     <feature.icon className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold mb-1">{feature.title}</h3>
+                    <h3 className="text-lg font-bold mb-1 text-foreground">{feature.title}</h3>
                     <p className="text-sm text-muted-foreground font-medium leading-relaxed">{feature.description}</p>
                   </div>
                 </motion.div>
@@ -231,7 +238,7 @@ export default function Home() {
                 hoverLift={0.5}
                 color="transparent"
                 hoverColor="transparent"
-                className="h-[500px]"
+                className="h-[550px]"
                 content={
                   <div className="w-[320px] p-8 text-left glass backdrop-blur-xl rounded-[2.5rem] border border-border/50 shadow-premium">
                     <div className="flex items-center gap-3 mb-8">
@@ -241,61 +248,67 @@ export default function Home() {
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <div className="text-[10px] font-black uppercase tracking-widest text-primary/60">Live Analytics</div>
-                          <div className="h-1 w-1 rounded-full bg-red-500 animate-ping" />
+                          <div className="text-[10px] font-black uppercase tracking-widest text-primary/70">Mood Trend Analysis</div>
+                          <div className="h-1.5 w-1.5 rounded-full bg-red-500 animate-ping" />
                         </div>
-                        <div className="text-sm font-bold text-foreground">Academic Pulse</div>
+                        <div className="text-sm font-bold text-foreground opacity-90">Weekly Pulse</div>
                       </div>
                     </div>
 
-                    <div className="space-y-4 mb-10">
-                      <div className="h-3 w-full bg-foreground/5 rounded-full overflow-hidden relative">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: "75%" }}
-                          transition={{ duration: 2, ease: "circOut", delay: 0.5 }}
-                          className="h-full bg-primary relative"
-                        >
-                          <motion.div
-                            initial={{ x: "-100%" }}
-                            animate={{ x: "200%" }}
-                            transition={{ repeat: Infinity, duration: 2, ease: "linear", repeatDelay: 1 }}
-                            className="absolute inset-y-0 w-20 bg-gradient-to-r from-transparent via-white/50 to-transparent"
-                          />
-                        </motion.div>
+                    {/* Graphical Mood Trends with Grid and Axis */}
+                    <div className="mb-10 relative">
+                      {/* Y-Axis Labels & Grid Lines */}
+                      <div className="absolute inset-0 flex flex-col justify-between pointer-events-none pr-2 py-1">
+                        {[1, 2, 3].map((_, i) => (
+                          <div key={i} className="flex items-center gap-3 w-full">
+                            <span className="text-[8px] font-black text-foreground/20 w-4 text-right">
+                              {i === 0 ? 'H' : i === 1 ? 'A' : 'L'}
+                            </span>
+                            <div className="h-px flex-1 border-t border-dotted border-foreground/10" />
+                          </div>
+                        ))}
                       </div>
-                      <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-foreground/40">
-                        <motion.span
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          transition={{ delay: 1.5 }}
-                        >Well-being Score</motion.span>
-                        <motion.span
-                          initial={{ opacity: 0, y: 5 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 1.8 }}
-                          className="text-primary text-xs"
-                        >75%</motion.span>
+
+                      <div className="flex items-end justify-between h-28 gap-2 px-6 relative z-10 pt-4">
+                        {[40, 65, 45, 80, 55, 90, 75].map((height, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ height: 0, opacity: 0 }}
+                            whileInView={{ height: `${height}%`, opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.6 + (i * 0.1), duration: 0.8, ease: "circOut" }}
+                            className="w-full bg-gradient-to-t from-primary/10 via-primary/40 to-primary rounded-t-sm relative group/bar shadow-[0_0_15px_rgba(174,145,100,0.1)]"
+                          >
+                            <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover/bar:opacity-100 transition-all text-[9px] font-black text-primary bg-background/80 backdrop-blur-sm px-1.5 py-0.5 rounded-md border border-primary/20">
+                              {height}%
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+
+                      <div className="flex justify-between text-[8px] font-black uppercase tracking-widest text-foreground/30 px-6 mt-3">
+                        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, i) => (
+                          <span key={`${day}-${i}`} className="w-full text-center">{day[0]}</span>
+                        ))}
                       </div>
                     </div>
 
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 2.2 }}
-                      className="p-5 rounded-2xl bg-primary/5 border border-primary/10 relative overflow-hidden group/box shadow-inner"
+                      transition={{ delay: 1.5 }}
+                      className="p-5 rounded-[1.5rem] bg-primary/[0.03] border border-primary/10 relative overflow-hidden group/box shadow-inner"
                     >
-                      <motion.div
-                        className="absolute inset-0 bg-primary/5 translate-x-[-100%]"
-                        whileInView={{ x: "100%" }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                      />
-                      <p className="text-xs font-medium text-foreground/60 italic leading-relaxed relative z-10">
-                        "Your engagement levels are steady this week. Consider a 15-minute mindfulness session before your lecture."
+                      <div className="flex items-center gap-2 mb-2 relative z-10">
+                        <div className="px-2 py-0.5 rounded-full bg-primary/20 text-[8px] font-black text-primary uppercase tracking-wider">Insight</div>
+                        <div className="h-px flex-1 bg-primary/5" />
+                      </div>
+                      <p className="text-[11px] font-semibold text-foreground italic leading-relaxed relative z-10">
+                        "Your weekend mood showed a 15% increase in resilience. Keep up the consistent mindfulness practice."
                       </p>
                     </motion.div>
 
-                    <div className="mt-8 pt-6 border-t border-black/5 flex justify-between items-center opacity-60">
+                    <div className="mt-8 pt-6 border-t border-foreground/5 flex justify-between items-center">
                       <div className="text-[10px] font-black uppercase tracking-widest text-foreground/40">Session ID: #MB-0492</div>
                       <div className="flex -space-x-2">
                         {[1, 2, 3].map(i => (
@@ -344,7 +357,7 @@ export default function Home() {
                 Ghana's first context-aware support system designed to navigate the complexities of university life with precision and empathy.
               </p>
             </div>
-            
+
             <div className="space-y-6">
               <h4 className="text-sm font-black uppercase tracking-widest text-foreground">Platform</h4>
               <ul className="space-y-4 text-sm font-bold text-muted-foreground">
