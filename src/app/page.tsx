@@ -33,152 +33,140 @@ export default function Home() {
       {/* Soft Background Accents */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <ParallaxSection speed={0.05} direction="down" className="absolute top-[-10%] left-[-10%] h-[40%] w-[40%]">
-          <div className="h-full w-full rounded-full bg-foreground/5 blur-[120px]" />
+          <div className="h-full w-full rounded-full bg-primary/10 blur-[120px]" />
         </ParallaxSection>
         <ParallaxSection speed={0.1} direction="up" className="absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%]">
-          <div className="h-full w-full rounded-full bg-foreground/5 blur-[120px]" />
+          <div className="h-full w-full rounded-full bg-secondary/10 blur-[120px]" />
         </ParallaxSection>
       </div>
 
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-24">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-2.5 outline-none"
-        >
-          <Link href="/">
-            <Logo size="md" />
-          </Link>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="hidden md:flex items-center gap-8 text-sm font-bold text-muted-foreground"
-        >
-          {[
-            { label: "About", href: "/about" },
-            { label: "Resources", href: "/resources" },
-            { label: "Privacy", href: "/privacy" },
-            { label: "Support", href: "/support" }
-          ].map((item) => (
-            <Link key={item.label} href={item.href} className="hover:text-primary transition-colors duration-300">
-              {item.label}
-            </Link>
-          ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-3"
-        >
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="rounded-full hover:bg-primary/5 group"
-            onClick={toggle}
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl">
+        <div className="flex items-center justify-between px-8 py-4 rounded-[2.5rem] bg-background/40 backdrop-blur-xl border border-primary/20 shadow-2xl shadow-black/20">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-2.5 outline-none"
           >
-            <Search className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
-          </Button>
-          <Link href="/login">
-            <Button variant="ghost" className="text-sm font-bold">
-              Sign In
+            <Link href="/">
+              <Logo size="md" />
+            </Link>
+          </motion.div>
+  
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="hidden md:flex items-center gap-10 text-md font-bold text-foreground"
+          >
+            {[
+              { label: "About", href: "/about" },
+              { label: "Resources", href: "/resources" },
+              { label: "Privacy", href: "/privacy" },
+              { label: "Support", href: "/support" }
+            ].map((item) => (
+              <Link key={item.label} href={item.href} className="hover:text-primary transition-all duration-300 hover:scale-105 active:scale-95 relative group px-2 py-1">
+                {item.label}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ))}
+          </motion.div>
+  
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-5"
+          >
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-12 w-12 rounded-full hover:bg-primary/10 group transition-all"
+              onClick={toggle}
+            >
+              <Search className="h-6 w-6 text-primary group-hover:scale-110 transition-transform" />
             </Button>
-          </Link>
-          <Link href="/register">
-            <Button className="rounded-full px-6 shadow-xl shadow-foreground/5">
-              Get Started
-            </Button>
-          </Link>
-        </motion.div>
+            <Link href="/login">
+              <Button variant="ghost" className="text-sm font-bold text-foreground/90 hover:text-primary">
+                Sign In
+              </Button>
+            </Link>
+            <Link href="/register">
+              <Button className="rounded-full px-8 h-12 text-sm font-bold bg-primary text-black hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
+                Get Started
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
       </nav>
 
       {/* Hero Section */}
-      <main className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 pt-20 text-center">
+      <main className="relative z-10 min-h-screen">
+        {/* Hero Background Image with Overlay */}
+        <div className="absolute inset-x-0 top-0 h-[90vh] overflow-hidden z-0">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: 'url("/images/hero-background.jpg")' }}
+          />
+          {/* Multi-layered dark overlay for depth and focus */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-background" />
+          <div className="absolute inset-0 bg-black/10" /> 
+        </div>
+
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0.5, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          className="max-w-5xl space-y-12 flex flex-col items-center"
+          className="relative z-10 flex flex-col items-center justify-center px-4 pt-44 lg:pt-64 pb-20 text-center max-w-7xl mx-auto space-y-12"
         >
-          {/* Heading */}
-          <ParallaxSection speed={0.15}>
-            <h1 className="text-6xl font-extrabold tracking-tight sm:text-7xl md:text-9xl text-foreground leading-[1.05]">
-              Your Mind,<br />
-              <span className="text-primary/80">Understood.</span>
-            </h1>
-          </ParallaxSection>
-
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.8 }}
-            className="inline-flex items-center gap-2.5 rounded-full border border-primary/10 bg-primary/5 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary/80 backdrop-blur-sm shadow-sm"
-          >
-            <Activity className="h-3.5 w-3.5 animate-pulse" />
-            Designed for Academic Well-being
-          </motion.div>
-
-          <ParallaxSection speed={0.1}>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
+          <div className="relative z-10 space-y-12 flex flex-col items-center py-16 px-8 rounded-[4rem]">
+            {/* Heading */}
+            <ParallaxSection speed={0.15}>
+              <h1 className="text-6xl font-extrabold tracking-tight sm:text-7xl md:text-9xl text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] leading-[1.05]">
+                Your Mind,<br />
+                <span className="text-primary drop-shadow-lg">Understood.</span>
+              </h1>
+            </ParallaxSection>
+  
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-              className="max-w-3xl mx-auto text-xl md:text-2xl font-semibold text-foreground/80 leading-relaxed"
+              transition={{ delay: 0.1, duration: 0.8 }}
+              className="inline-flex items-center gap-2.5 rounded-full border border-primary/50 bg-black/60 px-6 py-2.5 text-xs font-black uppercase tracking-[0.2em] text-primary backdrop-blur-md shadow-[0_0_20px_rgba(174,145,100,0.2)]"
             >
-              Navigate the complexities of university life with <span className="text-primary font-bold">Ghana's first Context-Aware Support System.</span> <span className="text-foreground font-extrabold pb-0.5 border-b-2 border-primary/20">Simple tools, deeper understanding.</span>
-            </motion.p>
-          </ParallaxSection>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
-            <Link href="/register" className="w-full sm:w-auto">
-              <Button size="lg" className="h-16 px-10 rounded-full text-lg font-bold shadow-2xl shadow-foreground/5">
-                Join MindBridge
-                <ChevronRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Link href="/resources" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="h-16 px-10 rounded-full text-lg font-bold border-2 border-primary/10">
-                View Resources
-              </Button>
-            </Link>
-          </div>
-
-          {/* Trust Assets */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.6, duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-            className="w-full pt-20 overflow-hidden pause-marquee"
-          >
-            <div className="flex animate-marquee gap-12 md:gap-24 items-center">
-              {[...Array(2)].map((_, i) => (
-                <div key={i} className="flex gap-12 md:gap-24 items-center shrink-0">
-                  {[
-                    { icon: ShieldCheck, label: "Confidential" },
-                    { icon: Brain, label: "AI-Powered" },
-                    { icon: GraduationCap, label: "Student-Led" },
-                    { icon: Trophy, label: "Highly Rated" }
-                  ].map(({ icon: Icon, label }) => (
-                    <div key={`${i}-${label}`} className="flex items-center gap-4 group cursor-default">
-                      <div className="h-10 w-10 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                        <Icon className="h-5 w-5 text-primary/40 group-hover:text-primary transition-colors" />
-                      </div>
-                      <span className="text-sm font-bold tracking-tight uppercase text-foreground/40 group-hover:text-foreground transition-colors whitespace-nowrap">
-                        {label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              ))}
+              <Activity className="h-4 w-4 animate-pulse text-primary" />
+              Designed for Academic Well-being
+            </motion.div>
+  
+            <ParallaxSection speed={0.1}>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+                className="max-w-3xl mx-auto text-xl md:text-2xl font-semibold text-white leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+              >
+                Navigate the complexities of university life with <span className="text-primary font-bold">Ghana's first Context-Aware Support System.</span> <span className="text-white font-extrabold pb-0.5 border-b-2 border-primary/60">Simple tools, deeper understanding.</span>
+              </motion.p>
+            </ParallaxSection>
+  
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
+              <Link href="/register" className="w-full sm:w-auto">
+                <Button size="lg" className="h-16 px-10 rounded-full text-lg font-bold shadow-2xl bg-primary text-black hover:bg-primary/90">
+                  Join MindBridge
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="/resources" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="h-16 px-10 rounded-full text-lg font-bold border-2 border-primary/30 bg-black/40 text-white hover:bg-black/60 transition-all backdrop-blur-md shadow-xl">
+                  View Resources
+                </Button>
+              </Link>
             </div>
-          </motion.div>
+          </div>
         </motion.div>
 
         {/* 3D Interactive Section */}
