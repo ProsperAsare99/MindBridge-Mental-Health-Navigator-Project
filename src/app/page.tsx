@@ -40,142 +40,30 @@ export default function Home() {
         </ParallaxSection>
       </div>
 
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl">
-        <div className="flex items-center justify-between px-8 py-4 rounded-[2.5rem] bg-background/40 backdrop-blur-xl border border-primary/20 shadow-2xl shadow-black/20">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-2.5 outline-none"
-          >
-            <Link href="/">
-              <Logo size="md" />
-            </Link>
-          </motion.div>
+      <MinimalistHero
+        navLinks={[
+          { label: "About", href: "/about" },
+          { label: "Resources", href: "/resources" },
+          { label: "Privacy", href: "/privacy" },
+          { label: "Support", href: "/support" }
+        ]}
+        mainText="Navigate the complexities of university life with Ghana's first Context-Aware Support System. Designed for academic well-being and emotional resilience."
+        readMoreLink="/about"
+        imageSrc="/images/hero-landscape-nature.png"
+        imageAlt="MindBridge Wellness"
+        overlayText={{
+          part1: "Your Mind,",
+          part2: "Understood."
+        }}
+        socialLinks={[
+          { icon: Heart, href: "#" },
+          { icon: MessageCircle, href: "#" },
+          { icon: Brain, href: "#" }
+        ]}
+        locationText="ACCRA • GHANA"
+      />
 
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="hidden md:flex items-center gap-10 text-md font-bold text-foreground"
-          >
-            {[
-              { label: "About", href: "/about" },
-              { label: "Resources", href: "/resources" },
-              { label: "Privacy", href: "/privacy" },
-              { label: "Support", href: "/support" }
-            ].map((item) => (
-              <Link key={item.label} href={item.href} className="hover:text-primary transition-all duration-300 hover:scale-105 active:scale-95 relative group px-2 py-1">
-                {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-              </Link>
-            ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-5"
-          >
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-12 w-12 rounded-full hover:bg-primary/10 group transition-all"
-              onClick={toggle}
-            >
-              <Search className="h-6 w-6 text-foreground/80 group-hover:text-primary group-hover:scale-110 transition-all duration-300" />
-            </Button>
-            <Link href="/login">
-              <Button variant="ghost" className="text-sm font-bold text-foreground/90 hover:text-primary">
-                Sign In
-              </Button>
-            </Link>
-            <Link href="/register">
-              <Button className="rounded-full px-8 h-12 text-sm font-bold bg-primary text-black hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
-                Get Started
-              </Button>
-            </Link>
-          </motion.div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <main className="relative z-10 min-h-screen">
-        {/* Top Visual Banner (Tiles BG) */}
-        <div className="relative h-[80vh] overflow-hidden rounded-b-[4rem] md:rounded-b-[6rem] border-b border-primary/20 shadow-2xl">
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="absolute inset-0 z-0"
-          >
-            <div 
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: 'url("/images/hero-background-tiles.jpg")' }}
-            />
-            {/* Multi-layered dark overlay for depth and focus */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-background/40" />
-            <div className="absolute inset-0 bg-black/10" /> 
-          </motion.div>
-        </div>
-
-        {/* Actionable Content Section */}
-        <div className="relative z-10 flex flex-col items-center justify-center px-4 pt-12 pb-20 text-center max-w-7xl mx-auto space-y-12">
-          <div className="space-y-12 flex flex-col items-center py-8 px-8">
-            {/* Main Heading */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-              className="relative z-10 space-y-4"
-            >
-              <ParallaxSection speed={0.15}>
-                <h1 className="text-6xl font-extrabold tracking-tight sm:text-7xl md:text-9xl text-foreground leading-[1.05]">
-                  Your Mind,<br />
-                  <span className="text-primary">Understood.</span>
-                </h1>
-              </ParallaxSection>
-            </motion.div>
-
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.8 }}
-              className="inline-flex items-center gap-3.5 rounded-full border border-white/10 bg-[#0a0a0b] px-10 py-4 text-xs font-black uppercase tracking-[0.35em] text-primary shadow-2xl shadow-primary/5 hover:border-primary/30 transition-all duration-500 group"
-            >
-              <Activity className="h-4 w-4 animate-pulse text-primary group-hover:scale-110 transition-transform" />
-              Designed for Academic Well-being
-            </motion.div>
-  
-            <ParallaxSection speed={0.1}>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3, duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-                className="max-w-3xl mx-auto text-xl md:text-2xl font-semibold text-foreground/80 leading-relaxed"
-              >
-                Navigate the complexities of university life with <span className="text-primary font-bold">Ghana's first Context-Aware Support System.</span> <span className="text-foreground font-extrabold pb-0.5 border-b-2 border-primary/60">Simple tools, deeper understanding.</span>
-              </motion.p>
-            </ParallaxSection>
-  
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
-              <Link href="/register" className="w-full sm:w-auto">
-                <Button size="lg" className="h-16 px-10 rounded-full text-lg font-bold shadow-2xl bg-primary text-[#0f0f10] hover:bg-primary/90">
-                  Join MindBridge
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="/resources" className="w-full sm:w-auto">
-                <Button variant="outline" size="lg" className="h-16 px-10 rounded-full text-lg font-bold border-2 border-primary/30 bg-transparent text-foreground hover:bg-primary/5 transition-all backdrop-blur-md">
-                  View Resources
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-
+      <main className="relative z-10">
         {/* 3D Interactive Section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
