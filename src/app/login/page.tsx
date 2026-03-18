@@ -1,20 +1,22 @@
 "use client";
 
-import { SunIcon as Sunburst, ArrowLeft, Loader2, ShieldCheck, Mail, Lock, UserCircle, PlusCircle } from "lucide-react";
+import { SunIcon as Sunburst, ArrowLeft, Loader2, ShieldCheck, Mail, Lock, UserCircle, PlusCircle, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { api } from "@/lib/api";
 import { useAuth } from "@/hooks/use-auth";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
+import { DotMap } from "@/components/auth/DotMap";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
+    const [isHovered, setIsHovered] = useState(false);
     const router = useRouter();
     const { loginWithGoogle, loginWithCredentials, loginAnonymously } = useAuth() as any;
 
@@ -56,169 +58,84 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center overflow-hidden p-4 md:p-10 bg-background selection:bg-orange-500/30">
-            <div className="w-full relative max-w-6xl overflow-hidden flex flex-col md:flex-row shadow-2xl rounded-3xl">
-                {/* Background Decoration Layer */}
-                <div className="absolute inset-0 z-0 bg-black pointer-events-none">
-                    <div className="w-full h-full z-2 absolute bg-gradient-to-t from-transparent to-black/80"></div>
-                    <div className="flex absolute z-1 h-full w-full overflow-hidden backdrop-blur-2xl opacity-30">
-                        {[...Array(8)].map((_, i) => (
-                            <div 
-                                key={i} 
-                                className="h-full z-1 w-[6rem] bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-20" 
-                            />
-                        ))}
+        <div className="min-h-screen w-full flex items-center justify-center bg-background p-0 md:p-4 selection:bg-orange-500/30">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="w-full max-w-6xl h-screen md:h-[min(800px,90vh)] overflow-hidden flex flex-col md:flex-row bg-card shadow-2xl md:rounded-3xl border border-border/50"
+            >
+                {/* Left Panel: Brand & Visuals */}
+                <div className="hidden md:flex w-1/2 relative bg-zinc-950 overflow-hidden flex-col justify-between p-12 border-r border-white/5">
+                    {/* Background Layer */}
+                    <div className="absolute inset-0 z-0">
+                        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-transparent opacity-40" />
+                        <DotMap />
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(249,115,22,0.05),transparent_70%)]" />
                     </div>
-                    {/* Floating Orbs */}
-                    <div className="w-[20rem] h-[20rem] bg-orange-500 absolute z-1 rounded-full -bottom-10 -left-10 blur-[80px] opacity-20"></div>
-                    <div className="w-[12rem] h-[8rem] bg-white absolute z-1 rounded-full bottom-0 left-20 blur-[60px] opacity-10"></div>
+
+                    {/* Logo Area */}
+                    <div className="relative z-10 flex items-center gap-4 group cursor-default">
+                        <div className="p-2.5 bg-white/5 rounded-xl border border-white/10 group-hover:border-orange-500/30 group-hover:bg-orange-500/5 transition-all duration-500">
+                            <Logo iconOnly size="md" />
+                        </div>
+                        <span className="text-2xl font-extrabold tracking-tighter text-white">MindBridge</span>
+                    </div>
+
+                    {/* Narrative Text */}
+                    <div className="relative z-10 space-y-6">
+                        <motion.h1 
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="text-4xl lg:text-5xl font-extrabold leading-[1.1] tracking-tight text-white"
+                        >
+                            Resume your journey with <span className="text-orange-500">intelligent support.</span>
+                        </motion.h1>
+                        <motion.p 
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.4 }}
+                            className="text-lg text-zinc-400 font-medium leading-relaxed max-w-sm"
+                        >
+                            Enter your credentials to access your personalized wellness workspace and neuro-navigator.
+                        </motion.p>
+                    </div>
+
+                    {/* Trust Badges */}
+                    <div className="relative z-10 flex items-center gap-8 pt-8 border-t border-white/5">
+                        <div className="flex items-center gap-2.5 text-[10px] font-extrabold uppercase tracking-widest text-zinc-500">
+                            <ShieldCheck className="h-4 w-4 text-orange-500/50" />
+                            Privacy Validated
+                        </div>
+                        <div className="flex items-center gap-2.5 text-[10px] font-extrabold uppercase tracking-widest text-zinc-500">
+                            <PlusCircle className="h-4 w-4 text-orange-500/50" />
+                            Secure Session
+                        </div>
+                    </div>
                 </div>
 
-                {/* Left Panel: Narrative */}
-                <div className="bg-black text-white p-10 md:p-16 md:w-1/2 relative flex flex-col justify-between min-h-[400px]">
-                    <div className="relative z-10 space-y-8">
-                        <div className="flex items-center gap-6">
-                            <Logo iconOnly size="lg" />
-                            <span className="text-3xl md:text-5xl font-extrabold tracking-tighter">MindBridge</span>
-                        </div>
-                        <div className="space-y-6">
-                            <h1 className="text-4xl md:text-5xl font-extrabold leading-[1.05] tracking-tight">
-                                Resume your journey with <span className="text-orange-500">intelligent support.</span>
-                            </h1>
-                            <p className="text-lg text-zinc-400 font-medium leading-relaxed max-w-sm">
-                                Enter your credentials to access your personalized wellness workspace.
+                {/* Right Panel: Login Form */}
+                <div className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center bg-card relative z-10">
+                    <div className="max-w-md mx-auto w-full space-y-8">
+                        {/* Header */}
+                        <div className="space-y-2">
+                            <div className="md:hidden flex items-center gap-3 mb-8">
+                                <Logo iconOnly size="sm" />
+                                <span className="text-xl font-extrabold tracking-tighter">MindBridge</span>
+                            </div>
+                            <h2 className="text-3xl font-extrabold tracking-tight text-foreground">Sign In</h2>
+                            <p className="text-sm font-semibold text-muted-foreground/60 uppercase tracking-widest">
+                                Initialize your session
                             </p>
                         </div>
 
-                        <div className="grid gap-8 pt-12">
-                            {[
-                                { title: "Secure Infrastructure", desc: "Your session is protected by enterprise-grade encryption.", icon: <Lock className="h-4 w-4" /> },
-                                { title: "Clinical Standards", desc: "Guided by evidence-based psychiatric best practices.", icon: <ShieldCheck className="h-4 w-4" /> }
-                            ].map((item, i) => (
-                                <div key={i} className="flex gap-5 group cursor-default">
-                                    <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-orange-500/10 group-hover:border-orange-500/30 transition-all">
-                                        <div className="text-zinc-500 group-hover:text-orange-500 transition-colors">
-                                            {item.icon}
-                                        </div>
-                                    </div>
-                                    <div className="space-y-1">
-                                        <h4 className="text-base font-bold text-white tracking-tight">{item.title}</h4>
-                                        <p className="text-sm text-zinc-500 font-medium leading-relaxed">{item.desc}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    
-                    <div className="relative z-10 pt-20 border-t border-white/5 flex flex-col gap-8">
-                        <div className="flex items-center gap-12 text-[11px] font-extrabold uppercase tracking-[0.2em] text-zinc-500">
-                            <div className="flex items-center gap-2.5">
-                                <ShieldCheck className="h-4 w-4 text-orange-500/50" />
-                                Privacy Validated
-                            </div>
-                            <div className="w-1 h-1 rounded-full bg-zinc-800" />
-                            <div className="flex items-center gap-2.5">
-                                <PlusCircle className="h-4 w-4 text-orange-500/50" />
-                                Secure Session
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Right Panel: Form */}
-                <div className="p-8 md:p-12 lg:p-16 md:w-1/2 flex flex-col bg-background z-10 relative">
-                    <div className="flex flex-col items-left mb-10">
-                        <div className="text-orange-500 mb-8">
-                            <Sunburst className="h-16 w-16 animate-pulse-slow font-black" />
-                        </div>
-                        <h2 className="text-3xl font-extrabold mb-2 tracking-tight">Sign In</h2>
-                        <p className="text-left text-sm font-semibold text-muted-foreground/60 leading-relaxed uppercase tracking-tighter">
-                            Initialize your MindBridge session
-                        </p>
-                    </div>
-
-                    <form className="flex flex-col gap-5" onSubmit={handleLogin}>
-                        <div className="space-y-4">
-                            <AnimatePresence mode="wait">
-                                {error && (
-                                    <motion.div
-                                        initial={{ opacity: 0, scale: 0.95 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        className="p-4 bg-red-500/10 text-red-600 text-[10px] font-extrabold uppercase tracking-widest rounded-xl border border-red-500/20 flex items-center gap-3"
-                                    >
-                                        <div className="h-1.5 w-1.5 rounded-full bg-red-600 animate-pulse" />
-                                        {error}
-                                    </motion.div>
-                                )}
-                                {successMessage && (
-                                    <motion.div
-                                        initial={{ opacity: 0, scale: 0.95 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        className="p-4 bg-green-500/10 text-green-600 text-[10px] font-extrabold uppercase tracking-widest rounded-xl border border-green-500/20 flex items-center gap-3"
-                                    >
-                                        <div className="h-1.5 w-1.5 rounded-full bg-green-600 animate-pulse" />
-                                        {successMessage}
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-
-                            <div>
-                                <label className="block text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground/40 mb-2 ml-1">Network Identity</label>
-                                <div className="relative group">
-                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
-                                    <input
-                                        type="email"
-                                        required
-                                        placeholder="name@university.gh"
-                                        className="w-full py-4 px-5 pl-12 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 bg-muted/30 text-foreground font-bold text-sm transition-all"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground/40 mb-2 ml-1">Secure Access Key</label>
-                                <div className="relative group">
-                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
-                                    <input
-                                        type="password"
-                                        required
-                                        placeholder="••••••••"
-                                        className="w-full py-4 px-5 pl-12 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500 bg-muted/30 text-foreground font-bold text-sm transition-all"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                            <a href="#" className='font-bold text-xs text-muted-foreground/40 hover:text-orange-500 transition-colors'>Forgot key?</a>
-                            <Link href="/register" className='font-bold text-xs text-orange-500 hover:underline underline-offset-4 font-black uppercase tracking-widest'>Create Profile</Link>
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-extrabold py-4 px-4 rounded-2xl transition-all shadow-xl shadow-orange-500/20 active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3 text-sm"
-                        >
-                            {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : "ESTABLISH CONNECTION"}
-                        </button>
-
-                        <div className="relative my-4">
-                            <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-border" /></div>
-                            <div className="relative flex justify-center text-[8px] uppercase font-black tracking-[0.4em] text-muted-foreground/40">
-                                <span className="bg-background px-4">Social Access Nodes</span>
-                            </div>
-                        </div>
-
-                        <div className="flex gap-4">
+                        {/* Social Auth */}
+                        <div className="grid grid-cols-2 gap-4">
                             <button
-                                type="button"
                                 onClick={handleGoogleLogin}
                                 disabled={loading}
-                                className="flex-1 border border-border hover:bg-muted/50 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all group"
+                                className="flex items-center justify-center gap-3 py-3 px-4 border border-border rounded-2xl hover:bg-muted/50 transition-all font-bold text-xs disabled:opacity-50 group"
                             >
                                 <svg className="h-4 w-4 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
                                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -229,44 +146,136 @@ export default function LoginPage() {
                                 Google
                             </button>
                             <button
-                                type="button"
-                                onClick={async () => {
+                                onClick={() => {
                                     setLoading(true);
-                                    try {
-                                        await loginAnonymously();
-                                    } catch (err: any) {
-                                        setError(err.message || "Anonymous login failed.");
-                                    } finally {
-                                        setLoading(false);
-                                    }
+                                    loginAnonymously().catch((err: any) => setError(err.message || "Guest access failed"));
                                 }}
                                 disabled={loading}
-                                className="flex-1 border border-border hover:bg-muted/50 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all group"
+                                className="flex items-center justify-center gap-3 py-3 px-4 border border-border rounded-2xl hover:bg-muted/50 transition-all font-bold text-xs disabled:opacity-50 group"
                             >
                                 <UserCircle className="h-4 w-4 text-muted-foreground/60 group-hover:text-orange-500 transition-colors" />
-                                Anonymous
+                                Guest
                             </button>
                         </div>
-                    </form>
 
-                    <div className="mt-auto pt-10 text-center">
-                        <Link href="/" className="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-muted-foreground/30 hover:text-orange-500 transition-all gap-2 group">
-                            <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" />
-                            Return to Control Node
-                        </Link>
+                        <div className="relative">
+                            <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-border" /></div>
+                            <div className="relative flex justify-center text-[8px] font-extrabold uppercase tracking-[.4em] text-muted-foreground/40">
+                                <span className="bg-card px-4">Standard Authentication</span>
+                            </div>
+                        </div>
+
+                        {/* Error/Success Notifications */}
+                        <AnimatePresence mode="wait">
+                            {error && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="p-4 bg-red-500/5 text-red-600 text-[11px] font-extrabold uppercase tracking-widest rounded-2xl border border-red-500/10 flex items-center gap-3"
+                                >
+                                    <div className="h-1.5 w-1.5 rounded-full bg-red-600 animate-pulse" />
+                                    {error}
+                                </motion.div>
+                            )}
+                            {successMessage && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="p-4 bg-green-500/5 text-green-600 text-[11px] font-extrabold uppercase tracking-widest rounded-2xl border border-green-500/10 flex items-center gap-3"
+                                >
+                                    <div className="h-1.5 w-1.5 rounded-full bg-green-600 animate-pulse" />
+                                    {successMessage}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        {/* Login Form */}
+                        <form className="space-y-5" onSubmit={handleLogin}>
+                            <div className="space-y-4">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground/50 ml-1">Network Identity</label>
+                                    <div className="relative group">
+                                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
+                                        <input
+                                            type="email"
+                                            required
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            placeholder="name@university.edu"
+                                            className="w-full py-4 px-12 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 bg-muted/30 text-sm font-bold transition-all placeholder:text-muted-foreground/20"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground/50 ml-1">Secure Access Key</label>
+                                    <div className="relative group">
+                                        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            required
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            placeholder="••••••••"
+                                            className="w-full py-4 px-12 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 bg-muted/30 text-sm font-bold transition-all placeholder:text-muted-foreground/20"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/30 hover:text-orange-500"
+                                        >
+                                            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center justify-between px-1">
+                                <button type="button" className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground/40 hover:text-orange-500 transition-colors">
+                                    Recovery Key?
+                                </button>
+                                <Link href="/register" className="text-[10px] font-extrabold uppercase tracking-widest text-orange-500 hover:text-orange-600 transition-colors">
+                                    Create Profile
+                                </Link>
+                            </div>
+
+                            <motion.button
+                                whileHover={{ scale: 1.01 }}
+                                whileTap={{ scale: 0.98 }}
+                                onHoverStart={() => setIsHovered(true)}
+                                onHoverEnd={() => setIsHovered(false)}
+                                type="submit"
+                                disabled={loading}
+                                className="w-full h-14 bg-orange-500 hover:bg-orange-600 text-white font-extrabold rounded-2xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-500/10 disabled:opacity-50 relative overflow-hidden"
+                            >
+                                {loading ? (
+                                    <Loader2 className="h-5 w-5 animate-spin" />
+                                ) : (
+                                    <>
+                                        ESTABLISH CONNECTION
+                                        <ArrowRight className="h-4 w-4" />
+                                    </>
+                                )}
+                                {isHovered && !loading && (
+                                    <motion.div
+                                        initial={{ x: "-100%" }}
+                                        animate={{ x: "100%" }}
+                                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                                    />
+                                )}
+                            </motion.button>
+                        </form>
+
+                        <div className="pt-10 text-center">
+                            <Link href="/" className="inline-flex items-center gap-2.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-muted-foreground/30 hover:text-orange-500 transition-all group">
+                                <ArrowLeft className="h-3 w-3 group-hover:-translate-x-1 transition-transform" />
+                                Return to Navigation Node
+                            </Link>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <style jsx global>{`
-                .animate-pulse-slow {
-                    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-                }
-                @keyframes pulse {
-                    0%, 100% { opacity: 1; transform: scale(1); }
-                    50% { opacity: .7; transform: scale(1.05); }
-                }
-            `}</style>
+            </motion.div>
         </div>
     );
 }
