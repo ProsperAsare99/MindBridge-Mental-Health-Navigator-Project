@@ -100,7 +100,7 @@ export default function Home() {
       {/* Hero Section */}
       <main className="relative z-10 min-h-screen">
         {/* Top Visual Banner (Tiles BG) */}
-        <div className="relative h-[80vh] overflow-hidden">
+        <div className="relative h-[80vh] overflow-hidden rounded-b-[4rem] md:rounded-b-[6rem] border-b border-primary/20 shadow-2xl">
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -112,7 +112,7 @@ export default function Home() {
               style={{ backgroundImage: 'url("/images/hero-background-tiles.jpg")' }}
             />
             {/* Multi-layered dark overlay for depth and focus */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-background" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-background/40" />
             <div className="absolute inset-0 bg-black/10" /> 
           </motion.div>
         </div>
