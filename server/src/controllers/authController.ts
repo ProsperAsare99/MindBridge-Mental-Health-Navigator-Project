@@ -151,7 +151,7 @@ export const anonymousLogin = async (req: Request, res: Response) => {
 
         res.json({ user, token });
     } catch (error) {
-        console.error('Anonymous Login Error:', error);
+        console.error('DETAILED ANONYMOUS LOGIN ERROR:', error);
         res.status(500).json({ error: 'Server error during anonymous login' });
     }
 };
