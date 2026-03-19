@@ -125,3 +125,85 @@ export const getMoodStats = async (req: AuthRequest, res: Response) => {
         res.status(500).json({ error: 'Server error calculating mood stats' });
     }
 };
+
+export const getProactiveNudges = async (req: AuthRequest, res: Response) => {
+    try {
+        if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
+
+        const moods = await prisma.mood.findMany({
+            where: { userId: req.user.userId },
+            orderBy: { createdAt: 'desc' },
+            take: 100
+        });
+
+        const nudges = [];
+
+        if (moods.length >= 5) {
+            // Pattern 1: Day of week dips
+            const dayScores: Record<number, { sum: number, count: number }> = {};
+            moods.forEach(m => {
+                const day = new Date(m.createdAt).getDay();
+                if (!dayScores[day]) dayScores[day] = { sum: 0, count: 0 };
+                dayScores[day].sum += m.value;
+                dayScores[day].count++;
+            });
+
+            const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            for (let i = 0; i < 7; i++) {
+                if (dayScores[i] && dayScores[i].count >= 2) {
+                    const avg = dayScores[i].sum / dayScores[i].count;
+                    if (avg < 2.5) {
+                        nudges.push({
+                            type: 'pattern',
+                            message: `You usually feel a bit lower on ${dayNames[i]}s.`,
+                            suggestion: 'How about planning a small "soul-refuel" activity for then?',
+                            icon: 'CloudRain'
+                        });
+                    }
+                }
+            }
+
+            // Pattern 2: Time of day dips
+            const hourScores: Record<number, { sum: number, count: number }> = {};
+            moods.forEach(m => {
+                const hour = new Date(m.createdAt).getHours();
+                const bucket = Math.floor(hour / 6); // 0: night, 1: morning, 2: afternoon, 3: evening
+                if (!hourScores[bucket]) hourScores[bucket] = { sum: 0, count: 0 };
+                hourScores[bucket].sum += m.value;
+                hourScores[bucket].count++;
+            });
+
+            const bucketNames = ["late nights", "mornings", "afternoons", "evenings"];
+            for (let i = 0; i < 4; i++) {
+                if (hourScores[i] && hourScores[i].count >= 3) {
+                    const avg = hourScores[i].sum / hourScores[i].count;
+                    if (avg < 2.5) {
+                        nudges.push({
+                            type: 'time_pattern',
+                            message: `Mornings seem to be a bit challenging for you lately.`,
+                            suggestion: 'Maybe a 5-minute sunlight ritual or a favorite song could help?',
+                            icon: 'Sun'
+                        });
+                        break; // Only one time nudge for now
+                    }
+                }
+            }
+        }
+
+        // Generic nudge if none found
+        if (nudges.length === 0) {
+            nudges.push({
+                type: 'generic',
+                message: "You're doing great with your check-ins!",
+                suggestion: "Consistency is the first step to deep self-understanding.",
+                icon: 'Sparkles'
+            });
+        }
+
+        res.json(nudges);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error fetching nudges' });
+    }
+};
+

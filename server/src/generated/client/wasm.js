@@ -157,6 +157,18 @@ exports.Prisma.MoodScalarFieldEnum = {
   userId: 'userId',
   value: 'value',
   note: 'note',
+  sentimentScore: 'sentimentScore',
+  sentimentLabel: 'sentimentLabel',
+  crisisFlag: 'crisisFlag',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AcademicEventScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  type: 'type',
+  date: 'date',
+  importance: 'importance',
   createdAt: 'createdAt'
 };
 
@@ -180,7 +192,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   ChatMessage: 'ChatMessage',
   Assessment: 'Assessment',
-  Mood: 'Mood'
+  Mood: 'Mood',
+  AcademicEvent: 'AcademicEvent'
 };
 
 /**

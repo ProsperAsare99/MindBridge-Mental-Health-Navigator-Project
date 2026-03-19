@@ -5,6 +5,7 @@ import assessmentRoutes from './routes/assessmentRoutes';
 import moodRoutes from './routes/moodRoutes';
 import aiRoutes from './routes/aiRoutes';
 import userRoutes from './routes/userRoutes';
+import academicRoutes from './routes/academicRoutes';
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use('/api/assessments', assessmentRoutes);
 app.use('/api/moods', moodRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/academic', academicRoutes);
+
 
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date() });

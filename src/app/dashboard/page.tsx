@@ -13,7 +13,11 @@ import {
     CheckCircle2,
     Users,
     ShieldCheck,
-    Info
+    Info,
+    Sparkles,
+    CloudRain,
+    Sun,
+    Lightbulb
 } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -31,12 +35,19 @@ export default async function DashboardPage() {
 
     const user = session.user as any;
     let moodStats = { average: 0, count: 0, streak: 0 };
+    let nudges = [];
 
     try {
-        moodStats = await serverApi('/moods/stats');
+        const [statsData, nudgesData] = await Promise.all([
+            serverApi('/moods/stats'),
+            serverApi('/moods/nudges')
+        ]);
+        moodStats = statsData;
+        nudges = nudgesData;
     } catch (error) {
-        console.error("Error fetching dashboard stats on server:", error);
+        console.error("Error fetching dashboard data on server:", error);
     }
+
 
     return (
         <div className="min-h-screen pb-20 px-4 md:px-10 pt-24 md:pt-10 max-w-7xl mx-auto selection:bg-primary/20">
@@ -109,6 +120,35 @@ export default async function DashboardPage() {
                         </div>
                     </Card>
                 </DashboardItem>
+
+                {/* Proactive Nudges Section */}
+                {nudges.length > 0 && (
+                    <DashboardItem className="space-y-4">
+                        <div className="flex items-center gap-2 px-1 ml-1">
+                            <Sparkles size={16} className="text-primary animate-pulse" />
+                            <h3 className="text-sm font-black uppercase tracking-widest text-foreground/70">Personalized Insights</h3>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {nudges.map((nudge: any, i: number) => (
+                                <div 
+                                    key={i}
+                                    className="glass rounded-[2rem] p-6 border border-primary/10 shadow-premium flex gap-4 items-start group hover:bg-primary/5 transition-all"
+                                >
+                                    <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                        {nudge.icon === 'CloudRain' ? <CloudRain className="text-primary" /> : 
+                                         nudge.icon === 'Sun' ? <Sun className="text-primary" /> : 
+                                         <Lightbulb className="text-primary" />}
+                                    </div>
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-bold text-foreground/90 leading-tight">{nudge.message}</p>
+                                        <p className="text-[11px] text-muted-foreground font-medium leading-relaxed italic">{nudge.suggestion}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </DashboardItem>
+                )}
+
 
                 {/* Main Stats Grid */}
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">

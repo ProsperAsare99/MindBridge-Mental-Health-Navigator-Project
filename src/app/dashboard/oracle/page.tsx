@@ -44,7 +44,7 @@ export default function OraclePage() {
 
     const fetchChatHistory = async () => {
         try {
-            const history = await api.get('/oracle/history');
+            const history = await api.get('/ai/history');
             setMessages(history);
         } catch (error) {
             console.error("Error fetching chat history:", error);
@@ -60,7 +60,7 @@ export default function OraclePage() {
         setIsLoading(true);
 
         try {
-            const res = await api.post('/oracle/chat', { message: userMessage });
+            const res = await api.post('/ai/chat', { message: userMessage });
             setMessages(prev => [...prev, { role: "assistant", content: res.response }]);
         } catch (error) {
             console.error("Oracle Error:", error);
@@ -69,6 +69,7 @@ export default function OraclePage() {
             setIsLoading(false);
         }
     };
+
 
     const startListening = () => {
         if (!('webkitSpeechRecognition' in window)) {

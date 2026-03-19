@@ -39,14 +39,17 @@ export default function MoodPage() {
     const [moodHistory, setMoodHistory] = useState<any[]>([]);
     const [moodStats, setMoodStats] = useState({ average: 0, count: 0, streak: 0 });
     const [isListening, setIsListening] = useState(false);
+    const [academicEvents, setAcademicEvents] = useState<any[]>([]);
 
     const fetchMoodData = useCallback(async () => {
         if (loading || !user) return;
         try {
             const history = await api.get('/moods');
             const statsData = await api.get('/moods/stats');
+            const events = await api.get('/academic');
             setMoodHistory(history);
             setMoodStats(statsData);
+            setAcademicEvents(events);
         } catch (error) {
             console.error("Error fetching mood data:", error);
         }
@@ -86,6 +89,7 @@ export default function MoodPage() {
 
         return last7Days.map(d => ({
             name: d.name,
+            date: d.date,
             mood: d.count > 0 ? parseFloat((d.val / d.count).toFixed(1)) : 0
         }));
     }, [moodHistory]);
@@ -291,6 +295,21 @@ export default function MoodPage() {
                                 </div>
                             </div>
 
+                            {/* Predictive Wellness Indicator */}
+                            <div className="flex items-center justify-between p-4 rounded-2xl bg-primary/5 border border-primary/10">
+                                <div className="space-y-1">
+                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Predictive Trajectory</p>
+                                    <p className="text-xs font-bold text-foreground/80">
+                                        {moodStats.average > 3.5 ? "Positive Growth Expected" : "Stability Maintenance Needed"}
+                                    </p>
+                                </div>
+                                <div className="text-right">
+                                    <div className="text-xl font-black text-primary">{Math.round((moodStats.average / 5) * 100)}%</div>
+                                    <div className="text-[8px] font-bold text-muted-foreground uppercase">Wellness Score</div>
+                                </div>
+                            </div>
+
+
                             <div className="h-[280px] w-full">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <AreaChart data={weekData}>
@@ -310,16 +329,27 @@ export default function MoodPage() {
                                             dy={10}
                                         />
                                         <Tooltip
-                                            contentStyle={{
-                                                borderRadius: '20px',
-                                                border: '1px solid var(--color-primary)',
-                                                boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-                                                backdropFilter: 'blur(10px)',
-                                                background: 'var(--card)',
-                                                color: 'var(--foreground)',
-                                                fontSize: '12px',
-                                                fontWeight: 'bold'
-                                            } as any}
+                                            content={({ active, payload, label }) => {
+                                                if (active && payload && payload.length) {
+                                                    const dateStr = weekData.find(d => d.name === label)?.date;
+                                                    const event = academicEvents.find(e => new Date(e.date).toDateString() === dateStr);
+                                                    return (
+                                                        <div className="glass p-4 rounded-2xl border border-primary/20 shadow-xl space-y-2">
+                                                            <p className="text-xs font-black text-primary">{label}</p>
+                                                            <p className="text-lg font-black text-foreground">{payload[0].value}/5</p>
+                                                            {event && (
+                                                                <div className="pt-2 border-t border-primary/10">
+                                                                    <div className="flex items-center gap-2">
+                                                                        <div className="h-1.5 w-1.5 rounded-full bg-red-400 animate-pulse" />
+                                                                        <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest">{event.type}: {event.title}</p>
+                                                                    </div>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                }
+                                                return null;
+                                            }}
                                         />
                                         <Area
                                             type="monotone"
@@ -329,6 +359,24 @@ export default function MoodPage() {
                                             fillOpacity={1}
                                             fill="url(#moodGradient)"
                                         />
+                                        {/* Stress Points Overlay */}
+                                        {weekData.map((d, i) => {
+                                             const event = academicEvents.find(e => new Date(e.date).toDateString() === d.date);
+                                             if (event) {
+                                                 return (
+                                                     <rect 
+                                                        key={i}
+                                                        x={`${(i / 6) * 90 + 5}%`}
+                                                        y="0"
+                                                        width="2"
+                                                        height="100%"
+                                                        fill="rgba(239, 68, 68, 0.1)"
+                                                        className="pointer-events-none"
+                                                     />
+                                                 );
+                                             }
+                                             return null;
+                                        })}
                                     </AreaChart>
                                 </ResponsiveContainer>
                             </div>
