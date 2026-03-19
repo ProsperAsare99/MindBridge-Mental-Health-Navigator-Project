@@ -17,6 +17,31 @@ export interface User {
     isAnonymous?: boolean;
     googleId?: string;
     image?: string;
+    onboardingStep?: number;
+    onboardingCompleted?: boolean;
+    nickname?: string;
+    yearOfStudy?: string;
+    fieldOfStudy?: string;
+    preferredLanguage?: string;
+    notificationPreference?: string;
+    checkInTime?: string;
+    wellbeingBaseline?: string;
+    reasonsForJoining?: string[];
+    hasSupportSystem?: string;
+    previousProfessionalSupport?: string;
+    selfHarmRisk?: string;
+    emergencyContacts?: any;
+    copingStyles?: string[];
+    academicStressors?: any;
+    spiritualityImportance?: string;
+    preferredApproach?: string;
+    goals?: string[];
+    trackingFrequency?: string;
+    trackingMetrics?: string[];
+    dataSharingConsent?: boolean;
+    dataVisibility?: string;
+    preferredTheme?: string;
+    dashboardLayout?: string;
 }
 
 export function useAuth() {
@@ -152,6 +177,7 @@ export function useAuth() {
         loginWithGoogle,
         loginAnonymously,
         loginWithCredentials,
+        updateSession: update,
         isAuthenticated: !!session
     };
 }
