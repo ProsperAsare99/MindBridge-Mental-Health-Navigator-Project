@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Target, TrendingUp, Shield, BookOpen, Moon, Activity, Users, FileText, Sparkles } from "lucide-react";
+import { Target, TrendingUp, Shield, BookOpen, Moon, Activity, Users, FileText, Sparkles, Brain } from "lucide-react";
 
 const goalOptions = [
   { label: "Better understand my emotions", icon: Brain },
