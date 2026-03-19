@@ -16,19 +16,19 @@ import {
 } from "lucide-react";
 
 // --- Components ---
-import Step1Identity from "./steps/Step1Identity";
-import Step2Context from "./steps/Step2Context";
-import Step3Communication from "./steps/Step3Communication";
-import Step4Wellbeing from "./steps/Step4Wellbeing";
-import Step5Support from "./steps/Step5Support";
-import Step6Safety from "./steps/Step6Safety";
-import Step7Coping from "./steps/Step7Coping";
-import Step8Stress from "./steps/Step8Stress";
-import Step9Values from "./steps/Step9Values";
-import Step10Goals from "./steps/Step10Goals";
-import Step11Tracking from "./steps/Step11Tracking";
-import Step12Privacy from "./steps/Step12Privacy";
-import Step13Interface from "./steps/Step13Interface";
+import Step1Identity from "@/components/onboarding/steps/Step1Identity";
+import Step2Context from "@/components/onboarding/steps/Step2Context";
+import Step3Communication from "@/components/onboarding/steps/Step3Communication";
+import Step4Wellbeing from "@/components/onboarding/steps/Step4Wellbeing";
+import Step5Support from "@/components/onboarding/steps/Step5Support";
+import Step6Safety from "@/components/onboarding/steps/Step6Safety";
+import Step7Coping from "@/components/onboarding/steps/Step7Coping";
+import Step8Stress from "@/components/onboarding/steps/Step8Stress";
+import Step9Values from "@/components/onboarding/steps/Step9Values";
+import Step10Goals from "@/components/onboarding/steps/Step10Goals";
+import Step11Tracking from "@/components/onboarding/steps/Step11Tracking";
+import Step12Privacy from "@/components/onboarding/steps/Step12Privacy";
+import Step13Interface from "@/components/onboarding/steps/Step13Interface";
 import OnboardingProgress from "./OnboardingProgress";
 
 const phases = [
