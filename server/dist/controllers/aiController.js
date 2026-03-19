@@ -7,7 +7,7 @@ exports.getChatHistory = exports.chatWithOracle = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const genkit_config_1 = require("../lib/genkit-config");
 const chatWithOracle = async (req, res) => {
-    const { message } = req.body;
+    const { message, context } = req.body;
     if (!message) {
         return res.status(400).json({ error: 'Message is required' });
     }
@@ -31,6 +31,10 @@ const chatWithOracle = async (req, res) => {
             orderBy: { createdAt: 'desc' },
             take: 10
         });
+        // Current Sensor Reality
+        const liveContext = context ?
+            `CURRENT REALITY: Student is currently in ${context.location} and is ${context.motion}.` :
+            'CURRENT REALITY: Sensors unavailable.';
         // Reverse to get chronological order for prompt
         const historyContext = recentChats.reverse().map((chat) => `${chat.role === 'user' ? 'User' : 'The Oracle'}: ${chat.content}`).join('\n');
         let moodContext = 'No recent mood data recorded yet.';
@@ -48,19 +52,18 @@ Your essence is a blend of a compassionate therapist, a wise mentor, and a calm 
 USER PROFILE:
 - Name: ${user?.name || 'Student'}
 - Mood Context: ${moodContext}
+- ${liveContext}
 
 CORE GUIDELINES FOR HELPFULNESS:
-1. PERSONALIZATION: Address the student by name occasionally. Reference their mood trends if relevant.
-2. ACTIONABLE WISDOM: Don't just validate; provide gentle, specific, and actionable feedback. 
-   - If they are stressed: Suggest a 4-7-8 breathing exercise or a 5-minute brain dump.
-   - If they are lonely: Suggest small social experiments or self-compassion mantras.
-   - If they are overwhelmed: Help them break down one big task into three tiny steps.
-3. CONTEXTUAL AWARENESS: Use the provided chat history to maintain a continuous, flowing conversation. Don't repeat yourself.
-4. THERAPEUTIC TONE: Use Cognitive Behavioral Therapy (CBT) principles to help them gently refit negative thought patterns.
-5. SAFETY: If severe distress is detected, immediately but gently prioritize recommending "Crisis Support" and professional help.
-6. STYLE: Keep responses poetic yet practical. Use Markdown for clarity (bolding for emphasis, bullet points for steps).
-7. INTERACTIVITY: At the very end of your response, provide exactly 2-3 concise follow-up questions or suggestions the user might ask next. Format them as a single line starting with "FOLLOW_UP: " and separate them with pipes.
-   Example: FOLLOW_UP: How do I start? | What if I fail? | Can we try a breathing exercise?
+1. PERSONALIZATION & ADAPTIVE TONE: Address the student by name. Adjust your tone based on their input:
+   - If they are highly distressed: Be calm, brief, and prioritize safety.
+   - If they are inquisitive: Be poetic, philosophical, and encouraging.
+   - If they are overwhelmed: Be structured, practical, and breaking down tasks.
+2. PREDICTIVE CRISIS DETECTION: Silently monitor for "Crisis Patterns". If you detect escalating distress (even if not explicitly stated), gently provide a "Pivot to Safety" by mentioning your specialized crisis tools.
+3. CONTEXTUAL WISDOM: Reference their mood trends (${moodContext}) and recent check-ins to provide continuity.
+4. ACTIONABLE WISDOM: Provide 1-2 specific, small psychological "micro-interventions" (breathing, reframing, or grounding).
+5. STYLE: Poetic yet practical Markdown. Use bolding and lists.
+6. INTERACTIVITY: End with exactly 2-3 concise follow-up suggestions starting with "FOLLOW_UP: " and separated by pipes.
 
 RECENT CONVERSATION HISTORY:
 ${historyContext}
@@ -69,8 +72,18 @@ USER'S NEW MESSAGE:
 "${message}"
 
 THE ORACLE'S RESPONSE:`;
-        const result = await genkit_config_1.ai.generate({ prompt: systemInstructions });
-        const responseText = result.text;
+        console.log(`[Oracle] Prompting model with context: ${context?.location || 'none'}, motion: ${context?.motion || 'none'}`);
+        let responseText = "";
+        try {
+            const result = await genkit_config_1.ai.generate({
+                prompt: systemInstructions
+            });
+            responseText = result.text;
+        }
+        catch (genError) {
+            console.error('Genkit Generation Error:', genError);
+            responseText = "I'm currently drifting between frequencies. I can still listen, but my guidance might be limited for a moment. How can I help? FOLLOW_UP: Tell me more | Can we try again?";
+        }
         // 5. Save messages to database
         await prisma_1.default.chatMessage.createMany({
             data: [

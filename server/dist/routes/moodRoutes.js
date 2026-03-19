@@ -7,5 +7,6 @@ const router = (0, express_1.Router)();
 router.post('/', auth_1.authenticateToken, moodController_1.createMood);
 router.get('/', auth_1.authenticateToken, moodController_1.getUserMoods);
 router.get('/stats', auth_1.authenticateToken, moodController_1.getMoodStats);
+router.get('/nudges', auth_1.authenticateToken, moodController_1.getProactiveNudges);
 exports.default = router;
 //# sourceMappingURL=moodRoutes.js.map

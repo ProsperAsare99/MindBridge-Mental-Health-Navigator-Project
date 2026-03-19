@@ -63,7 +63,7 @@ const login = async (req, res) => {
         res.json({ user, token });
     }
     catch (error) {
-        console.error(error);
+        console.error("DETAILED LOGIN ERROR:", error);
         res.status(500).json({ error: 'Server error during login' });
     }
 };
