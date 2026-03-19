@@ -68,7 +68,7 @@ export const getUserMoods = async (req: AuthRequest, res: Response) => {
 
         res.json(moods);
     } catch (error) {
-        console.error(error);
+        console.error("DETAILED MOOD FETCH ERROR:", error);
         res.status(500).json({ error: 'Server error fetching moods' });
     }
 };
