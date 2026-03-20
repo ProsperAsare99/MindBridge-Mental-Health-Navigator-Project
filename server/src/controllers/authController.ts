@@ -92,9 +92,15 @@ export const login = async (req: Request, res: Response) => {
             }, 
             token 
         });
-    } catch (error) {
+    } catch (error: any) {
+        const errorMsg = `[LOGIN ERROR] ${new Date().toISOString()}: ${error.message}\n${error.stack}\n\n`;
+        require('fs').appendFileSync('error_debug.log', errorMsg);
         console.error("DETAILED LOGIN ERROR:", error);
-        res.status(500).json({ error: 'Server error during login' });
+        res.status(500).json({ 
+            error: 'Server error during login', 
+            details: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 };
 

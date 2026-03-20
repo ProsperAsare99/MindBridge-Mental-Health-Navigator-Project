@@ -72,6 +72,9 @@ export const authOptions: NextAuthOptions = {
                         try {
                             const error = await response.json();
                             errorDetail = error.error || errorDetail;
+                            if (error.details) {
+                                errorDetail = `${errorDetail}: ${error.details}`;
+                            }
                         } catch (e) {
                             console.error("Failed to parse login error JSON:", e);
                             errorDetail = `Server error: ${response.status} ${response.statusText}`;
