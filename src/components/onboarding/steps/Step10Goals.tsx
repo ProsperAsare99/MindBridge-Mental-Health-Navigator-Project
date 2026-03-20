@@ -29,17 +29,17 @@ export default function Step10Goals({ data, update, onNext }: any) {
 
   return (
     <div className="space-y-8">
-      <div className="space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight text-foreground">Goals & Motivation</h2>
-        <p className="text-muted-foreground italic">What are you hoping to achieve with MindBridge?</p>
+      <div className="space-y-4">
+        <h2 className="text-4xl font-black tracking-tight text-foreground">Mission Objectives</h2>
+        <p className="text-lg text-muted-foreground/80 font-medium italic">Defining the primary targets for your cognitive optimization.</p>
       </div>
 
       <div className="space-y-6">
-        <div className="space-y-3">
-          <label className="text-sm font-semibold text-foreground/80">
-            Select up to 3 goals:
+        <div className="space-y-4">
+          <label className="text-base font-bold text-foreground/90 uppercase tracking-widest">
+            Select Top 3 Objectives:
           </label>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {goalOptions.map((opt) => {
               const Icon = opt.icon;
               const isActive = data.goals?.includes(opt.label);
@@ -50,21 +50,24 @@ export default function Step10Goals({ data, update, onNext }: any) {
                   key={opt.label}
                   disabled={isMax}
                   onClick={() => toggleGoal(opt.label)}
-                  className={`flex flex-col items-center gap-2 rounded-2xl border p-4 transition-all ${
+                  className={`flex flex-col items-center gap-3 rounded-[1.25rem] border-2 p-5 transition-all ${
                     isActive 
-                      ? "border-emerald-500 bg-emerald-500/10 text-emerald-700 shadow-sm" 
+                      ? "border-orange-500 bg-orange-500/10 text-orange-700 shadow-md shadow-orange-500/10 scale-[1.02]" 
                       : isMax 
-                        ? "opacity-50 cursor-not-allowed border-border/20" 
-                        : "border-border/50 bg-background/50 hover:bg-zinc-50 text-muted-foreground"
+                        ? "opacity-30 cursor-not-allowed border-border/10 scale-95" 
+                        : "border-border/20 bg-muted/10 hover:border-orange-500/40 text-muted-foreground/60"
                   }`}
                 >
-                  <Icon className={`h-4 w-4 ${isActive ? "text-emerald-500" : "text-zinc-500"}`} />
-                  <span className="text-[10px] font-medium leading-tight">{opt.label}</span>
+                  <Icon className={`h-5 w-5 ${isActive ? "text-orange-500" : "text-muted-foreground/40"}`} />
+                  <span className="text-xs font-black leading-tight text-center">{opt.label}</span>
                 </button>
               );
             })}
           </div>
-          <p className="text-[10px] text-muted-foreground">Why we ask: We'll help you track progress toward YOUR goals</p>
+          <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
+            <div className="h-1 w-1 rounded-full bg-orange-500" />
+            Prioritizing neural pathways based on your selection
+          </p>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Palette, Layout, Sparkles, Check } from "lucide-react";
 
 const themes = [
-  { name: "🌿 Serene Green (default)", color: "bg-emerald-500" },
+  { name: "🧡 MindBridge Orange (default)", color: "bg-orange-500" },
   { name: "🌑 Midnight Calm", color: "bg-zinc-900" },
   { name: "🌊 Ocean Peace", color: "bg-blue-500" },
   { name: "🌅 Sunset Glow", color: "bg-amber-500" },
@@ -21,68 +21,69 @@ const layouts = [
 export default function Step13Interface({ data, update, onNext }: any) {
   return (
     <div className="space-y-8">
-      <div className="space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight text-foreground">Final Touches</h2>
-        <p className="text-muted-foreground italic">Make MindBridge yours.</p>
+      <div className="space-y-4">
+        <h2 className="text-4xl font-black tracking-tight text-foreground">Interface Calibration</h2>
+        <p className="text-lg text-muted-foreground/80 font-medium italic">Finalizing your aesthetic and structural preferences.</p>
       </div>
 
       <div className="space-y-6">
-        <div className="space-y-3">
-          <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
-            <Palette className="h-4 w-4 text-emerald-500" />
-            Pick your serenity theme
+        <div className="space-y-4">
+          <label className="flex items-center gap-4 text-base font-bold text-foreground/90">
+            <Palette className="h-5 w-5 text-orange-500" />
+            Chromatic Theme
           </label>
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {themes.map((theme) => (
               <button
                 key={theme.name}
                 onClick={() => update({ preferredTheme: theme.name })}
-                className={`flex items-center justify-between rounded-xl border p-4 text-left transition-all ${
+                className={`flex items-center justify-between rounded-[1.25rem] border-2 p-5 text-left transition-all ${
                   data.preferredTheme === theme.name 
-                    ? "border-emerald-500 bg-emerald-500/10" 
-                    : "border-border/50 bg-background/50 hover:bg-zinc-50"
+                    ? "border-orange-500 bg-orange-500/10 shadow-md shadow-orange-500/10 scale-[1.02]" 
+                    : "border-border/20 bg-muted/10 hover:border-orange-500/40"
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`h-4 w-4 rounded-full ${theme.color} border border-white/20`} />
-                  <span className={`text-xs font-medium ${data.preferredTheme === theme.name ? "text-emerald-700" : "text-foreground"}`}>{theme.name}</span>
+                <div className="flex items-center gap-4">
+                  <div className={`h-5 w-5 rounded-full ${theme.color} border-2 border-white/40 shadow-sm`} />
+                  <span className={`text-sm font-black ${data.preferredTheme === theme.name ? "text-orange-700" : "text-foreground"}`}>{theme.name}</span>
                 </div>
-                {data.preferredTheme === theme.name && <Check className="h-3 w-3 text-emerald-600" />}
+                {data.preferredTheme === theme.name && <Check className="h-4 w-4 text-orange-600" />}
               </button>
             ))}
           </div>
         </div>
 
-        <div className="space-y-3">
-          <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
-            <Layout className="h-4 w-4 text-emerald-500" />
-            Default Dashboard View
+        <div className="space-y-4">
+          <label className="flex items-center gap-4 text-base font-bold text-foreground/90">
+            <Layout className="h-5 w-5 text-orange-500" />
+            Primary Structural Layout
           </label>
-          <div className="grid grid-cols-1 gap-2">
+          <div className="grid grid-cols-1 gap-3">
             {layouts.map((l) => (
               <button
                 key={l.name}
                 onClick={() => update({ dashboardLayout: l.name })}
-                className={`flex items-start gap-4 rounded-2xl border p-4 text-left transition-all ${
+                className={`flex items-start gap-5 rounded-[1.5rem] border-2 p-6 text-left transition-all ${
                   data.dashboardLayout === l.name 
-                    ? "border-emerald-500 bg-emerald-500/10 shadow-sm" 
-                    : "border-border/50 bg-background/50 hover:bg-zinc-50"
+                    ? "border-orange-500 bg-orange-500/10 shadow-md shadow-orange-500/10 scale-[1.01]" 
+                    : "border-border/20 bg-muted/10 hover:border-orange-500/40"
                 }`}
               >
-                <div className="space-y-1">
-                  <p className={`text-xs font-bold ${data.dashboardLayout === l.name ? "text-emerald-700" : "text-foreground"}`}>{l.name}</p>
-                  <p className="text-[10px] text-muted-foreground leading-relaxed">{l.desc}</p>
+                <div className="space-y-2">
+                  <p className={`text-base font-black ${data.dashboardLayout === l.name ? "text-orange-700" : "text-foreground"}`}>{l.name}</p>
+                  <p className="text-xs font-bold text-muted-foreground/60 leading-relaxed">{l.desc}</p>
                 </div>
               </button>
             ))}
           </div>
         </div>
 
-        <div className="rounded-2xl border border-dashed border-border/50 p-6 text-center">
-          <Sparkles className="mx-auto h-10 w-10 text-emerald-500/30" />
-          <h3 className="mt-4 text-base font-bold">You're all set!</h3>
-          <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
-            Welcome to a more personalized MindBridge experience.
+        <div className="relative overflow-hidden rounded-[2.5rem] border-4 border-orange-500/20 bg-orange-500/5 p-10 text-center backdrop-blur-md">
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-orange-500/5" />
+          <Sparkles className="mx-auto h-16 w-16 text-orange-500 animate-pulse relative z-10" />
+          <h3 className="mt-6 text-3xl font-black uppercase tracking-tighter text-foreground relative z-10">System Ready</h3>
+          <p className="mt-3 text-base font-bold text-muted-foreground/80 max-w-sm mx-auto leading-relaxed relative z-10">
+            Your cognitive framework has been successfully calibrated. Welcome to MindBridge.
           </p>
         </div>
       </div>

@@ -25,39 +25,39 @@ export default function Step8Stress({ data, update, onNext }: any) {
 
   return (
     <div className="space-y-8">
-      <div className="space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight text-foreground">Academic Stress</h2>
-        <p className="text-muted-foreground italic">Understanding your academic challenges.</p>
+      <div className="space-y-4">
+        <h2 className="text-4xl font-black tracking-tight text-foreground">Academic Load</h2>
+        <p className="text-lg text-muted-foreground/80 font-medium italic">Quantifying your current educational pressures.</p>
       </div>
 
       <div className="space-y-4">
-        <p className="text-xs font-semibold text-foreground/80">Rate 1-5: (1=No stress, 5=Very stressful)</p>
+        <p className="text-sm font-black text-foreground/90 uppercase tracking-[0.15em]">Rating Scale: (1=Low Load, 5=Critical Load)</p>
         
-        <div className="space-y-4">
+        <div className="space-y-5">
           {stressors.map((s) => {
             const Icon = s.icon;
             const currentRating = data.academicStressors?.[s.id] || 1;
             
             return (
-              <div key={s.id} className="space-y-2 rounded-2xl border border-border/50 bg-background/50 p-4 transition-all hover:border-emerald-500/30">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-xl bg-zinc-100 p-2 dark:bg-zinc-800">
-                    <Icon className="h-4 w-4 text-emerald-500" />
+              <div key={s.id} className="space-y-4 rounded-[1.5rem] border border-border/30 bg-muted/10 p-6 transition-all hover:border-orange-500/40">
+                <div className="flex items-center gap-4">
+                  <div className="rounded-xl bg-orange-500/10 p-3">
+                    <Icon className="h-5 w-5 text-orange-500" />
                   </div>
-                  <span className="text-xs font-medium text-foreground">{s.label}</span>
+                  <span className="text-base font-bold text-foreground">{s.label}</span>
                 </div>
                 
-                <div className="flex gap-2">
+                <div className="flex gap-3">
                   {[1, 2, 3, 4, 5].map((num) => (
                     <button
                       key={num}
                       onClick={() => setRating(s.id, num)}
-                      className={`h-8 w-8 rounded-lg text-xs font-bold transition-all ${
+                      className={`h-12 w-12 rounded-xl text-sm font-black transition-all ${
                         currentRating === num 
-                          ? "bg-primary text-white shadow-lg shadow-primary/20 scale-110" 
+                          ? "bg-orange-500 text-white shadow-xl shadow-orange-500/30 scale-110" 
                           :  num < currentRating 
-                            ? "bg-primary/20 text-primary-foreground" 
-                            : "bg-zinc-100 text-zinc-400 dark:bg-zinc-800"
+                            ? "bg-orange-500/20 text-orange-700" 
+                            : "bg-muted/30 text-muted-foreground/40"
                       }`}
                     >
                       {num}
@@ -68,7 +68,10 @@ export default function Step8Stress({ data, update, onNext }: any) {
             );
           })}
         </div>
-        <p className="text-[10px] text-muted-foreground">Why we ask: We'll provide targeted support for your specific stressors</p>
+        <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
+          <div className="h-1 w-1 rounded-full bg-orange-500" />
+          Used to prioritize support modules during critical academic windows
+        </p>
       </div>
     </div>
   );

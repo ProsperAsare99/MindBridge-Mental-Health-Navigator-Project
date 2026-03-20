@@ -6,12 +6,10 @@ import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import {
     Send,
-    Bot,
     User as UserIcon,
-    Sparkles,
+    BrainCircuit,
     Mic,
     MicOff,
-    BrainCircuit,
     ChevronDown,
     AlertTriangle,
     ShieldCheck
@@ -132,8 +130,8 @@ export default function OraclePage() {
             >
                 {messages.length === 0 && (
                     <div className="h-full flex flex-col items-center justify-center text-center space-y-6 max-w-sm mx-auto">
-                        <div className="h-20 w-20 rounded-[2rem] bg-primary/5 flex items-center justify-center border border-primary/10">
-                            <Sparkles className="h-10 w-10 text-primary animate-pulse" />
+                        <div className="h-20 w-20 rounded-[2.5rem] bg-primary/10 flex items-center justify-center border-2 border-primary/20 shadow-xl shadow-primary/5">
+                            <BrainCircuit className="h-10 w-10 text-primary animate-pulse" />
                         </div>
                         <h2 className="text-2xl font-bold text-foreground/90 tracking-tighter">Your Mind, Reimagined.</h2>
                         <p className="text-sm text-muted-foreground font-medium">I am your context-aware navigator. Share your thoughts, feelings, or recent stressors.</p>
@@ -165,7 +163,7 @@ export default function OraclePage() {
                             "h-10 w-10 rounded-xl flex items-center justify-center shrink-0 border shadow-sm",
                             m.role === "assistant" ? "bg-primary/10 border-primary/20 text-primary" : "bg-muted border-border text-muted-foreground"
                         )}>
-                            {m.role === "assistant" ? <Bot size={20} /> : <UserIcon size={20} />}
+                            {m.role === "assistant" ? <BrainCircuit size={20} /> : <UserIcon size={20} />}
                         </div>
                         <div className={cn(
                             "space-y-2 p-5 rounded-[1.5rem] text-sm font-medium leading-relaxed tracking-tight group relative",
@@ -185,7 +183,7 @@ export default function OraclePage() {
                 {isLoading && (
                     <div className="flex gap-4">
                         <div className="h-10 w-10 rounded-xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center shrink-0 animate-pulse">
-                            <Bot size={20} />
+                            <BrainCircuit size={20} />
                         </div>
                         <div className="p-5 rounded-[1.5rem] bg-card border border-border shadow-premium flex gap-1.5 items-center">
                             <span className="h-1.5 w-1.5 rounded-full bg-primary/40 animate-bounce" />

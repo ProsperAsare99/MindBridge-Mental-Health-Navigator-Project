@@ -21,56 +21,62 @@ const approachOptions = [
 export default function Step9Values({ data, update, onNext }: any) {
   return (
     <div className="space-y-8">
-      <div className="space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight text-foreground">Values & Beliefs</h2>
-        <p className="text-muted-foreground italic">Honoring what matters to you.</p>
+      <div className="space-y-4">
+        <h2 className="text-4xl font-black tracking-tight text-foreground">Values & Beliefs</h2>
+        <p className="text-lg text-muted-foreground/80 font-medium italic">Integrating your personal ethical framework into the system.</p>
       </div>
 
       <div className="space-y-6">
-        <div className="space-y-3">
-          <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
-            <Heart className="h-4 w-4 text-emerald-500" />
-            What role does faith/spirituality play in your life?
+        <div className="space-y-4">
+          <label className="flex items-center gap-3 text-base font-bold text-foreground/90">
+            <Heart className="h-5 w-5 text-orange-500" />
+            Significance of Faith / Spirituality?
           </label>
-          <div className="grid grid-cols-1 gap-2">
+          <div className="grid grid-cols-1 gap-3">
             {spiritualityOptions.map((opt) => (
               <button
                 key={opt}
                 onClick={() => update({ spiritualityImportance: opt })}
-                className={`rounded-2xl border p-4 text-left text-xs font-medium transition-all ${
+                className={`rounded-[1.25rem] border-2 p-5 text-left text-sm font-black transition-all ${
                   data.spiritualityImportance === opt 
-                    ? "border-emerald-500 bg-emerald-500/10 text-emerald-700 shadow-sm" 
-                    : "border-border/50 bg-background/50 hover:border-emerald-500/30 text-muted-foreground"
+                    ? "border-orange-500 bg-orange-500/10 text-orange-700 shadow-md shadow-orange-500/10" 
+                    : "border-border/20 bg-muted/10 hover:border-orange-500/40 text-muted-foreground/60"
                 }`}
               >
                 {opt}
               </button>
             ))}
           </div>
-          <p className="text-[10px] text-muted-foreground">Why we ask: We'll recommend resources that align with your beliefs</p>
+          <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
+            <div className="h-1 w-1 rounded-full bg-orange-500" />
+            We'll recommend resources that resonate with your core values
+          </p>
         </div>
 
-        <div className="space-y-3">
-          <label className="flex items-center gap-2 text-sm font-semibold text-foreground/80">
-            <Compass className="h-4 w-4 text-emerald-500" />
-            How do you prefer to address mental health?
+        <div className="space-y-4">
+          <label className="flex items-center gap-3 text-base font-bold text-foreground/90">
+            <Compass className="h-5 w-5 text-orange-500" />
+            Preferred Methodological Approach?
           </label>
-          <div className="grid grid-cols-1 gap-2">
+          <div className="grid grid-cols-1 gap-3">
             {approachOptions.map((opt) => (
               <button
                 key={opt}
                 onClick={() => update({ preferredApproach: opt })}
-                className={`rounded-2xl border p-4 text-left text-xs font-medium transition-all ${
+                className={`rounded-[1.25rem] border-2 p-5 text-left text-sm font-black transition-all ${
                   data.preferredApproach === opt 
-                    ? "border-emerald-500 bg-emerald-500/10 text-emerald-700 shadow-sm" 
-                    : "border-border/50 bg-background/50 hover:border-emerald-500/30 text-muted-foreground"
+                    ? "border-orange-500 bg-orange-500/10 text-orange-700 shadow-md shadow-orange-500/10" 
+                    : "border-border/20 bg-muted/10 hover:border-orange-500/40 text-muted-foreground/60"
                 }`}
               >
                 {opt}
               </button>
             ))}
           </div>
-          <p className="text-[10px] text-muted-foreground">Why we ask: Personalizes the language and framework we use</p>
+          <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
+            <div className="h-1 w-1 rounded-full bg-orange-500" />
+            Optimizes the framework for maximum psychological alignment
+          </p>
         </div>
       </div>
     </div>
