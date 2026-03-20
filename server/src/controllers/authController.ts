@@ -14,6 +14,15 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_fallback_secret_for_developme
 export const register = async (req: Request, res: Response) => {
     const { email, password, name, institution, studentId, course, phoneNumber } = req.body;
 
+    if (!phoneNumber) {
+        return res.status(400).json({ error: 'Phone number is required' });
+    }
+
+    // Basic format validation
+    if (!/^\+?[\d\s-]{8,20}$/.test(phoneNumber)) {
+        return res.status(400).json({ error: 'Invalid phone number format' });
+    }
+
     try {
         const existingUser = await prisma.user.findUnique({ where: { email } });
         if (existingUser) {

@@ -119,6 +119,25 @@ export function useAuth() {
         }
     };
 
+    const register = async (email, password, name, institution, studentId, course, phoneNumber) => {
+        try {
+            const res = await api.post('/auth/register', { email, password, name, institution, studentId, course, phoneNumber });
+            
+            // Automatically log in after registration if token is returned
+            if (res.token) {
+                api.setToken(res.token);
+                await update({
+                    user: res.user,
+                    accessToken: res.token
+                });
+            }
+            return res;
+        } catch (error: any) {
+            console.error('Registration failed:', error.message);
+            throw error;
+        }
+    };
+
     const loginWithGoogle = async (idToken?: string) => {
         try {
             if (idToken) {
@@ -174,6 +193,7 @@ export function useAuth() {
         logout,
         updateProfile,
         updateAvatar,
+        register,
         loginWithGoogle,
         loginAnonymously,
         loginWithCredentials,

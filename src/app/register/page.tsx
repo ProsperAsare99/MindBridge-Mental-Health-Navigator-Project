@@ -1,6 +1,4 @@
-"use client";
-
-import { SunIcon as Sunburst, ArrowLeft, Loader2, ShieldCheck, Mail, Lock, UserCircle, PlusCircle, User, School, Hash, BookOpen, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { SunIcon as Sunburst, ArrowLeft, Loader2, ShieldCheck, Mail, Lock, UserCircle, PlusCircle, User, School, Hash, BookOpen, Eye, EyeOff, ArrowRight, Phone } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
@@ -13,6 +11,7 @@ import { AnimatedSelect } from "@/components/ui/animated-select";
 
 export default function RegisterPage() {
     const [name, setName] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [institution, setInstitution] = useState("");
     const [otherInstitution, setOtherInstitution] = useState("");
     const [studentId, setStudentId] = useState("");
@@ -40,7 +39,7 @@ export default function RegisterPage() {
 
         try {
             const finalInstitution = institution === "Other" ? otherInstitution : institution;
-            await register(email, password, name, finalInstitution, studentId, course);
+            await register(email, password, name, finalInstitution, studentId, course, phoneNumber);
             router.push("/login?registered=true");
         } catch (err: any) {
             setError(err.message || "An error occurred during registration.");
@@ -250,6 +249,21 @@ export default function RegisterPage() {
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
                                             placeholder="Prosper Asare"
+                                            className="w-full py-4 px-12 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 bg-muted/30 text-sm font-bold transition-all placeholder:text-muted-foreground/20"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1">Phone Number</label>
+                                    <div className="relative group">
+                                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
+                                        <input
+                                            type="tel"
+                                            required
+                                            value={phoneNumber}
+                                            onChange={(e) => setPhoneNumber(e.target.value)}
+                                            placeholder="+233 123 456 789"
                                             className="w-full py-4 px-12 border border-border rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 bg-muted/30 text-sm font-bold transition-all placeholder:text-muted-foreground/20"
                                         />
                                     </div>
