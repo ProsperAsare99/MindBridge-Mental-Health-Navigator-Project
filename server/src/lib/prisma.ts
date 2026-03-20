@@ -1,8 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 
 const createPrismaClient = () => {
-    const dbUrl = process.env.DATABASE_URL;
-    console.log(`[Prisma] Connecting to: ${dbUrl?.substring(0, 60)}...`);
+    // Hardcoding direct URL for diagnostic purposes to rule out env loading issues
+    const dbUrl = "postgresql://neondb_owner:npg_hvrlmMH2nBe7@ep-cold-art-al16we8v.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require&connection_limit=1";
+    console.log(`[DIAGNOSTIC] Prisma hardcoded connect to: ${dbUrl.substring(0, 40)}...`);
     
     return new PrismaClient({
         datasources: {
