@@ -3,7 +3,9 @@
  * Translates user data into contextually rich strings for the AI prompt.
  */
 export const getAICoreContext = (user: any) => {
-  const name = user.nickname || user.name?.split(' ')[0] || 'Student';
+  const rawName = user.nickname || user.name || 'Student';
+  // Always use first name only, properly capitalized (handles "PROSPER ASARE" → "Prosper")
+  const name = rawName.split(' ')[0].charAt(0).toUpperCase() + rawName.split(' ')[0].slice(1).toLowerCase();
   const language = user.preferredLanguage || 'English';
   const academicLevel = user.yearOfStudy || 'N/A';
   const program = user.fieldOfStudy || 'N/A';

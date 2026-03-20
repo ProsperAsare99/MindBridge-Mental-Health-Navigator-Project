@@ -180,37 +180,71 @@ EXAMPLE RESPONSE PATTERNS
 
 FOLLOW_UP: Yes, let's ground first | Tell me what's on my mind | How do I manage exam stress?"`;
 
-        // Build messages array for proper Genkit multi-turn conversation
+        // Build conversation history as text
         const chronologicalChats = recentChats.reverse();
+        const historyContext = chronologicalChats.length > 0
+            ? chronologicalChats.map((chat: any) =>
+                `${chat.role === 'user' ? personalization.displayName : 'The Oracle'}: ${chat.content}`
+              ).join('\n')
+            : 'This is the start of the conversation.';
+
+        const fullPrompt = `${systemPrompt}
+
+═══════════════════════════════════════
+RECENT CONVERSATION HISTORY
+═══════════════════════════════════════
+${historyContext}
+
+═══════════════════════════════════════
+NEW MESSAGE FROM ${personalization.displayName.toUpperCase()}
+═══════════════════════════════════════
+"${message}"
+
+THE ORACLE'S RESPONSE:`;
 
         console.log(`[Oracle 2.0] User: ${personalization.displayName} | Mood: ${moodTrend} | Risk: ${user?.selfHarmRisk}`);
 
         let responseText = '';
         try {
-            const result = await ai.generate({
-                messages: [
-                    {
-                        role: 'user',
-                        content: [{ text: `SYSTEM INSTRUCTIONS:\n${systemPrompt}` }]
-                    },
-                    {
-                        role: 'model',
-                        content: [{ text: `Understood. I am The Oracle 2.0, ready to support ${personalization.displayName} with deeply personalized, culturally aware guidance.` }]
-                    },
-                    ...chronologicalChats.map((chat: any) => ({
-                        role: chat.role === 'user' ? 'user' : 'model' as 'user' | 'model',
-                        content: [{ text: chat.content }]
-                    })),
-                    {
-                        role: 'user',
-                        content: [{ text: message }]
-                    }
-                ]
-            });
-            responseText = result.text;
+            const geminiApiKey = process.env.GEMINI_API_KEY;
+            if (!geminiApiKey) throw new Error('GEMINI_API_KEY is not set');
+
+            const geminiRes = await fetch(
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: fullPrompt }] }],
+                        generationConfig: {
+                            temperature: 0.85,
+                            maxOutputTokens: 1024,
+                            topP: 0.95,
+                        },
+                        safetySettings: [
+                            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
+                            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
+                        ]
+                    })
+                }
+            );
+
+            if (!geminiRes.ok) {
+                const errBody = await geminiRes.text();
+                console.error(`[Oracle] Gemini API error ${geminiRes.status}:`, errBody);
+                throw new Error(`Gemini API returned ${geminiRes.status}`);
+            }
+
+            const geminiData = await geminiRes.json() as any;
+            responseText = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+            if (!responseText) {
+                console.error('[Oracle] Empty response from Gemini:', JSON.stringify(geminiData));
+                throw new Error('Empty response from Gemini');
+            }
         } catch (genError) {
-            console.error('Genkit Generation Error:', genError);
-            responseText = `I'm momentarily between frequencies, ${personalization.displayName}. Your words matter to me — please try again in a moment. 🌿\n\nFOLLOW_UP: Try again | Share what's on your mind | Access crisis support`;
+            console.error('Oracle Generation Error:', genError);
+            responseText = `I'm gathering my thoughts for you, ${personalization.displayName}. Could you share that again? I'm here and listening. 🌿\n\nFOLLOW_UP: Try again | Share what's on your mind | Access crisis support`;
         }
 
         // 11. Save messages to database
@@ -245,142 +279,3 @@ export const getChatHistory = async (req: AuthRequest, res: Response) => {
     }
 };
 
-
-export const chatWithOracle = async (req: AuthRequest, res: Response) => {
-    const { message, context } = req.body;
-
-    if (!message) {
-        return res.status(400).json({ error: 'Message is required' });
-    }
-
-    try {
-        if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
-
-        // 1. Fetch User Profile for personalization
-        const user = await prisma.user.findUnique({
-            where: { id: req.user.userId },
-            select: { 
-                name: true,
-                nickname: true,
-                yearOfStudy: true,
-                fieldOfStudy: true,
-                preferredLanguage: true,
-                reasonsForJoining: true,
-                spiritualityImportance: true,
-                preferredApproach: true,
-                selfHarmRisk: true,
-                academicStressors: true,
-                institution: true
-            }
-        });
-
-        const personalization = getAICoreContext(user);
-
-        // 2. Fetch User Context (recent moods)
-        const recentMoods = await prisma.mood.findMany({
-            where: { userId: req.user.userId },
-            orderBy: { createdAt: 'desc' },
-            take: 10
-        });
-
-        // 3. Fetch Recent Chat History for Context
-        const recentChats = await prisma.chatMessage.findMany({
-            where: { userId: req.user.userId },
-            orderBy: { createdAt: 'desc' },
-            take: 10
-        });
-
-        // Current Sensor Reality
-        const liveContext = context ? 
-            `CURRENT REALITY: Student is currently in ${context.location} and is ${context.motion}.` : 
-            'CURRENT REALITY: Sensors unavailable.';
-
-        // Reverse to get chronological order for prompt
-        const historyContext = recentChats.reverse().map((chat: any) =>
-            `${chat.role === 'user' ? 'User' : 'The Oracle'}: ${chat.content}`
-        ).join('\n');
-
-        let moodInsight = 'No recent mood data recorded yet.';
-        if (recentMoods.length > 0) {
-             const avgMood = (recentMoods.reduce((acc: number, m: any) => acc + m.value, 0) / recentMoods.length).toFixed(1);
-             const recentNotes = recentMoods.filter((m: any) => m.note).map((m: any) => `"${m.note}"`).join(', ');
-             moodInsight = `Average mood over the last ${recentMoods.length} check-ins: ${avgMood}/5. `;
-             if (recentNotes) moodInsight += `Recent journal notes: ${recentNotes}.`;
-        }
-
-        // 4. Prepare the sophisticated prompt
-        const systemInstructions = `You are "The Oracle", a highly empathetic, wise, and supportive AI mental health navigator for university students in Ghana. 
-
-USER CONTEXT:
-- Name: ${personalization.name}
-- Institution: ${personalization.institution}
-- Academic: ${personalization.academicLevel} in ${personalization.program}
-- Primary Concerns: ${personalization.concerns}
-- Faith Level: ${personalization.faithLevel}
-- Preferred Approach: ${personalization.approach}
-- Mood Insight: ${moodInsight}
-- ${personalization.academicNote}
-- ${personalization.programNote}
-- ${liveContext}
-
-CORE GUIDELINES:
-1. ALWAYS address the student as ${personalization.displayName}.
-2. LANGUAGE: Your primary language is English, but if the user's preference is Twi, feel free to use comforting Twi phrases like "Akwaaba", "Wo te sɛn?", or "Wo ho yɛ".
-3. FAITH: ${personalization.faithLevel === 'Very Important' ? 'High priority on spiritual support. Suggest prayer or meditation if appropriate.' : 'Keep it secular and focused on psychological grounding.'}
-4. APPROACH: Use ${personalization.approach} terminology (e.g., ${personalization.approach === 'Clinical' ? 'anxiety, depression' : 'troubled mind, heavy heart'}).
-5. RISK DETECTION: If user's selfHarmRisk is high (${user?.selfHarmRisk}), prioritize safety and crisis resource mentions.
-6. STYLE: Empathetic, poetic, yet practical. Use Bold text for emphasis.
-7. INTERACTIVITY: End with exactly 2-3 specific follow-up suggestions starting with "FOLLOW_UP: " separated by pipes.
-
-RECENT CONVERSATION:
-${historyContext}
-
-USER MESSAGE:
-"${message}"
-
-THE ORACLE'S RESPONSE:`;
-
-        console.log(`[Oracle] Prompting model with context: ${context?.location || 'none'}, motion: ${context?.motion || 'none'}`);
-
-        let responseText = "";
-        try {
-            const result = await ai.generate({ 
-                prompt: systemInstructions 
-            });
-            responseText = result.text;
-        } catch (genError) {
-            console.error('Genkit Generation Error:', genError);
-            responseText = "I'm currently drifting between frequencies. I can still listen, but my guidance might be limited for a moment. How can I help? FOLLOW_UP: Tell me more | Can we try again?";
-        }
-
-        // 5. Save messages to database
-        await prisma.chatMessage.createMany({
-            data: [
-                { userId: req.user.userId, content: message, role: 'user' },
-                { userId: req.user.userId, content: responseText, role: 'assistant' }
-            ]
-        });
-
-        res.json({ response: responseText });
-    } catch (error) {
-        console.error('Oracle Chat Error:', error);
-        res.status(500).json({ error: 'The Oracle is currently in deep meditation. Please reach out again in a moment.' });
-    }
-};
-
-export const getChatHistory = async (req: AuthRequest, res: Response) => {
-    try {
-        if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
-
-        const history = await prisma.chatMessage.findMany({
-            where: { userId: req.user.userId },
-            orderBy: { createdAt: 'asc' },
-            take: 50
-        });
-
-        res.json(history);
-    } catch (error) {
-        console.error('Fetch Chat History Error:', error);
-        res.status(500).json({ error: 'Failed to fetch your wisdom path.', details: error instanceof Error ? error.message : String(error) });
-    }
-};
