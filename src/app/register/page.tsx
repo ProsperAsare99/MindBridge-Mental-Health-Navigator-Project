@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { DotMap } from "@/components/auth/DotMap";
+import { INSTITUTION_OPTIONS } from "@/lib/constants";
 
 interface SelectProps {
     value: string;
@@ -283,12 +284,7 @@ export default function RegisterPage() {
                                             value={institution}
                                             onChange={setInstitution}
                                             placeholder="Select Node"
-                                            options={[
-                                                { value: "UG", label: "UG" },
-                                                { value: "KNUST", label: "KNUST" },
-                                                { value: "UCC", label: "UCC" },
-                                                { value: "Other", label: "Other" },
-                                            ]}
+                                            options={INSTITUTION_OPTIONS}
                                         />
                                     </div>
                                     <div className="space-y-2">

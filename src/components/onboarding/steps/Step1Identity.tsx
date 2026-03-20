@@ -1,16 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { User, GraduationCap, MapPin } from "lucide-react";
-
-const universities = [
-  "University of Ghana",
-  "KNUST",
-  "University of Cape Coast",
-  "Ashesi University",
-  "GIMPA",
-  "Other"
-];
+import { User, GraduationCap, MapPin, CheckCircle2 } from "lucide-react";
+import { INSTITUTIONS } from "@/lib/constants";
 
 export default function Step1Identity({ data, update, onNext }: any) {
   return (
@@ -41,23 +33,30 @@ export default function Step1Identity({ data, update, onNext }: any) {
             <GraduationCap className="h-4 w-4 text-emerald-500" />
             Your university
           </label>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {universities.map((uni) => (
-              <button
-                key={uni}
-                onClick={() => update({ institution: uni })}
-                className={`relative overflow-hidden rounded-2xl border p-4 text-center text-xs font-medium transition-all ${
-                  data.institution === uni 
-                    ? "border-emerald-500 bg-emerald-500/10 text-emerald-700 shadow-sm shadow-emerald-500/10" 
-                    : "border-border/50 bg-background/50 hover:border-emerald-500/30"
-                }`}
-              >
-                {uni}
-                {data.institution === uni && (
-                  <motion.div layoutId="uni-active" className="absolute inset-0 bg-emerald-500/5" />
-                )}
-              </button>
-            ))}
+          <div className="max-h-[320px] overflow-y-auto pr-2 custom-scrollbar lg:max-h-[400px]">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {INSTITUTIONS.map((uni) => (
+                <button
+                  key={uni}
+                  onClick={() => update({ institution: uni })}
+                  className={`group relative overflow-hidden rounded-2xl border p-4 text-left text-xs font-bold transition-all ${
+                    data.institution === uni 
+                      ? "border-emerald-500 bg-emerald-500/10 text-emerald-700 shadow-sm shadow-emerald-500/10" 
+                      : "border-border/50 bg-background/50 hover:border-emerald-500/30"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="flex-1 leading-relaxed">{uni}</span>
+                    {data.institution === uni && (
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+                    )}
+                  </div>
+                  {data.institution === uni && (
+                    <motion.div layoutId="uni-active" className="absolute inset-0 bg-emerald-500/5" />
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
           {data.institution === "Other" && (
             <input
