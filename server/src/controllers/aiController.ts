@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import prisma from '../lib/prisma';
-import { ai } from '../lib/genkit-config';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getAICoreContext } from '../lib/personalization-utils';
 
 export const chatWithOracle = async (req: AuthRequest, res: Response) => {
@@ -209,39 +209,22 @@ THE ORACLE'S RESPONSE:`;
             const geminiApiKey = process.env.GEMINI_API_KEY;
             if (!geminiApiKey) throw new Error('GEMINI_API_KEY is not set');
 
-            const geminiRes = await fetch(
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`,
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: fullPrompt }] }],
-                        generationConfig: {
-                            temperature: 0.85,
-                            maxOutputTokens: 1024,
-                            topP: 0.95,
-                        },
-                        safetySettings: [
-                            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
-                            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
-                        ]
-                    })
-                }
-            );
+            const genAI = new GoogleGenerativeAI(geminiApiKey);
+            const model = genAI.getGenerativeModel({
+                model: 'gemini-2.0-flash',
+                generationConfig: {
+                    temperature: 0.85,
+                    maxOutputTokens: 1024,
+                    topP: 0.95,
+                },
+            });
 
-            if (!geminiRes.ok) {
-                const errBody = await geminiRes.text();
-                console.error(`[Oracle] Gemini API error ${geminiRes.status}:`, errBody);
-                throw new Error(`Gemini API returned ${geminiRes.status}`);
-            }
+            console.log(`[Oracle] Sending prompt (${fullPrompt.length} chars) to Gemini...`);
+            const result = await model.generateContent(fullPrompt);
+            responseText = result.response.text();
 
-            const geminiData = await geminiRes.json() as any;
-            responseText = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-            if (!responseText) {
-                console.error('[Oracle] Empty response from Gemini:', JSON.stringify(geminiData));
-                throw new Error('Empty response from Gemini');
-            }
+            if (!responseText) throw new Error('Empty response from Gemini');
+            console.log(`[Oracle] Response received (${responseText.length} chars)`);
         } catch (genError) {
             console.error('Oracle Generation Error:', genError);
             responseText = `I'm gathering my thoughts for you, ${personalization.displayName}. Could you share that again? I'm here and listening. 🌿\n\nFOLLOW_UP: Try again | Share what's on your mind | Access crisis support`;
