@@ -1,0 +1,100 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+  output          = "../src/generated/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id                String   @id @default(uuid())
+  email             String   @unique
+  password          String?
+  name              String?
+  institution       String?
+  studentId         String?
+  course            String?
+  phoneNumber       String?
+  googleId          String?  @unique
+  isVerified        Boolean  @default(false)
+  isAnonymous       Boolean  @default(false)
+  image             String?
+  verificationToken String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Onboarding & Personalization
+  onboardingStep              Int      @default(1)
+  onboardingCompleted         Boolean  @default(false)
+  nickname                    String?
+  yearOfStudy                 String?
+  fieldOfStudy                String? // Can correspond to 'course' but used for broader categorization
+  preferredLanguage           String?
+  notificationPreference      String?
+  checkInTime                 String?
+  wellbeingBaseline           String?
+  reasonsForJoining           String[] @default([])
+  hasSupportSystem            String?
+  previousProfessionalSupport String?
+  selfHarmRisk                String?
+  emergencyContacts           Json?
+  copingStyles                String[] @default([])
+  academicStressors           Json?
+  spiritualityImportance      String?
+  preferredApproach           String?
+  goals                       String[] @default([])
+  trackingFrequency           String?
+  trackingMetrics             String[] @default([])
+  dataSharingConsent          Boolean?
+  dataVisibility              String?
+  preferredTheme              String?
+  dashboardLayout             String?
+
+  assessments  Assessment[]
+  moods        Mood[]
+  chatMessages ChatMessage[]
+}
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content   String   @db.Text
+  role      String // 'user' or 'assistant'
+  createdAt DateTime @default(now())
+}
+
+model Assessment {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  score     Int
+  severity  String
+  createdAt DateTime @default(now())
+}
+
+model Mood {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  value          Int // 1-5 (Awful to Great)
+  note           String?
+  sentimentScore Float?
+  sentimentLabel String?
+  crisisFlag     Boolean  @default(false)
+  createdAt      DateTime @default(now())
+}
+
+model AcademicEvent {
+  id         String   @id @default(uuid())
+  title      String
+  type       String // 'exam', 'deadline', 'holiday'
+  date       DateTime
+  importance Int      @default(1) // 1-5
+  createdAt  DateTime @default(now())
+}

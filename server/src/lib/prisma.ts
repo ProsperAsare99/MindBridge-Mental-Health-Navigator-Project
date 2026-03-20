@@ -1,16 +1,21 @@
-import { PrismaClient } from '@prisma/client';
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '../generated/client';
 
 const createPrismaClient = () => {
-    // Hardcoding direct URL for diagnostic purposes to rule out env loading issues
-    const dbUrl = "postgresql://neondb_owner:npg_hvrlmMH2nBe7@ep-cold-art-al16we8v.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require&connection_limit=1";
-    console.log(`[DIAGNOSTIC] Prisma hardcoded connect to: ${dbUrl.substring(0, 40)}...`);
+    const connectionString = process.env.DATABASE_URL || "postgresql://neondb_owner:npg_hvrlmMH2nBe7@ep-cold-art-al16we8v.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require&connection_limit=1";
     
-    return new PrismaClient({
-        datasources: {
-            db: { url: dbUrl }
-        },
+    console.log(`[STABILITY FIX] Initializing Prisma with PG Driver Adapter...`);
+    
+    const pool = new Pool({ connectionString });
+    const adapter = new PrismaPg(pool);
+    
+    const client = new PrismaClient({ 
+        adapter,
         log: ['error', 'warn']
     });
+
+    return client;
 };
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
