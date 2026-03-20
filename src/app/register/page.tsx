@@ -241,7 +241,7 @@ export default function RegisterPage() {
                         <form className="space-y-4" onSubmit={handleSubmit}>
                             <div className="space-y-4">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1 italic">Full Name</label>
+                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1">Full Name</label>
                                     <div className="relative group">
                                         <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
                                         <input
@@ -257,7 +257,7 @@ export default function RegisterPage() {
 
                                 {/* Institution Row - Moved to its own row for layout fix */}
                                 <div className="space-y-2">
-                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1 italic">Institution</label>
+                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1">Institution</label>
                                     <AnimatedSelect
                                         value={institution}
                                         onChange={setInstitution}
@@ -288,7 +288,7 @@ export default function RegisterPage() {
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1 italic">Student ID</label>
+                                        <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1">Student ID</label>
                                         <div className="relative group">
                                             <Hash className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
                                             <input
@@ -302,7 +302,7 @@ export default function RegisterPage() {
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1 italic">Course of Study</label>
+                                        <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1">Course of Study</label>
                                         <div className="relative group">
                                             <BookOpen className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
                                             <input
@@ -318,7 +318,7 @@ export default function RegisterPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1 italic">Email Address</label>
+                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1">Email Address</label>
                                     <div className="relative group">
                                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
                                         <input
@@ -333,7 +333,7 @@ export default function RegisterPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1 italic">Password</label>
+                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1">Password</label>
                                     <div className="relative group">
                                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
                                         <input

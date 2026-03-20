@@ -193,7 +193,7 @@ export default function LoginPage() {
                         <form className="space-y-5" onSubmit={handleLogin}>
                             <div className="space-y-4">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1 italic">Email Address</label>
+                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1">Email Address</label>
                                     <div className="relative group">
                                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
                                         <input
@@ -208,7 +208,7 @@ export default function LoginPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1 italic">Password</label>
+                                    <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/70 ml-1">Password</label>
                                     <div className="relative group">
                                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/30 group-focus-within:text-orange-500 transition-colors" />
                                         <input
