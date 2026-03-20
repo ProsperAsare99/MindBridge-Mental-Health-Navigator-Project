@@ -8,7 +8,7 @@ const createPrismaClient = () => {
     console.log(`[STABILITY FIX] Initializing Prisma with PG Driver Adapter...`);
     
     const pool = new Pool({ connectionString });
-    const adapter = new PrismaPg(pool);
+    const adapter = new PrismaPg(pool as any) as any;
     
     const client = new PrismaClient({ 
         adapter,
