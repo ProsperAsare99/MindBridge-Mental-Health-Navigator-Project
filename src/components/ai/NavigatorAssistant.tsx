@@ -13,20 +13,17 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
+import { usePathname } from 'next/navigation';
 
 export default function NavigatorAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [pulse, setPulse] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
-
-  useEffect(() => {
-    fetchPulse();
-  }, []);
+  const pathname = usePathname();
 
   const fetchPulse = async () => {
     try {
-      // Re-using the nudge endpoint for a "pulse" of intelligence
       const response = await axios.get('/api/ai/nudge', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -37,6 +34,14 @@ export default function NavigatorAssistant() {
       console.error('Failed to fetch AI pulse:', error);
     }
   };
+
+  useEffect(() => {
+    if (pathname !== '/') {
+      fetchPulse();
+    }
+  }, [pathname]);
+
+  if (pathname === '/') return null;
 
   const handleSearch = async (val: string) => {
     setSearchQuery(val);
