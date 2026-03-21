@@ -6,6 +6,7 @@ import prisma from '../lib/prisma';
 import { AuthRequest } from '../middleware/auth';
 import { sendVerificationEmail } from '../utils/emailService';
 import { OAuth2Client } from 'google-auth-library';
+import { University } from '../generated/client';
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -35,10 +36,10 @@ export const register = async (req: Request, res: Response) => {
             data: {
                 email,
                 password: hashedPassword,
-                name,
-                institution,
+                displayName: name,
+                university: mapInstitutionToUniversity(institution),
                 studentId,
-                course,
+                program: course,
                 phoneNumber,
                 isVerified: true
             }
@@ -139,7 +140,7 @@ export const googleLogin = async (req: Request, res: Response) => {
                 data: {
                     email,
                     googleId,
-                    name,
+                    displayName: name,
                     isVerified: true, // Google emails are already verified
                 }
             });
@@ -177,7 +178,7 @@ export const anonymousLogin = async (req: Request, res: Response) => {
         const user = await prisma.user.create({
             data: {
                 email,
-                name: "Guest User",
+                displayName: "Guest User",
                 isAnonymous: true,
                 isVerified: true
             }
@@ -297,10 +298,10 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
         const user = await prisma.user.update({
             where: { id: req.user.userId },
             data: {
-                name,
-                institution,
+                displayName: name,
+                university: institution ? mapInstitutionToUniversity(institution) : undefined,
                 studentId,
-                course,
+                program: course,
                 phoneNumber
             }
         });
@@ -391,4 +392,18 @@ export const verifyToken = async (req: AuthRequest, res: Response) => {
         console.error(error);
         res.status(500).json({ error: 'Token verification failed' });
     }
+};
+
+const mapInstitutionToUniversity = (institution: string): University => {
+    if (!institution) return University.OTHER;
+    
+    const inst = institution.toLowerCase();
+    
+    if (inst.includes('knust')) return University.KNUST;
+    if (inst.includes('university of ghana') || inst.includes('legon')) return University.UNIVERSITY_OF_GHANA;
+    if (inst.includes('cape coast') || inst.includes('ucc')) return University.UNIVERSITY_OF_CAPE_COAST;
+    if (inst.includes('ashesi')) return University.ASHESI_UNIVERSITY;
+    if (inst.includes('gimpa')) return University.GIMPA;
+    
+    return University.OTHER;
 };

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import prisma from '../lib/prisma';
+import { University } from '../generated/client';
 
 export const updateOnboarding = async (req: AuthRequest, res: Response) => {
     try {
@@ -40,11 +41,28 @@ export const updateOnboarding = async (req: AuthRequest, res: Response) => {
                 // Special handling for academicLevel to ensure it's an integer
                 if (field === 'academicLevel') {
                     updateData[field] = parseInt(data[field]) || 100;
-                } else {
+                } 
+                // Handle University mapping specifically
+                else if (field === 'university' && typeof data[field] === 'string') {
+                    updateData[field] = mapInstitutionToUniversity(data[field]);
+                }
+                // Handle Enum arrays by uppercasing strings
+                else if (['concerns', 'copingStyles'].includes(field) && Array.isArray(data[field])) {
+                    updateData[field] = data[field].map((val: string) => val.toUpperCase().replace(/\s+/g, '_'));
+                }
+                // Handle single Enum fields by uppercasing strings
+                else if ([
+                    'language', 'notificationPreference', 'preferredCheckInTime', 
+                    'supportLevel', 'riskLevel', 'faithLevel', 'approachPreference'
+                ].includes(field) && typeof data[field] === 'string') {
+                    updateData[field] = data[field].toUpperCase().replace(/\s+/g, '_');
+                }
+                else {
                     updateData[field] = data[field];
                 }
             }
         }
+
 
         const user = await prisma.user.update({
             where: { id: userId },
@@ -94,3 +112,15 @@ export const getOnboardingStatus = async (req: AuthRequest, res: Response) => {
         res.status(500).json({ error: 'Failed to fetch onboarding status' });
     }
 };
+
+const mapInstitutionToUniversity = (institution: string): University => {
+    if (!institution) return University.OTHER;
+    const inst = institution.toLowerCase();
+    if (inst.includes('knust')) return University.KNUST;
+    if (inst.includes('university of ghana') || inst.includes('legon')) return University.UNIVERSITY_OF_GHANA;
+    if (inst.includes('cape coast') || inst.includes('ucc')) return University.UNIVERSITY_OF_CAPE_COAST;
+    if (inst.includes('ashesi')) return University.ASHESI_UNIVERSITY;
+    if (inst.includes('gimpa')) return University.GIMPA;
+    return University.OTHER;
+};
+

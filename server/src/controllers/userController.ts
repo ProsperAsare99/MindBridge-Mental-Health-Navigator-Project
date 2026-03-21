@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 import prisma from '../lib/prisma';
+import { University } from '../generated/client';
 
 // Define the schema for input validation
 const createUserSchema = z.object({
@@ -9,6 +10,7 @@ const createUserSchema = z.object({
   password: z.string().min(6, 'Password must be at least 6 characters long'),
   name: z.string().optional(),
   institution: z.string().optional(),
+  academicLevel: z.number().optional(),
   studentId: z.string().optional(),
   course: z.string().optional(),
   phoneNumber: z.string().optional(),
@@ -30,7 +32,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
-    const { email, password, name, institution, studentId, course, phoneNumber } = validatedData.data;
+    const { email, password, name, institution, studentId, course, phoneNumber, academicLevel } = validatedData.data;
 
     // 2. Check if the user already exists in the database
     const existingUser = await prisma.user.findUnique({
@@ -51,12 +53,13 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
       data: {
         email,
         password: hashedPassword,
-        name,
-        institution,
+        displayName: name,
+        university: institution ? mapInstitutionToUniversity(institution) : undefined,
+        academicLevel: academicLevel,
         studentId,
-        course,
+        program: course,
         phoneNumber,
-        isVerified: false, // Defaulting to false, they might need email verification
+        isVerified: false,
       },
     });
 
@@ -71,4 +74,14 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     console.error('Error creating user:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+};
+
+const mapInstitutionToUniversity = (institution: string): University => {
+  const inst = institution.toLowerCase();
+  if (inst.includes('knust')) return University.KNUST;
+  if (inst.includes('university of ghana') || inst.includes('legon')) return University.UNIVERSITY_OF_GHANA;
+  if (inst.includes('cape coast') || inst.includes('ucc')) return University.UNIVERSITY_OF_CAPE_COAST;
+  if (inst.includes('ashesi')) return University.ASHESI_UNIVERSITY;
+  if (inst.includes('gimpa')) return University.GIMPA;
+  return University.OTHER;
 };
