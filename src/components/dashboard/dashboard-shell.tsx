@@ -19,8 +19,7 @@ import {
     Sparkles,
     Search,
     ShieldCheck,
-    Info,
-    BrainCircuit
+    Info
 } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { signOut } from "next-auth/react";
@@ -48,7 +47,6 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
     const navItems = [
         { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
         { href: "/dashboard/mood", label: "Mood Tracker", icon: BarChart3 },
-        { href: "/dashboard/oracle", label: "The Oracle", icon: BrainCircuit },
         { href: "/dashboard/assessment", label: "Assessment", icon: ClipboardList },
         { href: "/dashboard/resources", label: "Resources", icon: BookOpen },
         { href: "/dashboard/crisis", label: "Crisis Support", icon: Phone },

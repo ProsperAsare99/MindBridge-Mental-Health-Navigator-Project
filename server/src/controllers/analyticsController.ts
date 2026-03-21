@@ -19,10 +19,6 @@ export const getUserAnalytics = async (req: AuthRequest, res: Response) => {
             ? moodStats.reduce((acc, entry) => acc + entry.mood, 0) / totalMoods 
             : 0;
 
-        // 2. AI Interaction Statistics
-        const aiInteractions = await prisma.aIInteraction.count({
-            where: { userId }
-        });
 
         // 3. Crisis Incidents
         const crisisCount = await prisma.moodEntry.count({
@@ -47,14 +43,13 @@ export const getUserAnalytics = async (req: AuthRequest, res: Response) => {
             summary: {
                 totalMoods,
                 averageMood: Number(averageMood.toFixed(1)),
-                aiInteractions,
                 crisisCount
             },
             moodHistory: moodStats.map(m => ({
                 value: m.mood,
                 date: m.createdAt
             })),
-            isHighlyActive: aiInteractions > 20
+            isHighlyActive: totalMoods > 20
         });
 
     } catch (error) {

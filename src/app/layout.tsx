@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 
-import NavigatorAssistant from "@/components/ai/NavigatorAssistant";
+
 
 export default function RootLayout({
   children,
@@ -41,7 +41,6 @@ export default function RootLayout({
               >
                 {children}
                 <CommandMenu />
-                <NavigatorAssistant />
               </ThemeProvider>
             </SearchProvider>
 

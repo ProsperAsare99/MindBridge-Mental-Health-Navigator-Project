@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     PlusCircle,
     AlertCircle,
-    Quote,
     ArrowUpRight,
     BrainCircuit,
     Compass,
@@ -12,24 +11,13 @@ import {
     Flame,
     CheckCircle2,
     Users,
-    ShieldCheck,
-    Info,
-    Sparkles,
-    CloudRain,
-    Sun,
-    Lightbulb
+    ShieldCheck
 } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { MotivationalCarousel } from "@/components/dashboard/motivational-carousel";
 import { GreetingHeader } from "@/components/dashboard/greeting-header";
 import { DashboardContainer, DashboardItem } from "@/components/dashboard/dashboard-animations";
-import { AnalyticsDashboard } from "@/components/dashboard/AnalyticsDashboard";
-import { ConversationHistory } from "@/components/dashboard/ConversationHistory";
-import { AIChatbot } from "@/components/dashboard/AIChatbot";
-import AINudge from "@/components/ai/AINudge";
-import CarePlanView from "@/components/dashboard/CarePlanView";
-import StabilityForecast from "@/components/dashboard/StabilityForecast";
 
 
 export default async function DashboardPage() {
@@ -41,7 +29,6 @@ export default async function DashboardPage() {
 
     const user = session.user as any;
     let moodStats = { average: 0, count: 0, streak: 0 };
-    let nudges = [];
 
     try {
         const statsData = await serverApi('/moods/stats');
@@ -78,7 +65,7 @@ export default async function DashboardPage() {
 
                 {/* Persuasive Task Support: Next Best Action & Praise */}
                 <DashboardItem className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="md:col-span-2 p-1 rounded-[2rem] bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 animate-pulse-slow">
+                    <div className="md:col-span-2 p-1 rounded-[2rem] bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20">
                         <div className="h-full w-full glass rounded-[1.9rem] p-8 flex flex-col md:flex-row items-center gap-8 border-none">
                             <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
                                 <Flame className="h-8 w-8 text-primary" />
@@ -121,18 +108,6 @@ export default async function DashboardPage() {
                             <Users size={120} className="text-primary" />
                         </div>
                     </Card>
-                </DashboardItem>
-
-                {/* Proactive Support Row */}
-                <DashboardItem>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-                        <div className="lg:col-span-2">
-                            <AINudge />
-                        </div>
-                        <div className="glass rounded-[2.5rem] p-8 border border-primary/10 bg-primary/5 flex flex-col justify-center">
-                            <StabilityForecast />
-                        </div>
-                    </div>
                 </DashboardItem>
 
 
@@ -207,16 +182,6 @@ export default async function DashboardPage() {
                         </Link>
                     </DashboardItem>
                 </div>
-
-                {/* Advanced Insights & History */}
-                <DashboardItem className="grid gap-8 lg:grid-cols-3">
-                    <div className="lg:col-span-2">
-                        <AnalyticsDashboard />
-                    </div>
-                    <div className="glass rounded-[2.5rem] p-8 border border-border/40 min-h-[400px]">
-                        <CarePlanView />
-                    </div>
-                </DashboardItem>
 
                 {/* Featured Sections */}
                 <DashboardItem className="grid md:grid-cols-5 gap-8">

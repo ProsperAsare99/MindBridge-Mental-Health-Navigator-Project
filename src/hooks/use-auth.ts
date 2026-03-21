@@ -49,7 +49,9 @@ export function useAuth() {
         return {
             id: u.id || "",
             email: u.email || "",
-            displayName: u.displayName || u.name || "",
+            displayName: u.name || u.displayName || "", // name in session is now mapped from displayName in auth.ts
+            university: u.institution || u.university || "",
+            program: u.course || u.program || "",
             isVerified: u.isVerified ?? true,
             isAnonymous: u.isAnonymous ?? false,
             image: u.image || "",
