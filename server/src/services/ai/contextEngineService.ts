@@ -54,7 +54,8 @@ export class ContextEngineService {
                     trend: moodInsights.trend as any,
                     volatility: moodInsights.volatility,
                     lowestPoint: moodInsights.lowestPoint,
-                    highestPoint: moodInsights.highestPoint
+                    highestPoint: moodInsights.highestPoint,
+                    entryCount: moodInsights.entries.length
                 },
                 academicCalendar: {
                     isExamPeriod: academicContext.isExamPeriod,

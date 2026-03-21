@@ -41,11 +41,11 @@ router.post('/mood-insight', authenticateToken, async (req: AuthRequest, res: Re
         const userId = req.userId!;
         const context = await contextEngine.buildContext(userId);
 
-        if (context.temporal.recentMoods.length < 3) {
+        if (context.temporal.recentMoods.entryCount < 3) {
             return res.json({ insight: 'Keep tracking your mood to get personalized insights!' });
         }
 
-        const prompt = `Provide a brief, supportive insight based on this mood trend: ${context.temporal.recentMoods.length} entries, Trend: ${context.clinical.riskAssessment.level}. User: ${context.user.displayName}`;
+        const prompt = `Provide a brief, supportive insight based on this mood trend: ${context.temporal.recentMoods.entryCount} entries, Trend: ${context.clinical.riskAssessment.level}. User: ${context.user.displayName}`;
         const response = await geminiAdvanced.generateResponse(prompt, { name: 'gemini-1.5-flash' }, userId);
         
         res.json({ insight: response });
@@ -77,10 +77,14 @@ router.post('/journal-analysis', authenticateToken, async (req: AuthRequest, res
 router.get('/conversations', authenticateToken, async (req: AuthRequest, res: Response) => {
     try {
         const userId = req.userId!;
+        const limit = parseInt(req.query.limit as string) || 20;
+        const offset = parseInt(req.query.offset as string) || 0;
+
         const conversations = await prisma.conversation.findMany({
             where: { userId },
             orderBy: { lastMessageAt: 'desc' },
-            take: 20
+            take: limit,
+            skip: offset
         });
         res.json({ conversations });
     } catch (error) {
@@ -94,7 +98,7 @@ router.get('/conversations', authenticateToken, async (req: AuthRequest, res: Re
 router.get('/conversation/:id', authenticateToken, async (req: AuthRequest, res: Response) => {
     try {
         const { id } = req.params;
-        const insights = await conversationManager.getConversationInsights(id);
+        const insights = await conversationManager.getConversationInsights(id as string);
         res.json(insights);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch insights' });
@@ -107,7 +111,7 @@ router.get('/conversation/:id', authenticateToken, async (req: AuthRequest, res:
 router.delete('/conversation/:id', authenticateToken, async (req: AuthRequest, res: Response) => {
     try {
         const { id } = req.params;
-        await conversationManager.endConversation(id, 'Deleted by user');
+        await conversationManager.endConversation(id as string, 'Deleted by user');
         res.json({ success: true });
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete conversation' });
@@ -120,7 +124,7 @@ router.delete('/conversation/:id', authenticateToken, async (req: AuthRequest, r
 router.get('/stats', authenticateToken, async (req: AuthRequest, res: Response) => {
     try {
         const userId = req.userId!;
-        const stats = await conversationManager.getConversationStats(userId);
+        const stats = await conversationManager.getConversationStats(userId, (req.query.period as any) || 'weekly');
         res.json(stats);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch stats' });

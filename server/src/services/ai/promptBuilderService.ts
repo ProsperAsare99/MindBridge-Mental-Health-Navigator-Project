@@ -31,6 +31,7 @@ export interface PromptContext {
       volatility: number;
       lowestPoint: number;
       highestPoint: number;
+      entryCount: number;
     };
     academicCalendar: {
       isExamPeriod: boolean;
