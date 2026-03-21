@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '@/lib/axios-config';
+import { useAuth } from '@/hooks/use-auth';
 import { 
   Heart, 
   AlertTriangle, 
@@ -16,13 +17,19 @@ import {
 import Link from 'next/link';
 
 export default function AINudge() {
+  const { status } = useAuth();
   const [nudge, setNudge] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    fetchNudge();
-  }, []);
+    if (status === 'authenticated') {
+      fetchNudge();
+    } else if (status === 'unauthenticated') {
+      setLoading(false);
+      setNudge(null);
+    }
+  }, [status]);
 
   const fetchNudge = async () => {
     try {

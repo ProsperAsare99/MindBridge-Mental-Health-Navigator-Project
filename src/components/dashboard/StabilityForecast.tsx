@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import api from '@/lib/axios-config';
+import { useAuth } from '@/hooks/use-auth';
 import { 
   ShieldCheck, 
   AlertTriangle, 
@@ -19,12 +20,18 @@ import {
 } from "@/components/ui/tooltip";
 
 export default function StabilityForecast() {
+  const { status } = useAuth();
   const [forecast, setForecast] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchForecast();
-  }, []);
+    if (status === 'authenticated') {
+      fetchForecast();
+    } else if (status === 'unauthenticated') {
+      setLoading(false);
+      setForecast([]);
+    }
+  }, [status]);
 
   const fetchForecast = async () => {
     try {

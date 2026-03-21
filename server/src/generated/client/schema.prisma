@@ -83,6 +83,9 @@ model User {
   aiInteractions AIInteraction[]
   crisisLogs     CrisisLog[]
   usageLogs      UsageLog[]
+  memoryEntries  MemoryEntry[]
+  userGoals      UserGoal[]
+  carePlans      CarePlan[]
 
   @@index([email])
   @@index([university, academicLevel])
@@ -243,6 +246,25 @@ model UsageLog {
   @@index([service])
 }
 
+model MemoryEntry {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  content    String  @db.Text
+  importance Int     @default(1) // 1-10 scale
+  category   String? // ACADEMIC, PERSONAL, MEDICAL, GOAL
+
+  // Vector embedding stored as JSON array of numbers
+  embedding Json?
+
+  timestamp DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([category])
+}
+
 model AcademicEvent {
   id         String   @id @default(uuid())
   title      String
@@ -250,6 +272,45 @@ model AcademicEvent {
   date       DateTime
   importance Int      @default(1)
   createdAt  DateTime @default(now())
+}
+
+model UserGoal {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title    String
+  type     Goal
+  status   GoalStatus @default(ACTIVE)
+  progress Int        @default(0) // 0-100
+
+  targetDate DateTime?
+  milestones Json? // Array of { title: string, completed: boolean }
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+model CarePlan {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  weekNumber Int
+  year       Int
+
+  summary      String @db.Text
+  moodAnalysis Json? // e.g., { avgMood: number, trend: string }
+  growthTasks  Json // Array of { task: string, reason: string, completed: boolean }
+
+  generatedAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, weekNumber, year])
+  @@index([userId])
 }
 
 // ============================================
@@ -345,6 +406,12 @@ enum Goal {
   PREPARE_COUNSELING
   BE_MINDFUL
   IMPROVE_ACADEMICS
+}
+
+enum GoalStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
 }
 
 enum ConversationStatus {

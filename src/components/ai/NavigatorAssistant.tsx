@@ -14,30 +14,34 @@ import {
 import { Button } from '@/components/ui/button';
 import api from '@/lib/axios-config';
 import { usePathname } from 'next/navigation';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function NavigatorAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [pulse, setPulse] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
+  const { isAuthenticated, status } = useAuth();
   const pathname = usePathname();
 
   const fetchPulse = async () => {
+    if (status !== 'authenticated') return;
     try {
       const response = await api.get('/ai/nudge');
       setPulse(response.data);
     } catch (error) {
-      // Sliently fail if unauthenticated/stale token
-      console.warn('AI Pulse unavailable');
+      // Silently fail if session expires or API is down
       setPulse(null);
     }
   };
 
   useEffect(() => {
-    if (pathname !== '/') {
+    if (pathname !== '/' && status === 'authenticated') {
       fetchPulse();
+    } else if (status === 'unauthenticated') {
+      setPulse(null);
     }
-  }, [pathname]);
+  }, [pathname, status]);
 
   if (pathname === '/') return null;
 

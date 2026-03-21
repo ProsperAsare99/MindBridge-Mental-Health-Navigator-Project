@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '@/lib/axios-config';
+import { useAuth } from '@/hooks/use-auth';
 import { 
   CheckCircle2, 
   Circle, 
@@ -16,12 +17,18 @@ import {
 import { Button } from '@/components/ui/button';
 
 export default function CarePlanView() {
+  const { status } = useAuth();
   const [plan, setPlan] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchCarePlan();
-  }, []);
+    if (status === 'authenticated') {
+      fetchCarePlan();
+    } else if (status === 'unauthenticated') {
+      setLoading(false);
+      setPlan(null);
+    }
+  }, [status]);
 
   const fetchCarePlan = async () => {
     try {
