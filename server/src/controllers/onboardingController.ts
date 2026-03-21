@@ -13,37 +13,36 @@ export const updateOnboarding = async (req: AuthRequest, res: Response) => {
 
         // Clean up the data to ensure we only update allowed fields
         const allowedFields = [
-            'nickname',
-            'onboardingStep',
-            'onboardingCompleted',
-            'yearOfStudy',
-            'fieldOfStudy',
-            'preferredLanguage',
+            'displayName',
+            'university',
+            'academicLevel',
+            'program',
+            'language',
             'notificationPreference',
-            'checkInTime',
-            'wellbeingBaseline',
-            'reasonsForJoining',
-            'hasSupportSystem',
-            'previousProfessionalSupport',
-            'selfHarmRisk',
-            'emergencyContacts',
+            'preferredCheckInTime',
+            'concerns',
+            'supportLevel',
+            'riskLevel',
             'copingStyles',
-            'academicStressors',
-            'spiritualityImportance',
-            'preferredApproach',
+            'faithLevel',
+            'approachPreference',
             'goals',
-            'trackingFrequency',
-            'trackingMetrics',
-            'dataSharingConsent',
-            'dataVisibility',
-            'preferredTheme',
-            'dashboardLayout'
+            'stressors',
+            'trackingPreferences',
+            'baseline',
+            'onboardingStep',
+            'onboardingCompleted'
         ];
 
         const updateData: any = {};
         for (const field of allowedFields) {
             if (data[field] !== undefined) {
-                updateData[field] = data[field];
+                // Special handling for academicLevel to ensure it's an integer
+                if (field === 'academicLevel') {
+                    updateData[field] = parseInt(data[field]) || 100;
+                } else {
+                    updateData[field] = data[field];
+                }
             }
         }
 
@@ -57,11 +56,12 @@ export const updateOnboarding = async (req: AuthRequest, res: Response) => {
             user: {
                 id: user.id,
                 email: user.email,
-                name: user.name,
-                onboardingStep: (user as any).onboardingStep,
-                onboardingCompleted: (user as any).onboardingCompleted
+                displayName: user.displayName,
+                onboardingStep: user.onboardingStep,
+                onboardingCompleted: user.onboardingCompleted
             }
         });
+
     } catch (error) {
         console.error('Onboarding Update Error:', error);
         res.status(500).json({ error: 'Failed to update onboarding data' });
@@ -79,8 +79,9 @@ export const getOnboardingStatus = async (req: AuthRequest, res: Response) => {
             select: {
                 onboardingStep: true,
                 onboardingCompleted: true,
-                nickname: true
-            } as any
+                displayName: true
+            }
+
         });
 
         if (!user) {

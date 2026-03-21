@@ -24,9 +24,9 @@ export class UserPersonalizationService {
       greetingPrefix = "Good night";
     }
 
-    const name = user.nickname || user.name?.split(' ')[0] || "Friend";
+    const name = user.displayName || user.name?.split(' ')[0] || "Friend";
 
-    if (user.preferredLanguage === "Twi") {
+    if (user.language === "Twi") {
       const twiGreetings: Record<string, string> = {
         morning: "Maakye",
         afternoon: "Maaha",
@@ -43,18 +43,18 @@ export class UserPersonalizationService {
    * Determines which features should be visible/active for a specific user.
    */
   static shouldShowFeature(feature: string, user: any): boolean {
-    const riskLevel = user.selfHarmRisk?.toLowerCase() || 'low';
-    const examStress = (user.academicStressors as any)?.exams || 1;
-    const financialStress = (user.academicStressors as any)?.financial || 1;
+    const riskLevel = user.riskLevel?.toLowerCase() || 'low';
+    const examStress = (user.stressors as any)?.exams || 1;
+    const financialStress = (user.stressors as any)?.financial || 1;
     
     const featureMap: Record<string, boolean> = {
-      'peer-support': user.hasSupportSystem === "I feel mostly alone",
-      'crisis-button': riskLevel === 'high' || riskLevel === 'moderate',
-      'faith-resources': user.spiritualityImportance === "Very Important",
+      'peer-support': user.supportLevel === "alone",
+      'crisis-button': riskLevel === 'high' || riskLevel === 'moderate' || riskLevel === 'critical',
+      'faith-resources': user.faithLevel === "very_important",
       'financial-wellness': financialStress >= 4,
       'exam-prep': examStress >= 4,
-      'sleep-tracker': user.trackingMetrics?.includes('Sleep Quality'),
-      'social-analytics': user.trackingMetrics?.includes('Social Interactions'),
+      'sleep-tracker': !!user.trackingPreferences?.sleep,
+      'social-analytics': !!user.trackingPreferences?.social,
     };
 
     return featureMap[feature] || false;
@@ -65,25 +65,29 @@ export class UserPersonalizationService {
    */
   static recommendCopingStrategy(user: any, currentMood: number) {
     const strategies: Record<string, string[]> = {
-      'Exercise / Physical Activity': [
+      'exercise': [
         "Take a 10-minute walk around campus",
         "Try some quick stretches",
         "Dance to your favorite song"
       ],
-      'Talking to friends/family': [
+      'talk': [
         "Message a trusted friend",
         "Join an anonymous support circle",
         "Talk to our AI companion"
       ],
-      'Prayer / Meditation': [
+      'pray': [
         "Take 5 minutes for prayer",
         "Read an inspirational scripture",
         "Listen to worship music"
       ],
-      'Journaling / Writing': [
+      'journal': [
         "Write about what you're feeling",
         "List 3 things you're grateful for",
         "Voice record your thoughts"
+      ],
+      'music': [
+        "Listen to your calming playlist",
+        "Discover some upbeat tunes"
       ]
     };
 
@@ -93,7 +97,7 @@ export class UserPersonalizationService {
       .slice(0, 3);
 
     return {
-      title: `${user.nickname || "Kwame"}, these usually help you:`,
+      title: `${user.displayName || "Friend"}, these usually help you:`,
       strategies: recommendations.length > 0 ? recommendations : [
         "Take 3 deep breaths",
         "Step outside for fresh air",
@@ -127,10 +131,17 @@ export class UserPersonalizationService {
         healing: "restoration",
         support: "community care",
         wellbeing: "inner peace"
+      },
+      mixed: {
+        sadness: "struggle",
+        worry: "tension",
+        healing: "growth",
+        support: "guidance",
+        wellbeing: "balance"
       }
     };
 
-    const approach = (user.preferredApproach?.toLowerCase() || 'holistic') as keyof typeof terminology;
+    const approach = (user.approachPreference?.toLowerCase() || 'holistic') as keyof typeof terminology;
     return terminology[approach] || terminology.holistic;
   }
 
@@ -139,15 +150,16 @@ export class UserPersonalizationService {
    */
   static getAIContext(user: any) {
     return {
-      displayName: user.nickname || user.name?.split(' ')[0] || "Friend",
+      displayName: user.displayName || user.name?.split(' ')[0] || "Friend",
       university: user.university || "your university",
-      academicLevel: user.yearOfStudy || "your level",
-      program: user.fieldOfStudy || "your program",
-      language: user.preferredLanguage || "English",
-      concerns: user.reasonsForJoining || [],
-      riskLevel: user.selfHarmRisk || "LOW",
-      faithLevel: user.spiritualityImportance || "Not important",
-      approach: user.preferredApproach || "Holistic"
+      academicLevel: user.academicLevel || "your level",
+      program: user.program || "your program",
+      language: user.language || "English",
+      concerns: user.concerns || [],
+      riskLevel: user.riskLevel || "LOW",
+      faithLevel: user.faithLevel || "somewhat_important",
+      approach: user.approachPreference || "holistic"
     };
   }
+
 }

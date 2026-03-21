@@ -28,12 +28,11 @@ export default function SettingsPage() {
     const router = useRouter();
 
     // Profile fields
-    const [name, setName] = useState("");
+    const [displayName, setDisplayName] = useState("");
     const [email, setEmail] = useState("");
-    const [institution, setInstitution] = useState("");
-    const [studentId, setStudentId] = useState("");
-    const [course, setCourse] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
+    const [university, setUniversity] = useState("");
+    const [academicLevel, setAcademicLevel] = useState(100);
+    const [program, setProgram] = useState("");
 
     // Password fields
     const [currentPassword, setCurrentPassword] = useState("");
@@ -57,31 +56,25 @@ export default function SettingsPage() {
 
     useEffect(() => {
         if (user) {
-            setName(user.name || user.displayName || "");
+            setDisplayName(user.displayName || "");
             setEmail(user.email || "");
-            setInstitution(user.institution || "");
-            setStudentId(user.studentId || "");
-            setCourse(user.course || "");
-            setPhoneNumber(user.phoneNumber || "");
+            setUniversity(user.university || "");
+            setAcademicLevel(user.academicLevel || 100);
+            setProgram(user.program || "");
         }
     }, [user]);
 
     const handleSaveProfile = async () => {
-        // Simple validation
-        if (phoneNumber && !/^\+?[\d\s-]{8,20}$/.test(phoneNumber)) {
-            setProfileError("Please enter a valid phone number.");
-            return;
-        }
-
         setSaving(true);
         setProfileError("");
         setProfileSuccess("");
 
         try {
-            await updateProfile({ name, institution, studentId, course, phoneNumber });
+            await updateProfile({ displayName, university, academicLevel, program });
             setProfileSuccess("Profile updated successfully!");
             setTimeout(() => setProfileSuccess(""), 4000);
-        } catch (err: any) {
+        }
+ catch (err: any) {
             setProfileError(err.message || "Failed to update profile.");
         } finally {
             setSaving(false);
@@ -187,13 +180,13 @@ export default function SettingsPage() {
 
                         <div className="grid gap-6 md:grid-cols-2">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Full Name</label>
+                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Display Name</label>
                                 <div className="relative group">
                                     <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                                     <input
                                         type="text"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        value={displayName}
+                                        onChange={(e) => setDisplayName(e.target.value)}
                                         className="w-full bg-muted/50 border border-border rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all text-foreground placeholder:text-muted-foreground"
                                         placeholder="Add name"
                                     />
@@ -212,41 +205,46 @@ export default function SettingsPage() {
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Institution</label>
+                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">University</label>
                                 <div className="relative group">
                                     <School className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                                    <input
-                                        type="text"
-                                        value={institution}
-                                        onChange={(e) => setInstitution(e.target.value)}
-                                        className="w-full bg-muted/50 border border-border rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all text-foreground placeholder:text-muted-foreground"
-                                        placeholder="Add institution"
-                                    />
+                                    <select
+                                        value={university}
+                                        onChange={(e) => setUniversity(e.target.value)}
+                                        className="w-full bg-muted/50 border border-border rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all text-foreground"
+                                    >
+                                        <option value="">Select University</option>
+                                        {['KNUST', 'University of Ghana', 'University of Cape Coast', 'Ashesi University', 'GIMPA', 'Other'].map(u => (
+                                            <option key={u} value={u}>{u}</option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Student ID</label>
+                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Academic Level</label>
                                 <div className="relative group">
                                     <IdCard className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                                    <input
-                                        type="text"
-                                        value={studentId}
-                                        onChange={(e) => setStudentId(e.target.value)}
-                                        className="w-full bg-muted/50 border border-border rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all text-foreground placeholder:text-muted-foreground"
-                                        placeholder="Add student ID"
-                                    />
+                                    <select
+                                        value={academicLevel}
+                                        onChange={(e) => setAcademicLevel(Number(e.target.value))}
+                                        className="w-full bg-muted/50 border border-border rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all text-foreground"
+                                    >
+                                        {[100, 200, 300, 400].map(l => (
+                                            <option key={l} value={l}>Level {l}</option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Course / Major</label>
+                                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Academic Program</label>
                                 <div className="relative group">
                                     <BookHeart className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                                     <input
                                         type="text"
-                                        value={course}
-                                        onChange={(e) => setCourse(e.target.value)}
+                                        value={program}
+                                        onChange={(e) => setProgram(e.target.value)}
                                         className="w-full bg-muted/50 border border-border rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all text-foreground placeholder:text-muted-foreground"
-                                        placeholder="Add course / major"
+                                        placeholder="Add program"
                                     />
                                 </div>
                             </div>

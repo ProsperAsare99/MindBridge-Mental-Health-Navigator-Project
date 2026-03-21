@@ -5,10 +5,10 @@ import { AlertCircle, FileText, Users, Presentation, BookOpen, Wallet, Users2 } 
 
 const stressors = [
   { id: "exams", label: "Exams", icon: FileText },
-  { id: "deadlines", label: "Assignments/Deadlines", icon: AlertCircle },
-  { id: "groups", label: "Group work", icon: Users },
-  { id: "presentation", label: "Presentations", icon: Presentation },
-  { id: "comprehension", label: "Understanding coursework", icon: BookOpen },
+  { id: "assignments", label: "Assignments/Deadlines", icon: AlertCircle },
+  { id: "groupWork", label: "Group work", icon: Users },
+  { id: "presentations", label: "Presentations", icon: Presentation },
+  { id: "understanding", label: "Understanding coursework", icon: BookOpen },
   { id: "financial", label: "Financial pressure", icon: Wallet },
   { id: "family", label: "Family expectations", icon: Users2 }
 ];
@@ -16,12 +16,13 @@ const stressors = [
 export default function Step8Stress({ data, update, onNext }: any) {
   const setRating = (id: string, rating: number) => {
     update({
-      academicStressors: {
-        ...data.academicStressors,
+      stressors: {
+        ...data.stressors,
         [id]: rating
       }
     });
   };
+
 
   return (
     <div className="space-y-8">
@@ -36,7 +37,8 @@ export default function Step8Stress({ data, update, onNext }: any) {
         <div className="space-y-5">
           {stressors.map((s) => {
             const Icon = s.icon;
-            const currentRating = data.academicStressors?.[s.id] || 1;
+            const currentRating = data.stressors?.[s.id] || 3;
+
             
             return (
               <div key={s.id} className="space-y-4 rounded-[1.5rem] border border-border/30 bg-muted/10 p-6 transition-all hover:border-orange-500/40">

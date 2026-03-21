@@ -12,7 +12,7 @@ const riskOptions = [
 ];
 
 export default function Step6Safety({ data, update, onNext }: any) {
-  const isHighRisk = data.selfHarmRisk === "Sometimes" || data.selfHarmRisk === "Often";
+  const isHighRisk = data.riskLevel === "MODERATE" || data.riskLevel === "HIGH" || data.riskLevel === "CRITICAL";
 
   return (
     <div className="space-y-8">
@@ -25,22 +25,28 @@ export default function Step6Safety({ data, update, onNext }: any) {
         <div className="space-y-4">
           <label className="flex items-center gap-3 text-base font-bold text-foreground/90">
             <ShieldAlert className="h-5 w-5 text-rose-500" />
-            Have you experienced self-harm impulses recently?
+            Relative safety assessment (Recent impulses?)
           </label>
           <div className="grid grid-cols-1 gap-3">
-            {riskOptions.map((opt) => (
+            {[
+              { label: "No, I feel safe", value: "LOW" },
+              { label: "Rarely / Mildly", value: "LOW" },
+              { label: "Sometimes / Moderate", value: "MODERATE" },
+              { label: "Often / High", value: "HIGH" },
+              { label: "I am in crisis right now", value: "CRITICAL" }
+            ].map((opt) => (
               <button
-                key={opt}
-                onClick={() => update({ selfHarmRisk: opt })}
+                key={opt.value}
+                onClick={() => update({ riskLevel: opt.value })}
                 className={`rounded-[1.25rem] border-2 p-5 text-left text-sm font-black transition-all ${
-                  data.selfHarmRisk === opt 
-                    ? opt === "No" 
+                  data.riskLevel === opt.value 
+                    ? opt.value === "LOW" 
                       ? "border-orange-500 bg-orange-500/10 text-orange-700 shadow-md shadow-orange-500/10" 
                       : "border-rose-500 bg-rose-500/10 text-rose-700 shadow-md shadow-rose-500/10" 
                     : "border-border/20 bg-muted/10 hover:bg-muted/20 text-muted-foreground/60"
                 }`}
               >
-                {opt}
+                {opt.label}
               </button>
             ))}
           </div>
@@ -77,52 +83,13 @@ export default function Step6Safety({ data, update, onNext }: any) {
                       <Phone className="h-5 w-5" />
                     </a>
                   </div>
-                  <div className="flex items-center justify-between rounded-[1.25rem] bg-card p-4 shadow-lg border border-orange-500/20">
-                    <div className="flex items-center gap-4">
-                      <div className="h-10 w-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                        <ShieldAlert className="h-5 w-5 text-orange-500" />
-                      </div>
-                      <div className="text-sm">
-                        <p className="font-black text-orange-600">MindBridge Crisis Node</p>
-                        <p className="text-muted-foreground font-bold">Secure Connection (24/7)</p>
-                      </div>
-                    </div>
-                    <button className="rounded-xl bg-orange-500 p-3 text-white shadow-xl shadow-orange-500/30 hover:bg-orange-600 transition-all active:scale-95">
-                      <Phone className="h-5 w-5" />
-                    </button>
-                  </div>
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-
-        <div className="space-y-4 pt-4">
-          <label className="flex items-center gap-3 text-base font-bold text-foreground/90">
-            <UserPlus className="h-5 w-5 text-orange-500" />
-            Initialize Emergency Contacts?
-          </label>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            {["Yes, add now", "Maybe later", "No thanks"].map((opt) => (
-              <button
-                key={opt}
-                onClick={() => update({ emergencyContacts: { ...data.emergencyContacts, preference: opt } })}
-                className={`rounded-2xl border-2 p-5 text-center text-sm font-black transition-all ${
-                  data.emergencyContacts?.preference === opt 
-                    ? "border-orange-500 bg-orange-500/10 text-orange-700 shadow-md shadow-orange-500/10" 
-                    : "border-border/20 bg-muted/10 hover:bg-muted/20 text-muted-foreground/60"
-                }`}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-          <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
-            <div className="h-1 w-1 rounded-full bg-orange-500" />
-            Provides additional redundancy in critical states
-          </p>
-        </div>
       </div>
     </div>
   );
 }
+

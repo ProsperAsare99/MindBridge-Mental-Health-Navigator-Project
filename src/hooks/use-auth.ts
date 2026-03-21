@@ -7,42 +7,36 @@ import { api } from '@/lib/api';
 export interface User {
     id: string;
     email: string;
-    name: string;
-    institution?: string;
-    studentId?: string;
-    course?: string;
-    phoneNumber?: string;
     displayName?: string;
-    isVerified?: boolean;
-    isAnonymous?: boolean;
-    googleId?: string;
-    image?: string;
+    university?: string;
+    academicLevel?: number; // 100, 200, 300, 400
+    program?: string;
+    language?: string;
+    notificationPreference?: string;
+    preferredCheckInTime?: string;
+    concerns?: string[];
+    supportLevel?: string;
+    riskLevel?: string;
+    copingStyles?: string[];
+    faithLevel?: string;
+    approachPreference?: string;
+    goals?: string[];
+    stressors?: any;
+    trackingPreferences?: any;
+    baseline?: any;
+    moodCheckInsCount?: number;
+    conversationsCount?: number;
+    lastActive?: Date;
     onboardingStep?: number;
     onboardingCompleted?: boolean;
-    nickname?: string;
-    yearOfStudy?: string;
-    fieldOfStudy?: string;
-    preferredLanguage?: string;
-    notificationPreference?: string;
-    checkInTime?: string;
-    wellbeingBaseline?: string;
-    reasonsForJoining?: string[];
-    hasSupportSystem?: string;
-    previousProfessionalSupport?: string;
-    selfHarmRisk?: string;
-    emergencyContacts?: any;
-    copingStyles?: string[];
-    academicStressors?: any;
-    spiritualityImportance?: string;
-    preferredApproach?: string;
-    goals?: string[];
-    trackingFrequency?: string;
-    trackingMetrics?: string[];
-    dataSharingConsent?: boolean;
-    dataVisibility?: string;
-    preferredTheme?: string;
-    dashboardLayout?: string;
+    isVerified?: boolean;
+    isAnonymous?: boolean;
+    image?: string;
+    googleId?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
+
 
 export function useAuth() {
     const { data: session, status, update } = useSession();
@@ -51,15 +45,15 @@ export function useAuth() {
     const user = useMemo<User | null>(() => {
         if (!session?.user) return null;
 
+        const u = session.user as any;
         return {
-            id: (session.user as any).id || "",
-            email: session.user.email || "",
-            name: session.user.name || "",
-            displayName: session.user.name || "",
-            isVerified: (session.user as any).isVerified ?? true,
-            isAnonymous: (session.user as any).isAnonymous ?? false,
-            image: (session.user as any).image || "",
-            ...(session.user as any)
+            id: u.id || "",
+            email: u.email || "",
+            displayName: u.displayName || u.name || "",
+            isVerified: u.isVerified ?? true,
+            isAnonymous: u.isAnonymous ?? false,
+            image: u.image || "",
+            ...u
         };
     }, [session, status]);
 
@@ -80,17 +74,13 @@ export function useAuth() {
 
     const updateProfile = async (data: Partial<User>) => {
         try {
-            const res = await api.post('/auth/profile', data);
+            const res = await api.post('/onboarding', data);
             
             // Sync with NextAuth session
             await update({
                 user: {
                     ...session?.user,
-                    name: res.name,
-                    institution: res.institution,
-                    studentId: res.studentId,
-                    course: res.course,
-                    phoneNumber: res.phoneNumber
+                    ...res.user
                 }
             });
             
@@ -100,6 +90,7 @@ export function useAuth() {
             throw error;
         }
     };
+
 
     const updateAvatar = async (file: File) => {
         const formData = new FormData();

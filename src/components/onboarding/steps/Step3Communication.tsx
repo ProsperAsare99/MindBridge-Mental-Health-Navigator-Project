@@ -32,12 +32,12 @@ export default function Step3Communication({ data, update, onNext }: any) {
             Preferred Language
           </label>
           <div className="flex flex-wrap gap-3">
-            {languages.map((lang) => (
+            {["English", "Twi", "Ga", "Ewe"].map((lang) => (
               <button
                 key={lang}
-                onClick={() => update({ preferredLanguage: lang })}
+                onClick={() => update({ language: lang.toLowerCase() })}
                 className={`rounded-2xl border-2 px-6 py-3 text-sm font-black transition-all ${
-                  data.preferredLanguage === lang 
+                  data.language === lang.toLowerCase() 
                     ? "border-orange-500 bg-orange-500/10 text-orange-700" 
                     : "border-border/20 bg-muted/10 hover:border-orange-500/40 text-muted-foreground/60"
                 }`}
@@ -58,17 +58,22 @@ export default function Step3Communication({ data, update, onNext }: any) {
             Notification Protocol
           </label>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {notifications.map((notif) => (
+            {[
+              { label: "Daily gentle reminders", value: "daily" },
+              { label: "Weekly check-ins", value: "weekly" },
+              { label: "Only when needed", value: "only_when_needed" },
+              { label: "No notifications", value: "none" }
+            ].map((notif) => (
               <button
-                key={notif}
-                onClick={() => update({ notificationPreference: notif })}
+                key={notif.value}
+                onClick={() => update({ notificationPreference: notif.value })}
                 className={`rounded-[1.25rem] border-2 p-5 text-left text-sm font-black transition-all ${
-                  data.notificationPreference === notif 
+                  data.notificationPreference === notif.value 
                     ? "border-orange-500 bg-orange-500/10 text-orange-700 shadow-md shadow-orange-500/10" 
                     : "border-border/20 bg-muted/10 hover:border-orange-500/40 text-muted-foreground/60"
                 }`}
               >
-                {notif}
+                {notif.label}
               </button>
             ))}
           </div>
@@ -80,20 +85,26 @@ export default function Step3Communication({ data, update, onNext }: any) {
             Optimal Maintenance Window
           </label>
           <div className="grid grid-cols-2 gap-4">
-            {times.map((time) => (
+            {[
+              { label: "Morning", value: "morning" },
+              { label: "Afternoon", value: "afternoon" },
+              { label: "Evening", value: "evening" },
+              { label: "Night", value: "night" }
+            ].map((time) => (
               <button
-                key={time}
-                onClick={() => update({ checkInTime: time })}
+                key={time.value}
+                onClick={() => update({ preferredCheckInTime: time.value })}
                 className={`rounded-[1.25rem] border-2 p-5 text-center text-sm font-black transition-all ${
-                  data.checkInTime === time 
+                  data.preferredCheckInTime === time.value 
                     ? "border-orange-500 bg-orange-500/10 text-orange-700 shadow-md shadow-orange-500/10" 
                     : "border-border/20 bg-muted/10 hover:border-orange-500/40 text-muted-foreground/60"
                 }`}
               >
-                {time}
+                {time.label}
               </button>
             ))}
           </div>
+
         </div>
       </div>
     </div>

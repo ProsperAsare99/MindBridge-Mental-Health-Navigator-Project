@@ -20,8 +20,8 @@ export default function Step1Identity({ data, update, onNext }: any) {
           </label>
           <input
             type="text"
-            value={data.nickname}
-            onChange={(e) => update({ nickname: e.target.value })}
+            value={data.displayName}
+            onChange={(e) => update({ displayName: e.target.value })}
             placeholder="First name or nickname"
             className="w-full rounded-[1.5rem] border border-border/40 bg-muted/20 p-5 text-base font-bold outline-none transition-all focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/5 placeholder:text-muted-foreground/30"
           />
@@ -41,31 +41,32 @@ export default function Step1Identity({ data, update, onNext }: any) {
               {INSTITUTIONS.map((uni) => (
                 <button
                   key={uni}
-                  onClick={() => update({ institution: uni })}
+                  onClick={() => update({ university: uni })}
                   className={`group relative overflow-hidden rounded-[1.25rem] border-2 p-5 text-left text-sm font-black transition-all ${
-                    data.institution === uni 
+                    data.university === uni 
                       ? "border-orange-500 bg-orange-500/10 text-orange-700 shadow-md shadow-orange-500/10" 
                       : "border-border/20 bg-muted/10 hover:border-orange-500/40"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-4">
                     <span className="flex-1 leading-tight">{uni}</span>
-                    {data.institution === uni && (
+                    {data.university === uni && (
                       <CheckCircle2 className="h-5 w-5 shrink-0 text-orange-600" />
                     )}
                   </div>
-                  {data.institution === uni && (
+                  {data.university === uni && (
                     <motion.div layoutId="uni-active" className="absolute inset-0 bg-orange-500/5" />
                   )}
                 </button>
               ))}
             </div>
           </div>
-          {(!INSTITUTIONS.includes(data.institution) || data.institution === "Other") && data.institution !== "" && (
+          {(!INSTITUTIONS.includes(data.university) || data.university === "Other") && data.university !== "" && (
             <input
               type="text"
-              value={INSTITUTIONS.includes(data.institution) ? "" : data.institution}
-              onChange={(e) => update({ institution: e.target.value })}
+              value={INSTITUTIONS.includes(data.university) ? "" : data.university}
+              onChange={(e) => update({ university: e.target.value })}
+
               placeholder="Enter your university name"
               className="mt-4 w-full rounded-[1.25rem] border border-orange-500/30 bg-orange-500/5 p-5 text-sm font-bold outline-none transition-all focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10"
             />

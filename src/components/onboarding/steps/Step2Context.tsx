@@ -37,17 +37,17 @@ export default function Step2Context({ data, update, onNext }: any) {
             Current Year of Study
           </label>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {levels.map((level) => (
+            {[100, 200, 300, 400].map((level) => (
               <button
                 key={level}
-                onClick={() => update({ yearOfStudy: level })}
+                onClick={() => update({ academicLevel: level })}
                 className={`flex items-center justify-center rounded-[1.25rem] border-2 p-5 text-center text-sm font-black transition-all ${
-                  data.yearOfStudy === level 
+                  data.academicLevel === level 
                     ? "border-orange-500 bg-orange-500/10 text-orange-700 shadow-md shadow-orange-500/10" 
                     : "border-border/20 bg-muted/10 hover:border-orange-500/40"
                 }`}
               >
-                {level}
+                Level {level}
               </button>
             ))}
           </div>
@@ -63,20 +63,21 @@ export default function Step2Context({ data, update, onNext }: any) {
             Program / Field of Study
           </label>
           <div className="flex flex-wrap gap-3">
-            {programs.map((program) => (
+            {programs.map((prog) => (
               <button
-                key={program}
-                onClick={() => update({ fieldOfStudy: program })}
+                key={prog}
+                onClick={() => update({ program: prog })}
                 className={`rounded-2xl border-2 px-6 py-3 text-sm font-black transition-all ${
-                  data.fieldOfStudy === program 
+                  data.program === prog 
                     ? "border-orange-500 bg-orange-500/10 text-orange-700" 
                     : "border-border/20 bg-muted/10 hover:border-orange-500/40 text-muted-foreground/60"
                 }`}
               >
-                {program}
+                {prog}
               </button>
             ))}
           </div>
+
           <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
             <div className="h-1 w-1 rounded-full bg-orange-500" />
             Specialized fields encounter unique psychological pressures

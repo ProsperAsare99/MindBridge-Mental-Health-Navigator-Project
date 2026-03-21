@@ -43,31 +43,40 @@ export function OnboardingWizard() {
   const router = useRouter();
   const [step, setStep] = useState(user?.onboardingStep || 1);
   const [formData, setFormData] = useState<any>({
-    nickname: user?.name || "",
-    institution: user?.institution || "",
-    yearOfStudy: "",
-    fieldOfStudy: user?.course || "",
-    preferredLanguage: "English",
-    notificationPreference: "Daily gentle reminders",
-    checkInTime: "Morning (6am - 10am)",
-    wellbeingBaseline: "",
-    reasonsForJoining: [],
-    hasSupportSystem: "",
-    previousProfessionalSupport: "",
-    selfHarmRisk: "No",
-    emergencyContacts: {},
-    copingStyles: [],
-    academicStressors: { exams: 1, deadlines: 1, groups: 1, presentation: 1, comprehension: 1, financial: 1, family: 1 },
-    spiritualityImportance: "Not important",
-    preferredApproach: "Holistic/Wellness approach",
-    goals: [],
-    trackingFrequency: "Daily",
-    trackingMetrics: ["Mood/Emotions"],
+    displayName: user?.displayName || "",
+
+    university: user?.university || "",
+    academicLevel: user?.academicLevel || 100,
+    program: user?.program || "",
+    language: user?.language || "english",
+    notificationPreference: user?.notificationPreference || "daily",
+    preferredCheckInTime: user?.preferredCheckInTime || "morning",
+    baseline: user?.baseline || { mood: 3, joinDate: new Date() },
+    concerns: user?.concerns || [],
+    supportLevel: user?.supportLevel || "somewhat",
+    riskLevel: user?.riskLevel || "LOW",
+    copingStyles: user?.copingStyles || [],
+    stressors: user?.stressors || { exams: 3, assignments: 3, groupWork: 3, presentations: 3, understanding: 3, financial: 3, family: 3 },
+    faithLevel: user?.faithLevel || "somewhat_important",
+    approachPreference: user?.approachPreference || "holistic",
+    goals: user?.goals || [],
+    trackingPreferences: user?.trackingPreferences || {
+      mood: true,
+      anxiety: false,
+      sleep: false,
+      academic: false,
+      social: false,
+      energy: false,
+      physical: false,
+      exercise: false
+    },
+
     dataSharingConsent: true,
     dataVisibility: "Only me",
     preferredTheme: "🌿 Serene Green (default)",
     dashboardLayout: "Today's mood check-in"
   });
+
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 

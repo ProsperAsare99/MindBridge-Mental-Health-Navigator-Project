@@ -4,28 +4,21 @@ import { motion } from "framer-motion";
 import { Coffee, Music, Bike, PenTool, Book, Users, Heart, Brain, Moon, Tv, Smile } from "lucide-react";
 
 const copingOptions = [
-  { label: "Talk to someone", icon: Users },
-  { label: "Write/journal", icon: PenTool },
-  { label: "Exercise or move", icon: Bike },
-  { label: "Listen to music", icon: Music },
-  { label: "Pray or meditate", icon: Heart },
-  { label: "Spend time alone", icon: Moon },
-  { label: "Be around people", icon: Users },
-  { label: "Do something creative", icon: PenTool },
-  { label: "Sleep or rest", icon: Moon },
-  { label: "Watch videos/entertainment", icon: Tv },
-  { label: "Read", icon: Book },
-  { label: "Help others", icon: Smile },
-  { label: "I'm not sure yet", icon: Brain }
+  { label: "Talk to someone", value: "talk", icon: Users },
+  { label: "Write/journal", value: "journal", icon: PenTool },
+  { label: "Exercise or move", value: "exercise", icon: Bike },
+  { label: "Listen to music", value: "music", icon: Music },
+  { label: "Pray or meditate", value: "pray", icon: Heart },
+  { label: "Other / Not sure", value: "other", icon: Brain }
 ];
 
 export default function Step7Coping({ data, update, onNext }: any) {
-  const toggleCoping = (option: string) => {
+  const toggleCoping = (optionValue: string) => {
     const current = data.copingStyles || [];
-    if (current.includes(option)) {
-      update({ copingStyles: current.filter((o: string) => o !== option) });
+    if (current.includes(optionValue)) {
+      update({ copingStyles: current.filter((o: string) => o !== optionValue) });
     } else {
-      update({ copingStyles: [...current, option] });
+      update({ copingStyles: [...current, optionValue] });
     }
   };
 
@@ -44,11 +37,11 @@ export default function Step7Coping({ data, update, onNext }: any) {
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {copingOptions.map((opt) => {
               const Icon = opt.icon;
-              const isActive = data.copingStyles?.includes(opt.label);
+              const isActive = data.copingStyles?.includes(opt.value);
               return (
                 <button
-                  key={opt.label}
-                  onClick={() => toggleCoping(opt.label)}
+                  key={opt.value}
+                  onClick={() => toggleCoping(opt.value)}
                   className={`flex flex-col items-center gap-3 rounded-[1.25rem] border-2 p-5 transition-all ${
                     isActive 
                       ? "border-orange-500 bg-orange-500/10 text-orange-700 shadow-md shadow-orange-500/10 scale-[1.02]" 
@@ -61,6 +54,7 @@ export default function Step7Coping({ data, update, onNext }: any) {
               );
             })}
           </div>
+
           <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
             <div className="h-1 w-1 rounded-full bg-orange-500" />
             We'll synchronize our recommendations with your natural recovery protocols
