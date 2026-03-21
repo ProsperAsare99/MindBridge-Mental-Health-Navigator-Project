@@ -147,9 +147,12 @@ export const authOptions: NextAuthOptions = {
                 // If the update trigger is fired, merge the new session data into the token
                 if (session.user) {
                    if (session.user.name) token.name = session.user.name;
+                   if (session.user.displayName) token.name = session.user.displayName;
                    if (session.user.institution) token.institution = session.user.institution;
+                   if (session.user.university) token.institution = session.user.university;
                    if (session.user.studentId) token.studentId = session.user.studentId;
                    if (session.user.course) token.course = session.user.course;
+                   if (session.user.program) token.course = session.user.program;
                    if (session.user.image) token.image = session.user.image;
                    if (session.user.phoneNumber) token.phoneNumber = session.user.phoneNumber;
                    if (session.user.onboardingCompleted !== undefined) token.onboardingCompleted = session.user.onboardingCompleted;

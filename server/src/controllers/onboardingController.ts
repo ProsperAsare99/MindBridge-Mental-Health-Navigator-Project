@@ -47,7 +47,7 @@ export const updateOnboarding = async (req: AuthRequest, res: Response) => {
                     updateData[field] = mapInstitutionToUniversity(data[field]);
                 }
                 // Handle Enum arrays by uppercasing strings
-                else if (['concerns', 'copingStyles'].includes(field) && Array.isArray(data[field])) {
+                else if (['concerns', 'copingStyles', 'goals'].includes(field) && Array.isArray(data[field])) {
                     updateData[field] = data[field].map((val: string) => val.toUpperCase().replace(/\s+/g, '_'));
                 }
                 // Handle single Enum fields by uppercasing strings
