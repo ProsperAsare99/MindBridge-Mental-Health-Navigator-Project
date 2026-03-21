@@ -241,6 +241,15 @@ exports.Prisma.UsageLogScalarFieldEnum = {
   timestamp: 'timestamp'
 };
 
+exports.Prisma.AcademicEventScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  type: 'type',
+  date: 'date',
+  importance: 'importance',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -402,7 +411,8 @@ exports.Prisma.ModelName = {
   Assessment: 'Assessment',
   AIInteraction: 'AIInteraction',
   CrisisLog: 'CrisisLog',
-  UsageLog: 'UsageLog'
+  UsageLog: 'UsageLog',
+  AcademicEvent: 'AcademicEvent'
 };
 
 /**

@@ -243,6 +243,16 @@ model UsageLog {
   @@index([service])
 }
 
+model AcademicEvent {
+  id          String   @id @default(uuid())
+  title       String
+  type        String
+  date        DateTime
+  importance  Int      @default(1)
+  createdAt   DateTime @default(now())
+}
+
+
 // ============================================
 // ENUMS
 // ============================================

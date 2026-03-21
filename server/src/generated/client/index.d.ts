@@ -53,6 +53,11 @@ export type CrisisLog = $Result.DefaultSelection<Prisma.$CrisisLogPayload>
  * 
  */
 export type UsageLog = $Result.DefaultSelection<Prisma.$UsageLogPayload>
+/**
+ * Model AcademicEvent
+ * 
+ */
+export type AcademicEvent = $Result.DefaultSelection<Prisma.$AcademicEventPayload>
 
 /**
  * Enums
@@ -499,6 +504,16 @@ export class PrismaClient<
     * ```
     */
   get usageLog(): Prisma.UsageLogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.academicEvent`: Exposes CRUD operations for the **AcademicEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AcademicEvents
+    * const academicEvents = await prisma.academicEvent.findMany()
+    * ```
+    */
+  get academicEvent(): Prisma.AcademicEventDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -946,7 +961,8 @@ export namespace Prisma {
     Assessment: 'Assessment',
     AIInteraction: 'AIInteraction',
     CrisisLog: 'CrisisLog',
-    UsageLog: 'UsageLog'
+    UsageLog: 'UsageLog',
+    AcademicEvent: 'AcademicEvent'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -962,7 +978,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "conversation" | "message" | "moodEntry" | "assessment" | "aIInteraction" | "crisisLog" | "usageLog"
+      modelProps: "user" | "conversation" | "message" | "moodEntry" | "assessment" | "aIInteraction" | "crisisLog" | "usageLog" | "academicEvent"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1558,6 +1574,80 @@ export namespace Prisma {
           }
         }
       }
+      AcademicEvent: {
+        payload: Prisma.$AcademicEventPayload<ExtArgs>
+        fields: Prisma.AcademicEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AcademicEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AcademicEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicEventPayload>
+          }
+          findFirst: {
+            args: Prisma.AcademicEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AcademicEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicEventPayload>
+          }
+          findMany: {
+            args: Prisma.AcademicEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicEventPayload>[]
+          }
+          create: {
+            args: Prisma.AcademicEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicEventPayload>
+          }
+          createMany: {
+            args: Prisma.AcademicEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AcademicEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicEventPayload>[]
+          }
+          delete: {
+            args: Prisma.AcademicEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicEventPayload>
+          }
+          update: {
+            args: Prisma.AcademicEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.AcademicEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AcademicEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AcademicEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.AcademicEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicEventPayload>
+          }
+          aggregate: {
+            args: Prisma.AcademicEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAcademicEvent>
+          }
+          groupBy: {
+            args: Prisma.AcademicEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AcademicEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AcademicEventCountArgs<ExtArgs>
+            result: $Utils.Optional<AcademicEventCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1654,6 +1744,7 @@ export namespace Prisma {
     aIInteraction?: AIInteractionOmit
     crisisLog?: CrisisLogOmit
     usageLog?: UsageLogOmit
+    academicEvent?: AcademicEventOmit
   }
 
   /* Types for Logging */
@@ -11385,6 +11476,1036 @@ export namespace Prisma {
 
 
   /**
+   * Model AcademicEvent
+   */
+
+  export type AggregateAcademicEvent = {
+    _count: AcademicEventCountAggregateOutputType | null
+    _avg: AcademicEventAvgAggregateOutputType | null
+    _sum: AcademicEventSumAggregateOutputType | null
+    _min: AcademicEventMinAggregateOutputType | null
+    _max: AcademicEventMaxAggregateOutputType | null
+  }
+
+  export type AcademicEventAvgAggregateOutputType = {
+    importance: number | null
+  }
+
+  export type AcademicEventSumAggregateOutputType = {
+    importance: number | null
+  }
+
+  export type AcademicEventMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    type: string | null
+    date: Date | null
+    importance: number | null
+    createdAt: Date | null
+  }
+
+  export type AcademicEventMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    type: string | null
+    date: Date | null
+    importance: number | null
+    createdAt: Date | null
+  }
+
+  export type AcademicEventCountAggregateOutputType = {
+    id: number
+    title: number
+    type: number
+    date: number
+    importance: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AcademicEventAvgAggregateInputType = {
+    importance?: true
+  }
+
+  export type AcademicEventSumAggregateInputType = {
+    importance?: true
+  }
+
+  export type AcademicEventMinAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    date?: true
+    importance?: true
+    createdAt?: true
+  }
+
+  export type AcademicEventMaxAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    date?: true
+    importance?: true
+    createdAt?: true
+  }
+
+  export type AcademicEventCountAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    date?: true
+    importance?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AcademicEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AcademicEvent to aggregate.
+     */
+    where?: AcademicEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AcademicEvents to fetch.
+     */
+    orderBy?: AcademicEventOrderByWithRelationInput | AcademicEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AcademicEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AcademicEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AcademicEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AcademicEvents
+    **/
+    _count?: true | AcademicEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AcademicEventAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AcademicEventSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AcademicEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AcademicEventMaxAggregateInputType
+  }
+
+  export type GetAcademicEventAggregateType<T extends AcademicEventAggregateArgs> = {
+        [P in keyof T & keyof AggregateAcademicEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAcademicEvent[P]>
+      : GetScalarType<T[P], AggregateAcademicEvent[P]>
+  }
+
+
+
+
+  export type AcademicEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AcademicEventWhereInput
+    orderBy?: AcademicEventOrderByWithAggregationInput | AcademicEventOrderByWithAggregationInput[]
+    by: AcademicEventScalarFieldEnum[] | AcademicEventScalarFieldEnum
+    having?: AcademicEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AcademicEventCountAggregateInputType | true
+    _avg?: AcademicEventAvgAggregateInputType
+    _sum?: AcademicEventSumAggregateInputType
+    _min?: AcademicEventMinAggregateInputType
+    _max?: AcademicEventMaxAggregateInputType
+  }
+
+  export type AcademicEventGroupByOutputType = {
+    id: string
+    title: string
+    type: string
+    date: Date
+    importance: number
+    createdAt: Date
+    _count: AcademicEventCountAggregateOutputType | null
+    _avg: AcademicEventAvgAggregateOutputType | null
+    _sum: AcademicEventSumAggregateOutputType | null
+    _min: AcademicEventMinAggregateOutputType | null
+    _max: AcademicEventMaxAggregateOutputType | null
+  }
+
+  type GetAcademicEventGroupByPayload<T extends AcademicEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AcademicEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AcademicEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AcademicEventGroupByOutputType[P]>
+            : GetScalarType<T[P], AcademicEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AcademicEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    date?: boolean
+    importance?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["academicEvent"]>
+
+  export type AcademicEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    date?: boolean
+    importance?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["academicEvent"]>
+
+  export type AcademicEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    date?: boolean
+    importance?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["academicEvent"]>
+
+  export type AcademicEventSelectScalar = {
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    date?: boolean
+    importance?: boolean
+    createdAt?: boolean
+  }
+
+  export type AcademicEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "date" | "importance" | "createdAt", ExtArgs["result"]["academicEvent"]>
+
+  export type $AcademicEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AcademicEvent"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      type: string
+      date: Date
+      importance: number
+      createdAt: Date
+    }, ExtArgs["result"]["academicEvent"]>
+    composites: {}
+  }
+
+  type AcademicEventGetPayload<S extends boolean | null | undefined | AcademicEventDefaultArgs> = $Result.GetResult<Prisma.$AcademicEventPayload, S>
+
+  type AcademicEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AcademicEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AcademicEventCountAggregateInputType | true
+    }
+
+  export interface AcademicEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AcademicEvent'], meta: { name: 'AcademicEvent' } }
+    /**
+     * Find zero or one AcademicEvent that matches the filter.
+     * @param {AcademicEventFindUniqueArgs} args - Arguments to find a AcademicEvent
+     * @example
+     * // Get one AcademicEvent
+     * const academicEvent = await prisma.academicEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AcademicEventFindUniqueArgs>(args: SelectSubset<T, AcademicEventFindUniqueArgs<ExtArgs>>): Prisma__AcademicEventClient<$Result.GetResult<Prisma.$AcademicEventPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one AcademicEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AcademicEventFindUniqueOrThrowArgs} args - Arguments to find a AcademicEvent
+     * @example
+     * // Get one AcademicEvent
+     * const academicEvent = await prisma.academicEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AcademicEventFindUniqueOrThrowArgs>(args: SelectSubset<T, AcademicEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AcademicEventClient<$Result.GetResult<Prisma.$AcademicEventPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first AcademicEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AcademicEventFindFirstArgs} args - Arguments to find a AcademicEvent
+     * @example
+     * // Get one AcademicEvent
+     * const academicEvent = await prisma.academicEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AcademicEventFindFirstArgs>(args?: SelectSubset<T, AcademicEventFindFirstArgs<ExtArgs>>): Prisma__AcademicEventClient<$Result.GetResult<Prisma.$AcademicEventPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first AcademicEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AcademicEventFindFirstOrThrowArgs} args - Arguments to find a AcademicEvent
+     * @example
+     * // Get one AcademicEvent
+     * const academicEvent = await prisma.academicEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AcademicEventFindFirstOrThrowArgs>(args?: SelectSubset<T, AcademicEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__AcademicEventClient<$Result.GetResult<Prisma.$AcademicEventPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more AcademicEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AcademicEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AcademicEvents
+     * const academicEvents = await prisma.academicEvent.findMany()
+     * 
+     * // Get first 10 AcademicEvents
+     * const academicEvents = await prisma.academicEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const academicEventWithIdOnly = await prisma.academicEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AcademicEventFindManyArgs>(args?: SelectSubset<T, AcademicEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AcademicEventPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a AcademicEvent.
+     * @param {AcademicEventCreateArgs} args - Arguments to create a AcademicEvent.
+     * @example
+     * // Create one AcademicEvent
+     * const AcademicEvent = await prisma.academicEvent.create({
+     *   data: {
+     *     // ... data to create a AcademicEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends AcademicEventCreateArgs>(args: SelectSubset<T, AcademicEventCreateArgs<ExtArgs>>): Prisma__AcademicEventClient<$Result.GetResult<Prisma.$AcademicEventPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many AcademicEvents.
+     * @param {AcademicEventCreateManyArgs} args - Arguments to create many AcademicEvents.
+     * @example
+     * // Create many AcademicEvents
+     * const academicEvent = await prisma.academicEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AcademicEventCreateManyArgs>(args?: SelectSubset<T, AcademicEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AcademicEvents and returns the data saved in the database.
+     * @param {AcademicEventCreateManyAndReturnArgs} args - Arguments to create many AcademicEvents.
+     * @example
+     * // Create many AcademicEvents
+     * const academicEvent = await prisma.academicEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AcademicEvents and only return the `id`
+     * const academicEventWithIdOnly = await prisma.academicEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AcademicEventCreateManyAndReturnArgs>(args?: SelectSubset<T, AcademicEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AcademicEventPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a AcademicEvent.
+     * @param {AcademicEventDeleteArgs} args - Arguments to delete one AcademicEvent.
+     * @example
+     * // Delete one AcademicEvent
+     * const AcademicEvent = await prisma.academicEvent.delete({
+     *   where: {
+     *     // ... filter to delete one AcademicEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AcademicEventDeleteArgs>(args: SelectSubset<T, AcademicEventDeleteArgs<ExtArgs>>): Prisma__AcademicEventClient<$Result.GetResult<Prisma.$AcademicEventPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one AcademicEvent.
+     * @param {AcademicEventUpdateArgs} args - Arguments to update one AcademicEvent.
+     * @example
+     * // Update one AcademicEvent
+     * const academicEvent = await prisma.academicEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AcademicEventUpdateArgs>(args: SelectSubset<T, AcademicEventUpdateArgs<ExtArgs>>): Prisma__AcademicEventClient<$Result.GetResult<Prisma.$AcademicEventPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more AcademicEvents.
+     * @param {AcademicEventDeleteManyArgs} args - Arguments to filter AcademicEvents to delete.
+     * @example
+     * // Delete a few AcademicEvents
+     * const { count } = await prisma.academicEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AcademicEventDeleteManyArgs>(args?: SelectSubset<T, AcademicEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AcademicEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AcademicEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AcademicEvents
+     * const academicEvent = await prisma.academicEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AcademicEventUpdateManyArgs>(args: SelectSubset<T, AcademicEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AcademicEvents and returns the data updated in the database.
+     * @param {AcademicEventUpdateManyAndReturnArgs} args - Arguments to update many AcademicEvents.
+     * @example
+     * // Update many AcademicEvents
+     * const academicEvent = await prisma.academicEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AcademicEvents and only return the `id`
+     * const academicEventWithIdOnly = await prisma.academicEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AcademicEventUpdateManyAndReturnArgs>(args: SelectSubset<T, AcademicEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AcademicEventPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one AcademicEvent.
+     * @param {AcademicEventUpsertArgs} args - Arguments to update or create a AcademicEvent.
+     * @example
+     * // Update or create a AcademicEvent
+     * const academicEvent = await prisma.academicEvent.upsert({
+     *   create: {
+     *     // ... data to create a AcademicEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AcademicEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AcademicEventUpsertArgs>(args: SelectSubset<T, AcademicEventUpsertArgs<ExtArgs>>): Prisma__AcademicEventClient<$Result.GetResult<Prisma.$AcademicEventPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of AcademicEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AcademicEventCountArgs} args - Arguments to filter AcademicEvents to count.
+     * @example
+     * // Count the number of AcademicEvents
+     * const count = await prisma.academicEvent.count({
+     *   where: {
+     *     // ... the filter for the AcademicEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends AcademicEventCountArgs>(
+      args?: Subset<T, AcademicEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AcademicEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AcademicEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AcademicEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AcademicEventAggregateArgs>(args: Subset<T, AcademicEventAggregateArgs>): Prisma.PrismaPromise<GetAcademicEventAggregateType<T>>
+
+    /**
+     * Group by AcademicEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AcademicEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AcademicEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AcademicEventGroupByArgs['orderBy'] }
+        : { orderBy?: AcademicEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AcademicEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAcademicEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AcademicEvent model
+   */
+  readonly fields: AcademicEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AcademicEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AcademicEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AcademicEvent model
+   */ 
+  interface AcademicEventFieldRefs {
+    readonly id: FieldRef<"AcademicEvent", 'String'>
+    readonly title: FieldRef<"AcademicEvent", 'String'>
+    readonly type: FieldRef<"AcademicEvent", 'String'>
+    readonly date: FieldRef<"AcademicEvent", 'DateTime'>
+    readonly importance: FieldRef<"AcademicEvent", 'Int'>
+    readonly createdAt: FieldRef<"AcademicEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AcademicEvent findUnique
+   */
+  export type AcademicEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+    /**
+     * Filter, which AcademicEvent to fetch.
+     */
+    where: AcademicEventWhereUniqueInput
+  }
+
+  /**
+   * AcademicEvent findUniqueOrThrow
+   */
+  export type AcademicEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+    /**
+     * Filter, which AcademicEvent to fetch.
+     */
+    where: AcademicEventWhereUniqueInput
+  }
+
+  /**
+   * AcademicEvent findFirst
+   */
+  export type AcademicEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+    /**
+     * Filter, which AcademicEvent to fetch.
+     */
+    where?: AcademicEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AcademicEvents to fetch.
+     */
+    orderBy?: AcademicEventOrderByWithRelationInput | AcademicEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AcademicEvents.
+     */
+    cursor?: AcademicEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AcademicEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AcademicEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AcademicEvents.
+     */
+    distinct?: AcademicEventScalarFieldEnum | AcademicEventScalarFieldEnum[]
+  }
+
+  /**
+   * AcademicEvent findFirstOrThrow
+   */
+  export type AcademicEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+    /**
+     * Filter, which AcademicEvent to fetch.
+     */
+    where?: AcademicEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AcademicEvents to fetch.
+     */
+    orderBy?: AcademicEventOrderByWithRelationInput | AcademicEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AcademicEvents.
+     */
+    cursor?: AcademicEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AcademicEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AcademicEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AcademicEvents.
+     */
+    distinct?: AcademicEventScalarFieldEnum | AcademicEventScalarFieldEnum[]
+  }
+
+  /**
+   * AcademicEvent findMany
+   */
+  export type AcademicEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+    /**
+     * Filter, which AcademicEvents to fetch.
+     */
+    where?: AcademicEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AcademicEvents to fetch.
+     */
+    orderBy?: AcademicEventOrderByWithRelationInput | AcademicEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AcademicEvents.
+     */
+    cursor?: AcademicEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AcademicEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AcademicEvents.
+     */
+    skip?: number
+    distinct?: AcademicEventScalarFieldEnum | AcademicEventScalarFieldEnum[]
+  }
+
+  /**
+   * AcademicEvent create
+   */
+  export type AcademicEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AcademicEvent.
+     */
+    data: XOR<AcademicEventCreateInput, AcademicEventUncheckedCreateInput>
+  }
+
+  /**
+   * AcademicEvent createMany
+   */
+  export type AcademicEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AcademicEvents.
+     */
+    data: AcademicEventCreateManyInput | AcademicEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AcademicEvent createManyAndReturn
+   */
+  export type AcademicEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many AcademicEvents.
+     */
+    data: AcademicEventCreateManyInput | AcademicEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AcademicEvent update
+   */
+  export type AcademicEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AcademicEvent.
+     */
+    data: XOR<AcademicEventUpdateInput, AcademicEventUncheckedUpdateInput>
+    /**
+     * Choose, which AcademicEvent to update.
+     */
+    where: AcademicEventWhereUniqueInput
+  }
+
+  /**
+   * AcademicEvent updateMany
+   */
+  export type AcademicEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AcademicEvents.
+     */
+    data: XOR<AcademicEventUpdateManyMutationInput, AcademicEventUncheckedUpdateManyInput>
+    /**
+     * Filter which AcademicEvents to update
+     */
+    where?: AcademicEventWhereInput
+  }
+
+  /**
+   * AcademicEvent updateManyAndReturn
+   */
+  export type AcademicEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+    /**
+     * The data used to update AcademicEvents.
+     */
+    data: XOR<AcademicEventUpdateManyMutationInput, AcademicEventUncheckedUpdateManyInput>
+    /**
+     * Filter which AcademicEvents to update
+     */
+    where?: AcademicEventWhereInput
+  }
+
+  /**
+   * AcademicEvent upsert
+   */
+  export type AcademicEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AcademicEvent to update in case it exists.
+     */
+    where: AcademicEventWhereUniqueInput
+    /**
+     * In case the AcademicEvent found by the `where` argument doesn't exist, create a new AcademicEvent with this data.
+     */
+    create: XOR<AcademicEventCreateInput, AcademicEventUncheckedCreateInput>
+    /**
+     * In case the AcademicEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AcademicEventUpdateInput, AcademicEventUncheckedUpdateInput>
+  }
+
+  /**
+   * AcademicEvent delete
+   */
+  export type AcademicEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+    /**
+     * Filter which AcademicEvent to delete.
+     */
+    where: AcademicEventWhereUniqueInput
+  }
+
+  /**
+   * AcademicEvent deleteMany
+   */
+  export type AcademicEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AcademicEvents to delete
+     */
+    where?: AcademicEventWhereInput
+  }
+
+  /**
+   * AcademicEvent without action
+   */
+  export type AcademicEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AcademicEvent
+     */
+    select?: AcademicEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AcademicEvent
+     */
+    omit?: AcademicEventOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -11544,6 +12665,18 @@ export namespace Prisma {
   };
 
   export type UsageLogScalarFieldEnum = (typeof UsageLogScalarFieldEnum)[keyof typeof UsageLogScalarFieldEnum]
+
+
+  export const AcademicEventScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    type: 'type',
+    date: 'date',
+    importance: 'importance',
+    createdAt: 'createdAt'
+  };
+
+  export type AcademicEventScalarFieldEnum = (typeof AcademicEventScalarFieldEnum)[keyof typeof AcademicEventScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -12666,6 +13799,65 @@ export namespace Prisma {
     timestamp?: DateTimeWithAggregatesFilter<"UsageLog"> | Date | string
   }
 
+  export type AcademicEventWhereInput = {
+    AND?: AcademicEventWhereInput | AcademicEventWhereInput[]
+    OR?: AcademicEventWhereInput[]
+    NOT?: AcademicEventWhereInput | AcademicEventWhereInput[]
+    id?: StringFilter<"AcademicEvent"> | string
+    title?: StringFilter<"AcademicEvent"> | string
+    type?: StringFilter<"AcademicEvent"> | string
+    date?: DateTimeFilter<"AcademicEvent"> | Date | string
+    importance?: IntFilter<"AcademicEvent"> | number
+    createdAt?: DateTimeFilter<"AcademicEvent"> | Date | string
+  }
+
+  export type AcademicEventOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    date?: SortOrder
+    importance?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AcademicEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AcademicEventWhereInput | AcademicEventWhereInput[]
+    OR?: AcademicEventWhereInput[]
+    NOT?: AcademicEventWhereInput | AcademicEventWhereInput[]
+    title?: StringFilter<"AcademicEvent"> | string
+    type?: StringFilter<"AcademicEvent"> | string
+    date?: DateTimeFilter<"AcademicEvent"> | Date | string
+    importance?: IntFilter<"AcademicEvent"> | number
+    createdAt?: DateTimeFilter<"AcademicEvent"> | Date | string
+  }, "id">
+
+  export type AcademicEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    date?: SortOrder
+    importance?: SortOrder
+    createdAt?: SortOrder
+    _count?: AcademicEventCountOrderByAggregateInput
+    _avg?: AcademicEventAvgOrderByAggregateInput
+    _max?: AcademicEventMaxOrderByAggregateInput
+    _min?: AcademicEventMinOrderByAggregateInput
+    _sum?: AcademicEventSumOrderByAggregateInput
+  }
+
+  export type AcademicEventScalarWhereWithAggregatesInput = {
+    AND?: AcademicEventScalarWhereWithAggregatesInput | AcademicEventScalarWhereWithAggregatesInput[]
+    OR?: AcademicEventScalarWhereWithAggregatesInput[]
+    NOT?: AcademicEventScalarWhereWithAggregatesInput | AcademicEventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AcademicEvent"> | string
+    title?: StringWithAggregatesFilter<"AcademicEvent"> | string
+    type?: StringWithAggregatesFilter<"AcademicEvent"> | string
+    date?: DateTimeWithAggregatesFilter<"AcademicEvent"> | Date | string
+    importance?: IntWithAggregatesFilter<"AcademicEvent"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"AcademicEvent"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -13553,6 +14745,69 @@ export namespace Prisma {
     tokensUsed?: NullableIntFieldUpdateOperationsInput | number | null
     finishReason?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AcademicEventCreateInput = {
+    id?: string
+    title: string
+    type: string
+    date: Date | string
+    importance?: number
+    createdAt?: Date | string
+  }
+
+  export type AcademicEventUncheckedCreateInput = {
+    id?: string
+    title: string
+    type: string
+    date: Date | string
+    importance?: number
+    createdAt?: Date | string
+  }
+
+  export type AcademicEventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    importance?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AcademicEventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    importance?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AcademicEventCreateManyInput = {
+    id?: string
+    title: string
+    type: string
+    date: Date | string
+    importance?: number
+    createdAt?: Date | string
+  }
+
+  export type AcademicEventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    importance?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AcademicEventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    importance?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -14613,6 +15868,41 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumServiceFilter<$PrismaModel>
     _max?: NestedEnumServiceFilter<$PrismaModel>
+  }
+
+  export type AcademicEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    date?: SortOrder
+    importance?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AcademicEventAvgOrderByAggregateInput = {
+    importance?: SortOrder
+  }
+
+  export type AcademicEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    date?: SortOrder
+    importance?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AcademicEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    date?: SortOrder
+    importance?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AcademicEventSumOrderByAggregateInput = {
+    importance?: SortOrder
   }
 
   export type UserCreateconcernsInput = {

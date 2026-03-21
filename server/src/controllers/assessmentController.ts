@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import prisma from '../lib/prisma';
 import { AuthRequest } from '../middleware/auth';
+import { AssessmentType, Severity } from '../generated/client';
 
 export const createAssessment = async (req: AuthRequest, res: Response) => {
     const { type, score, severity } = req.body;
@@ -11,9 +12,10 @@ export const createAssessment = async (req: AuthRequest, res: Response) => {
         const assessment = await prisma.assessment.create({
             data: {
                 userId: req.user.userId,
-                type,
+                type: type.toUpperCase().replace(/[- ]/g, '') as AssessmentType,
                 score,
-                severity
+                severity: severity ? (severity.toUpperCase().replace(/[- ]/g, '_') as Severity) : undefined,
+                responses: req.body.responses || []
             }
         });
 
