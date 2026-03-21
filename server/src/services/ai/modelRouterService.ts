@@ -17,7 +17,7 @@ export interface ModelSelectionResult {
   reason: string;
 }
 
-class ModelRouter {
+export class ModelRouter {
   
   /**
    * Intelligently select the best model for the request

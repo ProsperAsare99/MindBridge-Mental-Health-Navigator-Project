@@ -1,0 +1,49 @@
+FAIL src/__tests__/unit/ai-services.test.ts
+  AI Services Unit Tests
+    ContextEngineService
+      × should build comprehensive context for a user (8 ms)
+    SafetyModeratorService
+      × should detect crisis language (9 ms)
+      √ should flag high emotional intensity (3 ms)
+    ModelRouter
+      √ should select PRO model for crisis (1 ms)
+      √ should calculate complexity (2 ms)
+
+  ● AI Services Unit Tests › ContextEngineService › should build comprehensive context for a user
+
+    TypeError: Cannot read properties of undefined (reading 'findMany')
+
+    [0m [90m 116 |[39m         cutoffDate[33m.[39msetDate(cutoffDate[33m.[39mgetDate() [33m-[39m days)[33m;[39m
+     [90m 117 |[39m
+    [31m[1m>[22m[39m[90m 118 |[39m         [36mconst[39m moods [33m=[39m [36mawait[39m prisma[33m.[39mmoodEntry[33m.[39mfindMany({
+     [90m     |[39m                                              [31m[1m^[22m[39m
+     [90m 119 |[39m             where[33m:[39m {
+     [90m 120 |[39m                 userId[33m,[39m
+     [90m 121 |[39m                 createdAt[33m:[39m { gte[33m:[39m cutoffDate }[0m
+
+      at ContextEngineService.getRecentMoods (src/services/ai/contextEngineService.ts:118:46)
+      at ContextEngineService.buildContext (src/services/ai/contextEngineService.ts:21:18)
+      at Object.<anonymous> (src/__tests__/unit/ai-services.test.ts:78:49)
+
+  ● AI Services Unit Tests › SafetyModeratorService › should detect crisis language
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    [0m [90m 91 |[39m             
+     [90m 92 |[39m             [36mconst[39m result [33m=[39m [36mawait[39m safetyModerator[33m.[39mmoderateInput(mockUserId[33m,[39m message)[33m;[39m
+    [31m[1m>[22m[39m[90m 93 |[39m             expect(result[33m.[39mcrisis)[33m.[39mtoBe([36mtrue[39m)[33m;[39m
+     [90m    |[39m                                   [31m[1m^[22m[39m
+     [90m 94 |[39m             expect(result[33m.[39msafe)[33m.[39mtoBe([36mtrue[39m)[33m;[39m [90m// crisis language isn't technically unsafe (blocked) yet unless it's inappropriate[39m
+     [90m 95 |[39m         })[33m;[39m
+     [90m 96 |[39m[0m
+
+      at Object.<anonymous> (src/__tests__/unit/ai-services.test.ts:93:35)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 3 passed, 5 total
+Snapshots:   0 total
+Time:        0.678 s, estimated 2 s
+Ran all test suites matching src/__tests__/unit/ai-services.test.ts.

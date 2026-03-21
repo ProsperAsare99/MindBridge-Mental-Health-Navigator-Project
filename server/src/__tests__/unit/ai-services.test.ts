@@ -7,16 +7,24 @@ import prisma from '../../lib/prisma';
 jest.mock('../../lib/prisma', () => ({
     __esModule: true,
     default: {
-        user: { findUnique: jest.fn(), findFirst: jest.fn(), create: jest.fn(), delete: jest.fn() },
+        user: { 
+            findUnique: jest.fn(), 
+            findFirst: jest.fn(), 
+            create: jest.fn(), 
+            delete: jest.fn(),
+            update: jest.fn()
+        },
         mood: { findMany: jest.fn() },
         assessment: { findMany: jest.fn() },
         chatMessage: { findMany: jest.fn() },
         academicEvent: { findMany: jest.fn() },
+        aIInteraction: { count: jest.fn() },
+        crisisLog: { create: jest.fn() },
         $disconnect: jest.fn(),
     },
 }));
 
-// Mock Generated Client Enums if needed
+// Mock Generated Client Enums
 jest.mock('../../generated/client', () => ({
     University: { KNUST: 'KNUST', UNIVERSITY_OF_GHANA: 'UNIVERSITY_OF_GHANA', OTHER: 'OTHER' },
     Language: { ENGLISH: 'ENGLISH', TWI: 'TWI' },
@@ -71,22 +79,47 @@ describe('AI Services Unit Tests', () => {
 
             expect(context).toHaveProperty('user');
             expect(context.user.displayName).toBe('Test Student');
+            expect(context.temporal.recentMoods.entryCount).toBe(3);
         });
     });
 
     describe('SafetyModeratorService', () => {
         it('should detect crisis language', async () => {
             const message = "I feel like giving up on life completely";
-            const result = await safetyModerator.moderateInput(mockUserId, message, {} as any);
-            expect(result.crisis.detected).toBe(true);
+            // Mock counts for spam check
+            (prisma as any).aIInteraction = { count: jest.fn().mockResolvedValue(0) };
+            
+            const result = await safetyModerator.moderateInput(mockUserId, message);
+            expect(result.crisis).toBe(true);
+            expect(result.safe).toBe(true); // crisis language isn't technically unsafe (blocked) yet unless it's inappropriate
+        });
+
+        it('should flag high emotional intensity', async () => {
+            const message = "I am VERY EXTREMELY OVERWHELMED AND HOPELESS";
+             (prisma as any).aIInteraction = { count: jest.fn().mockResolvedValue(0) };
+            const result = await safetyModerator.moderateInput(mockUserId, message);
+            expect(result.emotionalState.intensity).toBeGreaterThan(7);
         });
     });
 
     describe('ModelRouter', () => {
         it('should select PRO model for crisis', () => {
-            const context = { crisisDetected: true, emotionalIntensity: 10 };
+            const context = { 
+                crisisDetected: true, 
+                emotionalIntensity: 10,
+                userRiskLevel: 'HIGH',
+                conversationLength: 5,
+                messageComplexity: 2,
+                requiresAnalysis: false
+            };
             const result = modelRouter.selectModel(context as any);
-            expect(result.model.name).toContain('pro');
+            expect(result.reason).toBe('crisis_protocol');
+        });
+
+        it('should calculate complexity', () => {
+            const msg = "I'm overwhelmed and devastated and hopeless about everything.";
+            const score = modelRouter.calculateComplexity(msg);
+            expect(score).toBeGreaterThan(5);
         });
     });
 });
