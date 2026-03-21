@@ -84,6 +84,7 @@ model User {
   crisisLogs            CrisisLog[]
   usageLogs             UsageLog[]
   memoryEntries         MemoryEntry[]
+  userGoals             UserGoal[]
   
   @@index([email])
   @@index([university, academicLevel])
@@ -272,6 +273,26 @@ model AcademicEvent {
   createdAt   DateTime @default(now())
 }
 
+model UserGoal {
+  id            String      @id @default(uuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  title         String
+  type          Goal
+  status        GoalStatus  @default(ACTIVE)
+  progress      Int         @default(0) // 0-100
+  
+  targetDate    DateTime?
+  milestones    Json?       // Array of { title: string, completed: boolean }
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
 
 // ============================================
 // ENUMS
@@ -366,6 +387,12 @@ enum Goal {
   PREPARE_COUNSELING
   BE_MINDFUL
   IMPROVE_ACADEMICS
+}
+
+enum GoalStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
 }
 
 enum ConversationStatus {
