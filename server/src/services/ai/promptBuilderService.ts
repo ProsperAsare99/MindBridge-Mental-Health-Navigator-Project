@@ -1,3 +1,5 @@
+import { RiskLevel } from '../../generated/client';
+
 export interface PromptContext {
   user: {
     displayName: string;
@@ -57,7 +59,7 @@ export interface PromptContext {
   };
   clinical: {
     riskAssessment: {
-      level: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+      level: RiskLevel;
       score: number;
       interventionNeeded: boolean;
       recommendations: string[];

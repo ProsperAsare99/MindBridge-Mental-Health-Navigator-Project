@@ -77,6 +77,18 @@ export class ConversationManagerService {
                 responseTime: metadata.responseTime
             }
         });
+        
+        // 5. If crisis detected, log to CrisisLog specifically
+        if (metadata.isCrisis) {
+            await prisma.crisisLog.create({
+                data: {
+                    userId,
+                    message: userMessage,
+                    severity: 5, // Default severity
+                    categories: { detection: 'keyword_match', engine: 'SafetyModeratorService' }
+                }
+            });
+        }
     }
 
     /**

@@ -83,7 +83,7 @@ export default function MoodPage() {
             const mDate = new Date(m.createdAt).toDateString();
             const day = last7Days.find(d => d.date === mDate);
             if (day) {
-                day.val += m.value;
+                day.val += m.mood;
                 day.count++;
             }
         });
@@ -386,7 +386,7 @@ export default function MoodPage() {
                             <div className="space-y-4 pt-4">
                                 <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Recent Fluctuations</p>
                                 {moodHistory.slice(0, 3).map((entry, idx) => {
-                                    const moodMeta = moods.find(m => m.value === entry.value);
+                                    const moodMeta = moods.find(m => m.value === entry.mood);
                                     const Icon = moodMeta?.icon || Smile;
                                     const date = new Date(entry.createdAt);
                                     return (

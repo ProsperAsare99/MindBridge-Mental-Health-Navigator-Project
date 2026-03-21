@@ -1,8 +1,9 @@
 import { geminiConfig } from '../../config/geminiConfig';
+import { RiskLevel } from '../../generated/client';
 
 export interface ModelRouterContext {
   conversationLength: number;
-  userRiskLevel: string;
+  userRiskLevel: RiskLevel;
   messageComplexity: number;
   requiresAnalysis: boolean;
   crisisDetected: boolean;
@@ -32,7 +33,7 @@ class ModelRouter {
     } = context;
 
     // Crisis situations always use pro model with crisis config
-    if (crisisDetected || userRiskLevel === 'High' || userRiskLevel === 'Extreme' || emotionalIntensity > 8) {
+    if (crisisDetected || userRiskLevel === RiskLevel.HIGH || userRiskLevel === RiskLevel.CRITICAL || emotionalIntensity > 8) {
       return {
         model: geminiConfig.models.crisis,
         reason: 'crisis_protocol'

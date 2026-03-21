@@ -27,7 +27,7 @@ export class MindBridgeMasterService {
 
         const modelSelection = modelRouter.selectModel({
             conversationLength: history.length,
-            userRiskLevel: context.user.supportLevel === 'I feel mostly alone' ? 'High' : 'Low',
+            userRiskLevel: context.clinical.riskAssessment.level,
             messageComplexity: complexity,
             requiresAnalysis: history.length % 5 === 0 || isCrisis,
             crisisDetected: isCrisis,
