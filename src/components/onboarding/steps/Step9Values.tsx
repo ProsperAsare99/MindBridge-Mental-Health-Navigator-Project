@@ -52,7 +52,7 @@ export default function Step9Values({ data, update, onNext }: any) {
             ))}
           </div>
           <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
-            <div className="h-1 w-1 rounded-full bg-orange-500" />
+            <span className="h-1 w-1 rounded-full bg-orange-500 inline-block" />
             We'll recommend resources that resonate with your core values
           </p>
         </div>
@@ -84,7 +84,7 @@ export default function Step9Values({ data, update, onNext }: any) {
           </div>
 
           <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
-            <div className="h-1 w-1 rounded-full bg-orange-500" />
+            <span className="h-1 w-1 rounded-full bg-orange-500 inline-block" />
             Optimizes the framework for maximum psychological alignment
           </p>
         </div>

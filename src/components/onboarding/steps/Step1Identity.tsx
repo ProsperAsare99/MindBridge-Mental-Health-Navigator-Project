@@ -26,7 +26,7 @@ export default function Step1Identity({ data, update, onNext }: any) {
             className="w-full rounded-[1.5rem] border border-border/40 bg-muted/20 p-5 text-base font-bold outline-none transition-all focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/5 placeholder:text-muted-foreground/30"
           />
           <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
-            <div className="h-1 w-1 rounded-full bg-orange-500" />
+            <span className="h-1 w-1 rounded-full bg-orange-500 inline-block" />
             Used to personalize your interface
           </p>
         </div>
@@ -72,7 +72,7 @@ export default function Step1Identity({ data, update, onNext }: any) {
             />
           )}
           <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
-            <div className="h-1 w-1 rounded-full bg-orange-500" />
+            <span className="h-1 w-1 rounded-full bg-orange-500 inline-block" />
             Used to provide campus-specific resources
           </p>
         </div>

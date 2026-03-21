@@ -56,7 +56,7 @@ export default function Step7Coping({ data, update, onNext }: any) {
           </div>
 
           <p className="text-xs font-bold text-muted-foreground/40 uppercase tracking-widest flex items-center gap-2">
-            <div className="h-1 w-1 rounded-full bg-orange-500" />
+            <span className="h-1 w-1 rounded-full bg-orange-500 inline-block" />
             We'll synchronize our recommendations with your natural recovery protocols
           </p>
         </div>
