@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
+import api from '@/lib/axios-config';
 import { 
   Heart, 
   AlertTriangle, 
@@ -26,11 +26,7 @@ export default function AINudge() {
 
   const fetchNudge = async () => {
     try {
-      const response = await axios.get('/api/ai/nudge', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      const response = await api.get('/ai/nudge');
       setNudge(response.data);
     } catch (error) {
       console.error('Failed to fetch nudge:', error);

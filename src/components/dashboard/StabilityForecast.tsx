@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from '@/lib/axios-config';
 import { 
   ShieldCheck, 
   AlertTriangle, 
@@ -28,11 +28,7 @@ export default function StabilityForecast() {
 
   const fetchForecast = async () => {
     try {
-      const response = await axios.get('/api/ai/forecast', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      const response = await api.get('/ai/forecast');
       setForecast(response.data);
     } catch (error) {
       console.error('Failed to fetch forecast:', error);

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
+import api from '@/lib/axios-config';
 import { 
   CheckCircle2, 
   Circle, 
@@ -25,11 +25,7 @@ export default function CarePlanView() {
 
   const fetchCarePlan = async () => {
     try {
-      const response = await axios.get('/api/ai/care-plan', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      const response = await api.get('/ai/care-plan');
       setPlan(response.data);
     } catch (error) {
       console.error('Failed to fetch care plan:', error);
@@ -40,13 +36,9 @@ export default function CarePlanView() {
 
   const completeTask = async (index: number) => {
     try {
-      const response = await axios.post('/api/ai/care-plan/task/complete', {
+      const response = await api.post('/ai/care-plan/task/complete', {
         planId: plan.id,
         taskIndex: index
-      }, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
       });
       setPlan(response.data);
     } catch (error) {

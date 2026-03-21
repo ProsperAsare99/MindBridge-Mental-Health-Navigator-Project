@@ -20,8 +20,10 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials) {
                 try {
                     // Check if we have an explicit access token (e.g. from anonymous login)
+                    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api';
+                    
                     if (credentials?.accessToken) {
-                        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api'}/auth/verify-token`, {
+                        const response = await fetch(`${apiUrl}/auth/verify-token`, {
                             method: 'GET',
                             headers: {
                                 'Authorization': `Bearer ${credentials.accessToken}`,
@@ -61,7 +63,7 @@ export const authOptions: NextAuthOptions = {
                         throw new Error("Invalid credentials");
                     }
 
-                    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api'}/auth/login`, {
+                    const response = await fetch(`${apiUrl}/auth/login`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email: credentials.email, password: credentials.password }),

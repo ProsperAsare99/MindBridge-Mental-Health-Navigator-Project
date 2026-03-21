@@ -12,7 +12,7 @@ import {
   LineChart
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import axios from 'axios';
+import api from '@/lib/axios-config';
 import { usePathname } from 'next/navigation';
 
 export default function NavigatorAssistant() {
@@ -24,11 +24,7 @@ export default function NavigatorAssistant() {
 
   const fetchPulse = async () => {
     try {
-      const response = await axios.get('/api/ai/nudge', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      const response = await api.get('/ai/nudge');
       setPulse(response.data);
     } catch (error) {
       console.error('Failed to fetch AI pulse:', error);
@@ -47,11 +43,7 @@ export default function NavigatorAssistant() {
     setSearchQuery(val);
     if (val.length > 2) {
       try {
-        const response = await axios.get(`/api/ai/search?q=${val}`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
+        const response = await api.get(`/ai/search?q=${val}`);
         setSearchResults(response.data);
       } catch (error) {
         console.error('Search error:', error);
