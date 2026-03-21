@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useMoodTheme } from "@/hooks/useMoodTheme";
 
 export const DashboardContainer = ({ children }: { children: React.ReactNode }) => {
+    useMoodTheme();
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {

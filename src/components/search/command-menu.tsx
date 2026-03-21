@@ -1,8 +1,7 @@
-"use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Command, X, ArrowRight, MessageSquare, BookOpen, ShieldAlert, Sparkles } from "lucide-react";
+import axios from "axios";
+import { Search, Command, X, ArrowRight, MessageSquare, BookOpen, ShieldAlert, Sparkles, Target, History, BrainCircuit } from "lucide-react";
 import { useSearch } from "@/components/providers/SearchProvider";
 import { useRouter } from "next/navigation";
 
@@ -16,6 +15,8 @@ const QUICK_LINKS = [
 export function CommandMenu() {
   const { isOpen, setIsOpen } = useSearch();
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -24,17 +25,38 @@ export function CommandMenu() {
       setTimeout(() => {
         inputRef.current?.focus();
       }, 10);
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
       setQuery("");
+      setResults([]);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (query.length > 2) {
+      const delayDebounce = setTimeout(() => {
+        searchAI();
+      }, 300);
+      return () => clearTimeout(delayDebounce);
+    } else {
+      setResults([]);
+    }
+  }, [query]);
+
+  const searchAI = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`/api/ai/search?q=${query}`, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
+      setResults(response.data);
+    } catch (error) {
+      console.error("Search failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleNavigate = (href: string) => {
     router.push(href);
@@ -84,6 +106,52 @@ export function CommandMenu() {
 
             <div className="p-4 max-h-[60vh] overflow-y-auto custom-scrollbar">
               <div className="space-y-8 p-4">
+                {/* AI Search Results Section */}
+                {query.length > 2 && (
+                  <section>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 mb-6 px-2 flex items-center gap-2">
+                      <Sparkles className="h-3 w-3" /> AI Search Results
+                    </h3>
+                    <div className="space-y-3">
+                      {loading ? (
+                        <div className="p-4 bg-primary/5 rounded-2xl animate-pulse flex items-center justify-center">
+                          <Sparkles className="h-4 w-4 text-primary/20 animate-spin-slow" />
+                        </div>
+                      ) : results.length > 0 ? (
+                        results.map((result, i) => (
+                          <button
+                            key={i}
+                            onClick={() => {
+                              if (result.type === 'GOAL') handleNavigate('/dashboard');
+                              else if (result.type === 'MOOD') handleNavigate('/dashboard/mood');
+                              else handleNavigate('/oracle');
+                            }}
+                            className="w-full flex items-start gap-4 p-4 rounded-2xl hover:bg-primary/5 border border-white/5 hover:border-primary/10 transition-all group text-left"
+                          >
+                            <div className={`h-10 w-10 rounded-xl bg-primary/5 flex items-center justify-center`}>
+                              {result.type === 'GOAL' ? <Target className="h-5 w-5 text-primary" /> :
+                               result.type === 'MOOD' ? <History className="h-5 w-5 text-primary" /> :
+                               <BrainCircuit className="h-5 w-5 text-primary" />}
+                            </div>
+                            <div className="flex-1">
+                              <div className="text-sm font-bold text-foreground">
+                                {result.title || result.content.substring(0, 60)}
+                              </div>
+                              <div className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+                                {result.type} • {Math.round(result.similarity * 100)}% Match
+                              </div>
+                            </div>
+                          </button>
+                        ))
+                      ) : (
+                        <div className="p-8 text-center text-muted-foreground text-xs font-medium italic">
+                          No specific matches found for "{query}". Try a different term.
+                        </div>
+                      )}
+                    </div>
+                  </section>
+                )}
+
                 {/* Suggestions Section */}
                 <section>
                   <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 mb-6 px-2">Quick Navigation</h3>
