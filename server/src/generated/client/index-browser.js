@@ -241,6 +241,17 @@ exports.Prisma.UsageLogScalarFieldEnum = {
   timestamp: 'timestamp'
 };
 
+exports.Prisma.MemoryEntryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  content: 'content',
+  importance: 'importance',
+  category: 'category',
+  embedding: 'embedding',
+  timestamp: 'timestamp',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.AcademicEventScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -248,6 +259,31 @@ exports.Prisma.AcademicEventScalarFieldEnum = {
   date: 'date',
   importance: 'importance',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.UserGoalScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  type: 'type',
+  status: 'status',
+  progress: 'progress',
+  targetDate: 'targetDate',
+  milestones: 'milestones',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CarePlanScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  weekNumber: 'weekNumber',
+  year: 'year',
+  summary: 'summary',
+  moodAnalysis: 'moodAnalysis',
+  growthTasks: 'growthTasks',
+  generatedAt: 'generatedAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -403,6 +439,12 @@ exports.Service = exports.$Enums.Service = {
   ASSESSMENT: 'ASSESSMENT'
 };
 
+exports.GoalStatus = exports.$Enums.GoalStatus = {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Conversation: 'Conversation',
@@ -412,7 +454,10 @@ exports.Prisma.ModelName = {
   AIInteraction: 'AIInteraction',
   CrisisLog: 'CrisisLog',
   UsageLog: 'UsageLog',
-  AcademicEvent: 'AcademicEvent'
+  MemoryEntry: 'MemoryEntry',
+  AcademicEvent: 'AcademicEvent',
+  UserGoal: 'UserGoal',
+  CarePlan: 'CarePlan'
 };
 
 /**

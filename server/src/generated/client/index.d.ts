@@ -54,10 +54,25 @@ export type CrisisLog = $Result.DefaultSelection<Prisma.$CrisisLogPayload>
  */
 export type UsageLog = $Result.DefaultSelection<Prisma.$UsageLogPayload>
 /**
+ * Model MemoryEntry
+ * 
+ */
+export type MemoryEntry = $Result.DefaultSelection<Prisma.$MemoryEntryPayload>
+/**
  * Model AcademicEvent
  * 
  */
 export type AcademicEvent = $Result.DefaultSelection<Prisma.$AcademicEventPayload>
+/**
+ * Model UserGoal
+ * 
+ */
+export type UserGoal = $Result.DefaultSelection<Prisma.$UserGoalPayload>
+/**
+ * Model CarePlan
+ * 
+ */
+export type CarePlan = $Result.DefaultSelection<Prisma.$CarePlanPayload>
 
 /**
  * Enums
@@ -187,6 +202,15 @@ export const Goal: {
 export type Goal = (typeof Goal)[keyof typeof Goal]
 
 
+export const GoalStatus: {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
+};
+
+export type GoalStatus = (typeof GoalStatus)[keyof typeof GoalStatus]
+
+
 export const ConversationStatus: {
   ACTIVE: 'ACTIVE',
   ENDED: 'ENDED',
@@ -279,6 +303,10 @@ export const ApproachPreference: typeof $Enums.ApproachPreference
 export type Goal = $Enums.Goal
 
 export const Goal: typeof $Enums.Goal
+
+export type GoalStatus = $Enums.GoalStatus
+
+export const GoalStatus: typeof $Enums.GoalStatus
 
 export type ConversationStatus = $Enums.ConversationStatus
 
@@ -506,6 +534,16 @@ export class PrismaClient<
   get usageLog(): Prisma.UsageLogDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.memoryEntry`: Exposes CRUD operations for the **MemoryEntry** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MemoryEntries
+    * const memoryEntries = await prisma.memoryEntry.findMany()
+    * ```
+    */
+  get memoryEntry(): Prisma.MemoryEntryDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.academicEvent`: Exposes CRUD operations for the **AcademicEvent** model.
     * Example usage:
     * ```ts
@@ -514,6 +552,26 @@ export class PrismaClient<
     * ```
     */
   get academicEvent(): Prisma.AcademicEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userGoal`: Exposes CRUD operations for the **UserGoal** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserGoals
+    * const userGoals = await prisma.userGoal.findMany()
+    * ```
+    */
+  get userGoal(): Prisma.UserGoalDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.carePlan`: Exposes CRUD operations for the **CarePlan** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CarePlans
+    * const carePlans = await prisma.carePlan.findMany()
+    * ```
+    */
+  get carePlan(): Prisma.CarePlanDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -962,7 +1020,10 @@ export namespace Prisma {
     AIInteraction: 'AIInteraction',
     CrisisLog: 'CrisisLog',
     UsageLog: 'UsageLog',
-    AcademicEvent: 'AcademicEvent'
+    MemoryEntry: 'MemoryEntry',
+    AcademicEvent: 'AcademicEvent',
+    UserGoal: 'UserGoal',
+    CarePlan: 'CarePlan'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -978,7 +1039,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "conversation" | "message" | "moodEntry" | "assessment" | "aIInteraction" | "crisisLog" | "usageLog" | "academicEvent"
+      modelProps: "user" | "conversation" | "message" | "moodEntry" | "assessment" | "aIInteraction" | "crisisLog" | "usageLog" | "memoryEntry" | "academicEvent" | "userGoal" | "carePlan"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1574,6 +1635,80 @@ export namespace Prisma {
           }
         }
       }
+      MemoryEntry: {
+        payload: Prisma.$MemoryEntryPayload<ExtArgs>
+        fields: Prisma.MemoryEntryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MemoryEntryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MemoryEntryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MemoryEntryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MemoryEntryPayload>
+          }
+          findFirst: {
+            args: Prisma.MemoryEntryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MemoryEntryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MemoryEntryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MemoryEntryPayload>
+          }
+          findMany: {
+            args: Prisma.MemoryEntryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MemoryEntryPayload>[]
+          }
+          create: {
+            args: Prisma.MemoryEntryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MemoryEntryPayload>
+          }
+          createMany: {
+            args: Prisma.MemoryEntryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MemoryEntryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MemoryEntryPayload>[]
+          }
+          delete: {
+            args: Prisma.MemoryEntryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MemoryEntryPayload>
+          }
+          update: {
+            args: Prisma.MemoryEntryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MemoryEntryPayload>
+          }
+          deleteMany: {
+            args: Prisma.MemoryEntryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MemoryEntryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MemoryEntryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MemoryEntryPayload>[]
+          }
+          upsert: {
+            args: Prisma.MemoryEntryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MemoryEntryPayload>
+          }
+          aggregate: {
+            args: Prisma.MemoryEntryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMemoryEntry>
+          }
+          groupBy: {
+            args: Prisma.MemoryEntryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MemoryEntryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MemoryEntryCountArgs<ExtArgs>
+            result: $Utils.Optional<MemoryEntryCountAggregateOutputType> | number
+          }
+        }
+      }
       AcademicEvent: {
         payload: Prisma.$AcademicEventPayload<ExtArgs>
         fields: Prisma.AcademicEventFieldRefs
@@ -1645,6 +1780,154 @@ export namespace Prisma {
           count: {
             args: Prisma.AcademicEventCountArgs<ExtArgs>
             result: $Utils.Optional<AcademicEventCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserGoal: {
+        payload: Prisma.$UserGoalPayload<ExtArgs>
+        fields: Prisma.UserGoalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserGoalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGoalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserGoalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGoalPayload>
+          }
+          findFirst: {
+            args: Prisma.UserGoalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGoalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserGoalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGoalPayload>
+          }
+          findMany: {
+            args: Prisma.UserGoalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGoalPayload>[]
+          }
+          create: {
+            args: Prisma.UserGoalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGoalPayload>
+          }
+          createMany: {
+            args: Prisma.UserGoalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserGoalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGoalPayload>[]
+          }
+          delete: {
+            args: Prisma.UserGoalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGoalPayload>
+          }
+          update: {
+            args: Prisma.UserGoalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGoalPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserGoalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserGoalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserGoalUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGoalPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserGoalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGoalPayload>
+          }
+          aggregate: {
+            args: Prisma.UserGoalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserGoal>
+          }
+          groupBy: {
+            args: Prisma.UserGoalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGoalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserGoalCountArgs<ExtArgs>
+            result: $Utils.Optional<UserGoalCountAggregateOutputType> | number
+          }
+        }
+      }
+      CarePlan: {
+        payload: Prisma.$CarePlanPayload<ExtArgs>
+        fields: Prisma.CarePlanFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CarePlanFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarePlanPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CarePlanFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarePlanPayload>
+          }
+          findFirst: {
+            args: Prisma.CarePlanFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarePlanPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CarePlanFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarePlanPayload>
+          }
+          findMany: {
+            args: Prisma.CarePlanFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarePlanPayload>[]
+          }
+          create: {
+            args: Prisma.CarePlanCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarePlanPayload>
+          }
+          createMany: {
+            args: Prisma.CarePlanCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CarePlanCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarePlanPayload>[]
+          }
+          delete: {
+            args: Prisma.CarePlanDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarePlanPayload>
+          }
+          update: {
+            args: Prisma.CarePlanUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarePlanPayload>
+          }
+          deleteMany: {
+            args: Prisma.CarePlanDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CarePlanUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CarePlanUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarePlanPayload>[]
+          }
+          upsert: {
+            args: Prisma.CarePlanUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarePlanPayload>
+          }
+          aggregate: {
+            args: Prisma.CarePlanAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCarePlan>
+          }
+          groupBy: {
+            args: Prisma.CarePlanGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CarePlanGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CarePlanCountArgs<ExtArgs>
+            result: $Utils.Optional<CarePlanCountAggregateOutputType> | number
           }
         }
       }
@@ -1744,7 +2027,10 @@ export namespace Prisma {
     aIInteraction?: AIInteractionOmit
     crisisLog?: CrisisLogOmit
     usageLog?: UsageLogOmit
+    memoryEntry?: MemoryEntryOmit
     academicEvent?: AcademicEventOmit
+    userGoal?: UserGoalOmit
+    carePlan?: CarePlanOmit
   }
 
   /* Types for Logging */
@@ -1845,6 +2131,9 @@ export namespace Prisma {
     aiInteractions: number
     crisisLogs: number
     usageLogs: number
+    memoryEntries: number
+    userGoals: number
+    carePlans: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1854,6 +2143,9 @@ export namespace Prisma {
     aiInteractions?: boolean | UserCountOutputTypeCountAiInteractionsArgs
     crisisLogs?: boolean | UserCountOutputTypeCountCrisisLogsArgs
     usageLogs?: boolean | UserCountOutputTypeCountUsageLogsArgs
+    memoryEntries?: boolean | UserCountOutputTypeCountMemoryEntriesArgs
+    userGoals?: boolean | UserCountOutputTypeCountUserGoalsArgs
+    carePlans?: boolean | UserCountOutputTypeCountCarePlansArgs
   }
 
   // Custom InputTypes
@@ -1907,6 +2199,27 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountUsageLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UsageLogWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMemoryEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MemoryEntryWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUserGoalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserGoalWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCarePlansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CarePlanWhereInput
   }
 
 
@@ -2393,6 +2706,9 @@ export namespace Prisma {
     aiInteractions?: boolean | User$aiInteractionsArgs<ExtArgs>
     crisisLogs?: boolean | User$crisisLogsArgs<ExtArgs>
     usageLogs?: boolean | User$usageLogsArgs<ExtArgs>
+    memoryEntries?: boolean | User$memoryEntriesArgs<ExtArgs>
+    userGoals?: boolean | User$userGoalsArgs<ExtArgs>
+    carePlans?: boolean | User$carePlansArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2524,6 +2840,9 @@ export namespace Prisma {
     aiInteractions?: boolean | User$aiInteractionsArgs<ExtArgs>
     crisisLogs?: boolean | User$crisisLogsArgs<ExtArgs>
     usageLogs?: boolean | User$usageLogsArgs<ExtArgs>
+    memoryEntries?: boolean | User$memoryEntriesArgs<ExtArgs>
+    userGoals?: boolean | User$userGoalsArgs<ExtArgs>
+    carePlans?: boolean | User$carePlansArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2538,6 +2857,9 @@ export namespace Prisma {
       aiInteractions: Prisma.$AIInteractionPayload<ExtArgs>[]
       crisisLogs: Prisma.$CrisisLogPayload<ExtArgs>[]
       usageLogs: Prisma.$UsageLogPayload<ExtArgs>[]
+      memoryEntries: Prisma.$MemoryEntryPayload<ExtArgs>[]
+      userGoals: Prisma.$UserGoalPayload<ExtArgs>[]
+      carePlans: Prisma.$CarePlanPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2977,6 +3299,9 @@ export namespace Prisma {
     aiInteractions<T extends User$aiInteractionsArgs<ExtArgs> = {}>(args?: Subset<T, User$aiInteractionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AIInteractionPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     crisisLogs<T extends User$crisisLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$crisisLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CrisisLogPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     usageLogs<T extends User$usageLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$usageLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsageLogPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    memoryEntries<T extends User$memoryEntriesArgs<ExtArgs> = {}>(args?: Subset<T, User$memoryEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    userGoals<T extends User$userGoalsArgs<ExtArgs> = {}>(args?: Subset<T, User$userGoalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    carePlans<T extends User$carePlansArgs<ExtArgs> = {}>(args?: Subset<T, User$carePlansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3560,6 +3885,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UsageLogScalarFieldEnum | UsageLogScalarFieldEnum[]
+  }
+
+  /**
+   * User.memoryEntries
+   */
+  export type User$memoryEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryInclude<ExtArgs> | null
+    where?: MemoryEntryWhereInput
+    orderBy?: MemoryEntryOrderByWithRelationInput | MemoryEntryOrderByWithRelationInput[]
+    cursor?: MemoryEntryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MemoryEntryScalarFieldEnum | MemoryEntryScalarFieldEnum[]
+  }
+
+  /**
+   * User.userGoals
+   */
+  export type User$userGoalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalInclude<ExtArgs> | null
+    where?: UserGoalWhereInput
+    orderBy?: UserGoalOrderByWithRelationInput | UserGoalOrderByWithRelationInput[]
+    cursor?: UserGoalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserGoalScalarFieldEnum | UserGoalScalarFieldEnum[]
+  }
+
+  /**
+   * User.carePlans
+   */
+  export type User$carePlansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanInclude<ExtArgs> | null
+    where?: CarePlanWhereInput
+    orderBy?: CarePlanOrderByWithRelationInput | CarePlanOrderByWithRelationInput[]
+    cursor?: CarePlanWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CarePlanScalarFieldEnum | CarePlanScalarFieldEnum[]
   }
 
   /**
@@ -11476,6 +11873,1121 @@ export namespace Prisma {
 
 
   /**
+   * Model MemoryEntry
+   */
+
+  export type AggregateMemoryEntry = {
+    _count: MemoryEntryCountAggregateOutputType | null
+    _avg: MemoryEntryAvgAggregateOutputType | null
+    _sum: MemoryEntrySumAggregateOutputType | null
+    _min: MemoryEntryMinAggregateOutputType | null
+    _max: MemoryEntryMaxAggregateOutputType | null
+  }
+
+  export type MemoryEntryAvgAggregateOutputType = {
+    importance: number | null
+  }
+
+  export type MemoryEntrySumAggregateOutputType = {
+    importance: number | null
+  }
+
+  export type MemoryEntryMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    content: string | null
+    importance: number | null
+    category: string | null
+    timestamp: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MemoryEntryMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    content: string | null
+    importance: number | null
+    category: string | null
+    timestamp: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MemoryEntryCountAggregateOutputType = {
+    id: number
+    userId: number
+    content: number
+    importance: number
+    category: number
+    embedding: number
+    timestamp: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MemoryEntryAvgAggregateInputType = {
+    importance?: true
+  }
+
+  export type MemoryEntrySumAggregateInputType = {
+    importance?: true
+  }
+
+  export type MemoryEntryMinAggregateInputType = {
+    id?: true
+    userId?: true
+    content?: true
+    importance?: true
+    category?: true
+    timestamp?: true
+    updatedAt?: true
+  }
+
+  export type MemoryEntryMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    content?: true
+    importance?: true
+    category?: true
+    timestamp?: true
+    updatedAt?: true
+  }
+
+  export type MemoryEntryCountAggregateInputType = {
+    id?: true
+    userId?: true
+    content?: true
+    importance?: true
+    category?: true
+    embedding?: true
+    timestamp?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MemoryEntryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MemoryEntry to aggregate.
+     */
+    where?: MemoryEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MemoryEntries to fetch.
+     */
+    orderBy?: MemoryEntryOrderByWithRelationInput | MemoryEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MemoryEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MemoryEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MemoryEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MemoryEntries
+    **/
+    _count?: true | MemoryEntryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MemoryEntryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MemoryEntrySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MemoryEntryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MemoryEntryMaxAggregateInputType
+  }
+
+  export type GetMemoryEntryAggregateType<T extends MemoryEntryAggregateArgs> = {
+        [P in keyof T & keyof AggregateMemoryEntry]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMemoryEntry[P]>
+      : GetScalarType<T[P], AggregateMemoryEntry[P]>
+  }
+
+
+
+
+  export type MemoryEntryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MemoryEntryWhereInput
+    orderBy?: MemoryEntryOrderByWithAggregationInput | MemoryEntryOrderByWithAggregationInput[]
+    by: MemoryEntryScalarFieldEnum[] | MemoryEntryScalarFieldEnum
+    having?: MemoryEntryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MemoryEntryCountAggregateInputType | true
+    _avg?: MemoryEntryAvgAggregateInputType
+    _sum?: MemoryEntrySumAggregateInputType
+    _min?: MemoryEntryMinAggregateInputType
+    _max?: MemoryEntryMaxAggregateInputType
+  }
+
+  export type MemoryEntryGroupByOutputType = {
+    id: string
+    userId: string
+    content: string
+    importance: number
+    category: string | null
+    embedding: JsonValue | null
+    timestamp: Date
+    updatedAt: Date
+    _count: MemoryEntryCountAggregateOutputType | null
+    _avg: MemoryEntryAvgAggregateOutputType | null
+    _sum: MemoryEntrySumAggregateOutputType | null
+    _min: MemoryEntryMinAggregateOutputType | null
+    _max: MemoryEntryMaxAggregateOutputType | null
+  }
+
+  type GetMemoryEntryGroupByPayload<T extends MemoryEntryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MemoryEntryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MemoryEntryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MemoryEntryGroupByOutputType[P]>
+            : GetScalarType<T[P], MemoryEntryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MemoryEntrySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    content?: boolean
+    importance?: boolean
+    category?: boolean
+    embedding?: boolean
+    timestamp?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["memoryEntry"]>
+
+  export type MemoryEntrySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    content?: boolean
+    importance?: boolean
+    category?: boolean
+    embedding?: boolean
+    timestamp?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["memoryEntry"]>
+
+  export type MemoryEntrySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    content?: boolean
+    importance?: boolean
+    category?: boolean
+    embedding?: boolean
+    timestamp?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["memoryEntry"]>
+
+  export type MemoryEntrySelectScalar = {
+    id?: boolean
+    userId?: boolean
+    content?: boolean
+    importance?: boolean
+    category?: boolean
+    embedding?: boolean
+    timestamp?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MemoryEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "content" | "importance" | "category" | "embedding" | "timestamp" | "updatedAt", ExtArgs["result"]["memoryEntry"]>
+  export type MemoryEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MemoryEntryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MemoryEntryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $MemoryEntryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MemoryEntry"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      content: string
+      importance: number
+      category: string | null
+      embedding: Prisma.JsonValue | null
+      timestamp: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["memoryEntry"]>
+    composites: {}
+  }
+
+  type MemoryEntryGetPayload<S extends boolean | null | undefined | MemoryEntryDefaultArgs> = $Result.GetResult<Prisma.$MemoryEntryPayload, S>
+
+  type MemoryEntryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MemoryEntryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MemoryEntryCountAggregateInputType | true
+    }
+
+  export interface MemoryEntryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MemoryEntry'], meta: { name: 'MemoryEntry' } }
+    /**
+     * Find zero or one MemoryEntry that matches the filter.
+     * @param {MemoryEntryFindUniqueArgs} args - Arguments to find a MemoryEntry
+     * @example
+     * // Get one MemoryEntry
+     * const memoryEntry = await prisma.memoryEntry.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MemoryEntryFindUniqueArgs>(args: SelectSubset<T, MemoryEntryFindUniqueArgs<ExtArgs>>): Prisma__MemoryEntryClient<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one MemoryEntry that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MemoryEntryFindUniqueOrThrowArgs} args - Arguments to find a MemoryEntry
+     * @example
+     * // Get one MemoryEntry
+     * const memoryEntry = await prisma.memoryEntry.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MemoryEntryFindUniqueOrThrowArgs>(args: SelectSubset<T, MemoryEntryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MemoryEntryClient<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first MemoryEntry that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MemoryEntryFindFirstArgs} args - Arguments to find a MemoryEntry
+     * @example
+     * // Get one MemoryEntry
+     * const memoryEntry = await prisma.memoryEntry.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MemoryEntryFindFirstArgs>(args?: SelectSubset<T, MemoryEntryFindFirstArgs<ExtArgs>>): Prisma__MemoryEntryClient<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first MemoryEntry that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MemoryEntryFindFirstOrThrowArgs} args - Arguments to find a MemoryEntry
+     * @example
+     * // Get one MemoryEntry
+     * const memoryEntry = await prisma.memoryEntry.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MemoryEntryFindFirstOrThrowArgs>(args?: SelectSubset<T, MemoryEntryFindFirstOrThrowArgs<ExtArgs>>): Prisma__MemoryEntryClient<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more MemoryEntries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MemoryEntryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MemoryEntries
+     * const memoryEntries = await prisma.memoryEntry.findMany()
+     * 
+     * // Get first 10 MemoryEntries
+     * const memoryEntries = await prisma.memoryEntry.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const memoryEntryWithIdOnly = await prisma.memoryEntry.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MemoryEntryFindManyArgs>(args?: SelectSubset<T, MemoryEntryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a MemoryEntry.
+     * @param {MemoryEntryCreateArgs} args - Arguments to create a MemoryEntry.
+     * @example
+     * // Create one MemoryEntry
+     * const MemoryEntry = await prisma.memoryEntry.create({
+     *   data: {
+     *     // ... data to create a MemoryEntry
+     *   }
+     * })
+     * 
+     */
+    create<T extends MemoryEntryCreateArgs>(args: SelectSubset<T, MemoryEntryCreateArgs<ExtArgs>>): Prisma__MemoryEntryClient<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many MemoryEntries.
+     * @param {MemoryEntryCreateManyArgs} args - Arguments to create many MemoryEntries.
+     * @example
+     * // Create many MemoryEntries
+     * const memoryEntry = await prisma.memoryEntry.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MemoryEntryCreateManyArgs>(args?: SelectSubset<T, MemoryEntryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MemoryEntries and returns the data saved in the database.
+     * @param {MemoryEntryCreateManyAndReturnArgs} args - Arguments to create many MemoryEntries.
+     * @example
+     * // Create many MemoryEntries
+     * const memoryEntry = await prisma.memoryEntry.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MemoryEntries and only return the `id`
+     * const memoryEntryWithIdOnly = await prisma.memoryEntry.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MemoryEntryCreateManyAndReturnArgs>(args?: SelectSubset<T, MemoryEntryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a MemoryEntry.
+     * @param {MemoryEntryDeleteArgs} args - Arguments to delete one MemoryEntry.
+     * @example
+     * // Delete one MemoryEntry
+     * const MemoryEntry = await prisma.memoryEntry.delete({
+     *   where: {
+     *     // ... filter to delete one MemoryEntry
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MemoryEntryDeleteArgs>(args: SelectSubset<T, MemoryEntryDeleteArgs<ExtArgs>>): Prisma__MemoryEntryClient<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one MemoryEntry.
+     * @param {MemoryEntryUpdateArgs} args - Arguments to update one MemoryEntry.
+     * @example
+     * // Update one MemoryEntry
+     * const memoryEntry = await prisma.memoryEntry.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MemoryEntryUpdateArgs>(args: SelectSubset<T, MemoryEntryUpdateArgs<ExtArgs>>): Prisma__MemoryEntryClient<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more MemoryEntries.
+     * @param {MemoryEntryDeleteManyArgs} args - Arguments to filter MemoryEntries to delete.
+     * @example
+     * // Delete a few MemoryEntries
+     * const { count } = await prisma.memoryEntry.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MemoryEntryDeleteManyArgs>(args?: SelectSubset<T, MemoryEntryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MemoryEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MemoryEntryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MemoryEntries
+     * const memoryEntry = await prisma.memoryEntry.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MemoryEntryUpdateManyArgs>(args: SelectSubset<T, MemoryEntryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MemoryEntries and returns the data updated in the database.
+     * @param {MemoryEntryUpdateManyAndReturnArgs} args - Arguments to update many MemoryEntries.
+     * @example
+     * // Update many MemoryEntries
+     * const memoryEntry = await prisma.memoryEntry.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MemoryEntries and only return the `id`
+     * const memoryEntryWithIdOnly = await prisma.memoryEntry.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MemoryEntryUpdateManyAndReturnArgs>(args: SelectSubset<T, MemoryEntryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one MemoryEntry.
+     * @param {MemoryEntryUpsertArgs} args - Arguments to update or create a MemoryEntry.
+     * @example
+     * // Update or create a MemoryEntry
+     * const memoryEntry = await prisma.memoryEntry.upsert({
+     *   create: {
+     *     // ... data to create a MemoryEntry
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MemoryEntry we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MemoryEntryUpsertArgs>(args: SelectSubset<T, MemoryEntryUpsertArgs<ExtArgs>>): Prisma__MemoryEntryClient<$Result.GetResult<Prisma.$MemoryEntryPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of MemoryEntries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MemoryEntryCountArgs} args - Arguments to filter MemoryEntries to count.
+     * @example
+     * // Count the number of MemoryEntries
+     * const count = await prisma.memoryEntry.count({
+     *   where: {
+     *     // ... the filter for the MemoryEntries we want to count
+     *   }
+     * })
+    **/
+    count<T extends MemoryEntryCountArgs>(
+      args?: Subset<T, MemoryEntryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MemoryEntryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MemoryEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MemoryEntryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MemoryEntryAggregateArgs>(args: Subset<T, MemoryEntryAggregateArgs>): Prisma.PrismaPromise<GetMemoryEntryAggregateType<T>>
+
+    /**
+     * Group by MemoryEntry.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MemoryEntryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MemoryEntryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MemoryEntryGroupByArgs['orderBy'] }
+        : { orderBy?: MemoryEntryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MemoryEntryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMemoryEntryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MemoryEntry model
+   */
+  readonly fields: MemoryEntryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MemoryEntry.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MemoryEntryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MemoryEntry model
+   */ 
+  interface MemoryEntryFieldRefs {
+    readonly id: FieldRef<"MemoryEntry", 'String'>
+    readonly userId: FieldRef<"MemoryEntry", 'String'>
+    readonly content: FieldRef<"MemoryEntry", 'String'>
+    readonly importance: FieldRef<"MemoryEntry", 'Int'>
+    readonly category: FieldRef<"MemoryEntry", 'String'>
+    readonly embedding: FieldRef<"MemoryEntry", 'Json'>
+    readonly timestamp: FieldRef<"MemoryEntry", 'DateTime'>
+    readonly updatedAt: FieldRef<"MemoryEntry", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MemoryEntry findUnique
+   */
+  export type MemoryEntryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which MemoryEntry to fetch.
+     */
+    where: MemoryEntryWhereUniqueInput
+  }
+
+  /**
+   * MemoryEntry findUniqueOrThrow
+   */
+  export type MemoryEntryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which MemoryEntry to fetch.
+     */
+    where: MemoryEntryWhereUniqueInput
+  }
+
+  /**
+   * MemoryEntry findFirst
+   */
+  export type MemoryEntryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which MemoryEntry to fetch.
+     */
+    where?: MemoryEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MemoryEntries to fetch.
+     */
+    orderBy?: MemoryEntryOrderByWithRelationInput | MemoryEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MemoryEntries.
+     */
+    cursor?: MemoryEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MemoryEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MemoryEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MemoryEntries.
+     */
+    distinct?: MemoryEntryScalarFieldEnum | MemoryEntryScalarFieldEnum[]
+  }
+
+  /**
+   * MemoryEntry findFirstOrThrow
+   */
+  export type MemoryEntryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which MemoryEntry to fetch.
+     */
+    where?: MemoryEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MemoryEntries to fetch.
+     */
+    orderBy?: MemoryEntryOrderByWithRelationInput | MemoryEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MemoryEntries.
+     */
+    cursor?: MemoryEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MemoryEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MemoryEntries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MemoryEntries.
+     */
+    distinct?: MemoryEntryScalarFieldEnum | MemoryEntryScalarFieldEnum[]
+  }
+
+  /**
+   * MemoryEntry findMany
+   */
+  export type MemoryEntryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryInclude<ExtArgs> | null
+    /**
+     * Filter, which MemoryEntries to fetch.
+     */
+    where?: MemoryEntryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MemoryEntries to fetch.
+     */
+    orderBy?: MemoryEntryOrderByWithRelationInput | MemoryEntryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MemoryEntries.
+     */
+    cursor?: MemoryEntryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MemoryEntries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MemoryEntries.
+     */
+    skip?: number
+    distinct?: MemoryEntryScalarFieldEnum | MemoryEntryScalarFieldEnum[]
+  }
+
+  /**
+   * MemoryEntry create
+   */
+  export type MemoryEntryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MemoryEntry.
+     */
+    data: XOR<MemoryEntryCreateInput, MemoryEntryUncheckedCreateInput>
+  }
+
+  /**
+   * MemoryEntry createMany
+   */
+  export type MemoryEntryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MemoryEntries.
+     */
+    data: MemoryEntryCreateManyInput | MemoryEntryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MemoryEntry createManyAndReturn
+   */
+  export type MemoryEntryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * The data used to create many MemoryEntries.
+     */
+    data: MemoryEntryCreateManyInput | MemoryEntryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MemoryEntry update
+   */
+  export type MemoryEntryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MemoryEntry.
+     */
+    data: XOR<MemoryEntryUpdateInput, MemoryEntryUncheckedUpdateInput>
+    /**
+     * Choose, which MemoryEntry to update.
+     */
+    where: MemoryEntryWhereUniqueInput
+  }
+
+  /**
+   * MemoryEntry updateMany
+   */
+  export type MemoryEntryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MemoryEntries.
+     */
+    data: XOR<MemoryEntryUpdateManyMutationInput, MemoryEntryUncheckedUpdateManyInput>
+    /**
+     * Filter which MemoryEntries to update
+     */
+    where?: MemoryEntryWhereInput
+  }
+
+  /**
+   * MemoryEntry updateManyAndReturn
+   */
+  export type MemoryEntryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * The data used to update MemoryEntries.
+     */
+    data: XOR<MemoryEntryUpdateManyMutationInput, MemoryEntryUncheckedUpdateManyInput>
+    /**
+     * Filter which MemoryEntries to update
+     */
+    where?: MemoryEntryWhereInput
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MemoryEntry upsert
+   */
+  export type MemoryEntryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MemoryEntry to update in case it exists.
+     */
+    where: MemoryEntryWhereUniqueInput
+    /**
+     * In case the MemoryEntry found by the `where` argument doesn't exist, create a new MemoryEntry with this data.
+     */
+    create: XOR<MemoryEntryCreateInput, MemoryEntryUncheckedCreateInput>
+    /**
+     * In case the MemoryEntry was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MemoryEntryUpdateInput, MemoryEntryUncheckedUpdateInput>
+  }
+
+  /**
+   * MemoryEntry delete
+   */
+  export type MemoryEntryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryInclude<ExtArgs> | null
+    /**
+     * Filter which MemoryEntry to delete.
+     */
+    where: MemoryEntryWhereUniqueInput
+  }
+
+  /**
+   * MemoryEntry deleteMany
+   */
+  export type MemoryEntryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MemoryEntries to delete
+     */
+    where?: MemoryEntryWhereInput
+  }
+
+  /**
+   * MemoryEntry without action
+   */
+  export type MemoryEntryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MemoryEntry
+     */
+    select?: MemoryEntrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MemoryEntry
+     */
+    omit?: MemoryEntryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MemoryEntryInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model AcademicEvent
    */
 
@@ -12506,6 +14018,2275 @@ export namespace Prisma {
 
 
   /**
+   * Model UserGoal
+   */
+
+  export type AggregateUserGoal = {
+    _count: UserGoalCountAggregateOutputType | null
+    _avg: UserGoalAvgAggregateOutputType | null
+    _sum: UserGoalSumAggregateOutputType | null
+    _min: UserGoalMinAggregateOutputType | null
+    _max: UserGoalMaxAggregateOutputType | null
+  }
+
+  export type UserGoalAvgAggregateOutputType = {
+    progress: number | null
+  }
+
+  export type UserGoalSumAggregateOutputType = {
+    progress: number | null
+  }
+
+  export type UserGoalMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    title: string | null
+    type: $Enums.Goal | null
+    status: $Enums.GoalStatus | null
+    progress: number | null
+    targetDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserGoalMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    title: string | null
+    type: $Enums.Goal | null
+    status: $Enums.GoalStatus | null
+    progress: number | null
+    targetDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserGoalCountAggregateOutputType = {
+    id: number
+    userId: number
+    title: number
+    type: number
+    status: number
+    progress: number
+    targetDate: number
+    milestones: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserGoalAvgAggregateInputType = {
+    progress?: true
+  }
+
+  export type UserGoalSumAggregateInputType = {
+    progress?: true
+  }
+
+  export type UserGoalMinAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    type?: true
+    status?: true
+    progress?: true
+    targetDate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserGoalMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    type?: true
+    status?: true
+    progress?: true
+    targetDate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserGoalCountAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    type?: true
+    status?: true
+    progress?: true
+    targetDate?: true
+    milestones?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserGoalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserGoal to aggregate.
+     */
+    where?: UserGoalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserGoals to fetch.
+     */
+    orderBy?: UserGoalOrderByWithRelationInput | UserGoalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserGoalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserGoals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserGoals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserGoals
+    **/
+    _count?: true | UserGoalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserGoalAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserGoalSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserGoalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserGoalMaxAggregateInputType
+  }
+
+  export type GetUserGoalAggregateType<T extends UserGoalAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserGoal]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserGoal[P]>
+      : GetScalarType<T[P], AggregateUserGoal[P]>
+  }
+
+
+
+
+  export type UserGoalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserGoalWhereInput
+    orderBy?: UserGoalOrderByWithAggregationInput | UserGoalOrderByWithAggregationInput[]
+    by: UserGoalScalarFieldEnum[] | UserGoalScalarFieldEnum
+    having?: UserGoalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserGoalCountAggregateInputType | true
+    _avg?: UserGoalAvgAggregateInputType
+    _sum?: UserGoalSumAggregateInputType
+    _min?: UserGoalMinAggregateInputType
+    _max?: UserGoalMaxAggregateInputType
+  }
+
+  export type UserGoalGroupByOutputType = {
+    id: string
+    userId: string
+    title: string
+    type: $Enums.Goal
+    status: $Enums.GoalStatus
+    progress: number
+    targetDate: Date | null
+    milestones: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: UserGoalCountAggregateOutputType | null
+    _avg: UserGoalAvgAggregateOutputType | null
+    _sum: UserGoalSumAggregateOutputType | null
+    _min: UserGoalMinAggregateOutputType | null
+    _max: UserGoalMaxAggregateOutputType | null
+  }
+
+  type GetUserGoalGroupByPayload<T extends UserGoalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserGoalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGoalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGoalGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGoalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserGoalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    type?: boolean
+    status?: boolean
+    progress?: boolean
+    targetDate?: boolean
+    milestones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userGoal"]>
+
+  export type UserGoalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    type?: boolean
+    status?: boolean
+    progress?: boolean
+    targetDate?: boolean
+    milestones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userGoal"]>
+
+  export type UserGoalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    type?: boolean
+    status?: boolean
+    progress?: boolean
+    targetDate?: boolean
+    milestones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userGoal"]>
+
+  export type UserGoalSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    type?: boolean
+    status?: boolean
+    progress?: boolean
+    targetDate?: boolean
+    milestones?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UserGoalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "title" | "type" | "status" | "progress" | "targetDate" | "milestones" | "createdAt" | "updatedAt", ExtArgs["result"]["userGoal"]>
+  export type UserGoalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserGoalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserGoalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserGoalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserGoal"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      title: string
+      type: $Enums.Goal
+      status: $Enums.GoalStatus
+      progress: number
+      targetDate: Date | null
+      milestones: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["userGoal"]>
+    composites: {}
+  }
+
+  type UserGoalGetPayload<S extends boolean | null | undefined | UserGoalDefaultArgs> = $Result.GetResult<Prisma.$UserGoalPayload, S>
+
+  type UserGoalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserGoalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserGoalCountAggregateInputType | true
+    }
+
+  export interface UserGoalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserGoal'], meta: { name: 'UserGoal' } }
+    /**
+     * Find zero or one UserGoal that matches the filter.
+     * @param {UserGoalFindUniqueArgs} args - Arguments to find a UserGoal
+     * @example
+     * // Get one UserGoal
+     * const userGoal = await prisma.userGoal.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserGoalFindUniqueArgs>(args: SelectSubset<T, UserGoalFindUniqueArgs<ExtArgs>>): Prisma__UserGoalClient<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one UserGoal that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserGoalFindUniqueOrThrowArgs} args - Arguments to find a UserGoal
+     * @example
+     * // Get one UserGoal
+     * const userGoal = await prisma.userGoal.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserGoalFindUniqueOrThrowArgs>(args: SelectSubset<T, UserGoalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserGoalClient<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first UserGoal that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGoalFindFirstArgs} args - Arguments to find a UserGoal
+     * @example
+     * // Get one UserGoal
+     * const userGoal = await prisma.userGoal.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserGoalFindFirstArgs>(args?: SelectSubset<T, UserGoalFindFirstArgs<ExtArgs>>): Prisma__UserGoalClient<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first UserGoal that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGoalFindFirstOrThrowArgs} args - Arguments to find a UserGoal
+     * @example
+     * // Get one UserGoal
+     * const userGoal = await prisma.userGoal.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserGoalFindFirstOrThrowArgs>(args?: SelectSubset<T, UserGoalFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserGoalClient<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more UserGoals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGoalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserGoals
+     * const userGoals = await prisma.userGoal.findMany()
+     * 
+     * // Get first 10 UserGoals
+     * const userGoals = await prisma.userGoal.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userGoalWithIdOnly = await prisma.userGoal.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserGoalFindManyArgs>(args?: SelectSubset<T, UserGoalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a UserGoal.
+     * @param {UserGoalCreateArgs} args - Arguments to create a UserGoal.
+     * @example
+     * // Create one UserGoal
+     * const UserGoal = await prisma.userGoal.create({
+     *   data: {
+     *     // ... data to create a UserGoal
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserGoalCreateArgs>(args: SelectSubset<T, UserGoalCreateArgs<ExtArgs>>): Prisma__UserGoalClient<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many UserGoals.
+     * @param {UserGoalCreateManyArgs} args - Arguments to create many UserGoals.
+     * @example
+     * // Create many UserGoals
+     * const userGoal = await prisma.userGoal.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserGoalCreateManyArgs>(args?: SelectSubset<T, UserGoalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserGoals and returns the data saved in the database.
+     * @param {UserGoalCreateManyAndReturnArgs} args - Arguments to create many UserGoals.
+     * @example
+     * // Create many UserGoals
+     * const userGoal = await prisma.userGoal.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserGoals and only return the `id`
+     * const userGoalWithIdOnly = await prisma.userGoal.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserGoalCreateManyAndReturnArgs>(args?: SelectSubset<T, UserGoalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a UserGoal.
+     * @param {UserGoalDeleteArgs} args - Arguments to delete one UserGoal.
+     * @example
+     * // Delete one UserGoal
+     * const UserGoal = await prisma.userGoal.delete({
+     *   where: {
+     *     // ... filter to delete one UserGoal
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserGoalDeleteArgs>(args: SelectSubset<T, UserGoalDeleteArgs<ExtArgs>>): Prisma__UserGoalClient<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one UserGoal.
+     * @param {UserGoalUpdateArgs} args - Arguments to update one UserGoal.
+     * @example
+     * // Update one UserGoal
+     * const userGoal = await prisma.userGoal.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserGoalUpdateArgs>(args: SelectSubset<T, UserGoalUpdateArgs<ExtArgs>>): Prisma__UserGoalClient<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more UserGoals.
+     * @param {UserGoalDeleteManyArgs} args - Arguments to filter UserGoals to delete.
+     * @example
+     * // Delete a few UserGoals
+     * const { count } = await prisma.userGoal.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserGoalDeleteManyArgs>(args?: SelectSubset<T, UserGoalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserGoals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGoalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserGoals
+     * const userGoal = await prisma.userGoal.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserGoalUpdateManyArgs>(args: SelectSubset<T, UserGoalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserGoals and returns the data updated in the database.
+     * @param {UserGoalUpdateManyAndReturnArgs} args - Arguments to update many UserGoals.
+     * @example
+     * // Update many UserGoals
+     * const userGoal = await prisma.userGoal.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserGoals and only return the `id`
+     * const userGoalWithIdOnly = await prisma.userGoal.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserGoalUpdateManyAndReturnArgs>(args: SelectSubset<T, UserGoalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one UserGoal.
+     * @param {UserGoalUpsertArgs} args - Arguments to update or create a UserGoal.
+     * @example
+     * // Update or create a UserGoal
+     * const userGoal = await prisma.userGoal.upsert({
+     *   create: {
+     *     // ... data to create a UserGoal
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserGoal we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserGoalUpsertArgs>(args: SelectSubset<T, UserGoalUpsertArgs<ExtArgs>>): Prisma__UserGoalClient<$Result.GetResult<Prisma.$UserGoalPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of UserGoals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGoalCountArgs} args - Arguments to filter UserGoals to count.
+     * @example
+     * // Count the number of UserGoals
+     * const count = await prisma.userGoal.count({
+     *   where: {
+     *     // ... the filter for the UserGoals we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserGoalCountArgs>(
+      args?: Subset<T, UserGoalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserGoalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserGoal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGoalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserGoalAggregateArgs>(args: Subset<T, UserGoalAggregateArgs>): Prisma.PrismaPromise<GetUserGoalAggregateType<T>>
+
+    /**
+     * Group by UserGoal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGoalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGoalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGoalGroupByArgs['orderBy'] }
+        : { orderBy?: UserGoalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGoalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGoalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserGoal model
+   */
+  readonly fields: UserGoalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserGoal.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserGoalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserGoal model
+   */ 
+  interface UserGoalFieldRefs {
+    readonly id: FieldRef<"UserGoal", 'String'>
+    readonly userId: FieldRef<"UserGoal", 'String'>
+    readonly title: FieldRef<"UserGoal", 'String'>
+    readonly type: FieldRef<"UserGoal", 'Goal'>
+    readonly status: FieldRef<"UserGoal", 'GoalStatus'>
+    readonly progress: FieldRef<"UserGoal", 'Int'>
+    readonly targetDate: FieldRef<"UserGoal", 'DateTime'>
+    readonly milestones: FieldRef<"UserGoal", 'Json'>
+    readonly createdAt: FieldRef<"UserGoal", 'DateTime'>
+    readonly updatedAt: FieldRef<"UserGoal", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserGoal findUnique
+   */
+  export type UserGoalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalInclude<ExtArgs> | null
+    /**
+     * Filter, which UserGoal to fetch.
+     */
+    where: UserGoalWhereUniqueInput
+  }
+
+  /**
+   * UserGoal findUniqueOrThrow
+   */
+  export type UserGoalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalInclude<ExtArgs> | null
+    /**
+     * Filter, which UserGoal to fetch.
+     */
+    where: UserGoalWhereUniqueInput
+  }
+
+  /**
+   * UserGoal findFirst
+   */
+  export type UserGoalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalInclude<ExtArgs> | null
+    /**
+     * Filter, which UserGoal to fetch.
+     */
+    where?: UserGoalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserGoals to fetch.
+     */
+    orderBy?: UserGoalOrderByWithRelationInput | UserGoalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserGoals.
+     */
+    cursor?: UserGoalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserGoals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserGoals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserGoals.
+     */
+    distinct?: UserGoalScalarFieldEnum | UserGoalScalarFieldEnum[]
+  }
+
+  /**
+   * UserGoal findFirstOrThrow
+   */
+  export type UserGoalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalInclude<ExtArgs> | null
+    /**
+     * Filter, which UserGoal to fetch.
+     */
+    where?: UserGoalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserGoals to fetch.
+     */
+    orderBy?: UserGoalOrderByWithRelationInput | UserGoalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserGoals.
+     */
+    cursor?: UserGoalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserGoals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserGoals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserGoals.
+     */
+    distinct?: UserGoalScalarFieldEnum | UserGoalScalarFieldEnum[]
+  }
+
+  /**
+   * UserGoal findMany
+   */
+  export type UserGoalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalInclude<ExtArgs> | null
+    /**
+     * Filter, which UserGoals to fetch.
+     */
+    where?: UserGoalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserGoals to fetch.
+     */
+    orderBy?: UserGoalOrderByWithRelationInput | UserGoalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserGoals.
+     */
+    cursor?: UserGoalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserGoals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserGoals.
+     */
+    skip?: number
+    distinct?: UserGoalScalarFieldEnum | UserGoalScalarFieldEnum[]
+  }
+
+  /**
+   * UserGoal create
+   */
+  export type UserGoalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserGoal.
+     */
+    data: XOR<UserGoalCreateInput, UserGoalUncheckedCreateInput>
+  }
+
+  /**
+   * UserGoal createMany
+   */
+  export type UserGoalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserGoals.
+     */
+    data: UserGoalCreateManyInput | UserGoalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserGoal createManyAndReturn
+   */
+  export type UserGoalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserGoals.
+     */
+    data: UserGoalCreateManyInput | UserGoalCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserGoal update
+   */
+  export type UserGoalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserGoal.
+     */
+    data: XOR<UserGoalUpdateInput, UserGoalUncheckedUpdateInput>
+    /**
+     * Choose, which UserGoal to update.
+     */
+    where: UserGoalWhereUniqueInput
+  }
+
+  /**
+   * UserGoal updateMany
+   */
+  export type UserGoalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserGoals.
+     */
+    data: XOR<UserGoalUpdateManyMutationInput, UserGoalUncheckedUpdateManyInput>
+    /**
+     * Filter which UserGoals to update
+     */
+    where?: UserGoalWhereInput
+  }
+
+  /**
+   * UserGoal updateManyAndReturn
+   */
+  export type UserGoalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * The data used to update UserGoals.
+     */
+    data: XOR<UserGoalUpdateManyMutationInput, UserGoalUncheckedUpdateManyInput>
+    /**
+     * Filter which UserGoals to update
+     */
+    where?: UserGoalWhereInput
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserGoal upsert
+   */
+  export type UserGoalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserGoal to update in case it exists.
+     */
+    where: UserGoalWhereUniqueInput
+    /**
+     * In case the UserGoal found by the `where` argument doesn't exist, create a new UserGoal with this data.
+     */
+    create: XOR<UserGoalCreateInput, UserGoalUncheckedCreateInput>
+    /**
+     * In case the UserGoal was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserGoalUpdateInput, UserGoalUncheckedUpdateInput>
+  }
+
+  /**
+   * UserGoal delete
+   */
+  export type UserGoalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalInclude<ExtArgs> | null
+    /**
+     * Filter which UserGoal to delete.
+     */
+    where: UserGoalWhereUniqueInput
+  }
+
+  /**
+   * UserGoal deleteMany
+   */
+  export type UserGoalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserGoals to delete
+     */
+    where?: UserGoalWhereInput
+  }
+
+  /**
+   * UserGoal without action
+   */
+  export type UserGoalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGoal
+     */
+    select?: UserGoalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGoal
+     */
+    omit?: UserGoalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGoalInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CarePlan
+   */
+
+  export type AggregateCarePlan = {
+    _count: CarePlanCountAggregateOutputType | null
+    _avg: CarePlanAvgAggregateOutputType | null
+    _sum: CarePlanSumAggregateOutputType | null
+    _min: CarePlanMinAggregateOutputType | null
+    _max: CarePlanMaxAggregateOutputType | null
+  }
+
+  export type CarePlanAvgAggregateOutputType = {
+    weekNumber: number | null
+    year: number | null
+  }
+
+  export type CarePlanSumAggregateOutputType = {
+    weekNumber: number | null
+    year: number | null
+  }
+
+  export type CarePlanMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    weekNumber: number | null
+    year: number | null
+    summary: string | null
+    generatedAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CarePlanMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    weekNumber: number | null
+    year: number | null
+    summary: string | null
+    generatedAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CarePlanCountAggregateOutputType = {
+    id: number
+    userId: number
+    weekNumber: number
+    year: number
+    summary: number
+    moodAnalysis: number
+    growthTasks: number
+    generatedAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CarePlanAvgAggregateInputType = {
+    weekNumber?: true
+    year?: true
+  }
+
+  export type CarePlanSumAggregateInputType = {
+    weekNumber?: true
+    year?: true
+  }
+
+  export type CarePlanMinAggregateInputType = {
+    id?: true
+    userId?: true
+    weekNumber?: true
+    year?: true
+    summary?: true
+    generatedAt?: true
+    updatedAt?: true
+  }
+
+  export type CarePlanMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    weekNumber?: true
+    year?: true
+    summary?: true
+    generatedAt?: true
+    updatedAt?: true
+  }
+
+  export type CarePlanCountAggregateInputType = {
+    id?: true
+    userId?: true
+    weekNumber?: true
+    year?: true
+    summary?: true
+    moodAnalysis?: true
+    growthTasks?: true
+    generatedAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CarePlanAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CarePlan to aggregate.
+     */
+    where?: CarePlanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarePlans to fetch.
+     */
+    orderBy?: CarePlanOrderByWithRelationInput | CarePlanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CarePlanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarePlans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarePlans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CarePlans
+    **/
+    _count?: true | CarePlanCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CarePlanAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CarePlanSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CarePlanMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CarePlanMaxAggregateInputType
+  }
+
+  export type GetCarePlanAggregateType<T extends CarePlanAggregateArgs> = {
+        [P in keyof T & keyof AggregateCarePlan]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCarePlan[P]>
+      : GetScalarType<T[P], AggregateCarePlan[P]>
+  }
+
+
+
+
+  export type CarePlanGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CarePlanWhereInput
+    orderBy?: CarePlanOrderByWithAggregationInput | CarePlanOrderByWithAggregationInput[]
+    by: CarePlanScalarFieldEnum[] | CarePlanScalarFieldEnum
+    having?: CarePlanScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CarePlanCountAggregateInputType | true
+    _avg?: CarePlanAvgAggregateInputType
+    _sum?: CarePlanSumAggregateInputType
+    _min?: CarePlanMinAggregateInputType
+    _max?: CarePlanMaxAggregateInputType
+  }
+
+  export type CarePlanGroupByOutputType = {
+    id: string
+    userId: string
+    weekNumber: number
+    year: number
+    summary: string
+    moodAnalysis: JsonValue | null
+    growthTasks: JsonValue
+    generatedAt: Date
+    updatedAt: Date
+    _count: CarePlanCountAggregateOutputType | null
+    _avg: CarePlanAvgAggregateOutputType | null
+    _sum: CarePlanSumAggregateOutputType | null
+    _min: CarePlanMinAggregateOutputType | null
+    _max: CarePlanMaxAggregateOutputType | null
+  }
+
+  type GetCarePlanGroupByPayload<T extends CarePlanGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CarePlanGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CarePlanGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CarePlanGroupByOutputType[P]>
+            : GetScalarType<T[P], CarePlanGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CarePlanSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    weekNumber?: boolean
+    year?: boolean
+    summary?: boolean
+    moodAnalysis?: boolean
+    growthTasks?: boolean
+    generatedAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["carePlan"]>
+
+  export type CarePlanSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    weekNumber?: boolean
+    year?: boolean
+    summary?: boolean
+    moodAnalysis?: boolean
+    growthTasks?: boolean
+    generatedAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["carePlan"]>
+
+  export type CarePlanSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    weekNumber?: boolean
+    year?: boolean
+    summary?: boolean
+    moodAnalysis?: boolean
+    growthTasks?: boolean
+    generatedAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["carePlan"]>
+
+  export type CarePlanSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    weekNumber?: boolean
+    year?: boolean
+    summary?: boolean
+    moodAnalysis?: boolean
+    growthTasks?: boolean
+    generatedAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CarePlanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "weekNumber" | "year" | "summary" | "moodAnalysis" | "growthTasks" | "generatedAt" | "updatedAt", ExtArgs["result"]["carePlan"]>
+  export type CarePlanInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CarePlanIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CarePlanIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CarePlanPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CarePlan"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      weekNumber: number
+      year: number
+      summary: string
+      moodAnalysis: Prisma.JsonValue | null
+      growthTasks: Prisma.JsonValue
+      generatedAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["carePlan"]>
+    composites: {}
+  }
+
+  type CarePlanGetPayload<S extends boolean | null | undefined | CarePlanDefaultArgs> = $Result.GetResult<Prisma.$CarePlanPayload, S>
+
+  type CarePlanCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CarePlanFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CarePlanCountAggregateInputType | true
+    }
+
+  export interface CarePlanDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CarePlan'], meta: { name: 'CarePlan' } }
+    /**
+     * Find zero or one CarePlan that matches the filter.
+     * @param {CarePlanFindUniqueArgs} args - Arguments to find a CarePlan
+     * @example
+     * // Get one CarePlan
+     * const carePlan = await prisma.carePlan.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CarePlanFindUniqueArgs>(args: SelectSubset<T, CarePlanFindUniqueArgs<ExtArgs>>): Prisma__CarePlanClient<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one CarePlan that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CarePlanFindUniqueOrThrowArgs} args - Arguments to find a CarePlan
+     * @example
+     * // Get one CarePlan
+     * const carePlan = await prisma.carePlan.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CarePlanFindUniqueOrThrowArgs>(args: SelectSubset<T, CarePlanFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CarePlanClient<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first CarePlan that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarePlanFindFirstArgs} args - Arguments to find a CarePlan
+     * @example
+     * // Get one CarePlan
+     * const carePlan = await prisma.carePlan.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CarePlanFindFirstArgs>(args?: SelectSubset<T, CarePlanFindFirstArgs<ExtArgs>>): Prisma__CarePlanClient<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first CarePlan that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarePlanFindFirstOrThrowArgs} args - Arguments to find a CarePlan
+     * @example
+     * // Get one CarePlan
+     * const carePlan = await prisma.carePlan.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CarePlanFindFirstOrThrowArgs>(args?: SelectSubset<T, CarePlanFindFirstOrThrowArgs<ExtArgs>>): Prisma__CarePlanClient<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more CarePlans that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarePlanFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CarePlans
+     * const carePlans = await prisma.carePlan.findMany()
+     * 
+     * // Get first 10 CarePlans
+     * const carePlans = await prisma.carePlan.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const carePlanWithIdOnly = await prisma.carePlan.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CarePlanFindManyArgs>(args?: SelectSubset<T, CarePlanFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a CarePlan.
+     * @param {CarePlanCreateArgs} args - Arguments to create a CarePlan.
+     * @example
+     * // Create one CarePlan
+     * const CarePlan = await prisma.carePlan.create({
+     *   data: {
+     *     // ... data to create a CarePlan
+     *   }
+     * })
+     * 
+     */
+    create<T extends CarePlanCreateArgs>(args: SelectSubset<T, CarePlanCreateArgs<ExtArgs>>): Prisma__CarePlanClient<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many CarePlans.
+     * @param {CarePlanCreateManyArgs} args - Arguments to create many CarePlans.
+     * @example
+     * // Create many CarePlans
+     * const carePlan = await prisma.carePlan.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CarePlanCreateManyArgs>(args?: SelectSubset<T, CarePlanCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CarePlans and returns the data saved in the database.
+     * @param {CarePlanCreateManyAndReturnArgs} args - Arguments to create many CarePlans.
+     * @example
+     * // Create many CarePlans
+     * const carePlan = await prisma.carePlan.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CarePlans and only return the `id`
+     * const carePlanWithIdOnly = await prisma.carePlan.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CarePlanCreateManyAndReturnArgs>(args?: SelectSubset<T, CarePlanCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a CarePlan.
+     * @param {CarePlanDeleteArgs} args - Arguments to delete one CarePlan.
+     * @example
+     * // Delete one CarePlan
+     * const CarePlan = await prisma.carePlan.delete({
+     *   where: {
+     *     // ... filter to delete one CarePlan
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CarePlanDeleteArgs>(args: SelectSubset<T, CarePlanDeleteArgs<ExtArgs>>): Prisma__CarePlanClient<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one CarePlan.
+     * @param {CarePlanUpdateArgs} args - Arguments to update one CarePlan.
+     * @example
+     * // Update one CarePlan
+     * const carePlan = await prisma.carePlan.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CarePlanUpdateArgs>(args: SelectSubset<T, CarePlanUpdateArgs<ExtArgs>>): Prisma__CarePlanClient<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more CarePlans.
+     * @param {CarePlanDeleteManyArgs} args - Arguments to filter CarePlans to delete.
+     * @example
+     * // Delete a few CarePlans
+     * const { count } = await prisma.carePlan.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CarePlanDeleteManyArgs>(args?: SelectSubset<T, CarePlanDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CarePlans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarePlanUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CarePlans
+     * const carePlan = await prisma.carePlan.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CarePlanUpdateManyArgs>(args: SelectSubset<T, CarePlanUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CarePlans and returns the data updated in the database.
+     * @param {CarePlanUpdateManyAndReturnArgs} args - Arguments to update many CarePlans.
+     * @example
+     * // Update many CarePlans
+     * const carePlan = await prisma.carePlan.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CarePlans and only return the `id`
+     * const carePlanWithIdOnly = await prisma.carePlan.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CarePlanUpdateManyAndReturnArgs>(args: SelectSubset<T, CarePlanUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one CarePlan.
+     * @param {CarePlanUpsertArgs} args - Arguments to update or create a CarePlan.
+     * @example
+     * // Update or create a CarePlan
+     * const carePlan = await prisma.carePlan.upsert({
+     *   create: {
+     *     // ... data to create a CarePlan
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CarePlan we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CarePlanUpsertArgs>(args: SelectSubset<T, CarePlanUpsertArgs<ExtArgs>>): Prisma__CarePlanClient<$Result.GetResult<Prisma.$CarePlanPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of CarePlans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarePlanCountArgs} args - Arguments to filter CarePlans to count.
+     * @example
+     * // Count the number of CarePlans
+     * const count = await prisma.carePlan.count({
+     *   where: {
+     *     // ... the filter for the CarePlans we want to count
+     *   }
+     * })
+    **/
+    count<T extends CarePlanCountArgs>(
+      args?: Subset<T, CarePlanCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CarePlanCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CarePlan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarePlanAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CarePlanAggregateArgs>(args: Subset<T, CarePlanAggregateArgs>): Prisma.PrismaPromise<GetCarePlanAggregateType<T>>
+
+    /**
+     * Group by CarePlan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarePlanGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CarePlanGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CarePlanGroupByArgs['orderBy'] }
+        : { orderBy?: CarePlanGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CarePlanGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCarePlanGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CarePlan model
+   */
+  readonly fields: CarePlanFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CarePlan.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CarePlanClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CarePlan model
+   */ 
+  interface CarePlanFieldRefs {
+    readonly id: FieldRef<"CarePlan", 'String'>
+    readonly userId: FieldRef<"CarePlan", 'String'>
+    readonly weekNumber: FieldRef<"CarePlan", 'Int'>
+    readonly year: FieldRef<"CarePlan", 'Int'>
+    readonly summary: FieldRef<"CarePlan", 'String'>
+    readonly moodAnalysis: FieldRef<"CarePlan", 'Json'>
+    readonly growthTasks: FieldRef<"CarePlan", 'Json'>
+    readonly generatedAt: FieldRef<"CarePlan", 'DateTime'>
+    readonly updatedAt: FieldRef<"CarePlan", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CarePlan findUnique
+   */
+  export type CarePlanFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanInclude<ExtArgs> | null
+    /**
+     * Filter, which CarePlan to fetch.
+     */
+    where: CarePlanWhereUniqueInput
+  }
+
+  /**
+   * CarePlan findUniqueOrThrow
+   */
+  export type CarePlanFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanInclude<ExtArgs> | null
+    /**
+     * Filter, which CarePlan to fetch.
+     */
+    where: CarePlanWhereUniqueInput
+  }
+
+  /**
+   * CarePlan findFirst
+   */
+  export type CarePlanFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanInclude<ExtArgs> | null
+    /**
+     * Filter, which CarePlan to fetch.
+     */
+    where?: CarePlanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarePlans to fetch.
+     */
+    orderBy?: CarePlanOrderByWithRelationInput | CarePlanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CarePlans.
+     */
+    cursor?: CarePlanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarePlans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarePlans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CarePlans.
+     */
+    distinct?: CarePlanScalarFieldEnum | CarePlanScalarFieldEnum[]
+  }
+
+  /**
+   * CarePlan findFirstOrThrow
+   */
+  export type CarePlanFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanInclude<ExtArgs> | null
+    /**
+     * Filter, which CarePlan to fetch.
+     */
+    where?: CarePlanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarePlans to fetch.
+     */
+    orderBy?: CarePlanOrderByWithRelationInput | CarePlanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CarePlans.
+     */
+    cursor?: CarePlanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarePlans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarePlans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CarePlans.
+     */
+    distinct?: CarePlanScalarFieldEnum | CarePlanScalarFieldEnum[]
+  }
+
+  /**
+   * CarePlan findMany
+   */
+  export type CarePlanFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanInclude<ExtArgs> | null
+    /**
+     * Filter, which CarePlans to fetch.
+     */
+    where?: CarePlanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarePlans to fetch.
+     */
+    orderBy?: CarePlanOrderByWithRelationInput | CarePlanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CarePlans.
+     */
+    cursor?: CarePlanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarePlans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarePlans.
+     */
+    skip?: number
+    distinct?: CarePlanScalarFieldEnum | CarePlanScalarFieldEnum[]
+  }
+
+  /**
+   * CarePlan create
+   */
+  export type CarePlanCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CarePlan.
+     */
+    data: XOR<CarePlanCreateInput, CarePlanUncheckedCreateInput>
+  }
+
+  /**
+   * CarePlan createMany
+   */
+  export type CarePlanCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CarePlans.
+     */
+    data: CarePlanCreateManyInput | CarePlanCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CarePlan createManyAndReturn
+   */
+  export type CarePlanCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * The data used to create many CarePlans.
+     */
+    data: CarePlanCreateManyInput | CarePlanCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CarePlan update
+   */
+  export type CarePlanUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CarePlan.
+     */
+    data: XOR<CarePlanUpdateInput, CarePlanUncheckedUpdateInput>
+    /**
+     * Choose, which CarePlan to update.
+     */
+    where: CarePlanWhereUniqueInput
+  }
+
+  /**
+   * CarePlan updateMany
+   */
+  export type CarePlanUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CarePlans.
+     */
+    data: XOR<CarePlanUpdateManyMutationInput, CarePlanUncheckedUpdateManyInput>
+    /**
+     * Filter which CarePlans to update
+     */
+    where?: CarePlanWhereInput
+  }
+
+  /**
+   * CarePlan updateManyAndReturn
+   */
+  export type CarePlanUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * The data used to update CarePlans.
+     */
+    data: XOR<CarePlanUpdateManyMutationInput, CarePlanUncheckedUpdateManyInput>
+    /**
+     * Filter which CarePlans to update
+     */
+    where?: CarePlanWhereInput
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CarePlan upsert
+   */
+  export type CarePlanUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CarePlan to update in case it exists.
+     */
+    where: CarePlanWhereUniqueInput
+    /**
+     * In case the CarePlan found by the `where` argument doesn't exist, create a new CarePlan with this data.
+     */
+    create: XOR<CarePlanCreateInput, CarePlanUncheckedCreateInput>
+    /**
+     * In case the CarePlan was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CarePlanUpdateInput, CarePlanUncheckedUpdateInput>
+  }
+
+  /**
+   * CarePlan delete
+   */
+  export type CarePlanDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanInclude<ExtArgs> | null
+    /**
+     * Filter which CarePlan to delete.
+     */
+    where: CarePlanWhereUniqueInput
+  }
+
+  /**
+   * CarePlan deleteMany
+   */
+  export type CarePlanDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CarePlans to delete
+     */
+    where?: CarePlanWhereInput
+  }
+
+  /**
+   * CarePlan without action
+   */
+  export type CarePlanDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarePlan
+     */
+    select?: CarePlanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarePlan
+     */
+    omit?: CarePlanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarePlanInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -12667,6 +16448,20 @@ export namespace Prisma {
   export type UsageLogScalarFieldEnum = (typeof UsageLogScalarFieldEnum)[keyof typeof UsageLogScalarFieldEnum]
 
 
+  export const MemoryEntryScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    content: 'content',
+    importance: 'importance',
+    category: 'category',
+    embedding: 'embedding',
+    timestamp: 'timestamp',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MemoryEntryScalarFieldEnum = (typeof MemoryEntryScalarFieldEnum)[keyof typeof MemoryEntryScalarFieldEnum]
+
+
   export const AcademicEventScalarFieldEnum: {
     id: 'id',
     title: 'title',
@@ -12677,6 +16472,37 @@ export namespace Prisma {
   };
 
   export type AcademicEventScalarFieldEnum = (typeof AcademicEventScalarFieldEnum)[keyof typeof AcademicEventScalarFieldEnum]
+
+
+  export const UserGoalScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    title: 'title',
+    type: 'type',
+    status: 'status',
+    progress: 'progress',
+    targetDate: 'targetDate',
+    milestones: 'milestones',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserGoalScalarFieldEnum = (typeof UserGoalScalarFieldEnum)[keyof typeof UserGoalScalarFieldEnum]
+
+
+  export const CarePlanScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    weekNumber: 'weekNumber',
+    year: 'year',
+    summary: 'summary',
+    moodAnalysis: 'moodAnalysis',
+    growthTasks: 'growthTasks',
+    generatedAt: 'generatedAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CarePlanScalarFieldEnum = (typeof CarePlanScalarFieldEnum)[keyof typeof CarePlanScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -13024,6 +16850,20 @@ export namespace Prisma {
    */
   export type ListEnumServiceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Service[]'>
     
+
+
+  /**
+   * Reference to a field of type 'GoalStatus'
+   */
+  export type EnumGoalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'GoalStatus[]'
+   */
+  export type ListEnumGoalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalStatus[]'>
+    
   /**
    * Deep Input Types
    */
@@ -13076,6 +16916,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionListRelationFilter
     crisisLogs?: CrisisLogListRelationFilter
     usageLogs?: UsageLogListRelationFilter
+    memoryEntries?: MemoryEntryListRelationFilter
+    userGoals?: UserGoalListRelationFilter
+    carePlans?: CarePlanListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -13122,6 +16965,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionOrderByRelationAggregateInput
     crisisLogs?: CrisisLogOrderByRelationAggregateInput
     usageLogs?: UsageLogOrderByRelationAggregateInput
+    memoryEntries?: MemoryEntryOrderByRelationAggregateInput
+    userGoals?: UserGoalOrderByRelationAggregateInput
+    carePlans?: CarePlanOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -13171,6 +17017,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionListRelationFilter
     crisisLogs?: CrisisLogListRelationFilter
     usageLogs?: UsageLogListRelationFilter
+    memoryEntries?: MemoryEntryListRelationFilter
+    userGoals?: UserGoalListRelationFilter
+    carePlans?: CarePlanListRelationFilter
   }, "id" | "email" | "googleId">
 
   export type UserOrderByWithAggregationInput = {
@@ -13799,6 +17648,78 @@ export namespace Prisma {
     timestamp?: DateTimeWithAggregatesFilter<"UsageLog"> | Date | string
   }
 
+  export type MemoryEntryWhereInput = {
+    AND?: MemoryEntryWhereInput | MemoryEntryWhereInput[]
+    OR?: MemoryEntryWhereInput[]
+    NOT?: MemoryEntryWhereInput | MemoryEntryWhereInput[]
+    id?: StringFilter<"MemoryEntry"> | string
+    userId?: StringFilter<"MemoryEntry"> | string
+    content?: StringFilter<"MemoryEntry"> | string
+    importance?: IntFilter<"MemoryEntry"> | number
+    category?: StringNullableFilter<"MemoryEntry"> | string | null
+    embedding?: JsonNullableFilter<"MemoryEntry">
+    timestamp?: DateTimeFilter<"MemoryEntry"> | Date | string
+    updatedAt?: DateTimeFilter<"MemoryEntry"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type MemoryEntryOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    importance?: SortOrder
+    category?: SortOrderInput | SortOrder
+    embedding?: SortOrderInput | SortOrder
+    timestamp?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type MemoryEntryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MemoryEntryWhereInput | MemoryEntryWhereInput[]
+    OR?: MemoryEntryWhereInput[]
+    NOT?: MemoryEntryWhereInput | MemoryEntryWhereInput[]
+    userId?: StringFilter<"MemoryEntry"> | string
+    content?: StringFilter<"MemoryEntry"> | string
+    importance?: IntFilter<"MemoryEntry"> | number
+    category?: StringNullableFilter<"MemoryEntry"> | string | null
+    embedding?: JsonNullableFilter<"MemoryEntry">
+    timestamp?: DateTimeFilter<"MemoryEntry"> | Date | string
+    updatedAt?: DateTimeFilter<"MemoryEntry"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type MemoryEntryOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    importance?: SortOrder
+    category?: SortOrderInput | SortOrder
+    embedding?: SortOrderInput | SortOrder
+    timestamp?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MemoryEntryCountOrderByAggregateInput
+    _avg?: MemoryEntryAvgOrderByAggregateInput
+    _max?: MemoryEntryMaxOrderByAggregateInput
+    _min?: MemoryEntryMinOrderByAggregateInput
+    _sum?: MemoryEntrySumOrderByAggregateInput
+  }
+
+  export type MemoryEntryScalarWhereWithAggregatesInput = {
+    AND?: MemoryEntryScalarWhereWithAggregatesInput | MemoryEntryScalarWhereWithAggregatesInput[]
+    OR?: MemoryEntryScalarWhereWithAggregatesInput[]
+    NOT?: MemoryEntryScalarWhereWithAggregatesInput | MemoryEntryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MemoryEntry"> | string
+    userId?: StringWithAggregatesFilter<"MemoryEntry"> | string
+    content?: StringWithAggregatesFilter<"MemoryEntry"> | string
+    importance?: IntWithAggregatesFilter<"MemoryEntry"> | number
+    category?: StringNullableWithAggregatesFilter<"MemoryEntry"> | string | null
+    embedding?: JsonNullableWithAggregatesFilter<"MemoryEntry">
+    timestamp?: DateTimeWithAggregatesFilter<"MemoryEntry"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MemoryEntry"> | Date | string
+  }
+
   export type AcademicEventWhereInput = {
     AND?: AcademicEventWhereInput | AcademicEventWhereInput[]
     OR?: AcademicEventWhereInput[]
@@ -13858,6 +17779,166 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"AcademicEvent"> | Date | string
   }
 
+  export type UserGoalWhereInput = {
+    AND?: UserGoalWhereInput | UserGoalWhereInput[]
+    OR?: UserGoalWhereInput[]
+    NOT?: UserGoalWhereInput | UserGoalWhereInput[]
+    id?: StringFilter<"UserGoal"> | string
+    userId?: StringFilter<"UserGoal"> | string
+    title?: StringFilter<"UserGoal"> | string
+    type?: EnumGoalFilter<"UserGoal"> | $Enums.Goal
+    status?: EnumGoalStatusFilter<"UserGoal"> | $Enums.GoalStatus
+    progress?: IntFilter<"UserGoal"> | number
+    targetDate?: DateTimeNullableFilter<"UserGoal"> | Date | string | null
+    milestones?: JsonNullableFilter<"UserGoal">
+    createdAt?: DateTimeFilter<"UserGoal"> | Date | string
+    updatedAt?: DateTimeFilter<"UserGoal"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserGoalOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    progress?: SortOrder
+    targetDate?: SortOrderInput | SortOrder
+    milestones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserGoalWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: UserGoalWhereInput | UserGoalWhereInput[]
+    OR?: UserGoalWhereInput[]
+    NOT?: UserGoalWhereInput | UserGoalWhereInput[]
+    userId?: StringFilter<"UserGoal"> | string
+    title?: StringFilter<"UserGoal"> | string
+    type?: EnumGoalFilter<"UserGoal"> | $Enums.Goal
+    status?: EnumGoalStatusFilter<"UserGoal"> | $Enums.GoalStatus
+    progress?: IntFilter<"UserGoal"> | number
+    targetDate?: DateTimeNullableFilter<"UserGoal"> | Date | string | null
+    milestones?: JsonNullableFilter<"UserGoal">
+    createdAt?: DateTimeFilter<"UserGoal"> | Date | string
+    updatedAt?: DateTimeFilter<"UserGoal"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type UserGoalOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    progress?: SortOrder
+    targetDate?: SortOrderInput | SortOrder
+    milestones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserGoalCountOrderByAggregateInput
+    _avg?: UserGoalAvgOrderByAggregateInput
+    _max?: UserGoalMaxOrderByAggregateInput
+    _min?: UserGoalMinOrderByAggregateInput
+    _sum?: UserGoalSumOrderByAggregateInput
+  }
+
+  export type UserGoalScalarWhereWithAggregatesInput = {
+    AND?: UserGoalScalarWhereWithAggregatesInput | UserGoalScalarWhereWithAggregatesInput[]
+    OR?: UserGoalScalarWhereWithAggregatesInput[]
+    NOT?: UserGoalScalarWhereWithAggregatesInput | UserGoalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserGoal"> | string
+    userId?: StringWithAggregatesFilter<"UserGoal"> | string
+    title?: StringWithAggregatesFilter<"UserGoal"> | string
+    type?: EnumGoalWithAggregatesFilter<"UserGoal"> | $Enums.Goal
+    status?: EnumGoalStatusWithAggregatesFilter<"UserGoal"> | $Enums.GoalStatus
+    progress?: IntWithAggregatesFilter<"UserGoal"> | number
+    targetDate?: DateTimeNullableWithAggregatesFilter<"UserGoal"> | Date | string | null
+    milestones?: JsonNullableWithAggregatesFilter<"UserGoal">
+    createdAt?: DateTimeWithAggregatesFilter<"UserGoal"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserGoal"> | Date | string
+  }
+
+  export type CarePlanWhereInput = {
+    AND?: CarePlanWhereInput | CarePlanWhereInput[]
+    OR?: CarePlanWhereInput[]
+    NOT?: CarePlanWhereInput | CarePlanWhereInput[]
+    id?: StringFilter<"CarePlan"> | string
+    userId?: StringFilter<"CarePlan"> | string
+    weekNumber?: IntFilter<"CarePlan"> | number
+    year?: IntFilter<"CarePlan"> | number
+    summary?: StringFilter<"CarePlan"> | string
+    moodAnalysis?: JsonNullableFilter<"CarePlan">
+    growthTasks?: JsonFilter<"CarePlan">
+    generatedAt?: DateTimeFilter<"CarePlan"> | Date | string
+    updatedAt?: DateTimeFilter<"CarePlan"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type CarePlanOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    weekNumber?: SortOrder
+    year?: SortOrder
+    summary?: SortOrder
+    moodAnalysis?: SortOrderInput | SortOrder
+    growthTasks?: SortOrder
+    generatedAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type CarePlanWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_weekNumber_year?: CarePlanUserIdWeekNumberYearCompoundUniqueInput
+    AND?: CarePlanWhereInput | CarePlanWhereInput[]
+    OR?: CarePlanWhereInput[]
+    NOT?: CarePlanWhereInput | CarePlanWhereInput[]
+    userId?: StringFilter<"CarePlan"> | string
+    weekNumber?: IntFilter<"CarePlan"> | number
+    year?: IntFilter<"CarePlan"> | number
+    summary?: StringFilter<"CarePlan"> | string
+    moodAnalysis?: JsonNullableFilter<"CarePlan">
+    growthTasks?: JsonFilter<"CarePlan">
+    generatedAt?: DateTimeFilter<"CarePlan"> | Date | string
+    updatedAt?: DateTimeFilter<"CarePlan"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_weekNumber_year">
+
+  export type CarePlanOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    weekNumber?: SortOrder
+    year?: SortOrder
+    summary?: SortOrder
+    moodAnalysis?: SortOrderInput | SortOrder
+    growthTasks?: SortOrder
+    generatedAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CarePlanCountOrderByAggregateInput
+    _avg?: CarePlanAvgOrderByAggregateInput
+    _max?: CarePlanMaxOrderByAggregateInput
+    _min?: CarePlanMinOrderByAggregateInput
+    _sum?: CarePlanSumOrderByAggregateInput
+  }
+
+  export type CarePlanScalarWhereWithAggregatesInput = {
+    AND?: CarePlanScalarWhereWithAggregatesInput | CarePlanScalarWhereWithAggregatesInput[]
+    OR?: CarePlanScalarWhereWithAggregatesInput[]
+    NOT?: CarePlanScalarWhereWithAggregatesInput | CarePlanScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CarePlan"> | string
+    userId?: StringWithAggregatesFilter<"CarePlan"> | string
+    weekNumber?: IntWithAggregatesFilter<"CarePlan"> | number
+    year?: IntWithAggregatesFilter<"CarePlan"> | number
+    summary?: StringWithAggregatesFilter<"CarePlan"> | string
+    moodAnalysis?: JsonNullableWithAggregatesFilter<"CarePlan">
+    growthTasks?: JsonWithAggregatesFilter<"CarePlan">
+    generatedAt?: DateTimeWithAggregatesFilter<"CarePlan"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CarePlan"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -13902,6 +17983,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -13948,6 +18032,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUncheckedCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogUncheckedCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogUncheckedCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryUncheckedCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalUncheckedCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -13994,6 +18081,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -14040,6 +18130,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUncheckedUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUncheckedUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUncheckedUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUncheckedUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUncheckedUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -14747,6 +18840,82 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MemoryEntryCreateInput = {
+    id?: string
+    content: string
+    importance?: number
+    category?: string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutMemoryEntriesInput
+  }
+
+  export type MemoryEntryUncheckedCreateInput = {
+    id?: string
+    userId: string
+    content: string
+    importance?: number
+    category?: string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MemoryEntryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    importance?: IntFieldUpdateOperationsInput | number
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMemoryEntriesNestedInput
+  }
+
+  export type MemoryEntryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    importance?: IntFieldUpdateOperationsInput | number
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MemoryEntryCreateManyInput = {
+    id?: string
+    userId: string
+    content: string
+    importance?: number
+    category?: string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MemoryEntryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    importance?: IntFieldUpdateOperationsInput | number
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MemoryEntryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    importance?: IntFieldUpdateOperationsInput | number
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AcademicEventCreateInput = {
     id?: string
     title: string
@@ -14808,6 +18977,179 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     importance?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserGoalCreateInput = {
+    id?: string
+    title: string
+    type: $Enums.Goal
+    status?: $Enums.GoalStatus
+    progress?: number
+    targetDate?: Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutUserGoalsInput
+  }
+
+  export type UserGoalUncheckedCreateInput = {
+    id?: string
+    userId: string
+    title: string
+    type: $Enums.Goal
+    status?: $Enums.GoalStatus
+    progress?: number
+    targetDate?: Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserGoalUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: EnumGoalFieldUpdateOperationsInput | $Enums.Goal
+    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
+    progress?: IntFieldUpdateOperationsInput | number
+    targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUserGoalsNestedInput
+  }
+
+  export type UserGoalUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: EnumGoalFieldUpdateOperationsInput | $Enums.Goal
+    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
+    progress?: IntFieldUpdateOperationsInput | number
+    targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserGoalCreateManyInput = {
+    id?: string
+    userId: string
+    title: string
+    type: $Enums.Goal
+    status?: $Enums.GoalStatus
+    progress?: number
+    targetDate?: Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserGoalUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: EnumGoalFieldUpdateOperationsInput | $Enums.Goal
+    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
+    progress?: IntFieldUpdateOperationsInput | number
+    targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserGoalUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: EnumGoalFieldUpdateOperationsInput | $Enums.Goal
+    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
+    progress?: IntFieldUpdateOperationsInput | number
+    targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarePlanCreateInput = {
+    id?: string
+    weekNumber: number
+    year: number
+    summary: string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks: JsonNullValueInput | InputJsonValue
+    generatedAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCarePlansInput
+  }
+
+  export type CarePlanUncheckedCreateInput = {
+    id?: string
+    userId: string
+    weekNumber: number
+    year: number
+    summary: string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks: JsonNullValueInput | InputJsonValue
+    generatedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarePlanUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weekNumber?: IntFieldUpdateOperationsInput | number
+    year?: IntFieldUpdateOperationsInput | number
+    summary?: StringFieldUpdateOperationsInput | string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks?: JsonNullValueInput | InputJsonValue
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCarePlansNestedInput
+  }
+
+  export type CarePlanUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    weekNumber?: IntFieldUpdateOperationsInput | number
+    year?: IntFieldUpdateOperationsInput | number
+    summary?: StringFieldUpdateOperationsInput | string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks?: JsonNullValueInput | InputJsonValue
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarePlanCreateManyInput = {
+    id?: string
+    userId: string
+    weekNumber: number
+    year: number
+    summary: string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks: JsonNullValueInput | InputJsonValue
+    generatedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarePlanUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weekNumber?: IntFieldUpdateOperationsInput | number
+    year?: IntFieldUpdateOperationsInput | number
+    summary?: StringFieldUpdateOperationsInput | string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks?: JsonNullValueInput | InputJsonValue
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarePlanUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    weekNumber?: IntFieldUpdateOperationsInput | number
+    year?: IntFieldUpdateOperationsInput | number
+    summary?: StringFieldUpdateOperationsInput | string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks?: JsonNullValueInput | InputJsonValue
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -15027,6 +19369,24 @@ export namespace Prisma {
     none?: UsageLogWhereInput
   }
 
+  export type MemoryEntryListRelationFilter = {
+    every?: MemoryEntryWhereInput
+    some?: MemoryEntryWhereInput
+    none?: MemoryEntryWhereInput
+  }
+
+  export type UserGoalListRelationFilter = {
+    every?: UserGoalWhereInput
+    some?: UserGoalWhereInput
+    none?: UserGoalWhereInput
+  }
+
+  export type CarePlanListRelationFilter = {
+    every?: CarePlanWhereInput
+    some?: CarePlanWhereInput
+    none?: CarePlanWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -15053,6 +19413,18 @@ export namespace Prisma {
   }
 
   export type UsageLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MemoryEntryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserGoalOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CarePlanOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15870,6 +20242,45 @@ export namespace Prisma {
     _max?: NestedEnumServiceFilter<$PrismaModel>
   }
 
+  export type MemoryEntryCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    importance?: SortOrder
+    category?: SortOrder
+    embedding?: SortOrder
+    timestamp?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MemoryEntryAvgOrderByAggregateInput = {
+    importance?: SortOrder
+  }
+
+  export type MemoryEntryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    importance?: SortOrder
+    category?: SortOrder
+    timestamp?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MemoryEntryMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    importance?: SortOrder
+    category?: SortOrder
+    timestamp?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MemoryEntrySumOrderByAggregateInput = {
+    importance?: SortOrder
+  }
+
   export type AcademicEventCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -15903,6 +20314,133 @@ export namespace Prisma {
 
   export type AcademicEventSumOrderByAggregateInput = {
     importance?: SortOrder
+  }
+
+  export type EnumGoalFilter<$PrismaModel = never> = {
+    equals?: $Enums.Goal | EnumGoalFieldRefInput<$PrismaModel>
+    in?: $Enums.Goal[] | ListEnumGoalFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Goal[] | ListEnumGoalFieldRefInput<$PrismaModel>
+    not?: NestedEnumGoalFilter<$PrismaModel> | $Enums.Goal
+  }
+
+  export type EnumGoalStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.GoalStatus | EnumGoalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumGoalStatusFilter<$PrismaModel> | $Enums.GoalStatus
+  }
+
+  export type UserGoalCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    progress?: SortOrder
+    targetDate?: SortOrder
+    milestones?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserGoalAvgOrderByAggregateInput = {
+    progress?: SortOrder
+  }
+
+  export type UserGoalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    progress?: SortOrder
+    targetDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserGoalMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    progress?: SortOrder
+    targetDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserGoalSumOrderByAggregateInput = {
+    progress?: SortOrder
+  }
+
+  export type EnumGoalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Goal | EnumGoalFieldRefInput<$PrismaModel>
+    in?: $Enums.Goal[] | ListEnumGoalFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Goal[] | ListEnumGoalFieldRefInput<$PrismaModel>
+    not?: NestedEnumGoalWithAggregatesFilter<$PrismaModel> | $Enums.Goal
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGoalFilter<$PrismaModel>
+    _max?: NestedEnumGoalFilter<$PrismaModel>
+  }
+
+  export type EnumGoalStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GoalStatus | EnumGoalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumGoalStatusWithAggregatesFilter<$PrismaModel> | $Enums.GoalStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGoalStatusFilter<$PrismaModel>
+    _max?: NestedEnumGoalStatusFilter<$PrismaModel>
+  }
+
+  export type CarePlanUserIdWeekNumberYearCompoundUniqueInput = {
+    userId: string
+    weekNumber: number
+    year: number
+  }
+
+  export type CarePlanCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    weekNumber?: SortOrder
+    year?: SortOrder
+    summary?: SortOrder
+    moodAnalysis?: SortOrder
+    growthTasks?: SortOrder
+    generatedAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CarePlanAvgOrderByAggregateInput = {
+    weekNumber?: SortOrder
+    year?: SortOrder
+  }
+
+  export type CarePlanMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    weekNumber?: SortOrder
+    year?: SortOrder
+    summary?: SortOrder
+    generatedAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CarePlanMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    weekNumber?: SortOrder
+    year?: SortOrder
+    summary?: SortOrder
+    generatedAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CarePlanSumOrderByAggregateInput = {
+    weekNumber?: SortOrder
+    year?: SortOrder
   }
 
   export type UserCreateconcernsInput = {
@@ -15959,6 +20497,27 @@ export namespace Prisma {
     connect?: UsageLogWhereUniqueInput | UsageLogWhereUniqueInput[]
   }
 
+  export type MemoryEntryCreateNestedManyWithoutUserInput = {
+    create?: XOR<MemoryEntryCreateWithoutUserInput, MemoryEntryUncheckedCreateWithoutUserInput> | MemoryEntryCreateWithoutUserInput[] | MemoryEntryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MemoryEntryCreateOrConnectWithoutUserInput | MemoryEntryCreateOrConnectWithoutUserInput[]
+    createMany?: MemoryEntryCreateManyUserInputEnvelope
+    connect?: MemoryEntryWhereUniqueInput | MemoryEntryWhereUniqueInput[]
+  }
+
+  export type UserGoalCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserGoalCreateWithoutUserInput, UserGoalUncheckedCreateWithoutUserInput> | UserGoalCreateWithoutUserInput[] | UserGoalUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserGoalCreateOrConnectWithoutUserInput | UserGoalCreateOrConnectWithoutUserInput[]
+    createMany?: UserGoalCreateManyUserInputEnvelope
+    connect?: UserGoalWhereUniqueInput | UserGoalWhereUniqueInput[]
+  }
+
+  export type CarePlanCreateNestedManyWithoutUserInput = {
+    create?: XOR<CarePlanCreateWithoutUserInput, CarePlanUncheckedCreateWithoutUserInput> | CarePlanCreateWithoutUserInput[] | CarePlanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CarePlanCreateOrConnectWithoutUserInput | CarePlanCreateOrConnectWithoutUserInput[]
+    createMany?: CarePlanCreateManyUserInputEnvelope
+    connect?: CarePlanWhereUniqueInput | CarePlanWhereUniqueInput[]
+  }
+
   export type ConversationUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ConversationCreateWithoutUserInput, ConversationUncheckedCreateWithoutUserInput> | ConversationCreateWithoutUserInput[] | ConversationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutUserInput | ConversationCreateOrConnectWithoutUserInput[]
@@ -15999,6 +20558,27 @@ export namespace Prisma {
     connectOrCreate?: UsageLogCreateOrConnectWithoutUserInput | UsageLogCreateOrConnectWithoutUserInput[]
     createMany?: UsageLogCreateManyUserInputEnvelope
     connect?: UsageLogWhereUniqueInput | UsageLogWhereUniqueInput[]
+  }
+
+  export type MemoryEntryUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<MemoryEntryCreateWithoutUserInput, MemoryEntryUncheckedCreateWithoutUserInput> | MemoryEntryCreateWithoutUserInput[] | MemoryEntryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MemoryEntryCreateOrConnectWithoutUserInput | MemoryEntryCreateOrConnectWithoutUserInput[]
+    createMany?: MemoryEntryCreateManyUserInputEnvelope
+    connect?: MemoryEntryWhereUniqueInput | MemoryEntryWhereUniqueInput[]
+  }
+
+  export type UserGoalUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserGoalCreateWithoutUserInput, UserGoalUncheckedCreateWithoutUserInput> | UserGoalCreateWithoutUserInput[] | UserGoalUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserGoalCreateOrConnectWithoutUserInput | UserGoalCreateOrConnectWithoutUserInput[]
+    createMany?: UserGoalCreateManyUserInputEnvelope
+    connect?: UserGoalWhereUniqueInput | UserGoalWhereUniqueInput[]
+  }
+
+  export type CarePlanUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CarePlanCreateWithoutUserInput, CarePlanUncheckedCreateWithoutUserInput> | CarePlanCreateWithoutUserInput[] | CarePlanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CarePlanCreateOrConnectWithoutUserInput | CarePlanCreateOrConnectWithoutUserInput[]
+    createMany?: CarePlanCreateManyUserInputEnvelope
+    connect?: CarePlanWhereUniqueInput | CarePlanWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -16168,6 +20748,48 @@ export namespace Prisma {
     deleteMany?: UsageLogScalarWhereInput | UsageLogScalarWhereInput[]
   }
 
+  export type MemoryEntryUpdateManyWithoutUserNestedInput = {
+    create?: XOR<MemoryEntryCreateWithoutUserInput, MemoryEntryUncheckedCreateWithoutUserInput> | MemoryEntryCreateWithoutUserInput[] | MemoryEntryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MemoryEntryCreateOrConnectWithoutUserInput | MemoryEntryCreateOrConnectWithoutUserInput[]
+    upsert?: MemoryEntryUpsertWithWhereUniqueWithoutUserInput | MemoryEntryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: MemoryEntryCreateManyUserInputEnvelope
+    set?: MemoryEntryWhereUniqueInput | MemoryEntryWhereUniqueInput[]
+    disconnect?: MemoryEntryWhereUniqueInput | MemoryEntryWhereUniqueInput[]
+    delete?: MemoryEntryWhereUniqueInput | MemoryEntryWhereUniqueInput[]
+    connect?: MemoryEntryWhereUniqueInput | MemoryEntryWhereUniqueInput[]
+    update?: MemoryEntryUpdateWithWhereUniqueWithoutUserInput | MemoryEntryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: MemoryEntryUpdateManyWithWhereWithoutUserInput | MemoryEntryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: MemoryEntryScalarWhereInput | MemoryEntryScalarWhereInput[]
+  }
+
+  export type UserGoalUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserGoalCreateWithoutUserInput, UserGoalUncheckedCreateWithoutUserInput> | UserGoalCreateWithoutUserInput[] | UserGoalUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserGoalCreateOrConnectWithoutUserInput | UserGoalCreateOrConnectWithoutUserInput[]
+    upsert?: UserGoalUpsertWithWhereUniqueWithoutUserInput | UserGoalUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserGoalCreateManyUserInputEnvelope
+    set?: UserGoalWhereUniqueInput | UserGoalWhereUniqueInput[]
+    disconnect?: UserGoalWhereUniqueInput | UserGoalWhereUniqueInput[]
+    delete?: UserGoalWhereUniqueInput | UserGoalWhereUniqueInput[]
+    connect?: UserGoalWhereUniqueInput | UserGoalWhereUniqueInput[]
+    update?: UserGoalUpdateWithWhereUniqueWithoutUserInput | UserGoalUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserGoalUpdateManyWithWhereWithoutUserInput | UserGoalUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserGoalScalarWhereInput | UserGoalScalarWhereInput[]
+  }
+
+  export type CarePlanUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CarePlanCreateWithoutUserInput, CarePlanUncheckedCreateWithoutUserInput> | CarePlanCreateWithoutUserInput[] | CarePlanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CarePlanCreateOrConnectWithoutUserInput | CarePlanCreateOrConnectWithoutUserInput[]
+    upsert?: CarePlanUpsertWithWhereUniqueWithoutUserInput | CarePlanUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CarePlanCreateManyUserInputEnvelope
+    set?: CarePlanWhereUniqueInput | CarePlanWhereUniqueInput[]
+    disconnect?: CarePlanWhereUniqueInput | CarePlanWhereUniqueInput[]
+    delete?: CarePlanWhereUniqueInput | CarePlanWhereUniqueInput[]
+    connect?: CarePlanWhereUniqueInput | CarePlanWhereUniqueInput[]
+    update?: CarePlanUpdateWithWhereUniqueWithoutUserInput | CarePlanUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CarePlanUpdateManyWithWhereWithoutUserInput | CarePlanUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CarePlanScalarWhereInput | CarePlanScalarWhereInput[]
+  }
+
   export type ConversationUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<ConversationCreateWithoutUserInput, ConversationUncheckedCreateWithoutUserInput> | ConversationCreateWithoutUserInput[] | ConversationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutUserInput | ConversationCreateOrConnectWithoutUserInput[]
@@ -16250,6 +20872,48 @@ export namespace Prisma {
     update?: UsageLogUpdateWithWhereUniqueWithoutUserInput | UsageLogUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UsageLogUpdateManyWithWhereWithoutUserInput | UsageLogUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UsageLogScalarWhereInput | UsageLogScalarWhereInput[]
+  }
+
+  export type MemoryEntryUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<MemoryEntryCreateWithoutUserInput, MemoryEntryUncheckedCreateWithoutUserInput> | MemoryEntryCreateWithoutUserInput[] | MemoryEntryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: MemoryEntryCreateOrConnectWithoutUserInput | MemoryEntryCreateOrConnectWithoutUserInput[]
+    upsert?: MemoryEntryUpsertWithWhereUniqueWithoutUserInput | MemoryEntryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: MemoryEntryCreateManyUserInputEnvelope
+    set?: MemoryEntryWhereUniqueInput | MemoryEntryWhereUniqueInput[]
+    disconnect?: MemoryEntryWhereUniqueInput | MemoryEntryWhereUniqueInput[]
+    delete?: MemoryEntryWhereUniqueInput | MemoryEntryWhereUniqueInput[]
+    connect?: MemoryEntryWhereUniqueInput | MemoryEntryWhereUniqueInput[]
+    update?: MemoryEntryUpdateWithWhereUniqueWithoutUserInput | MemoryEntryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: MemoryEntryUpdateManyWithWhereWithoutUserInput | MemoryEntryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: MemoryEntryScalarWhereInput | MemoryEntryScalarWhereInput[]
+  }
+
+  export type UserGoalUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserGoalCreateWithoutUserInput, UserGoalUncheckedCreateWithoutUserInput> | UserGoalCreateWithoutUserInput[] | UserGoalUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserGoalCreateOrConnectWithoutUserInput | UserGoalCreateOrConnectWithoutUserInput[]
+    upsert?: UserGoalUpsertWithWhereUniqueWithoutUserInput | UserGoalUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserGoalCreateManyUserInputEnvelope
+    set?: UserGoalWhereUniqueInput | UserGoalWhereUniqueInput[]
+    disconnect?: UserGoalWhereUniqueInput | UserGoalWhereUniqueInput[]
+    delete?: UserGoalWhereUniqueInput | UserGoalWhereUniqueInput[]
+    connect?: UserGoalWhereUniqueInput | UserGoalWhereUniqueInput[]
+    update?: UserGoalUpdateWithWhereUniqueWithoutUserInput | UserGoalUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserGoalUpdateManyWithWhereWithoutUserInput | UserGoalUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserGoalScalarWhereInput | UserGoalScalarWhereInput[]
+  }
+
+  export type CarePlanUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CarePlanCreateWithoutUserInput, CarePlanUncheckedCreateWithoutUserInput> | CarePlanCreateWithoutUserInput[] | CarePlanUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CarePlanCreateOrConnectWithoutUserInput | CarePlanCreateOrConnectWithoutUserInput[]
+    upsert?: CarePlanUpsertWithWhereUniqueWithoutUserInput | CarePlanUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CarePlanCreateManyUserInputEnvelope
+    set?: CarePlanWhereUniqueInput | CarePlanWhereUniqueInput[]
+    disconnect?: CarePlanWhereUniqueInput | CarePlanWhereUniqueInput[]
+    delete?: CarePlanWhereUniqueInput | CarePlanWhereUniqueInput[]
+    connect?: CarePlanWhereUniqueInput | CarePlanWhereUniqueInput[]
+    update?: CarePlanUpdateWithWhereUniqueWithoutUserInput | CarePlanUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CarePlanUpdateManyWithWhereWithoutUserInput | CarePlanUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CarePlanScalarWhereInput | CarePlanScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutConversationsInput = {
@@ -16427,6 +21091,56 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutUsageLogsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUsageLogsInput, UserUpdateWithoutUsageLogsInput>, UserUncheckedUpdateWithoutUsageLogsInput>
+  }
+
+  export type UserCreateNestedOneWithoutMemoryEntriesInput = {
+    create?: XOR<UserCreateWithoutMemoryEntriesInput, UserUncheckedCreateWithoutMemoryEntriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMemoryEntriesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutMemoryEntriesNestedInput = {
+    create?: XOR<UserCreateWithoutMemoryEntriesInput, UserUncheckedCreateWithoutMemoryEntriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMemoryEntriesInput
+    upsert?: UserUpsertWithoutMemoryEntriesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMemoryEntriesInput, UserUpdateWithoutMemoryEntriesInput>, UserUncheckedUpdateWithoutMemoryEntriesInput>
+  }
+
+  export type UserCreateNestedOneWithoutUserGoalsInput = {
+    create?: XOR<UserCreateWithoutUserGoalsInput, UserUncheckedCreateWithoutUserGoalsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserGoalsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumGoalFieldUpdateOperationsInput = {
+    set?: $Enums.Goal
+  }
+
+  export type EnumGoalStatusFieldUpdateOperationsInput = {
+    set?: $Enums.GoalStatus
+  }
+
+  export type UserUpdateOneRequiredWithoutUserGoalsNestedInput = {
+    create?: XOR<UserCreateWithoutUserGoalsInput, UserUncheckedCreateWithoutUserGoalsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserGoalsInput
+    upsert?: UserUpsertWithoutUserGoalsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserGoalsInput, UserUpdateWithoutUserGoalsInput>, UserUncheckedUpdateWithoutUserGoalsInput>
+  }
+
+  export type UserCreateNestedOneWithoutCarePlansInput = {
+    create?: XOR<UserCreateWithoutCarePlansInput, UserUncheckedCreateWithoutCarePlansInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCarePlansInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutCarePlansNestedInput = {
+    create?: XOR<UserCreateWithoutCarePlansInput, UserUncheckedCreateWithoutCarePlansInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCarePlansInput
+    upsert?: UserUpsertWithoutCarePlansInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCarePlansInput, UserUpdateWithoutCarePlansInput>, UserUncheckedUpdateWithoutCarePlansInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -16911,6 +21625,40 @@ export namespace Prisma {
     _max?: NestedEnumServiceFilter<$PrismaModel>
   }
 
+  export type NestedEnumGoalFilter<$PrismaModel = never> = {
+    equals?: $Enums.Goal | EnumGoalFieldRefInput<$PrismaModel>
+    in?: $Enums.Goal[] | ListEnumGoalFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Goal[] | ListEnumGoalFieldRefInput<$PrismaModel>
+    not?: NestedEnumGoalFilter<$PrismaModel> | $Enums.Goal
+  }
+
+  export type NestedEnumGoalStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.GoalStatus | EnumGoalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumGoalStatusFilter<$PrismaModel> | $Enums.GoalStatus
+  }
+
+  export type NestedEnumGoalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Goal | EnumGoalFieldRefInput<$PrismaModel>
+    in?: $Enums.Goal[] | ListEnumGoalFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Goal[] | ListEnumGoalFieldRefInput<$PrismaModel>
+    not?: NestedEnumGoalWithAggregatesFilter<$PrismaModel> | $Enums.Goal
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGoalFilter<$PrismaModel>
+    _max?: NestedEnumGoalFilter<$PrismaModel>
+  }
+
+  export type NestedEnumGoalStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GoalStatus | EnumGoalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumGoalStatusWithAggregatesFilter<$PrismaModel> | $Enums.GoalStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGoalStatusFilter<$PrismaModel>
+    _max?: NestedEnumGoalStatusFilter<$PrismaModel>
+  }
+
   export type ConversationCreateWithoutUserInput = {
     id?: string
     startedAt?: Date | string
@@ -17111,6 +21859,102 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MemoryEntryCreateWithoutUserInput = {
+    id?: string
+    content: string
+    importance?: number
+    category?: string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MemoryEntryUncheckedCreateWithoutUserInput = {
+    id?: string
+    content: string
+    importance?: number
+    category?: string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MemoryEntryCreateOrConnectWithoutUserInput = {
+    where: MemoryEntryWhereUniqueInput
+    create: XOR<MemoryEntryCreateWithoutUserInput, MemoryEntryUncheckedCreateWithoutUserInput>
+  }
+
+  export type MemoryEntryCreateManyUserInputEnvelope = {
+    data: MemoryEntryCreateManyUserInput | MemoryEntryCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserGoalCreateWithoutUserInput = {
+    id?: string
+    title: string
+    type: $Enums.Goal
+    status?: $Enums.GoalStatus
+    progress?: number
+    targetDate?: Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserGoalUncheckedCreateWithoutUserInput = {
+    id?: string
+    title: string
+    type: $Enums.Goal
+    status?: $Enums.GoalStatus
+    progress?: number
+    targetDate?: Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserGoalCreateOrConnectWithoutUserInput = {
+    where: UserGoalWhereUniqueInput
+    create: XOR<UserGoalCreateWithoutUserInput, UserGoalUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserGoalCreateManyUserInputEnvelope = {
+    data: UserGoalCreateManyUserInput | UserGoalCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CarePlanCreateWithoutUserInput = {
+    id?: string
+    weekNumber: number
+    year: number
+    summary: string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks: JsonNullValueInput | InputJsonValue
+    generatedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarePlanUncheckedCreateWithoutUserInput = {
+    id?: string
+    weekNumber: number
+    year: number
+    summary: string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks: JsonNullValueInput | InputJsonValue
+    generatedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarePlanCreateOrConnectWithoutUserInput = {
+    where: CarePlanWhereUniqueInput
+    create: XOR<CarePlanCreateWithoutUserInput, CarePlanUncheckedCreateWithoutUserInput>
+  }
+
+  export type CarePlanCreateManyUserInputEnvelope = {
+    data: CarePlanCreateManyUserInput | CarePlanCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ConversationUpsertWithWhereUniqueWithoutUserInput = {
     where: ConversationWhereUniqueInput
     update: XOR<ConversationUpdateWithoutUserInput, ConversationUncheckedUpdateWithoutUserInput>
@@ -17300,6 +22144,99 @@ export namespace Prisma {
     timestamp?: DateTimeFilter<"UsageLog"> | Date | string
   }
 
+  export type MemoryEntryUpsertWithWhereUniqueWithoutUserInput = {
+    where: MemoryEntryWhereUniqueInput
+    update: XOR<MemoryEntryUpdateWithoutUserInput, MemoryEntryUncheckedUpdateWithoutUserInput>
+    create: XOR<MemoryEntryCreateWithoutUserInput, MemoryEntryUncheckedCreateWithoutUserInput>
+  }
+
+  export type MemoryEntryUpdateWithWhereUniqueWithoutUserInput = {
+    where: MemoryEntryWhereUniqueInput
+    data: XOR<MemoryEntryUpdateWithoutUserInput, MemoryEntryUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MemoryEntryUpdateManyWithWhereWithoutUserInput = {
+    where: MemoryEntryScalarWhereInput
+    data: XOR<MemoryEntryUpdateManyMutationInput, MemoryEntryUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type MemoryEntryScalarWhereInput = {
+    AND?: MemoryEntryScalarWhereInput | MemoryEntryScalarWhereInput[]
+    OR?: MemoryEntryScalarWhereInput[]
+    NOT?: MemoryEntryScalarWhereInput | MemoryEntryScalarWhereInput[]
+    id?: StringFilter<"MemoryEntry"> | string
+    userId?: StringFilter<"MemoryEntry"> | string
+    content?: StringFilter<"MemoryEntry"> | string
+    importance?: IntFilter<"MemoryEntry"> | number
+    category?: StringNullableFilter<"MemoryEntry"> | string | null
+    embedding?: JsonNullableFilter<"MemoryEntry">
+    timestamp?: DateTimeFilter<"MemoryEntry"> | Date | string
+    updatedAt?: DateTimeFilter<"MemoryEntry"> | Date | string
+  }
+
+  export type UserGoalUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserGoalWhereUniqueInput
+    update: XOR<UserGoalUpdateWithoutUserInput, UserGoalUncheckedUpdateWithoutUserInput>
+    create: XOR<UserGoalCreateWithoutUserInput, UserGoalUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserGoalUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserGoalWhereUniqueInput
+    data: XOR<UserGoalUpdateWithoutUserInput, UserGoalUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserGoalUpdateManyWithWhereWithoutUserInput = {
+    where: UserGoalScalarWhereInput
+    data: XOR<UserGoalUpdateManyMutationInput, UserGoalUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserGoalScalarWhereInput = {
+    AND?: UserGoalScalarWhereInput | UserGoalScalarWhereInput[]
+    OR?: UserGoalScalarWhereInput[]
+    NOT?: UserGoalScalarWhereInput | UserGoalScalarWhereInput[]
+    id?: StringFilter<"UserGoal"> | string
+    userId?: StringFilter<"UserGoal"> | string
+    title?: StringFilter<"UserGoal"> | string
+    type?: EnumGoalFilter<"UserGoal"> | $Enums.Goal
+    status?: EnumGoalStatusFilter<"UserGoal"> | $Enums.GoalStatus
+    progress?: IntFilter<"UserGoal"> | number
+    targetDate?: DateTimeNullableFilter<"UserGoal"> | Date | string | null
+    milestones?: JsonNullableFilter<"UserGoal">
+    createdAt?: DateTimeFilter<"UserGoal"> | Date | string
+    updatedAt?: DateTimeFilter<"UserGoal"> | Date | string
+  }
+
+  export type CarePlanUpsertWithWhereUniqueWithoutUserInput = {
+    where: CarePlanWhereUniqueInput
+    update: XOR<CarePlanUpdateWithoutUserInput, CarePlanUncheckedUpdateWithoutUserInput>
+    create: XOR<CarePlanCreateWithoutUserInput, CarePlanUncheckedCreateWithoutUserInput>
+  }
+
+  export type CarePlanUpdateWithWhereUniqueWithoutUserInput = {
+    where: CarePlanWhereUniqueInput
+    data: XOR<CarePlanUpdateWithoutUserInput, CarePlanUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CarePlanUpdateManyWithWhereWithoutUserInput = {
+    where: CarePlanScalarWhereInput
+    data: XOR<CarePlanUpdateManyMutationInput, CarePlanUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CarePlanScalarWhereInput = {
+    AND?: CarePlanScalarWhereInput | CarePlanScalarWhereInput[]
+    OR?: CarePlanScalarWhereInput[]
+    NOT?: CarePlanScalarWhereInput | CarePlanScalarWhereInput[]
+    id?: StringFilter<"CarePlan"> | string
+    userId?: StringFilter<"CarePlan"> | string
+    weekNumber?: IntFilter<"CarePlan"> | number
+    year?: IntFilter<"CarePlan"> | number
+    summary?: StringFilter<"CarePlan"> | string
+    moodAnalysis?: JsonNullableFilter<"CarePlan">
+    growthTasks?: JsonFilter<"CarePlan">
+    generatedAt?: DateTimeFilter<"CarePlan"> | Date | string
+    updatedAt?: DateTimeFilter<"CarePlan"> | Date | string
+  }
+
   export type UserCreateWithoutConversationsInput = {
     id?: string
     email: string
@@ -17343,6 +22280,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutConversationsInput = {
@@ -17388,6 +22328,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUncheckedCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogUncheckedCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogUncheckedCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryUncheckedCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalUncheckedCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutConversationsInput = {
@@ -17475,6 +22418,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutConversationsInput = {
@@ -17520,6 +22466,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUncheckedUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUncheckedUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUncheckedUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUncheckedUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUncheckedUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -17661,6 +22610,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMoodEntriesInput = {
@@ -17706,6 +22658,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUncheckedCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogUncheckedCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogUncheckedCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryUncheckedCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalUncheckedCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMoodEntriesInput = {
@@ -17767,6 +22722,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMoodEntriesInput = {
@@ -17812,6 +22770,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUncheckedUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUncheckedUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUncheckedUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUncheckedUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUncheckedUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAssessmentsInput = {
@@ -17857,6 +22818,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssessmentsInput = {
@@ -17902,6 +22866,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUncheckedCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogUncheckedCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogUncheckedCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryUncheckedCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalUncheckedCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssessmentsInput = {
@@ -17963,6 +22930,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssessmentsInput = {
@@ -18008,6 +22978,9 @@ export namespace Prisma {
     aiInteractions?: AIInteractionUncheckedUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUncheckedUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUncheckedUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUncheckedUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUncheckedUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAiInteractionsInput = {
@@ -18053,6 +23026,9 @@ export namespace Prisma {
     assessments?: AssessmentCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAiInteractionsInput = {
@@ -18098,6 +23074,9 @@ export namespace Prisma {
     assessments?: AssessmentUncheckedCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogUncheckedCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogUncheckedCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryUncheckedCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalUncheckedCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAiInteractionsInput = {
@@ -18159,6 +23138,9 @@ export namespace Prisma {
     assessments?: AssessmentUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAiInteractionsInput = {
@@ -18204,6 +23186,9 @@ export namespace Prisma {
     assessments?: AssessmentUncheckedUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUncheckedUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUncheckedUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUncheckedUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUncheckedUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCrisisLogsInput = {
@@ -18249,6 +23234,9 @@ export namespace Prisma {
     assessments?: AssessmentCreateNestedManyWithoutUserInput
     aiInteractions?: AIInteractionCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCrisisLogsInput = {
@@ -18294,6 +23282,9 @@ export namespace Prisma {
     assessments?: AssessmentUncheckedCreateNestedManyWithoutUserInput
     aiInteractions?: AIInteractionUncheckedCreateNestedManyWithoutUserInput
     usageLogs?: UsageLogUncheckedCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryUncheckedCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalUncheckedCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCrisisLogsInput = {
@@ -18355,6 +23346,9 @@ export namespace Prisma {
     assessments?: AssessmentUpdateManyWithoutUserNestedInput
     aiInteractions?: AIInteractionUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCrisisLogsInput = {
@@ -18400,6 +23394,9 @@ export namespace Prisma {
     assessments?: AssessmentUncheckedUpdateManyWithoutUserNestedInput
     aiInteractions?: AIInteractionUncheckedUpdateManyWithoutUserNestedInput
     usageLogs?: UsageLogUncheckedUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUncheckedUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUncheckedUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutUsageLogsInput = {
@@ -18445,6 +23442,9 @@ export namespace Prisma {
     assessments?: AssessmentCreateNestedManyWithoutUserInput
     aiInteractions?: AIInteractionCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUsageLogsInput = {
@@ -18490,6 +23490,9 @@ export namespace Prisma {
     assessments?: AssessmentUncheckedCreateNestedManyWithoutUserInput
     aiInteractions?: AIInteractionUncheckedCreateNestedManyWithoutUserInput
     crisisLogs?: CrisisLogUncheckedCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryUncheckedCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalUncheckedCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUsageLogsInput = {
@@ -18551,6 +23554,9 @@ export namespace Prisma {
     assessments?: AssessmentUpdateManyWithoutUserNestedInput
     aiInteractions?: AIInteractionUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUsageLogsInput = {
@@ -18596,6 +23602,633 @@ export namespace Prisma {
     assessments?: AssessmentUncheckedUpdateManyWithoutUserNestedInput
     aiInteractions?: AIInteractionUncheckedUpdateManyWithoutUserNestedInput
     crisisLogs?: CrisisLogUncheckedUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUncheckedUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUncheckedUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutMemoryEntriesInput = {
+    id?: string
+    email: string
+    password?: string | null
+    googleId?: string | null
+    isVerified?: boolean
+    isAnonymous?: boolean
+    verificationToken?: string | null
+    image?: string | null
+    displayName?: string | null
+    university?: $Enums.University | null
+    academicLevel?: number | null
+    program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
+    language?: $Enums.Language
+    notificationPreference?: $Enums.NotificationFrequency
+    preferredCheckInTime?: $Enums.TimeOfDay
+    concerns?: UserCreateconcernsInput | $Enums.Concern[]
+    supportLevel?: $Enums.SupportLevel
+    riskLevel?: $Enums.RiskLevel
+    copingStyles?: UserCreatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: $Enums.FaithLevel
+    approachPreference?: $Enums.ApproachPreference
+    goals?: UserCreategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: Date | string
+    moodCheckInsCount?: number
+    conversationsCount?: number
+    lastActive?: Date | string | null
+    onboardingStep?: number
+    onboardingCompleted?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationCreateNestedManyWithoutUserInput
+    moodEntries?: MoodEntryCreateNestedManyWithoutUserInput
+    assessments?: AssessmentCreateNestedManyWithoutUserInput
+    aiInteractions?: AIInteractionCreateNestedManyWithoutUserInput
+    crisisLogs?: CrisisLogCreateNestedManyWithoutUserInput
+    usageLogs?: UsageLogCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutMemoryEntriesInput = {
+    id?: string
+    email: string
+    password?: string | null
+    googleId?: string | null
+    isVerified?: boolean
+    isAnonymous?: boolean
+    verificationToken?: string | null
+    image?: string | null
+    displayName?: string | null
+    university?: $Enums.University | null
+    academicLevel?: number | null
+    program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
+    language?: $Enums.Language
+    notificationPreference?: $Enums.NotificationFrequency
+    preferredCheckInTime?: $Enums.TimeOfDay
+    concerns?: UserCreateconcernsInput | $Enums.Concern[]
+    supportLevel?: $Enums.SupportLevel
+    riskLevel?: $Enums.RiskLevel
+    copingStyles?: UserCreatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: $Enums.FaithLevel
+    approachPreference?: $Enums.ApproachPreference
+    goals?: UserCreategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: Date | string
+    moodCheckInsCount?: number
+    conversationsCount?: number
+    lastActive?: Date | string | null
+    onboardingStep?: number
+    onboardingCompleted?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
+    moodEntries?: MoodEntryUncheckedCreateNestedManyWithoutUserInput
+    assessments?: AssessmentUncheckedCreateNestedManyWithoutUserInput
+    aiInteractions?: AIInteractionUncheckedCreateNestedManyWithoutUserInput
+    crisisLogs?: CrisisLogUncheckedCreateNestedManyWithoutUserInput
+    usageLogs?: UsageLogUncheckedCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalUncheckedCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutMemoryEntriesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMemoryEntriesInput, UserUncheckedCreateWithoutMemoryEntriesInput>
+  }
+
+  export type UserUpsertWithoutMemoryEntriesInput = {
+    update: XOR<UserUpdateWithoutMemoryEntriesInput, UserUncheckedUpdateWithoutMemoryEntriesInput>
+    create: XOR<UserCreateWithoutMemoryEntriesInput, UserUncheckedCreateWithoutMemoryEntriesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMemoryEntriesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMemoryEntriesInput, UserUncheckedUpdateWithoutMemoryEntriesInput>
+  }
+
+  export type UserUpdateWithoutMemoryEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
+    academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
+    program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
+    preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
+    concerns?: UserUpdateconcernsInput | $Enums.Concern[]
+    supportLevel?: EnumSupportLevelFieldUpdateOperationsInput | $Enums.SupportLevel
+    riskLevel?: EnumRiskLevelFieldUpdateOperationsInput | $Enums.RiskLevel
+    copingStyles?: UserUpdatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: EnumFaithLevelFieldUpdateOperationsInput | $Enums.FaithLevel
+    approachPreference?: EnumApproachPreferenceFieldUpdateOperationsInput | $Enums.ApproachPreference
+    goals?: UserUpdategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: NullableIntFieldUpdateOperationsInput | number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    moodCheckInsCount?: IntFieldUpdateOperationsInput | number
+    conversationsCount?: IntFieldUpdateOperationsInput | number
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUpdateManyWithoutUserNestedInput
+    moodEntries?: MoodEntryUpdateManyWithoutUserNestedInput
+    assessments?: AssessmentUpdateManyWithoutUserNestedInput
+    aiInteractions?: AIInteractionUpdateManyWithoutUserNestedInput
+    crisisLogs?: CrisisLogUpdateManyWithoutUserNestedInput
+    usageLogs?: UsageLogUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMemoryEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
+    academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
+    program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
+    preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
+    concerns?: UserUpdateconcernsInput | $Enums.Concern[]
+    supportLevel?: EnumSupportLevelFieldUpdateOperationsInput | $Enums.SupportLevel
+    riskLevel?: EnumRiskLevelFieldUpdateOperationsInput | $Enums.RiskLevel
+    copingStyles?: UserUpdatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: EnumFaithLevelFieldUpdateOperationsInput | $Enums.FaithLevel
+    approachPreference?: EnumApproachPreferenceFieldUpdateOperationsInput | $Enums.ApproachPreference
+    goals?: UserUpdategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: NullableIntFieldUpdateOperationsInput | number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    moodCheckInsCount?: IntFieldUpdateOperationsInput | number
+    conversationsCount?: IntFieldUpdateOperationsInput | number
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
+    moodEntries?: MoodEntryUncheckedUpdateManyWithoutUserNestedInput
+    assessments?: AssessmentUncheckedUpdateManyWithoutUserNestedInput
+    aiInteractions?: AIInteractionUncheckedUpdateManyWithoutUserNestedInput
+    crisisLogs?: CrisisLogUncheckedUpdateManyWithoutUserNestedInput
+    usageLogs?: UsageLogUncheckedUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUncheckedUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutUserGoalsInput = {
+    id?: string
+    email: string
+    password?: string | null
+    googleId?: string | null
+    isVerified?: boolean
+    isAnonymous?: boolean
+    verificationToken?: string | null
+    image?: string | null
+    displayName?: string | null
+    university?: $Enums.University | null
+    academicLevel?: number | null
+    program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
+    language?: $Enums.Language
+    notificationPreference?: $Enums.NotificationFrequency
+    preferredCheckInTime?: $Enums.TimeOfDay
+    concerns?: UserCreateconcernsInput | $Enums.Concern[]
+    supportLevel?: $Enums.SupportLevel
+    riskLevel?: $Enums.RiskLevel
+    copingStyles?: UserCreatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: $Enums.FaithLevel
+    approachPreference?: $Enums.ApproachPreference
+    goals?: UserCreategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: Date | string
+    moodCheckInsCount?: number
+    conversationsCount?: number
+    lastActive?: Date | string | null
+    onboardingStep?: number
+    onboardingCompleted?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationCreateNestedManyWithoutUserInput
+    moodEntries?: MoodEntryCreateNestedManyWithoutUserInput
+    assessments?: AssessmentCreateNestedManyWithoutUserInput
+    aiInteractions?: AIInteractionCreateNestedManyWithoutUserInput
+    crisisLogs?: CrisisLogCreateNestedManyWithoutUserInput
+    usageLogs?: UsageLogCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUserGoalsInput = {
+    id?: string
+    email: string
+    password?: string | null
+    googleId?: string | null
+    isVerified?: boolean
+    isAnonymous?: boolean
+    verificationToken?: string | null
+    image?: string | null
+    displayName?: string | null
+    university?: $Enums.University | null
+    academicLevel?: number | null
+    program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
+    language?: $Enums.Language
+    notificationPreference?: $Enums.NotificationFrequency
+    preferredCheckInTime?: $Enums.TimeOfDay
+    concerns?: UserCreateconcernsInput | $Enums.Concern[]
+    supportLevel?: $Enums.SupportLevel
+    riskLevel?: $Enums.RiskLevel
+    copingStyles?: UserCreatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: $Enums.FaithLevel
+    approachPreference?: $Enums.ApproachPreference
+    goals?: UserCreategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: Date | string
+    moodCheckInsCount?: number
+    conversationsCount?: number
+    lastActive?: Date | string | null
+    onboardingStep?: number
+    onboardingCompleted?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
+    moodEntries?: MoodEntryUncheckedCreateNestedManyWithoutUserInput
+    assessments?: AssessmentUncheckedCreateNestedManyWithoutUserInput
+    aiInteractions?: AIInteractionUncheckedCreateNestedManyWithoutUserInput
+    crisisLogs?: CrisisLogUncheckedCreateNestedManyWithoutUserInput
+    usageLogs?: UsageLogUncheckedCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryUncheckedCreateNestedManyWithoutUserInput
+    carePlans?: CarePlanUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUserGoalsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUserGoalsInput, UserUncheckedCreateWithoutUserGoalsInput>
+  }
+
+  export type UserUpsertWithoutUserGoalsInput = {
+    update: XOR<UserUpdateWithoutUserGoalsInput, UserUncheckedUpdateWithoutUserGoalsInput>
+    create: XOR<UserCreateWithoutUserGoalsInput, UserUncheckedCreateWithoutUserGoalsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserGoalsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserGoalsInput, UserUncheckedUpdateWithoutUserGoalsInput>
+  }
+
+  export type UserUpdateWithoutUserGoalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
+    academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
+    program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
+    preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
+    concerns?: UserUpdateconcernsInput | $Enums.Concern[]
+    supportLevel?: EnumSupportLevelFieldUpdateOperationsInput | $Enums.SupportLevel
+    riskLevel?: EnumRiskLevelFieldUpdateOperationsInput | $Enums.RiskLevel
+    copingStyles?: UserUpdatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: EnumFaithLevelFieldUpdateOperationsInput | $Enums.FaithLevel
+    approachPreference?: EnumApproachPreferenceFieldUpdateOperationsInput | $Enums.ApproachPreference
+    goals?: UserUpdategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: NullableIntFieldUpdateOperationsInput | number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    moodCheckInsCount?: IntFieldUpdateOperationsInput | number
+    conversationsCount?: IntFieldUpdateOperationsInput | number
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUpdateManyWithoutUserNestedInput
+    moodEntries?: MoodEntryUpdateManyWithoutUserNestedInput
+    assessments?: AssessmentUpdateManyWithoutUserNestedInput
+    aiInteractions?: AIInteractionUpdateManyWithoutUserNestedInput
+    crisisLogs?: CrisisLogUpdateManyWithoutUserNestedInput
+    usageLogs?: UsageLogUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserGoalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
+    academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
+    program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
+    preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
+    concerns?: UserUpdateconcernsInput | $Enums.Concern[]
+    supportLevel?: EnumSupportLevelFieldUpdateOperationsInput | $Enums.SupportLevel
+    riskLevel?: EnumRiskLevelFieldUpdateOperationsInput | $Enums.RiskLevel
+    copingStyles?: UserUpdatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: EnumFaithLevelFieldUpdateOperationsInput | $Enums.FaithLevel
+    approachPreference?: EnumApproachPreferenceFieldUpdateOperationsInput | $Enums.ApproachPreference
+    goals?: UserUpdategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: NullableIntFieldUpdateOperationsInput | number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    moodCheckInsCount?: IntFieldUpdateOperationsInput | number
+    conversationsCount?: IntFieldUpdateOperationsInput | number
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
+    moodEntries?: MoodEntryUncheckedUpdateManyWithoutUserNestedInput
+    assessments?: AssessmentUncheckedUpdateManyWithoutUserNestedInput
+    aiInteractions?: AIInteractionUncheckedUpdateManyWithoutUserNestedInput
+    crisisLogs?: CrisisLogUncheckedUpdateManyWithoutUserNestedInput
+    usageLogs?: UsageLogUncheckedUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUncheckedUpdateManyWithoutUserNestedInput
+    carePlans?: CarePlanUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutCarePlansInput = {
+    id?: string
+    email: string
+    password?: string | null
+    googleId?: string | null
+    isVerified?: boolean
+    isAnonymous?: boolean
+    verificationToken?: string | null
+    image?: string | null
+    displayName?: string | null
+    university?: $Enums.University | null
+    academicLevel?: number | null
+    program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
+    language?: $Enums.Language
+    notificationPreference?: $Enums.NotificationFrequency
+    preferredCheckInTime?: $Enums.TimeOfDay
+    concerns?: UserCreateconcernsInput | $Enums.Concern[]
+    supportLevel?: $Enums.SupportLevel
+    riskLevel?: $Enums.RiskLevel
+    copingStyles?: UserCreatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: $Enums.FaithLevel
+    approachPreference?: $Enums.ApproachPreference
+    goals?: UserCreategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: Date | string
+    moodCheckInsCount?: number
+    conversationsCount?: number
+    lastActive?: Date | string | null
+    onboardingStep?: number
+    onboardingCompleted?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationCreateNestedManyWithoutUserInput
+    moodEntries?: MoodEntryCreateNestedManyWithoutUserInput
+    assessments?: AssessmentCreateNestedManyWithoutUserInput
+    aiInteractions?: AIInteractionCreateNestedManyWithoutUserInput
+    crisisLogs?: CrisisLogCreateNestedManyWithoutUserInput
+    usageLogs?: UsageLogCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCarePlansInput = {
+    id?: string
+    email: string
+    password?: string | null
+    googleId?: string | null
+    isVerified?: boolean
+    isAnonymous?: boolean
+    verificationToken?: string | null
+    image?: string | null
+    displayName?: string | null
+    university?: $Enums.University | null
+    academicLevel?: number | null
+    program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
+    language?: $Enums.Language
+    notificationPreference?: $Enums.NotificationFrequency
+    preferredCheckInTime?: $Enums.TimeOfDay
+    concerns?: UserCreateconcernsInput | $Enums.Concern[]
+    supportLevel?: $Enums.SupportLevel
+    riskLevel?: $Enums.RiskLevel
+    copingStyles?: UserCreatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: $Enums.FaithLevel
+    approachPreference?: $Enums.ApproachPreference
+    goals?: UserCreategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: Date | string
+    moodCheckInsCount?: number
+    conversationsCount?: number
+    lastActive?: Date | string | null
+    onboardingStep?: number
+    onboardingCompleted?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
+    moodEntries?: MoodEntryUncheckedCreateNestedManyWithoutUserInput
+    assessments?: AssessmentUncheckedCreateNestedManyWithoutUserInput
+    aiInteractions?: AIInteractionUncheckedCreateNestedManyWithoutUserInput
+    crisisLogs?: CrisisLogUncheckedCreateNestedManyWithoutUserInput
+    usageLogs?: UsageLogUncheckedCreateNestedManyWithoutUserInput
+    memoryEntries?: MemoryEntryUncheckedCreateNestedManyWithoutUserInput
+    userGoals?: UserGoalUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCarePlansInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCarePlansInput, UserUncheckedCreateWithoutCarePlansInput>
+  }
+
+  export type UserUpsertWithoutCarePlansInput = {
+    update: XOR<UserUpdateWithoutCarePlansInput, UserUncheckedUpdateWithoutCarePlansInput>
+    create: XOR<UserCreateWithoutCarePlansInput, UserUncheckedCreateWithoutCarePlansInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCarePlansInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCarePlansInput, UserUncheckedUpdateWithoutCarePlansInput>
+  }
+
+  export type UserUpdateWithoutCarePlansInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
+    academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
+    program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
+    preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
+    concerns?: UserUpdateconcernsInput | $Enums.Concern[]
+    supportLevel?: EnumSupportLevelFieldUpdateOperationsInput | $Enums.SupportLevel
+    riskLevel?: EnumRiskLevelFieldUpdateOperationsInput | $Enums.RiskLevel
+    copingStyles?: UserUpdatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: EnumFaithLevelFieldUpdateOperationsInput | $Enums.FaithLevel
+    approachPreference?: EnumApproachPreferenceFieldUpdateOperationsInput | $Enums.ApproachPreference
+    goals?: UserUpdategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: NullableIntFieldUpdateOperationsInput | number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    moodCheckInsCount?: IntFieldUpdateOperationsInput | number
+    conversationsCount?: IntFieldUpdateOperationsInput | number
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUpdateManyWithoutUserNestedInput
+    moodEntries?: MoodEntryUpdateManyWithoutUserNestedInput
+    assessments?: AssessmentUpdateManyWithoutUserNestedInput
+    aiInteractions?: AIInteractionUpdateManyWithoutUserNestedInput
+    crisisLogs?: CrisisLogUpdateManyWithoutUserNestedInput
+    usageLogs?: UsageLogUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCarePlansInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
+    academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
+    program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
+    preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
+    concerns?: UserUpdateconcernsInput | $Enums.Concern[]
+    supportLevel?: EnumSupportLevelFieldUpdateOperationsInput | $Enums.SupportLevel
+    riskLevel?: EnumRiskLevelFieldUpdateOperationsInput | $Enums.RiskLevel
+    copingStyles?: UserUpdatecopingStylesInput | $Enums.CopingStyle[]
+    faithLevel?: EnumFaithLevelFieldUpdateOperationsInput | $Enums.FaithLevel
+    approachPreference?: EnumApproachPreferenceFieldUpdateOperationsInput | $Enums.ApproachPreference
+    goals?: UserUpdategoalsInput | $Enums.Goal[]
+    stressors?: NullableJsonNullValueInput | InputJsonValue
+    trackingPreferences?: NullableJsonNullValueInput | InputJsonValue
+    emergencyContacts?: NullableJsonNullValueInput | InputJsonValue
+    baselineMood?: NullableIntFieldUpdateOperationsInput | number | null
+    baseline?: NullableJsonNullValueInput | InputJsonValue
+    joinDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    moodCheckInsCount?: IntFieldUpdateOperationsInput | number
+    conversationsCount?: IntFieldUpdateOperationsInput | number
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    onboardingStep?: IntFieldUpdateOperationsInput | number
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
+    moodEntries?: MoodEntryUncheckedUpdateManyWithoutUserNestedInput
+    assessments?: AssessmentUncheckedUpdateManyWithoutUserNestedInput
+    aiInteractions?: AIInteractionUncheckedUpdateManyWithoutUserNestedInput
+    crisisLogs?: CrisisLogUncheckedUpdateManyWithoutUserNestedInput
+    usageLogs?: UsageLogUncheckedUpdateManyWithoutUserNestedInput
+    memoryEntries?: MemoryEntryUncheckedUpdateManyWithoutUserNestedInput
+    userGoals?: UserGoalUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ConversationCreateManyUserInput = {
@@ -18665,6 +24298,39 @@ export namespace Prisma {
     tokensUsed?: number | null
     finishReason?: string | null
     timestamp?: Date | string
+  }
+
+  export type MemoryEntryCreateManyUserInput = {
+    id?: string
+    content: string
+    importance?: number
+    category?: string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserGoalCreateManyUserInput = {
+    id?: string
+    title: string
+    type: $Enums.Goal
+    status?: $Enums.GoalStatus
+    progress?: number
+    targetDate?: Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarePlanCreateManyUserInput = {
+    id?: string
+    weekNumber: number
+    year: number
+    summary: string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks: JsonNullValueInput | InputJsonValue
+    generatedAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ConversationUpdateWithoutUserInput = {
@@ -18874,6 +24540,105 @@ export namespace Prisma {
     tokensUsed?: NullableIntFieldUpdateOperationsInput | number | null
     finishReason?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MemoryEntryUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    importance?: IntFieldUpdateOperationsInput | number
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MemoryEntryUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    importance?: IntFieldUpdateOperationsInput | number
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MemoryEntryUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    importance?: IntFieldUpdateOperationsInput | number
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserGoalUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: EnumGoalFieldUpdateOperationsInput | $Enums.Goal
+    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
+    progress?: IntFieldUpdateOperationsInput | number
+    targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserGoalUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: EnumGoalFieldUpdateOperationsInput | $Enums.Goal
+    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
+    progress?: IntFieldUpdateOperationsInput | number
+    targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserGoalUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: EnumGoalFieldUpdateOperationsInput | $Enums.Goal
+    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
+    progress?: IntFieldUpdateOperationsInput | number
+    targetDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    milestones?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarePlanUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weekNumber?: IntFieldUpdateOperationsInput | number
+    year?: IntFieldUpdateOperationsInput | number
+    summary?: StringFieldUpdateOperationsInput | string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks?: JsonNullValueInput | InputJsonValue
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarePlanUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weekNumber?: IntFieldUpdateOperationsInput | number
+    year?: IntFieldUpdateOperationsInput | number
+    summary?: StringFieldUpdateOperationsInput | string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks?: JsonNullValueInput | InputJsonValue
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarePlanUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weekNumber?: IntFieldUpdateOperationsInput | number
+    year?: IntFieldUpdateOperationsInput | number
+    summary?: StringFieldUpdateOperationsInput | string
+    moodAnalysis?: NullableJsonNullValueInput | InputJsonValue
+    growthTasks?: JsonNullValueInput | InputJsonValue
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageCreateManyConversationInput = {
