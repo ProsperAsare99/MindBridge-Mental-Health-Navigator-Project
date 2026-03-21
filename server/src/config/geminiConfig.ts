@@ -59,21 +59,21 @@ export const geminiConfig = {
     },
   ],
 
-  // Rate limiting (Conceptual - for reference in implementation)
+  // Rate limiting
   rateLimits: {
     requestsPerMinute: 60,
     requestsPerDay: 1500,
     tokensPerMinute: 32000,
   },
 
-  // Caching strategy (Conceptual - for reference in implementation)
+  // Caching strategy
   cache: {
     enabled: true,
     systemPromptTTL: 3600, // 1 hour
     conversationTTL: 1800, // 30 minutes
   },
 
-  // Retry configuration (Conceptual - for reference in implementation)
+  // Retry configuration
   retry: {
     maxRetries: 3,
     backoffMultiplier: 2,

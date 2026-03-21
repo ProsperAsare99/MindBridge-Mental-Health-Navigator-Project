@@ -1,47 +1,58 @@
-import { Request, Response, NextFunction } from 'express';
+import rateLimit from 'express-rate-limit';
+import RedisStore from 'rate-limit-redis';
+import Redis from 'ioredis';
+import { AuthRequest } from './auth';
 
-interface RateLimitConfig {
-    windowMs: number;
-    max: number;
-}
+const redis = new Redis({
+    host: process.env.REDIS_HOST || 'localhost',
+    port: parseInt(process.env.REDIS_PORT || '6379'),
+    password: process.env.REDIS_PASSWORD,
+});
 
-const config: RateLimitConfig = {
-    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'),
-    max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100')
-};
+// General API rate limiter
+export const generalLimiter = rateLimit({
+    store: new RedisStore({
+        // @ts-ignore
+        sendCommand: (...args: string[]) => redis.call(...args),
+        prefix: 'rl:general:',
+    }),
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100,
+    message: { error: 'Too many requests', message: 'Please try again later.' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
 
-// In-memory store for rate limiting (can be replaced with Redis later as per architecture)
-const ipRequestStore: Record<string, { count: number; resetTime: number }> = {};
-
-/**
- * Basic rate limiting middleware
- */
-export const rateLimiter = (req: Request, res: Response, next: NextFunction) => {
-    const ip = req.ip || req.headers['x-forwarded-for']?.toString() || 'unknown';
-    const now = Date.now();
-
-    if (!ipRequestStore[ip] || now > ipRequestStore[ip].resetTime) {
-        ipRequestStore[ip] = {
-            count: 1,
-            resetTime: now + config.windowMs
-        };
-        return next();
+// AI Chat rate limiter (per user)
+export const aiChatLimiter = rateLimit({
+    store: new RedisStore({
+        // @ts-ignore
+        sendCommand: (...args: string[]) => redis.call(...args),
+        prefix: 'rl:ai:',
+    }),
+    windowMs: 60 * 1000, // 1 minute
+    max: 10,
+    message: { error: 'Too many AI requests', message: 'Please slow down.' },
+    standardHeaders: true,
+    legacyHeaders: false,
+    keyGenerator: (req: any) => {
+        return (req as AuthRequest).userId || req.ip;
     }
+});
 
-    ipRequestStore[ip].count++;
+// Login rate limiter
+export const loginLimiter = rateLimit({
+    store: new RedisStore({
+        // @ts-ignore
+        sendCommand: (...args: string[]) => redis.call(...args),
+        prefix: 'rl:login:',
+    }),
+    windowMs: 15 * 60 * 1000,
+    max: 5,
+    message: { error: 'Too many login attempts', message: 'Please try again in 15 minutes.' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
 
-    if (ipRequestStore[ip].count > config.max) {
-        return res.status(429).json({
-            error: 'Too many requests',
-            message: 'You have exceeded the request limit. Please try again later.',
-            retryAfter: Math.ceil((ipRequestStore[ip].resetTime - now) / 1000)
-        });
-    }
-
-    // Add headers for transparency
-    res.setHeader('X-RateLimit-Limit', config.max);
-    res.setHeader('X-RateLimit-Remaining', Math.max(0, config.max - ipRequestStore[ip].count));
-    res.setHeader('X-RateLimit-Reset', new Date(ipRequestStore[ip].resetTime).toISOString());
-
-    next();
-};
+// Compatibility export
+export const rateLimiter = generalLimiter;

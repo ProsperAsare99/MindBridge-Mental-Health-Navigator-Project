@@ -18,6 +18,8 @@ interface Message {
     role: "user" | "assistant";
     content: string;
     isCrisis?: boolean;
+    metadata?: any;
+    suggestedActions?: any[];
 }
 
 interface AIChatbotProps {
@@ -30,6 +32,7 @@ export function AIChatbot({ initialMessages = [], onCrisisDetected }: AIChatbotP
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isListening, setIsListening] = useState(false);
+    const [emotionalState, setEmotionalState] = useState<any>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -46,8 +49,8 @@ export function AIChatbot({ initialMessages = [], onCrisisDetected }: AIChatbotP
 
     const fetchChatHistory = async () => {
         try {
-            const history = await api.get('/ai/history');
-            setMessages(history);
+            const res = await api.get('/ai/conversations');
+            // Logic to get messages from most recent conversation if needed
         } catch (error) {
             console.error("Error fetching chat history:", error);
         }
@@ -63,24 +66,37 @@ export function AIChatbot({ initialMessages = [], onCrisisDetected }: AIChatbotP
 
         try {
             const res = await api.post('/ai/chat', { 
-                message: userMessage,
-                context: { location: "Campus", motion: "Stationary" } // Example live context
+                message: userMessage
             });
             
             setMessages(prev => [...prev, { 
                 role: "assistant", 
                 content: res.response,
-                isCrisis: res.isCrisis
+                isCrisis: res.isCrisis,
+                suggestedActions: res.suggestedActions
             }]);
 
             if (res.isCrisis && onCrisisDetected) {
                 onCrisisDetected();
+            }
+
+            // Update emotional state for the header indicator
+            if (res.safetyAlert || res.isCrisis) {
+                setEmotionalState({ intensity: 9, alert: true });
             }
         } catch (error) {
             console.error("Oracle Error:", error);
             setMessages(prev => [...prev, { role: "assistant", content: "The Oracle is currently in deep meditation. Please try again." }]);
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const handleAction = (action: string) => {
+        if (action.startsWith('/')) {
+            window.location.href = action;
+        } else if (action === 'SHOW_CONTACTS') {
+            onCrisisDetected?.();
         }
     };
 
@@ -107,6 +123,16 @@ export function AIChatbot({ initialMessages = [], onCrisisDetected }: AIChatbotP
 
     return (
         <div className="flex flex-col h-full bg-background/40 backdrop-blur-xl rounded-3xl border border-border/40 overflow-hidden shadow-2xl relative">
+            {/* Emotional State Header */}
+            {emotionalState && (
+                <div className="px-6 py-2 bg-primary/5 border-b border-border/40 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <div className={cn("h-2 w-2 rounded-full animate-pulse", emotionalState.alert ? "bg-red-500" : "bg-primary")} />
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">User Vibe: {emotionalState.intensity}/10</span>
+                    </div>
+                </div>
+            )}
+
             {/* Messages Area */}
             <div 
                 ref={scrollRef}
@@ -150,15 +176,37 @@ export function AIChatbot({ initialMessages = [], onCrisisDetected }: AIChatbotP
                             )}>
                                 {m.role === "assistant" ? <BrainCircuit size={20} /> : <UserIcon size={20} />}
                             </div>
-                            <div className={cn(
-                                "space-y-2 p-5 rounded-[1.5rem] text-sm font-medium leading-relaxed tracking-tight group relative",
-                                m.role === "assistant" ? "bg-card border border-border shadow-premium text-foreground/90" : "bg-primary text-primary-foreground shadow-lg shadow-primary/10"
-                            )}>
-                                {m.content}
-                                {m.isCrisis && (
-                                    <div className="mt-3 p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3">
-                                        <AlertTriangle className="h-4 w-4 text-red-500 shrink-0" />
-                                        <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest">Priority Support Recommended</p>
+                            <div className="space-y-3 flex-1">
+                                <div className={cn(
+                                    "space-y-2 p-5 rounded-[1.5rem] text-sm font-medium leading-relaxed tracking-tight group relative",
+                                    m.role === "assistant" ? "bg-card border border-border shadow-premium text-foreground/90" : "bg-primary text-primary-foreground shadow-lg shadow-primary/10"
+                                )}>
+                                    {m.content}
+                                    {m.isCrisis && (
+                                        <div className="mt-3 p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3">
+                                            <AlertTriangle className="h-4 w-4 text-red-500 shrink-0" />
+                                            <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest">Priority Support Recommended</p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Suggested Actions */}
+                                {m.role === "assistant" && m.suggestedActions && m.suggestedActions.length > 0 && (
+                                    <div className="flex flex-wrap gap-2">
+                                        {m.suggestedActions.map((action, ai) => (
+                                            <button
+                                                key={ai}
+                                                onClick={() => handleAction(action.action)}
+                                                className={cn(
+                                                    "px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tight transition-all border",
+                                                    action.priority === 'CRITICAL' 
+                                                        ? "bg-red-500 text-white border-red-600 shadow-lg shadow-red-500/20" 
+                                                        : "bg-primary/10 text-primary border-primary/20 hover:bg-primary/20"
+                                                )}
+                                            >
+                                                {action.label}
+                                            </button>
+                                        ))}
                                     </div>
                                 )}
                             </div>
