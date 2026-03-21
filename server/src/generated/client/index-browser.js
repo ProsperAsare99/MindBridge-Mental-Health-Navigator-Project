@@ -130,6 +130,8 @@ exports.Prisma.UserScalarFieldEnum = {
   university: 'university',
   academicLevel: 'academicLevel',
   program: 'program',
+  phoneNumber: 'phoneNumber',
+  studentId: 'studentId',
   language: 'language',
   notificationPreference: 'notificationPreference',
   preferredCheckInTime: 'preferredCheckInTime',

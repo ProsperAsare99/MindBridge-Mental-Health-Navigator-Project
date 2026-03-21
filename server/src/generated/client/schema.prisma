@@ -30,6 +30,8 @@ model User {
   university    University?
   academicLevel Int?
   program       String?
+  phoneNumber   String?
+  studentId     String?
 
   // Communication Preferences
   language               Language              @default(ENGLISH)

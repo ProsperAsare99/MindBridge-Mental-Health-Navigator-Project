@@ -1895,6 +1895,8 @@ export namespace Prisma {
     university: $Enums.University | null
     academicLevel: number | null
     program: string | null
+    phoneNumber: string | null
+    studentId: string | null
     language: $Enums.Language | null
     notificationPreference: $Enums.NotificationFrequency | null
     preferredCheckInTime: $Enums.TimeOfDay | null
@@ -1926,6 +1928,8 @@ export namespace Prisma {
     university: $Enums.University | null
     academicLevel: number | null
     program: string | null
+    phoneNumber: string | null
+    studentId: string | null
     language: $Enums.Language | null
     notificationPreference: $Enums.NotificationFrequency | null
     preferredCheckInTime: $Enums.TimeOfDay | null
@@ -1957,6 +1961,8 @@ export namespace Prisma {
     university: number
     academicLevel: number
     program: number
+    phoneNumber: number
+    studentId: number
     language: number
     notificationPreference: number
     preferredCheckInTime: number
@@ -2013,6 +2019,8 @@ export namespace Prisma {
     university?: true
     academicLevel?: true
     program?: true
+    phoneNumber?: true
+    studentId?: true
     language?: true
     notificationPreference?: true
     preferredCheckInTime?: true
@@ -2044,6 +2052,8 @@ export namespace Prisma {
     university?: true
     academicLevel?: true
     program?: true
+    phoneNumber?: true
+    studentId?: true
     language?: true
     notificationPreference?: true
     preferredCheckInTime?: true
@@ -2075,6 +2085,8 @@ export namespace Prisma {
     university?: true
     academicLevel?: true
     program?: true
+    phoneNumber?: true
+    studentId?: true
     language?: true
     notificationPreference?: true
     preferredCheckInTime?: true
@@ -2200,6 +2212,8 @@ export namespace Prisma {
     university: $Enums.University | null
     academicLevel: number | null
     program: string | null
+    phoneNumber: string | null
+    studentId: string | null
     language: $Enums.Language
     notificationPreference: $Enums.NotificationFrequency
     preferredCheckInTime: $Enums.TimeOfDay
@@ -2257,6 +2271,8 @@ export namespace Prisma {
     university?: boolean
     academicLevel?: boolean
     program?: boolean
+    phoneNumber?: boolean
+    studentId?: boolean
     language?: boolean
     notificationPreference?: boolean
     preferredCheckInTime?: boolean
@@ -2302,6 +2318,8 @@ export namespace Prisma {
     university?: boolean
     academicLevel?: boolean
     program?: boolean
+    phoneNumber?: boolean
+    studentId?: boolean
     language?: boolean
     notificationPreference?: boolean
     preferredCheckInTime?: boolean
@@ -2340,6 +2358,8 @@ export namespace Prisma {
     university?: boolean
     academicLevel?: boolean
     program?: boolean
+    phoneNumber?: boolean
+    studentId?: boolean
     language?: boolean
     notificationPreference?: boolean
     preferredCheckInTime?: boolean
@@ -2378,6 +2398,8 @@ export namespace Prisma {
     university?: boolean
     academicLevel?: boolean
     program?: boolean
+    phoneNumber?: boolean
+    studentId?: boolean
     language?: boolean
     notificationPreference?: boolean
     preferredCheckInTime?: boolean
@@ -2403,7 +2425,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "googleId" | "isVerified" | "isAnonymous" | "verificationToken" | "image" | "displayName" | "university" | "academicLevel" | "program" | "language" | "notificationPreference" | "preferredCheckInTime" | "concerns" | "supportLevel" | "riskLevel" | "copingStyles" | "faithLevel" | "approachPreference" | "goals" | "stressors" | "trackingPreferences" | "emergencyContacts" | "baselineMood" | "baseline" | "joinDate" | "moodCheckInsCount" | "conversationsCount" | "lastActive" | "onboardingStep" | "onboardingCompleted" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "googleId" | "isVerified" | "isAnonymous" | "verificationToken" | "image" | "displayName" | "university" | "academicLevel" | "program" | "phoneNumber" | "studentId" | "language" | "notificationPreference" | "preferredCheckInTime" | "concerns" | "supportLevel" | "riskLevel" | "copingStyles" | "faithLevel" | "approachPreference" | "goals" | "stressors" | "trackingPreferences" | "emergencyContacts" | "baselineMood" | "baseline" | "joinDate" | "moodCheckInsCount" | "conversationsCount" | "lastActive" | "onboardingStep" | "onboardingCompleted" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversations?: boolean | User$conversationsArgs<ExtArgs>
     moodEntries?: boolean | User$moodEntriesArgs<ExtArgs>
@@ -2439,6 +2461,8 @@ export namespace Prisma {
       university: $Enums.University | null
       academicLevel: number | null
       program: string | null
+      phoneNumber: string | null
+      studentId: string | null
       language: $Enums.Language
       notificationPreference: $Enums.NotificationFrequency
       preferredCheckInTime: $Enums.TimeOfDay
@@ -2903,6 +2927,8 @@ export namespace Prisma {
     readonly university: FieldRef<"User", 'University'>
     readonly academicLevel: FieldRef<"User", 'Int'>
     readonly program: FieldRef<"User", 'String'>
+    readonly phoneNumber: FieldRef<"User", 'String'>
+    readonly studentId: FieldRef<"User", 'String'>
     readonly language: FieldRef<"User", 'Language'>
     readonly notificationPreference: FieldRef<"User", 'NotificationFrequency'>
     readonly preferredCheckInTime: FieldRef<"User", 'TimeOfDay'>
@@ -11385,6 +11411,8 @@ export namespace Prisma {
     university: 'university',
     academicLevel: 'academicLevel',
     program: 'program',
+    phoneNumber: 'phoneNumber',
+    studentId: 'studentId',
     language: 'language',
     notificationPreference: 'notificationPreference',
     preferredCheckInTime: 'preferredCheckInTime',
@@ -11884,6 +11912,8 @@ export namespace Prisma {
     university?: EnumUniversityNullableFilter<"User"> | $Enums.University | null
     academicLevel?: IntNullableFilter<"User"> | number | null
     program?: StringNullableFilter<"User"> | string | null
+    phoneNumber?: StringNullableFilter<"User"> | string | null
+    studentId?: StringNullableFilter<"User"> | string | null
     language?: EnumLanguageFilter<"User"> | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFilter<"User"> | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFilter<"User"> | $Enums.TimeOfDay
@@ -11928,6 +11958,8 @@ export namespace Prisma {
     university?: SortOrderInput | SortOrder
     academicLevel?: SortOrderInput | SortOrder
     program?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    studentId?: SortOrderInput | SortOrder
     language?: SortOrder
     notificationPreference?: SortOrder
     preferredCheckInTime?: SortOrder
@@ -11975,6 +12007,8 @@ export namespace Prisma {
     university?: EnumUniversityNullableFilter<"User"> | $Enums.University | null
     academicLevel?: IntNullableFilter<"User"> | number | null
     program?: StringNullableFilter<"User"> | string | null
+    phoneNumber?: StringNullableFilter<"User"> | string | null
+    studentId?: StringNullableFilter<"User"> | string | null
     language?: EnumLanguageFilter<"User"> | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFilter<"User"> | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFilter<"User"> | $Enums.TimeOfDay
@@ -12019,6 +12053,8 @@ export namespace Prisma {
     university?: SortOrderInput | SortOrder
     academicLevel?: SortOrderInput | SortOrder
     program?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    studentId?: SortOrderInput | SortOrder
     language?: SortOrder
     notificationPreference?: SortOrder
     preferredCheckInTime?: SortOrder
@@ -12065,6 +12101,8 @@ export namespace Prisma {
     university?: EnumUniversityNullableWithAggregatesFilter<"User"> | $Enums.University | null
     academicLevel?: IntNullableWithAggregatesFilter<"User"> | number | null
     program?: StringNullableWithAggregatesFilter<"User"> | string | null
+    phoneNumber?: StringNullableWithAggregatesFilter<"User"> | string | null
+    studentId?: StringNullableWithAggregatesFilter<"User"> | string | null
     language?: EnumLanguageWithAggregatesFilter<"User"> | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyWithAggregatesFilter<"User"> | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayWithAggregatesFilter<"User"> | $Enums.TimeOfDay
@@ -12641,6 +12679,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -12685,6 +12725,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -12729,6 +12771,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -12773,6 +12817,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -12817,6 +12863,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -12855,6 +12903,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -12893,6 +12943,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -13762,6 +13814,8 @@ export namespace Prisma {
     university?: SortOrder
     academicLevel?: SortOrder
     program?: SortOrder
+    phoneNumber?: SortOrder
+    studentId?: SortOrder
     language?: SortOrder
     notificationPreference?: SortOrder
     preferredCheckInTime?: SortOrder
@@ -13808,6 +13862,8 @@ export namespace Prisma {
     university?: SortOrder
     academicLevel?: SortOrder
     program?: SortOrder
+    phoneNumber?: SortOrder
+    studentId?: SortOrder
     language?: SortOrder
     notificationPreference?: SortOrder
     preferredCheckInTime?: SortOrder
@@ -13839,6 +13895,8 @@ export namespace Prisma {
     university?: SortOrder
     academicLevel?: SortOrder
     program?: SortOrder
+    phoneNumber?: SortOrder
+    studentId?: SortOrder
     language?: SortOrder
     notificationPreference?: SortOrder
     preferredCheckInTime?: SortOrder
@@ -15965,6 +16023,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -16008,6 +16068,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -16093,6 +16155,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -16136,6 +16200,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -16275,6 +16341,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -16318,6 +16386,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -16377,6 +16447,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -16420,6 +16492,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -16463,6 +16537,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -16506,6 +16582,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -16565,6 +16643,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -16608,6 +16688,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -16651,6 +16733,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -16694,6 +16778,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -16753,6 +16839,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -16796,6 +16884,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -16839,6 +16929,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -16882,6 +16974,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -16941,6 +17035,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -16984,6 +17080,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -17027,6 +17125,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -17070,6 +17170,8 @@ export namespace Prisma {
     university?: $Enums.University | null
     academicLevel?: number | null
     program?: string | null
+    phoneNumber?: string | null
+    studentId?: string | null
     language?: $Enums.Language
     notificationPreference?: $Enums.NotificationFrequency
     preferredCheckInTime?: $Enums.TimeOfDay
@@ -17129,6 +17231,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay
@@ -17172,6 +17276,8 @@ export namespace Prisma {
     university?: NullableEnumUniversityFieldUpdateOperationsInput | $Enums.University | null
     academicLevel?: NullableIntFieldUpdateOperationsInput | number | null
     program?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     notificationPreference?: EnumNotificationFrequencyFieldUpdateOperationsInput | $Enums.NotificationFrequency
     preferredCheckInTime?: EnumTimeOfDayFieldUpdateOperationsInput | $Enums.TimeOfDay

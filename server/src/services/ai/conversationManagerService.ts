@@ -1,5 +1,5 @@
 import prisma from '../../lib/prisma';
-import { MessageRole, ConversationStatus } from '../generated/client';
+import { MessageRole, ConversationStatus } from '../../generated/client';
 
 
 export class ConversationManagerService {
