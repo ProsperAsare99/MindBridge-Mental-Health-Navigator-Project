@@ -4,6 +4,7 @@ import { modelRouter } from './modelRouterService';
 import { promptBuilder } from './promptBuilderService';
 import { geminiAdvanced } from './geminiAdvancedService';
 import { safetyModerator } from './safetyModeratorService';
+import { memoryManager } from './memoryManagerService';
 
 export class MindBridgeMasterService {
     
@@ -17,7 +18,7 @@ export class MindBridgeMasterService {
             const moderation = await safetyModerator.moderateInput(userId, message);
             
             // 2. Build Context
-            const context = await contextEngine.buildContext(userId, liveData);
+            const context = await contextEngine.buildContext(userId, { ...liveData, message });
             
             // Handle Immediate Crisis
             if (moderation.crisis) {
@@ -72,8 +73,20 @@ export class MindBridgeMasterService {
                 emotionalIntensity: moderation.emotionalState.intensity,
                 safetyFlags: moderation.flags.map((f: any) => f.type || f.category)
             });
+            
+            // 8. Semantic Memory Extraction (Extract facts every 5 messages)
+            if ((history.length + 1) % 5 === 0) {
+                const recentContext = [
+                    ...history.slice(-4), 
+                    { role: 'USER', content: message }, 
+                    { role: 'ASSISTANT', content: finalResponse }
+                ];
+                memoryManager.extractAndSaveFromConversation(userId, recentContext).catch(err => 
+                    console.error('[Memory Extraction Error]', err)
+                );
+            }
 
-            // 8. Generate Suggested Actions
+            // 9. Generate Suggested Actions
             const suggestedActions = this.generateSuggestedActions(finalResponse, context, moderation);
 
             return {

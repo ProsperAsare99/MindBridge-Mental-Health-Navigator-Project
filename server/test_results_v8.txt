@@ -1,0 +1,45 @@
+FAIL src/__tests__/unit/memory-manager.test.ts
+  MemoryManagerService
+    saveMemory
+      √ should generate an embedding and save the memory to the database (7 ms)
+    searchMemories
+      √ should return semantically similar memories (3 ms)
+    extractAndSaveFromConversation
+      × should use LLM to extract facts and save them (3 ms)
+
+  ● MemoryManagerService › extractAndSaveFromConversation › should use LLM to extract facts and save them
+
+    expect(jest.fn()).toHaveBeenCalled()
+
+    Expected number of calls: >= 1
+    Received number of calls:    0
+
+    [0m [90m 101 |[39m             [36mawait[39m memoryManager[33m.[39mextractAndSaveFromConversation(mockUserId[33m,[39m messages)[33m;[39m
+     [90m 102 |[39m
+    [31m[1m>[22m[39m[90m 103 |[39m             expect(geminiAdvanced[33m.[39mgenerateResponse)[33m.[39mtoHaveBeenCalled()[33m;[39m
+     [90m     |[39m                                                     [31m[1m^[22m[39m
+     [90m 104 |[39m             expect(prisma[33m.[39mmemoryEntry[33m.[39mcreate)[33m.[39mtoHaveBeenCalledTimes([35m2[39m)[33m;[39m
+     [90m 105 |[39m         })[33m;[39m
+     [90m 106 |[39m     })[33m;[39m[0m
+
+      at Object.<anonymous> (src/__tests__/unit/memory-manager.test.ts:103:53)
+
+PASS src/__tests__/unit/ai-services.test.ts
+  AI Services Unit Tests
+    ContextEngineService
+      √ should build comprehensive context for a user (12 ms)
+    SafetyModeratorService
+      √ should detect crisis language (9 ms)
+      √ should flag high emotional intensity (4 ms)
+    ModelRouter
+      √ should select PRO model for crisis (1 ms)
+      √ should calculate complexity (2 ms)
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 failed, 7 passed, 8 total
+Snapshots:   0 total
+Time:        1.87 s
+Ran all test suites matching src/__tests__/unit/ai-services.test.ts|src/__tests__/unit/memory-manager.test.ts.
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

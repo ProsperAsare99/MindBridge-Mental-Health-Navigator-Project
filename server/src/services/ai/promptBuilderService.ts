@@ -68,6 +68,7 @@ export interface PromptContext {
     };
     concernTrends: Record<string, { isPrimary: boolean; mentionFrequency: number; assessmentTrend: string }>;
   };
+  semanticMemories?: { content: string; category: string; importance: number; similarity: number }[];
 }
 
 class PromptBuilder {
@@ -89,6 +90,7 @@ ${this.buildUserIdentitySection(user)}
 ${this.buildTemporalContextSection(temporal)}
 ${this.buildBehavioralInsightsSection(behavioral)}
 ${this.buildClinicalAssessmentSection(clinical)}
+${this.buildSemanticMemorySection(context.semanticMemories)}
 ${this.buildPersonalizationRulesSection(user)}
 ${this.buildResponseGuidelinesSection(user, context)}
 ${this.buildCrisisProtocolSection(user, clinical)}
@@ -536,6 +538,21 @@ ${context.behavioral.engagementLevel === 'HIGH' ? `
 - Hopeful (believe in their capacity to heal)
 
 Now, respond to ${user.displayName} with this complete understanding of who they are and what they need.`;
+  }
+
+  /**
+   * Semantic memory section
+   */
+  private buildSemanticMemorySection(memories?: PromptContext['semanticMemories']): string {
+    if (!memories || memories.length === 0) return '';
+
+    return `
+## 🧠 LONG-TERM MEMORY (PAST CONTEXT)
+These are significant life events or facts the user shared in past conversations:
+${memories.map(m => `- [${m.category}] ${m.content} (Importance: ${m.importance}/10)`).join('\n')}
+
+**Guideline**: Integrate these naturally into your response *only if relevant*. e.g., "I know you were worried about [Memory], how is that going?"
+`;
   }
 
   // Helper methods...

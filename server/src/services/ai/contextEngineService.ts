@@ -2,6 +2,7 @@ import prisma from '../../lib/prisma';
 import { PromptContext } from './promptBuilderService';
 import { getAICoreContext } from '../../lib/personalization-utils';
 import { University, Language, SupportLevel, RiskLevel, FaithLevel, ApproachPreference, MessageRole, AssessmentType } from '../../generated/client';
+import { memoryManager } from './memoryManagerService';
 
 export class ContextEngineService {
     
@@ -15,14 +16,16 @@ export class ContextEngineService {
             recentAssessments,
             conversationHistory,
             patterns,
-            riskAssessment
+            riskAssessment,
+            semanticMemories
         ] = await Promise.all([
             this.getUserProfile(userId),
             this.getRecentMoods(userId, 14),
             this.getRecentAssessments(userId, 30),
             this.getConversationHistory(userId, 20),
             this.detectPatterns(userId),
-            this.assessRisk(userId)
+            this.assessRisk(userId),
+            liveData?.message ? memoryManager.searchMemories(userId, liveData.message) : Promise.resolve([])
         ]);
 
         const academicContext = await this.getAcademicContext(userProfile);
@@ -82,7 +85,13 @@ export class ContextEngineService {
                     recommendations: riskAssessment.recommendations
                 },
                 concernTrends: this.analyzeConcernTrends(moodInsights.entries, recentAssessments)
-            }
+            },
+            semanticMemories: semanticMemories.map((m: any) => ({
+                content: m.content,
+                category: m.category as string,
+                importance: m.importance,
+                similarity: m.similarity
+            }))
         };
     }
 
