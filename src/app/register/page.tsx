@@ -63,7 +63,7 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center bg-background p-0 md:p-4 selection:bg-orange-500/30 auth-theme">
+        <div className="min-h-screen w-full flex items-center justify-center bg-background p-0 md:p-4 selection:bg-orange-500/30">
             {/* Informed Consent Modal omitted for brevity if unchanged, but I'll include form logic */}
             {/* ... */}
             <AnimatePresence>

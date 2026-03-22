@@ -153,6 +153,8 @@ exports.Prisma.UserScalarFieldEnum = {
   lastActive: 'lastActive',
   onboardingStep: 'onboardingStep',
   onboardingCompleted: 'onboardingCompleted',
+  preferredTheme: 'preferredTheme',
+  dashboardLayout: 'dashboardLayout',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

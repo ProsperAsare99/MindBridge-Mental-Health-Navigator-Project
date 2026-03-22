@@ -59,55 +59,31 @@
 
 .dark {
   /* MindBridge Antique Gold Theme - Dark Mode (CARBON & GOLD) */
-  --background: #0f0f10; /* Deep Carbon */
-  --foreground: #f4f4f5; /* Zinc White */
+  --background: #141415; /* Deeper, softer Carbon */
+  --foreground: #d1d1c7; /* Muted Parchment for softer contrast */
 
   --primary: #ae9164; /* Muted Gold */
-  --primary-foreground: #0f0f10;
+  --primary-foreground: #141415;
 
   --secondary: #27272a; 
-  --secondary-foreground: #f4f4f5;
+  --secondary-foreground: #d1d1c7;
 
   --muted: #1a1a1b; 
-  --muted-foreground: #a1a1aa; 
+  --muted-foreground: #8a8a8e; 
 
   --accent: #ae9164;
-  --accent-foreground: #0f0f10;
+  --accent-foreground: #141415;
 
-  --border: rgba(255, 255, 255, 0.05); /* Softened Dark Border */
-  --input: rgba(255, 255, 255, 0.05);
+  --border: rgba(174, 145, 100, 0.1); /* Themed subtle border */
+  --input: rgba(174, 145, 100, 0.1);
   --ring: #ae9164;
 
   --card: #1a1a1b; 
-  --card-foreground: #f4f4f5;
+  --card-foreground: #d1d1c7;
   --surface-above: #27272a;
 }
 
-/* Auth Theme - Preserved Teal/Deep Twilight Theme */
-.auth-theme {
-  --background: #03045e; /* Deep Twilight */
-  --foreground: #caf0f8; /* Light Cyan */
-
-  --primary: #0077b6; /* Bright Teal Blue */
-  --primary-foreground: #ffffff;
-
-  --secondary: #00b4d8; /* Turquoise Surf */
-  --secondary-foreground: #ffffff;
-
-  --muted: #023e8a; /* French Blue */
-  --muted-foreground: #90e0ef;
-
-  --accent: #023e8a;
-  --accent-foreground: #ffffff;
-
-  --border: rgba(144, 224, 239, 0.2);
-  --input: rgba(144, 224, 239, 0.2);
-  --ring: rgba(72, 202, 228, 0.5);
-
-  --card: #023e8a;
-  --card-foreground: #caf0f8;
-  --surface-above: #023e8a;
-}
+/* Auth Theme - Retired */
 
 /* Soft Luxury Theme - Profile & Settings Exclusive */
 .theme-luxury {
@@ -159,19 +135,17 @@
 .glass {
   background: rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(174, 145, 100, 0.1); /* Themed border */
   box-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.05),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    0 8px 32px 0 rgba(0, 0, 0, 0.05);
 }
 
 .dark .glass {
-  background: rgba(24, 24, 27, 0.45); /* Neutral Carbon Tint */
+  background: rgba(24, 24, 27, 0.45); 
   backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(174, 145, 100, 0.05);
   box-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.37),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 body {
