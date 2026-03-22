@@ -28,7 +28,6 @@ import Step9Values from "@/components/onboarding/steps/Step9Values";
 import Step10Goals from "@/components/onboarding/steps/Step10Goals";
 import Step11Tracking from "@/components/onboarding/steps/Step11Tracking";
 import Step12Privacy from "@/components/onboarding/steps/Step12Privacy";
-import Step13Interface from "@/components/onboarding/steps/Step13Interface";
 import OnboardingProgress from "./OnboardingProgress";
 
 const phases = [
@@ -72,9 +71,7 @@ export function OnboardingWizard() {
     },
 
     dataSharingConsent: true,
-    dataVisibility: "Only me",
-    preferredTheme: "🌿 Serene Green (default)",
-    dashboardLayout: "Today's mood check-in"
+    dataVisibility: "Only me"
   });
 
 
@@ -84,14 +81,14 @@ export function OnboardingWizard() {
   const currentPhase = step <= 3 ? 1 : step <= 6 ? 2 : step <= 10 ? 3 : 4;
 
   const nextStep = async () => {
-    if (step < 13) {
+    if (step < 12) {
       const next = step + 1;
       setStep(next);
       // Update backend periodically
       await saveProgress(next, false);
     } else {
       setIsSubmitting(true);
-      const success = await saveProgress(13, true);
+      const success = await saveProgress(12, true);
       if (success) {
         // Use window.location.href for the final redirect to ensure the session 
         // is re-fetched on the server-side before the dashboard layout checks it.
@@ -150,7 +147,7 @@ export function OnboardingWizard() {
       
       {/* Progress Bar */}
       <div className="mb-12 w-full max-w-3xl px-4">
-        <OnboardingProgress currentStep={step} totalSteps={13} phases={phases} currentPhase={currentPhase} />
+        <OnboardingProgress currentStep={step} totalSteps={12} phases={phases} currentPhase={currentPhase} />
       </div>
 
       {/* Wizard Card */}
@@ -179,7 +176,6 @@ export function OnboardingWizard() {
             {step === 10 && <Step10Goals data={formData} update={updateFormData} onNext={nextStep} />}
             {step === 11 && <Step11Tracking data={formData} update={updateFormData} onNext={nextStep} />}
             {step === 12 && <Step12Privacy data={formData} update={updateFormData} onNext={nextStep} />}
-            {step === 13 && <Step13Interface data={formData} update={updateFormData} onNext={nextStep} />}
           </motion.div>
         </AnimatePresence>
 
@@ -199,8 +195,8 @@ export function OnboardingWizard() {
             disabled={isSubmitting}
             className="relative flex items-center gap-3 overflow-hidden rounded-2xl bg-orange-500 px-10 py-4 text-sm font-black text-white shadow-xl shadow-orange-500/25 transition-all hover:scale-[1.02] hover:bg-orange-600 active:scale-95 group"
           >
-            {step === 13 ? "Enter Dashboard" : "Continue"}
-            {step !== 13 && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
+            {step === 12 ? "Enter Dashboard" : "Continue"}
+            {step !== 12 && <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />}
           </button>
         </div>
       </motion.div>

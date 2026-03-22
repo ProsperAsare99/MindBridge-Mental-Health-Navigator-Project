@@ -8,7 +8,8 @@ export const createMood = async (req: AuthRequest, res: Response) => {
     const { value, note } = req.body;
 
     try {
-        if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
+        if (!req.user || !req.userId) return res.status(401).json({ error: 'Not authenticated' });
+        const userId = req.userId;
 
         let sentimentScore = null;
         let sentimentLabel = null;
@@ -40,7 +41,7 @@ export const createMood = async (req: AuthRequest, res: Response) => {
 
         const mood = await prisma.moodEntry.create({
             data: {
-                userId: req.user.userId,
+                userId,
                 mood: parseInt(value),
                 notes: note,
                 sentimentScore,
@@ -59,10 +60,10 @@ export const createMood = async (req: AuthRequest, res: Response) => {
 
 export const getUserMoods = async (req: AuthRequest, res: Response) => {
     try {
-        if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
+        if (!req.user || !req.userId) return res.status(401).json({ error: 'Not authenticated' });
 
         const moods = await prisma.moodEntry.findMany({
-            where: { userId: req.user.userId },
+            where: { userId: req.userId },
             orderBy: { createdAt: 'desc' },
             take: 30 // Last 30 entries
         });
@@ -76,10 +77,10 @@ export const getUserMoods = async (req: AuthRequest, res: Response) => {
 
 export const getMoodStats = async (req: AuthRequest, res: Response) => {
     try {
-        if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
+        if (!req.user || !req.userId) return res.status(401).json({ error: 'Not authenticated' });
 
         const moods = await prisma.moodEntry.findMany({
-            where: { userId: req.user.userId },
+            where: { userId: req.userId },
             orderBy: { createdAt: 'desc' }
         });
 
@@ -129,10 +130,10 @@ export const getMoodStats = async (req: AuthRequest, res: Response) => {
 
 export const getProactiveNudges = async (req: AuthRequest, res: Response) => {
     try {
-        if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
+        if (!req.user || !req.userId) return res.status(401).json({ error: 'Not authenticated' });
 
         const moods = await prisma.moodEntry.findMany({
-            where: { userId: req.user.userId },
+            where: { userId: req.userId },
             orderBy: { createdAt: 'desc' },
             take: 100
         });
@@ -207,4 +208,3 @@ export const getProactiveNudges = async (req: AuthRequest, res: Response) => {
         res.status(500).json({ error: 'Server error fetching nudges' });
     }
 };
-

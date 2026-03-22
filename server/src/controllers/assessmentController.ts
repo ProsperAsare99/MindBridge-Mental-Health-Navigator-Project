@@ -7,11 +7,12 @@ export const createAssessment = async (req: AuthRequest, res: Response) => {
     const { type, score, severity } = req.body;
 
     try {
-        if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
+        if (!req.user || !req.userId) return res.status(401).json({ error: 'Not authenticated' });
+        const userId = req.userId;
 
         const assessment = await prisma.assessment.create({
             data: {
-                userId: req.user.userId,
+                userId,
                 type: type.toUpperCase().replace(/[- ]/g, '') as AssessmentType,
                 score,
                 severity: severity ? (severity.toUpperCase().replace(/[- ]/g, '_') as Severity) : undefined,
@@ -31,7 +32,7 @@ export const getUserAssessments = async (req: AuthRequest, res: Response) => {
         if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
 
         const assessments = await prisma.assessment.findMany({
-            where: { userId: req.user.userId },
+            where: { userId: req.userId },
             orderBy: { createdAt: 'desc' }
         });
 

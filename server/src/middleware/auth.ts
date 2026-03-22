@@ -4,6 +4,12 @@ import prisma from '../lib/prisma';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_fallback_secret_for_development';
 
+if (JWT_SECRET === 'your_fallback_secret_for_development') {
+    console.warn('[AUTH WARNING] JWT_SECRET is using the fallback value. This will cause authentication failures if NextAuth is using a different secret.');
+} else {
+    console.log('[AUTH INFO] JWT_SECRET loaded from environment.');
+}
+
 export interface AuthRequest extends Request {
     user?: any;
     userId?: string;
@@ -38,7 +44,19 @@ export const authenticateToken = async (req: AuthRequest, res: Response, next: N
         req.user = user;
         req.userId = user.id;
         next();
-    } catch (error) {
-        res.status(403).json({ error: 'Invalid token.' });
+    } catch (error: any) {
+        console.error('Authentication Error:', error);
+        
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(403).json({ error: 'Invalid token.' });
+        }
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({ error: 'Token expired.' });
+        }
+        
+        res.status(500).json({ 
+            error: 'Authentication process failed.', 
+            details: error.message 
+        });
     }
 };

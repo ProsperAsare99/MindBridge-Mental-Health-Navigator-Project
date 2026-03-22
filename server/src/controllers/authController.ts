@@ -12,6 +12,12 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_fallback_secret_for_development';
 
+if (JWT_SECRET === 'your_fallback_secret_for_development') {
+    console.warn('[AUTH CONTROLLER WARNING] JWT_SECRET is using the fallback value.');
+} else {
+    console.log('[AUTH CONTROLLER INFO] JWT_SECRET loaded from environment.');
+}
+
 export const register = async (req: Request, res: Response) => {
     const { email, password, name, institution, studentId, course, phoneNumber } = req.body;
 
@@ -263,7 +269,7 @@ export const getMe = async (req: AuthRequest, res: Response) => {
         if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
 
         const user = await prisma.user.findUnique({
-            where: { id: req.user.userId },
+            where: { id: req.userId },
             include: { assessments: true }
         });
 
@@ -296,7 +302,7 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
         }
 
         const user = await prisma.user.update({
-            where: { id: req.user.userId },
+            where: { id: req.userId },
             data: {
                 displayName: name,
                 university: institution ? mapInstitutionToUniversity(institution) : undefined,
@@ -325,7 +331,7 @@ export const uploadAvatar = async (req: AuthRequest, res: Response) => {
         const imageUrl = `/uploads/avatars/${req.file.filename}`;
 
         const user = await prisma.user.update({
-            where: { id: req.user.userId },
+            where: { id: req.userId },
             data: { image: imageUrl }
         });
 
@@ -349,7 +355,7 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
     try {
         if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
 
-        const user = await prisma.user.findUnique({ where: { id: req.user.userId } });
+        const user = await prisma.user.findUnique({ where: { id: req.userId } });
         if (!user || !user.password) return res.status(404).json({ error: 'User not found' });
 
         const isMatch = await bcrypt.compare(currentPassword, user.password);
@@ -359,7 +365,7 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
 
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         await prisma.user.update({
-            where: { id: req.user.userId },
+            where: { id: req.userId },
             data: { password: hashedPassword }
         });
 
@@ -375,7 +381,7 @@ export const verifyToken = async (req: AuthRequest, res: Response) => {
         if (!req.user) return res.status(401).json({ error: 'Invalid or expired token' });
 
         const user = await prisma.user.findUnique({
-            where: { id: req.user.userId }
+            where: { id: req.userId }
         });
 
         if (!user) return res.status(404).json({ error: 'User not found' });

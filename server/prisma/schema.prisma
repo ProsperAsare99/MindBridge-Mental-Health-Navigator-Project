@@ -72,10 +72,6 @@ model User {
   onboardingStep        Int      @default(1)
   onboardingCompleted   Boolean  @default(false)
   
-  // Personalization Extras
-  preferredTheme        String   @default("antique-gold")
-  dashboardLayout       String   @default("classic")
-  
   // Timestamps
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt

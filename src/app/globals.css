@@ -135,21 +135,20 @@
 .glass {
   background: rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(174, 145, 100, 0.1); /* Themed border */
-  box-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(197, 160, 89, 0.08); /* Softer Antique Gold border */
+  box-shadow: 0 8px 32px 0 rgba(197, 160, 89, 0.03);
 }
 
 .dark .glass {
   background: rgba(24, 24, 27, 0.45); 
   backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(174, 145, 100, 0.05);
-  box-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
 body {
   background: var(--background);
+  background-image: var(--dashboard-bg-gradient, none);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -2315,8 +2315,6 @@ export namespace Prisma {
     lastActive: Date | null
     onboardingStep: number | null
     onboardingCompleted: boolean | null
-    preferredTheme: string | null
-    dashboardLayout: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2350,8 +2348,6 @@ export namespace Prisma {
     lastActive: Date | null
     onboardingStep: number | null
     onboardingCompleted: boolean | null
-    preferredTheme: string | null
-    dashboardLayout: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2392,8 +2388,6 @@ export namespace Prisma {
     lastActive: number
     onboardingStep: number
     onboardingCompleted: number
-    preferredTheme: number
-    dashboardLayout: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2445,8 +2439,6 @@ export namespace Prisma {
     lastActive?: true
     onboardingStep?: true
     onboardingCompleted?: true
-    preferredTheme?: true
-    dashboardLayout?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2480,8 +2472,6 @@ export namespace Prisma {
     lastActive?: true
     onboardingStep?: true
     onboardingCompleted?: true
-    preferredTheme?: true
-    dashboardLayout?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2522,8 +2512,6 @@ export namespace Prisma {
     lastActive?: true
     onboardingStep?: true
     onboardingCompleted?: true
-    preferredTheme?: true
-    dashboardLayout?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2651,8 +2639,6 @@ export namespace Prisma {
     lastActive: Date | null
     onboardingStep: number
     onboardingCompleted: boolean
-    preferredTheme: string
-    dashboardLayout: string
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -2712,8 +2698,6 @@ export namespace Prisma {
     lastActive?: boolean
     onboardingStep?: boolean
     onboardingCompleted?: boolean
-    preferredTheme?: boolean
-    dashboardLayout?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     conversations?: boolean | User$conversationsArgs<ExtArgs>
@@ -2764,8 +2748,6 @@ export namespace Prisma {
     lastActive?: boolean
     onboardingStep?: boolean
     onboardingCompleted?: boolean
-    preferredTheme?: boolean
-    dashboardLayout?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2806,8 +2788,6 @@ export namespace Prisma {
     lastActive?: boolean
     onboardingStep?: boolean
     onboardingCompleted?: boolean
-    preferredTheme?: boolean
-    dashboardLayout?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2848,13 +2828,11 @@ export namespace Prisma {
     lastActive?: boolean
     onboardingStep?: boolean
     onboardingCompleted?: boolean
-    preferredTheme?: boolean
-    dashboardLayout?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "googleId" | "isVerified" | "isAnonymous" | "verificationToken" | "image" | "displayName" | "university" | "academicLevel" | "program" | "phoneNumber" | "studentId" | "language" | "notificationPreference" | "preferredCheckInTime" | "concerns" | "supportLevel" | "riskLevel" | "copingStyles" | "faithLevel" | "approachPreference" | "goals" | "stressors" | "trackingPreferences" | "emergencyContacts" | "baselineMood" | "baseline" | "joinDate" | "moodCheckInsCount" | "conversationsCount" | "lastActive" | "onboardingStep" | "onboardingCompleted" | "preferredTheme" | "dashboardLayout" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "googleId" | "isVerified" | "isAnonymous" | "verificationToken" | "image" | "displayName" | "university" | "academicLevel" | "program" | "phoneNumber" | "studentId" | "language" | "notificationPreference" | "preferredCheckInTime" | "concerns" | "supportLevel" | "riskLevel" | "copingStyles" | "faithLevel" | "approachPreference" | "goals" | "stressors" | "trackingPreferences" | "emergencyContacts" | "baselineMood" | "baseline" | "joinDate" | "moodCheckInsCount" | "conversationsCount" | "lastActive" | "onboardingStep" | "onboardingCompleted" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversations?: boolean | User$conversationsArgs<ExtArgs>
     moodEntries?: boolean | User$moodEntriesArgs<ExtArgs>
@@ -2919,8 +2897,6 @@ export namespace Prisma {
       lastActive: Date | null
       onboardingStep: number
       onboardingCompleted: boolean
-      preferredTheme: string
-      dashboardLayout: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -3390,8 +3366,6 @@ export namespace Prisma {
     readonly lastActive: FieldRef<"User", 'DateTime'>
     readonly onboardingStep: FieldRef<"User", 'Int'>
     readonly onboardingCompleted: FieldRef<"User", 'Boolean'>
-    readonly preferredTheme: FieldRef<"User", 'String'>
-    readonly dashboardLayout: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -16362,8 +16336,6 @@ export namespace Prisma {
     lastActive: 'lastActive',
     onboardingStep: 'onboardingStep',
     onboardingCompleted: 'onboardingCompleted',
-    preferredTheme: 'preferredTheme',
-    dashboardLayout: 'dashboardLayout',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -16936,8 +16908,6 @@ export namespace Prisma {
     lastActive?: DateTimeNullableFilter<"User"> | Date | string | null
     onboardingStep?: IntFilter<"User"> | number
     onboardingCompleted?: BoolFilter<"User"> | boolean
-    preferredTheme?: StringFilter<"User"> | string
-    dashboardLayout?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     conversations?: ConversationListRelationFilter
@@ -16987,8 +16957,6 @@ export namespace Prisma {
     lastActive?: SortOrderInput | SortOrder
     onboardingStep?: SortOrder
     onboardingCompleted?: SortOrder
-    preferredTheme?: SortOrder
-    dashboardLayout?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     conversations?: ConversationOrderByRelationAggregateInput
@@ -17041,8 +17009,6 @@ export namespace Prisma {
     lastActive?: DateTimeNullableFilter<"User"> | Date | string | null
     onboardingStep?: IntFilter<"User"> | number
     onboardingCompleted?: BoolFilter<"User"> | boolean
-    preferredTheme?: StringFilter<"User"> | string
-    dashboardLayout?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     conversations?: ConversationListRelationFilter
@@ -17092,8 +17058,6 @@ export namespace Prisma {
     lastActive?: SortOrderInput | SortOrder
     onboardingStep?: SortOrder
     onboardingCompleted?: SortOrder
-    preferredTheme?: SortOrder
-    dashboardLayout?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -17142,8 +17106,6 @@ export namespace Prisma {
     lastActive?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     onboardingStep?: IntWithAggregatesFilter<"User"> | number
     onboardingCompleted?: BoolWithAggregatesFilter<"User"> | boolean
-    preferredTheme?: StringWithAggregatesFilter<"User"> | string
-    dashboardLayout?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -18013,8 +17975,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutUserInput
@@ -18064,8 +18024,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
@@ -18115,8 +18073,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutUserNestedInput
@@ -18166,8 +18122,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
@@ -18217,8 +18171,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18259,8 +18211,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18301,8 +18251,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19516,8 +19464,6 @@ export namespace Prisma {
     lastActive?: SortOrder
     onboardingStep?: SortOrder
     onboardingCompleted?: SortOrder
-    preferredTheme?: SortOrder
-    dashboardLayout?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19559,8 +19505,6 @@ export namespace Prisma {
     lastActive?: SortOrder
     onboardingStep?: SortOrder
     onboardingCompleted?: SortOrder
-    preferredTheme?: SortOrder
-    dashboardLayout?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19594,8 +19538,6 @@ export namespace Prisma {
     lastActive?: SortOrder
     onboardingStep?: SortOrder
     onboardingCompleted?: SortOrder
-    preferredTheme?: SortOrder
-    dashboardLayout?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22331,8 +22273,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     moodEntries?: MoodEntryCreateNestedManyWithoutUserInput
@@ -22381,8 +22321,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     moodEntries?: MoodEntryUncheckedCreateNestedManyWithoutUserInput
@@ -22473,8 +22411,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     moodEntries?: MoodEntryUpdateManyWithoutUserNestedInput
@@ -22523,8 +22459,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     moodEntries?: MoodEntryUncheckedUpdateManyWithoutUserNestedInput
@@ -22669,8 +22603,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutUserInput
@@ -22719,8 +22651,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
@@ -22785,8 +22715,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutUserNestedInput
@@ -22835,8 +22763,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
@@ -22885,8 +22811,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutUserInput
@@ -22935,8 +22859,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
@@ -23001,8 +22923,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutUserNestedInput
@@ -23051,8 +22971,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
@@ -23101,8 +23019,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutUserInput
@@ -23151,8 +23067,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
@@ -23217,8 +23131,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutUserNestedInput
@@ -23267,8 +23179,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
@@ -23317,8 +23227,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutUserInput
@@ -23367,8 +23275,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
@@ -23433,8 +23339,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutUserNestedInput
@@ -23483,8 +23387,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
@@ -23533,8 +23435,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutUserInput
@@ -23583,8 +23483,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
@@ -23649,8 +23547,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutUserNestedInput
@@ -23699,8 +23595,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
@@ -23749,8 +23643,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutUserInput
@@ -23799,8 +23691,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
@@ -23865,8 +23755,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutUserNestedInput
@@ -23915,8 +23803,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
@@ -23965,8 +23851,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutUserInput
@@ -24015,8 +23899,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
@@ -24081,8 +23963,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutUserNestedInput
@@ -24131,8 +24011,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
@@ -24181,8 +24059,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutUserInput
@@ -24231,8 +24107,6 @@ export namespace Prisma {
     lastActive?: Date | string | null
     onboardingStep?: number
     onboardingCompleted?: boolean
-    preferredTheme?: string
-    dashboardLayout?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
@@ -24297,8 +24171,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutUserNestedInput
@@ -24347,8 +24219,6 @@ export namespace Prisma {
     lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     onboardingStep?: IntFieldUpdateOperationsInput | number
     onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
-    preferredTheme?: StringFieldUpdateOperationsInput | string
-    dashboardLayout?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput

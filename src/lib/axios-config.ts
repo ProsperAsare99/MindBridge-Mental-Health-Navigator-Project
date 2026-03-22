@@ -15,7 +15,10 @@ axiosInstance.interceptors.request.use(
         if (typeof window !== 'undefined') {
             const token = localStorage.getItem('token');
             if (token) {
+                console.log('[AXIOS DEBUG] Sending token:', token.substring(0, 10) + '...');
                 config.headers.Authorization = `Bearer ${token}`;
+            } else {
+                console.warn('[AXIOS DEBUG] No token found in localStorage');
             }
         }
         return config;

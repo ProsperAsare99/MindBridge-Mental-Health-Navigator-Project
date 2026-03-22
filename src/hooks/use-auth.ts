@@ -76,7 +76,7 @@ export function useAuth() {
 
     const updateProfile = async (data: Partial<User>) => {
         try {
-            const res = await api.post('/onboarding', data);
+            const res = await api.post('/onboarding/update', data);
             
             // Sync with NextAuth session
             await update({

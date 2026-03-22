@@ -13,7 +13,7 @@ const buttonVariants = cva(
             variant: {
                 primary: "bg-primary text-primary-foreground shadow-premium hover:brightness-110 hover:shadow-lg",
                 secondary: "bg-secondary text-secondary-foreground hover:brightness-110",
-                outline: "border-2 border-primary/30 bg-transparent hover:bg-primary/10 text-primary hover:border-primary/50",
+                outline: "border border-primary/20 bg-transparent hover:bg-primary/10 text-primary hover:border-primary/40",
                 ghost: "hover:bg-primary/15 text-primary",
                 glass: "glass text-foreground hover:bg-foreground/[0.08] dark:hover:bg-white/10",
             },

@@ -32,9 +32,7 @@ export const updateOnboarding = async (req: AuthRequest, res: Response) => {
             'trackingPreferences',
             'baseline',
             'onboardingStep',
-            'onboardingCompleted',
-            'preferredTheme',
-            'dashboardLayout'
+            'onboardingCompleted'
         ];
 
         const updateData: any = {};
