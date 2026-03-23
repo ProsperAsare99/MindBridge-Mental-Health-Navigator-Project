@@ -12,6 +12,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { api } from '@/lib/api';
+import { CircleDialog } from './CircleDialog';
 
 interface Circle {
     id: string;
@@ -27,6 +28,8 @@ interface Circle {
 export function SupportCircles() {
     const [circles, setCircles] = useState<Circle[]>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedCircle, setSelectedCircle] = useState<Circle | null>(null);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     useEffect(() => {
         const fetchCircles = async () => {
@@ -93,7 +96,10 @@ export function SupportCircles() {
                         </div>
 
                         <div className="flex gap-3 pt-6 relative z-10">
-                            <Button className="flex-1 h-12 rounded-2xl bg-primary shadow-lg shadow-primary/20 text-xs font-black uppercase tracking-[0.2em]">
+                            <Button 
+                                onClick={() => { setSelectedCircle(circle); setIsDialogOpen(true); }}
+                                className="flex-1 h-12 rounded-2xl bg-primary shadow-lg shadow-primary/20 text-xs font-black uppercase tracking-[0.2em]"
+                            >
                                 Enter Circle
                             </Button>
                             <Button variant="outline" className="h-12 w-12 rounded-2xl border-border/40 hover:bg-primary/5 hover:border-primary/30 p-0">
@@ -137,6 +143,15 @@ export function SupportCircles() {
                     ))}
                 </div>
             </div>
+
+            {selectedCircle && (
+                <CircleDialog 
+                    circleId={selectedCircle.id}
+                    circleName={selectedCircle.name}
+                    isOpen={isDialogOpen}
+                    onClose={() => setIsDialogOpen(false)}
+                />
+            )}
         </div>
     );
 }
