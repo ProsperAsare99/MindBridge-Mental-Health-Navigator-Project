@@ -26,35 +26,25 @@ export function DailyWins() {
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                    <h3 className="text-sm font-black text-foreground uppercase tracking-tight">Daily Micro-Wins</h3>
-                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{completed.length}/{DEFAULT_WINS.length} completed</p>
+            <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h3 className="text-sm font-black text-foreground uppercase tracking-tight">Daily Micro-Wins</h3>
+                        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{completed.length}/{DEFAULT_WINS.length} completed</p>
+                    </div>
+                    <div className="text-right">
+                        <span className="text-2xl font-black text-primary leading-none">{Math.round(progress)}%</span>
+                        <p className="text-[8px] font-black text-primary/40 uppercase tracking-tighter">Day Progress</p>
+                    </div>
                 </div>
-                <div className="h-10 w-10 rounded-full border-2 border-primary/20 flex items-center justify-center relative">
-                    <svg className="h-full w-full -rotate-90">
-                        <circle
-                            cx="20"
-                            cy="20"
-                            r="16"
-                            fill="transparent"
-                            stroke="currentColor"
-                            strokeWidth="3"
-                            className="text-primary/10"
-                        />
-                        <circle
-                            cx="20"
-                            cy="20"
-                            r="16"
-                            fill="transparent"
-                            stroke="currentColor"
-                            strokeWidth="3"
-                            strokeDasharray={100}
-                            strokeDashoffset={100 - progress}
-                            className="text-primary transition-all duration-1000"
-                        />
-                    </svg>
-                    <span className="absolute text-[10px] font-black text-primary">{Math.round(progress)}%</span>
+                
+                <div className="h-2 w-full bg-primary/10 rounded-full overflow-hidden border border-primary/5">
+                    <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progress}%` }}
+                        transition={{ duration: 1, ease: "circOut" }}
+                        className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full shadow-[0_0_12px_rgba(var(--primary),0.3)]"
+                    />
                 </div>
             </div>
 
