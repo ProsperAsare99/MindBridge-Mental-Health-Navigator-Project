@@ -51,8 +51,8 @@ export function MoodTrendChart({ moodHistory }: MoodTrendChartProps) {
 
     if (moodHistory.length === 0) {
         return (
-            <div className="h-full flex flex-col items-center justify-center text-center space-y-4 p-6 glass border-primary/5 rounded-[2rem]">
-                <Activity className="h-12 w-12 text-primary/20 animate-pulse" />
+            <div className="h-full flex flex-col items-center justify-center text-center space-y-4 p-6 glass border-[#6C757D]/10 rounded-[2rem]">
+                <Activity className="h-12 w-12 text-[#6C757D]/20 animate-pulse" />
                 <div className="space-y-1">
                     <p className="text-sm font-bold text-foreground">No data yet</p>
                     <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Check in to see your trends</p>
@@ -67,11 +67,11 @@ export function MoodTrendChart({ moodHistory }: MoodTrendChartProps) {
                 <AreaChart data={chartData}>
                     <defs>
                         <linearGradient id="moodTrendGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.6} />
-                            <stop offset="95%" stopColor="var(--primary)" stopOpacity={0.1} />
+                            <stop offset="5%" stopColor="#6C757D" stopOpacity={0.6} />
+                            <stop offset="95%" stopColor="#6C757D" stopOpacity={0.1} />
                         </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--primary)" className="opacity-[0.2]" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#6C757D" className="opacity-[0.2]" />
                     <XAxis
                         dataKey="name"
                         axisLine={false}
@@ -80,11 +80,11 @@ export function MoodTrendChart({ moodHistory }: MoodTrendChartProps) {
                         dy={10}
                     />
                     <Tooltip
-                        cursor={{ stroke: 'var(--primary)', strokeWidth: 2, strokeDasharray: '5 5' }}
+                        cursor={{ stroke: '#6C757D', strokeWidth: 2, strokeDasharray: '5 5' }}
                         content={({ active, payload, label }) => {
                             if (active && payload && payload.length) {
                                 return (
-                                    <div className="glass p-4 rounded-3xl border border-primary/40 shadow-2xl backdrop-blur-md">
+                                    <div className="glass p-4 rounded-3xl border border-[#6C757D]/40 shadow-2xl backdrop-blur-md">
                                         <div className="flex items-center gap-2 mb-1">
                                             <div className="h-2 w-2 rounded-full bg-slate-400 animate-pulse" />
                                             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{label}</p>
@@ -102,21 +102,21 @@ export function MoodTrendChart({ moodHistory }: MoodTrendChartProps) {
                     <Area
                         type="monotone"
                         dataKey="mood"
-                        stroke="var(--primary)"
+                        stroke="#6C757D"
                         strokeWidth={6}
                         fillOpacity={1}
                         fill="url(#moodTrendGradient)"
                         animationDuration={2000}
                         dot={{
                             r: 6,
-                            fill: 'var(--primary)',
+                            fill: '#6C757D',
                             stroke: 'var(--background)',
                             strokeWidth: 2,
                             fillOpacity: 1
                         }}
                         activeDot={{
                             r: 9,
-                            fill: 'var(--primary)',
+                            fill: '#6C757D',
                             stroke: 'var(--background)',
                             strokeWidth: 3
                         }}

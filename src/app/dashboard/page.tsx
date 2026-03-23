@@ -104,7 +104,7 @@ export default async function DashboardPage() {
                                         <h3 className="text-sm font-black text-foreground uppercase tracking-tight">Activity Flow</h3>
                                         <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Your Weekly Trajectory</p>
                                     </div>
-                                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-primary/10 border border-primary/10 text-primary text-[10px] font-black uppercase">
+                                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-[#6C757D]/10 border border-[#6C757D]/10 text-[#6C757D] text-[10px] font-black uppercase">
                                         <Activity size={12} strokeWidth={3} /> {moodStats.count} Total Logs
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@ export default async function DashboardPage() {
                                 </div>
                             </div>
                             <div className="absolute -bottom-10 -right-10 opacity-[0.02] pointer-events-none group-hover:opacity-[0.05] transition-opacity">
-                                <TrendingUp size={240} className="text-primary" />
+                                <TrendingUp size={240} className="text-[#6C757D]" />
                             </div>
                         </Card>
                     </DashboardItem>

@@ -34,7 +34,7 @@
 :root {
   color-scheme: light dark;
 
-  /* MindBridge Antique Gold Theme - Light Mode (PARCHMENT & GOLD) */
+  /* MindBridge Ocean Blue Theme - Light Mode (PARCHMENT & BLUE) */
   --background: #edede9; /* Parchment - Base surface */
   --foreground: #0f172a; /* Slate 900 for better contrast than pure black */
   --ash-grey: #f8fafc; /* Somewhat White Ash (Slate 50) */
@@ -62,7 +62,7 @@
 }
 
 .dark {
-  /* MindBridge Antique Gold Theme - Dark Mode (CARBON & GOLD) */
+  /* MindBridge Ocean Blue Theme - Dark Mode (CARBON & BLUE) */
   --background: #141415; /* Deeper, softer Carbon */
   --foreground: #d1d1c7; /* Muted Parchment for softer contrast */
   --ash-grey: #e2e8f0; /* Soft White Ash for Dark Mode (Slate 200) */
