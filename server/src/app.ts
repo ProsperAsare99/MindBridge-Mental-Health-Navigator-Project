@@ -8,6 +8,7 @@ import academicRoutes from './routes/academicRoutes';
 import onboardingRoutes from './routes/onboardingRoutes';
 import analyticsRoutes from './routes/analyticsRoutes';
 import gamificationRoutes from './routes/gamificationRoutes';
+import socialRoutes from './routes/socialRoutes';
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/api/academic', academicRoutes);
 app.use('/api/onboarding', onboardingRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/gamification', gamificationRoutes);
+app.use('/api/social', socialRoutes);
 
 
 app.get('/health', (req, res) => {
