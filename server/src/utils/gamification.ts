@@ -1,4 +1,4 @@
-import { MoodEntry } from '../generated/client';
+import { MoodEntry } from '../generated/client_new';
 
 export const calculateStreak = (moods: MoodEntry[]): number => {
     if (moods.length === 0) return 0;
