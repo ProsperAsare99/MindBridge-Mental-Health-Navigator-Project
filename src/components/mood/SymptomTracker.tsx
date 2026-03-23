@@ -40,8 +40,8 @@ export function SymptomTracker({ selected, onChange }: SymptomTrackerProps) {
               className={cn(
                 "px-4 py-2 rounded-full text-[10px] font-bold transition-all border",
                 isSelected
-                  ? "bg-secondary text-secondary-foreground border-secondary shadow-lg shadow-secondary/20"
-                  : "bg-muted/50 border-transparent hover:border-secondary/30 text-muted-foreground"
+                  ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20 scale-105"
+                  : "bg-muted/50 border-transparent hover:border-primary/20 text-muted-foreground"
               )}
             >
               {symptom}

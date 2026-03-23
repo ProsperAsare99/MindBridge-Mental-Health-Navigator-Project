@@ -34,11 +34,12 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
     const [weather, setWeather] = useState<any>(null);
     const [location, setLocation] = useState<any>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     // Live Media States
     const [isRecording, setIsRecording] = useState(false);
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
-    const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
+    const [recognition, setRecognition] = useState<any>(null);
     
     const [isCameraOpen, setIsCameraOpen] = useState(false);
     const videoRef = React.useRef<HTMLVideoElement>(null);
@@ -58,22 +59,43 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
     const startRecording = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            const recorder = new (window as any).MediaRecorder(stream);
-            setMediaRecorder(recorder);
-            setAudioChunks([]);
+            const recorder = new MediaRecorder(stream);
+            const chunks: Blob[] = [];
             
-            recorder.ondataavailable = (e: any) => {
-                if (e.data.size > 0) setAudioChunks((prev) => [...prev, e.data]);
+            recorder.ondataavailable = (e) => {
+                if (e.data.size > 0) chunks.push(e.data);
             };
 
             recorder.onstop = () => {
-                const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
-                const audioFile = new File([audioBlob], `mood-audio-${Date.now()}.mp3`, { type: 'audio/mpeg' });
+                const audioBlob = new Blob(chunks, { type: 'audio/webm' }); 
+                const audioFile = new File([audioBlob], `mood-audio-${Date.now()}.webm`, { type: 'audio/webm' });
                 setAudio(audioFile);
                 stream.getTracks().forEach(track => track.stop());
             };
 
+            // Speech Recognition Setup
+            const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+            if (SpeechRecognition) {
+                const reco = new SpeechRecognition();
+                reco.continuous = true;
+                reco.interimResults = true;
+                reco.lang = 'en-US';
+
+                reco.onresult = (event: any) => {
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        if (event.results[i].isFinal) {
+                            setNote(prev => prev + (prev.length > 0 ? ' ' : '') + event.results[i][0].transcript);
+                        }
+                    }
+                };
+
+                reco.onerror = (err: any) => console.error("Speech Recog Error:", err);
+                reco.start();
+                setRecognition(reco);
+            }
+
             recorder.start();
+            setMediaRecorder(recorder);
             setIsRecording(true);
         } catch (err) {
             console.error("Mic access denied:", err);
@@ -84,8 +106,11 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
     const stopRecording = () => {
         if (mediaRecorder && isRecording) {
             mediaRecorder.stop();
-            setIsRecording(false);
         }
+        if (recognition) {
+            recognition.stop();
+        }
+        setIsRecording(false);
     };
 
     // Camera Logic
@@ -157,7 +182,11 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
             if (res.crisisFlag) {
                 alert("We noticed some concerning patterns. Please remember that crisis support is available 24/7 in the side menu.");
             }
-            onComplete();
+            
+            setShowSuccess(true);
+            setTimeout(() => {
+                onComplete();
+            }, 2500);
         } catch (error) {
             console.error("Mood Logging Error:", error);
             alert("Failed to sync your mood.");
@@ -265,12 +294,24 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
                             <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.2em]">Capture your voice and surroundings</p>
                         </div>
 
-                        <textarea
-                            placeholder="Pour your heart out here..."
-                            value={note}
-                            onChange={(e) => setNote(e.target.value)}
-                            className="w-full bg-muted/30 border border-border/40 rounded-[2rem] p-6 text-sm font-medium focus:ring-4 focus:ring-primary/10 transition-all min-h-[150px] resize-none"
-                        />
+                        <div className="relative">
+                            <textarea
+                                placeholder="Pour your heart out here..."
+                                value={note}
+                                onChange={(e) => setNote(e.target.value)}
+                                className="w-full bg-muted/30 border border-border/40 rounded-[2rem] p-6 text-sm font-medium focus:ring-4 focus:ring-primary/10 transition-all min-h-[150px] resize-none"
+                            />
+                            {isRecording && (
+                                <motion.div 
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="absolute bottom-4 right-6 flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20"
+                                >
+                                    <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                                    <span className="text-[8px] font-black uppercase tracking-widest text-primary">Transcribing Audio...</span>
+                                </motion.div>
+                            )}
+                        </div>
 
                         <div className="grid grid-cols-2 gap-4">
                             {/* Camera Action */}
@@ -356,6 +397,32 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
                     <div key={s} className={cn("flex-1 h-full rounded-full transition-all duration-500", s <= step ? "bg-primary" : "bg-muted")} />
                 ))}
             </div>
+
+            <AnimatePresence>
+                {showSuccess && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                        className="absolute inset-0 z-[100] flex items-center justify-center p-8 text-center bg-background/80 backdrop-blur-xl"
+                    >
+                        <div className="space-y-6">
+                            <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ type: "spring", damping: 10, stiffness: 100, delay: 0.2 }}
+                                className="h-24 w-24 bg-primary rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-primary/40"
+                            >
+                                <CheckCircle2 size={48} className="text-white" />
+                            </motion.div>
+                            <div className="space-y-2">
+                                <h2 className="text-3xl font-black text-foreground tracking-tight uppercase">Mood logged successfully</h2>
+                                <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest italic">Your resilience has been noted. keep growing.</p>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
