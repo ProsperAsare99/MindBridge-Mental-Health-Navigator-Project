@@ -217,7 +217,7 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
                         className="space-y-6 flex flex-col items-center"
                     >
                         <div className="space-y-2 text-center">
-                            <h3 className="text-2xl font-black text-foreground uppercase tracking-tighter">Nuance Wheel</h3>
+                            <h3 className="text-2xl font-black text-foreground uppercase tracking-tighter">Emotion Wheel</h3>
                             <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.2em]">Select a specific emotional texture</p>
                         </div>
                         <EmotionWheel onSelect={(e) => { setEmotion(e); nextStep(); }} selectedEmotion={emotion} />

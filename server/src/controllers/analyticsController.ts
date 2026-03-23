@@ -62,35 +62,76 @@ export const getUserAnalytics = async (req: AuthRequest, res: Response) => {
 export const getMoodInsight = async (req: AuthRequest, res: Response) => {
     try {
         if (!req.user || !req.userId) return res.status(401).json({ error: 'Not authenticated' });
-        const { moodData } = req.body;
+        const userId = req.userId;
 
-        if (!moodData || moodData.length < 3) {
-            return res.json({ insight: "Complete more mood check-ins (at least 3) to unlock personalized therapeutic insights." });
+        // Fetch last 30 entries for comprehensive analysis
+        const recentEntries = await prisma.moodEntry.findMany({
+            where: { userId },
+            orderBy: { createdAt: 'desc' },
+            take: 30
+        });
+
+        if (recentEntries.length < 3) {
+            return res.json({ 
+                insight: "Check in 3 more times to generate clinical insights.",
+                isPartial: true 
+            });
         }
 
-        const values = moodData.map((m: any) => m.mood);
-        const average = values.reduce((acc: number, curr: number) => acc + curr, 0) / values.length;
+        const moods = recentEntries.map(e => e.mood);
+        const avgMood = moods.reduce((a, b) => a + b, 0) / moods.length;
         
-        // Calculate Trend (Recent half vs Older half)
-        const half = Math.floor(values.length / 2);
-        const recentAvg = values.slice(0, half).reduce((a: number, b: number) => a + b, 0) / (half || 1);
-        const olderAvg = values.slice(half).reduce((a: number, b: number) => a + b, 0) / (values.length - half || 1);
+        // Calculate Volatility (Standard Deviation)
+        const variance = moods.reduce((a, b) => a + Math.pow(b - avgMood, 2), 0) / moods.length;
+        const volatility = Math.sqrt(variance);
+
+        // Analyze Vitals
+        const avgSleep = recentEntries.filter(e => e.sleepRating !== null).reduce((a, b) => a + (b.sleepRating || 0), 0) / (recentEntries.filter(e => e.sleepRating !== null).length || 1);
+        const avgEnergy = recentEntries.filter(e => e.energyLevel !== null).reduce((a, b) => a + (b.energyLevel || 0), 0) / (recentEntries.filter(e => e.energyLevel !== null).length || 1);
+        const avgSocial = recentEntries.filter(e => e.socialInteraction !== null).reduce((a, b) => a + (b.socialInteraction || 0), 0) / (recentEntries.filter(e => e.socialInteraction !== null).length || 1);
+
+        // Find Correlations (Example: Sleep effect on Mood)
+        const sleepMoodCorr = recentEntries.filter(e => e.sleepRating !== null && e.sleepRating >= 4).reduce((a, b) => a + b.mood, 0) / (recentEntries.filter(e => e.sleepRating !== null && e.sleepRating >= 4).length || 1);
+        const baseMood = recentEntries.filter(e => e.sleepRating !== null && e.sleepRating < 4).reduce((a, b) => a + b.mood, 0) / (recentEntries.filter(e => e.sleepRating !== null && e.sleepRating < 4).length || 1);
         
-        let insight = "";
-        
-        if (recentAvg > olderAvg + 0.5) {
-            insight = "Your mood is showing a strong positive upward trend. Keep focusing on the activities and routines that are supporting this growth!";
-        } else if (recentAvg < olderAvg - 0.5) {
-            insight = "We've noticed a slight downward trend in your recent check-ins. Consider reaching out to a peer or using one of your learned coping strategies today.";
-        } else if (average >= 4.0) {
-            insight = "You've been maintaining a consistently high mood! This stability is a great foundation for tackling complex academic or personal goals.";
-        } else if (average >= 2.5) {
-            insight = "Your mood has been steady and balanced recently. Reflect on the small habits that are helping you stay grounded in the middle ground.";
+        let correlationLabel = "";
+        if (Math.abs(sleepMoodCorr - baseMood) > 0.5) {
+            correlationLabel = `Higher sleep depth (+4) correlates with a ${Math.abs(sleepMoodCorr - baseMood).toFixed(1)}pt ${sleepMoodCorr > baseMood ? 'lift' : 'drop'} in your mood.`;
+        }
+
+        // Symptom Patterns
+        const allSymptoms = recentEntries.flatMap(e => e.physicalSymptoms || []);
+        const symptomCounts: Record<string, number> = {};
+        allSymptoms.forEach(s => symptomCounts[s] = (symptomCounts[s] || 0) + 1);
+        const topSymptom = Object.entries(symptomCounts).sort((a, b) => b[1] - a[1])[0]?.[0];
+
+        // Narrative Analysis
+        let narrative = "";
+        if (volatility > 1.2) {
+            narrative = "Your internal emotional climate has been fluctuating significantly. This 'high variability' state suggests your resilience is being tested by shifting external factors.";
+        } else if (avgMood >= 4) {
+            narrative = "You are maintaining exceptional emotional stability. Your current routines are effectively shielding you from stress-induced volatility.";
+        } else if (avgMood < 2.5) {
+            narrative = "Data indicates a sustained period of low energy and mood. This 'persistent low' suggests a need for targeted recovery or professional outreach.";
         } else {
-            insight = "Things have been challenging lately, but your consistency in tracking is a powerful first step. Small, intentional self-care acts can make a big difference today.";
+            narrative = "Your mood data reflects a balanced, adaptive state. You are successfully navigating the standard emotional range with good recovery patterns.";
         }
 
-        res.json({ insight });
+        res.json({
+            insight: narrative,
+            metrics: {
+                avgMood: Number(avgMood.toFixed(1)),
+                volatility: Number(volatility.toFixed(1)),
+                vitals: {
+                    sleep: Number(avgSleep.toFixed(1)),
+                    energy: Number(avgEnergy.toFixed(1)),
+                    social: Number(avgSocial.toFixed(1))
+                },
+                correlation: correlationLabel,
+                topSymptom,
+                totalChecks: recentEntries.length
+            }
+        });
 
     } catch (error) {
         console.error('Mood Insight Calculation Error:', error);

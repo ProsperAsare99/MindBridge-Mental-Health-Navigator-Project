@@ -34,31 +34,31 @@
 :root {
   color-scheme: light dark;
 
-  /* MindBridge Ocean Blue Theme - Light Mode (PARCHMENT & BLUE) */
-  --background: #edede9; /* Parchment - Base surface */
-  --foreground: #0f172a; /* Slate 900 for better contrast than pure black */
-  --ash-grey: #f8fafc; /* Somewhat White Ash (Slate 50) */
-  --ash-stroke: #94a3b8; /* Refined Ash Stroke (Slate 400) */
+  /* MindBridge Clean Modern Light Theme (SLATE-BASED CLARITY) */
+  --background: #f1f5f9; /* Slate 100 - Clean, distinct base */
+  --foreground: #020617; /* Sinking the text for better readability */
+  --ash-grey: #f8fafc; 
+  --ash-stroke: #cbd5e1; 
 
-  --primary: #0077b6; /* Ocean Blue */
+  --primary: #0077b6; 
   --primary-foreground: #ffffff;
 
-  --secondary: #d5bdaf; /* Almond Silk */
-  --secondary-foreground: #0f172a;
+  --secondary: #e2e8f0; /* Slate 200 */
+  --secondary-foreground: #020617;
 
-  --muted: #f1f1f1; 
-  --muted-foreground: #4b5563; /* Gray 600 - Darker for better contrast on Parchment */
+  --muted: #f8fafc; 
+  --muted-foreground: #64748b; 
 
-  --accent: #e3d5ca; 
-  --accent-foreground: #0f172a;
+  --accent: #0077b6; 
+  --accent-foreground: #ffffff;
 
-  --border: #d6ccc2; 
-  --input: #d6ccc2;
+  --border: #cbd5e1; /* Slate 300 - Clear, professional definition */
+  --input: #cbd5e1;
   --ring: #0077b6;
 
-  --card: #f5ebe0; 
-  --card-foreground: #0f172a;
-  --surface-above: #e0e1dd;
+  --card: #ffffff; 
+  --card-foreground: #020617;
+  --surface-above: #e2e8f0;
 }
 
 .dark {
@@ -139,10 +139,10 @@
 }
 
 .glass {
-  background: rgba(253, 252, 249, 0.85); /* Parchment-inspired soft fill */
-  backdrop-filter: blur(16px) saturate(120%);
-  border: 1px solid rgba(214, 204, 194, 0.4); /* Neutral Silk/Parchment outline */
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.03);
+  background: rgba(255, 255, 255, 0.8); /* Pure white with slightly less transparency */
+  backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(15, 23, 42, 0.12); /* Subtle slate stroke for visibility */
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.05);
 }
 
 .dark .glass {
