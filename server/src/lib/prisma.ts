@@ -7,7 +7,18 @@ const createPrismaClient = () => {
     
     console.log(`[STABILITY FIX] Initializing Prisma with PG Driver Adapter...`);
     
-    const pool = new Pool({ connectionString });
+    const pool = new Pool({ 
+        connectionString,
+        max: 2, // Low limit to avoid Neon "Authentication timed out"
+        idleTimeoutMillis: 10000,
+        connectionTimeoutMillis: 10000,
+        keepAlive: true
+    });
+
+    pool.on('error', (err) => {
+        console.error('[PRISMA POOL ERROR]', err.message);
+    });
+    
     const adapter = new PrismaPg(pool);
     
     const client = new PrismaClient({ 
