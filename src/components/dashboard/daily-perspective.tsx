@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
     Sparkles, 
@@ -17,7 +18,21 @@ interface DailyPerspectiveProps {
     className?: string;
 }
 
+const TIPS = [
+    "Take 3 deep breaths before your next task.",
+    "Hydrate: A glass of water can reset your focus.",
+    "Ghanaian wisdom: 'The one who asks the way does not get lost.' Talk to a peer today.",
+    "Your MindBridge streak is a testament to your resilience."
+];
+
 export function DailyPerspective({ moodStats, className }: DailyPerspectiveProps) {
+    const [randomTip, setRandomTip] = useState(TIPS[0]);
+
+    useEffect(() => {
+        const selectedTip = TIPS[Math.floor(Math.random() * TIPS.length)];
+        setRandomTip(selectedTip);
+    }, []);
+
     // Determine a "status" message based on stats
     const getStatusInfo = () => {
         if (moodStats.streak > 5) return { label: "Exceptional Momentum", color: "text-amber-500", bg: "bg-amber-500/10" };
@@ -26,15 +41,6 @@ export function DailyPerspective({ moodStats, className }: DailyPerspectiveProps
     };
 
     const status = getStatusInfo();
-
-    const tips = [
-        "Take 3 deep breaths before your next task.",
-        "Hydrate: A glass of water can reset your focus.",
-        "Ghanaian wisdom: 'The one who asks the way does not get lost.' Talk to a peer today.",
-        "Your MindBridge streak is a testament to your resilience."
-    ];
-    
-    const randomTip = tips[Math.floor(Math.random() * tips.length)];
 
     return (
         <motion.div
