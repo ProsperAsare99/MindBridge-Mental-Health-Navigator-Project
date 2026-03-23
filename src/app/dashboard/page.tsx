@@ -23,6 +23,7 @@ import { DailyWins } from "@/components/dashboard/daily-wins";
 import { QuickActions } from "@/components/dashboard/quick-actions";
 import { MoodInsight } from "@/components/dashboard/MoodInsight";
 import { TrendingUp } from "lucide-react";
+import { GamificationPortal } from "@/components/dashboard/GamificationPortal";
 
 
 import { DailyPerspective } from "@/components/dashboard/daily-perspective";
@@ -131,8 +132,15 @@ export default async function DashboardPage() {
                     </DashboardItem>
                 </div>
 
-                {/* 5. Utility & Insight Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {/* 5. Wellness Journey (Gamification Portal) */}
+                <div className="mb-10">
+                    <DashboardItem>
+                        <GamificationPortal />
+                    </DashboardItem>
+                </div>
+
+                {/* 6. Utility & Insight Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Quick Actions */}
                     <DashboardItem className="lg:col-span-1">
                         <Card className="h-full glass p-8 rounded-[2.5rem]">
@@ -140,38 +148,9 @@ export default async function DashboardPage() {
                         </Card>
                     </DashboardItem>
 
-                    {/* Mood Insight - Now even more prominent */}
+                    {/* Mood Insight */}
                     <DashboardItem className="lg:col-span-2">
                         <MoodInsight moods={moodHistory} className="h-full shadow-premium" />
-                    </DashboardItem>
-
-                    {/* Continuity Card */}
-                    <DashboardItem>
-                        <Link href="/dashboard/mood">
-                            <Card className="h-full group hover:shadow-2xl transition-all duration-500 glass cursor-pointer overflow-hidden relative rounded-[2.5rem]">
-                                <CardHeader className="pb-2">
-                                    <CardTitle className="text-sm font-bold uppercase tracking-widest text-muted-foreground">Continuity</CardTitle>
-                                </CardHeader>
-                                <CardContent className="flex flex-col justify-between pt-2 h-[calc(100%-80px)]">
-                                    <div className="flex items-baseline gap-2">
-                                        <span className="text-6xl font-black text-primary">{moodStats.streak}</span>
-                                        <span className="text-sm font-bold text-muted-foreground uppercase">Days</span>
-                                    </div>
-                                    <div className="mt-8 flex flex-col gap-4">
-                                        <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
-                                            <Flame className="h-3 w-3" />
-                                            {moodStats.streak > 0 ? "You're on fire! Keep it up." : "Start your streak today."}
-                                        </div>
-                                        <Button size="sm" variant="outline" className="rounded-xl w-full h-10 font-bold border-primary/10 bg-primary/5 hover:bg-primary/10 transition-all">
-                                            View Logs
-                                        </Button>
-                                    </div>
-                                </CardContent>
-                                <div className="absolute top-[-10%] right-[-10%] opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
-                                    <Flame size={120} className="text-primary" />
-                                </div>
-                            </Card>
-                        </Link>
                     </DashboardItem>
                 </div>
 
