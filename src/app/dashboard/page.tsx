@@ -71,26 +71,27 @@ export default async function DashboardPage() {
                     </div>
                 </DashboardItem>
 
-                {/* 2. Top Impact Board - Elevated necessary info */}
-                <DashboardItem>
-                    <DailyPerspective moodStats={moodStats} />
-                </DashboardItem>
+                {/* 2 & 3. Top Impact Board - 7:5 Grid (Swapped Positions) */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-10">
+                    <DashboardItem className="lg:col-span-5 h-full">
+                        <Card className="h-full glass overflow-hidden group shadow-premium rounded-[2.5rem] flex flex-col min-h-[320px]">
+                            <CardHeader className="pb-2">
+                                <CardTitle className="text-lg flex items-center gap-2">
+                                    <BrainCircuit className="h-5 w-5 text-primary" />
+                                    Growth Reflections
+                                </CardTitle>
+                                <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mt-1">A curated space for your resilience</CardTitle>
+                            </CardHeader>
+                            <CardContent className="pt-4 flex-1 flex flex-col justify-center">
+                                <MotivationalCarousel />
+                            </CardContent>
+                        </Card>
+                    </DashboardItem>
 
-                {/* 3. Daily Reflections - Moved from bottom to top */}
-                <DashboardItem>
-                    <Card className="glass overflow-hidden group shadow-premium rounded-[2.5rem]">
-                        <CardHeader className="pb-2">
-                            <CardTitle className="text-lg flex items-center gap-2">
-                                <BrainCircuit className="h-5 w-5 text-primary" />
-                                Growth Reflections
-                            </CardTitle>
-                            <CardTitle className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-1">A curated space for your resilience</CardTitle>
-                        </CardHeader>
-                        <CardContent className="pt-4">
-                            <MotivationalCarousel />
-                        </CardContent>
-                    </Card>
-                </DashboardItem>
+                    <DashboardItem className="lg:col-span-7 h-full">
+                        <DailyPerspective moodStats={moodStats} className="h-full" />
+                    </DashboardItem>
+                </div>
 
                 {/* 4. Analytics & Flow Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
