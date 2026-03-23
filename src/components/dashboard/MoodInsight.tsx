@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { api } from "@/lib/api";
-import { 
-    TrendingUp, 
-    TrendingDown, 
-    Minus, 
-    RefreshCw, 
+import {
+    TrendingUp,
+    TrendingDown,
+    Minus,
+    RefreshCw,
     Sparkles,
     Calendar,
     BarChart3,
@@ -62,14 +62,14 @@ export function MoodInsight({ moods, className, onRefresh }: MoodInsightProps) {
 
         const values = moods.map(m => m.mood);
         const average = values.reduce((sum, m) => sum + m, 0) / values.length;
-        
+
         // Calculate trend (recent vs older)
         const halfPoint = Math.floor(values.length / 2);
         const recentAvg = values.slice(0, halfPoint).reduce((sum, m) => sum + m, 0) / (halfPoint || 1);
         const olderAvg = values.slice(halfPoint).reduce((sum, m) => sum + m, 0) / (values.length - halfPoint || 1);
-        
+
         const trend = recentAvg > olderAvg ? 'improving' : recentAvg < olderAvg ? 'declining' : 'stable';
-        
+
         // Calculate volatility (standard deviation)
         const variance = values.reduce((sum, m) => sum + Math.pow(m - average, 2), 0) / values.length;
         const volatility = Math.sqrt(variance);
@@ -106,9 +106,9 @@ export function MoodInsight({ moods, className, onRefresh }: MoodInsightProps) {
 
     const getGlowStyle = (trend: string) => {
         if (!trend) return 'shadow-premium';
-        if (trend === 'improving') return 'shadow-[0_0_40px_-10px_rgba(16,185,129,0.15)] border-emerald-500/30';
-        if (trend === 'declining') return 'shadow-[0_0_40px_-10px_rgba(239,68,68,0.15)] border-red-500/30';
-        return 'shadow-[0_0_40px_-10px_rgba(197,160,89,0.15)] border-primary/30';
+        if (trend === 'improving') return 'shadow-[0_0_40px_-10px_rgba(16,185,129,0.1)] border-emerald-500/20';
+        if (trend === 'declining') return 'shadow-[0_0_40px_-10px_rgba(239,68,68,0.1)] border-red-500/20';
+        return 'shadow-premium border-border/40';
     };
 
     if (!moods || moods.length < 3) {
@@ -119,15 +119,15 @@ export function MoodInsight({ moods, className, onRefresh }: MoodInsightProps) {
                 className={cn("glass p-6 rounded-[2.5rem] shadow-premium space-y-4 relative overflow-hidden", className)}
             >
                 {/* Background Ambient Glow */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(197,160,89,0.05),transparent)] pointer-events-none" />
-                
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(226,232,240,0.03),transparent)] pointer-events-none" />
+
                 <div className="flex items-center gap-3 relative z-10">
-                    <div className="h-10 w-10 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
-                        <BarChart3 className="h-5 w-5 text-primary" />
+                    <div className="h-10 w-10 rounded-2xl bg-muted flex items-center justify-center border border-border/50">
+                        <BarChart3 className="h-5 w-5 text-muted-foreground" />
                     </div>
                     <h3 className="text-sm font-black text-foreground uppercase tracking-tight">Mood Insights</h3>
                 </div>
-                
+
                 <div className="text-center py-6 space-y-4 relative z-10">
                     <Calendar className="h-12 w-12 text-muted-foreground/20 mx-auto" />
                     <p className="text-[11px] font-medium text-muted-foreground max-w-[180px] mx-auto leading-relaxed">
@@ -163,15 +163,15 @@ export function MoodInsight({ moods, className, onRefresh }: MoodInsightProps) {
             )}
         >
             {/* Background Ambient Accents */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(197,160,89,0.03),transparent)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,119,182,0.03),transparent)] pointer-events-none" />
             <div className="absolute top-0 right-0 w-full h-full bg-[grid-white-5%/10%] [mask-image:radial-gradient(white,transparent_70%)] pointer-events-none opacity-20" />
 
             {/* Header */}
-            <div className="p-6 bg-gradient-to-br from-primary/5 to-transparent border-b border-border/40 relative z-10">
+            <div className="p-6 bg-gradient-to-br from-muted/20 to-transparent border-b border-border/40 relative z-10">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <motion.div 
-                            animate={{ 
+                        <motion.div
+                            animate={{
                                 scale: [1, 1.1, 1],
                                 opacity: [0.8, 1, 0.8]
                             }}
@@ -180,7 +180,7 @@ export function MoodInsight({ moods, className, onRefresh }: MoodInsightProps) {
                                 repeat: Infinity,
                                 ease: "easeInOut"
                             }}
-                            className="h-10 w-10 rounded-2xl bg-white/50 backdrop-blur-sm flex items-center justify-center border border-primary/20 shadow-sm"
+                            className="h-10 w-10 rounded-2xl bg-white/50 backdrop-blur-sm flex items-center justify-center border border-border/50 shadow-sm"
                         >
                             <Sparkles className="h-5 w-5 text-primary" />
                         </motion.div>
@@ -192,7 +192,7 @@ export function MoodInsight({ moods, className, onRefresh }: MoodInsightProps) {
                             <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{stats?.total} observations synthesized</p>
                         </div>
                     </div>
-                    
+
                     <button
                         onClick={() => { fetchInsight(); onRefresh?.(); }}
                         disabled={loading}
@@ -239,7 +239,7 @@ export function MoodInsight({ moods, className, onRefresh }: MoodInsightProps) {
                             <div className="h-4 bg-primary/10 rounded-full w-5/6 animate-pulse" />
                             <div className="h-4 bg-primary/10 rounded-full w-4/6 animate-pulse" />
                             {/* Scanning Line Effect */}
-                            <motion.div 
+                            <motion.div
                                 animate={{ top: ['0%', '100%', '0%'] }}
                                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                                 className="absolute left-0 right-0 h-px bg-primary/40 shadow-[0_0_10px_var(--primary)] pointer-events-none"
@@ -251,7 +251,7 @@ export function MoodInsight({ moods, className, onRefresh }: MoodInsightProps) {
                             <p className="text-sm text-red-500 font-bold">{error}</p>
                         </div>
                     ) : (
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             className="relative group lg:p-2"
@@ -267,7 +267,7 @@ export function MoodInsight({ moods, className, onRefresh }: MoodInsightProps) {
                 {/* Warnings Section */}
                 <AnimatePresence>
                     {(parseFloat(stats?.volatility) > 1.5 || parseFloat(stats?.average) < 2.5) && (
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             className="space-y-3"

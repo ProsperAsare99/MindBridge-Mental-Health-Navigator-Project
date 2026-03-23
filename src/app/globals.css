@@ -22,6 +22,8 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-surface-above: var(--surface-above);
+  --color-ash-grey: var(--ash-grey);
+  --color-ash-stroke: var(--ash-stroke);
 
   --radius-xl: 1.5rem;
   --radius-2xl: 2rem;
@@ -35,8 +37,10 @@
   /* MindBridge Antique Gold Theme - Light Mode (PARCHMENT & GOLD) */
   --background: #edede9; /* Parchment - Base surface */
   --foreground: #0f172a; /* Slate 900 for better contrast than pure black */
+  --ash-grey: #f8fafc; /* Somewhat White Ash (Slate 50) */
+  --ash-stroke: #94a3b8; /* Refined Ash Stroke (Slate 400) */
 
-  --primary: #c5a059; /* Antique Gold */
+  --primary: #0077b6; /* Ocean Blue */
   --primary-foreground: #ffffff;
 
   --secondary: #d5bdaf; /* Almond Silk */
@@ -50,7 +54,7 @@
 
   --border: #d6ccc2; 
   --input: #d6ccc2;
-  --ring: #c5a059;
+  --ring: #0077b6;
 
   --card: #f5ebe0; 
   --card-foreground: #0f172a;
@@ -61,8 +65,10 @@
   /* MindBridge Antique Gold Theme - Dark Mode (CARBON & GOLD) */
   --background: #141415; /* Deeper, softer Carbon */
   --foreground: #d1d1c7; /* Muted Parchment for softer contrast */
+  --ash-grey: #e2e8f0; /* Soft White Ash for Dark Mode (Slate 200) */
+  --ash-stroke: #64748b; /* Stronger Ash for Dark Mode (Slate 500) */
 
-  --primary: #ae9164; /* Muted Gold */
+  --primary: #00b4d8; /* Muted Blue */
   --primary-foreground: #141415;
 
   --secondary: #27272a; 
@@ -71,12 +77,12 @@
   --muted: #1a1a1b; 
   --muted-foreground: #9ca3af; /* Gray 400 - Lighter for better contrast on Carbon */
 
-  --accent: #ae9164;
+  --accent: #00b4d8;
   --accent-foreground: #141415;
 
-  --border: rgba(174, 145, 100, 0.1); /* Themed subtle border */
-  --input: rgba(174, 145, 100, 0.1);
-  --ring: #ae9164;
+  --border: rgba(0, 180, 216, 0.1); /* Themed subtle blue border */
+  --input: rgba(0, 180, 216, 0.1);
+  --ring: #00b4d8;
 
   --card: #1a1a1b; 
   --card-foreground: #d1d1c7;
@@ -90,7 +96,7 @@
   --background: #fdfcf9; /* Soft Ivory */
   --foreground: #1b263b; /* Deep Navy (Contrast Optimization) */
 
-  --primary: #c5a059; /* Soft Antique Gold */
+  --primary: #0077b6; /* Ocean Blue */
   --primary-foreground: #ffffff;
 
   --secondary: #d9c5b2; /* Champagne Beige */
@@ -104,7 +110,7 @@
 
   --border: #e3d9cf; /* Subtle Silk Border */
   --input: #e3d9cf;
-  --ring: #c5a059;
+  --ring: #0077b6;
 
   --card: #ffffff;
   --card-foreground: #1b263b;
@@ -115,7 +121,7 @@
   --background: #1c1c1c; /* Obsidian Black */
   --foreground: #f5f5f0; /* Cream Text */
 
-  --primary: #ae9164; /* Muted Gold */
+  --primary: #00b4d8; /* Brighter Blue */
   --primary-foreground: #1c1c1c;
 
   --secondary: #3d3d3d; /* Dark Stone */
@@ -124,7 +130,7 @@
   --muted: #2a2a2a;
   --muted-foreground: #a0a090;
 
-  --accent: #ae9164;
+  --accent: #00b4d8;
   --accent-foreground: #1c1c1c;
 
   --border: #333333;
@@ -135,14 +141,14 @@
 .glass {
   background: rgba(253, 252, 249, 0.85); /* Parchment-inspired soft fill */
   backdrop-filter: blur(16px) saturate(120%);
-  border: 1px solid rgba(197, 160, 89, 0.25); /* More visible Antique Gold outline */
-  box-shadow: 0 12px 40px 0 rgba(197, 160, 89, 0.05);
+  border: 1px solid rgba(214, 204, 194, 0.4); /* Neutral Silk/Parchment outline */
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.03);
 }
 
 .dark .glass {
   background: rgba(26, 26, 27, 0.85); /* Carbon-inspired soft fill */
   backdrop-filter: blur(12px) saturate(140%);
-  border: 1px solid rgba(174, 145, 100, 0.3); /* Clearer Gold outline in dark mode */
+  border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle neutral outline */
   box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
 }
 

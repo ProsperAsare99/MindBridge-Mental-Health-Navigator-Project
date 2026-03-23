@@ -45,8 +45,9 @@ export function DailyPerspective({ moodStats, className }: DailyPerspectiveProps
                 className
             )}
         >
-            <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none group-hover:opacity-[0.06] transition-opacity">
-                <BrainCircuit size={180} className="text-primary" />
+            {/* Background Graphic Watermark */}
+            <div className="absolute -right-12 -top-12 opacity-10 pointer-events-none transform rotate-12 transition-transform duration-1000 group-hover:rotate-6">
+                <BrainCircuit size={180} className="text-muted-foreground" />
             </div>
 
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
@@ -55,13 +56,13 @@ export function DailyPerspective({ moodStats, className }: DailyPerspectiveProps
                         <div className={cn("px-4 py-1.5 rounded-2xl text-[10px] font-black uppercase tracking-widest border border-current/20", status.color, status.bg)}>
                             {status.label}
                         </div>
-                        <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                        <div className="h-1.5 w-1.5 rounded-full bg-slate-400 animate-pulse" />
                         <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Live Performance</span>
                     </div>
                     
                     <div className="space-y-2">
-                        <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight tracking-tight">
-                            Today's <span className="text-primary">Perspective</span>
+                        <h2 className="text-3xl font-black text-foreground leading-tight">
+                            Today&apos;s Perspective
                         </h2>
                         <p className="text-sm md:text-base font-bold text-muted-foreground leading-relaxed">
                             {randomTip}
@@ -69,7 +70,7 @@ export function DailyPerspective({ moodStats, className }: DailyPerspectiveProps
                     </div>
 
                     <div className="flex flex-wrap gap-4 pt-2">
-                        <div className="flex items-center gap-2 bg-primary/5 px-3 py-2 rounded-xl border border-primary/10 text-primary">
+                        <div className="flex items-center gap-2 bg-muted/40 px-3 py-2 rounded-xl border border-border/50 text-muted-foreground">
                             <Zap className="h-4 w-4" />
                             <span className="text-xs font-black uppercase tracking-tight">{moodStats.streak} Day Streak</span>
                         </div>

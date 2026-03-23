@@ -148,8 +148,8 @@ const assessments = [
         duration: "2-4 mins",
         questions: 7,
         category: "Clinical",
-        color: "text-purple-500",
-        bgColor: "bg-purple-500/10"
+        color: "text-[#D5BDAF]",
+        bgColor: "bg-[#D5BDAF]/10"
     },
     {
         id: "stress",
@@ -283,11 +283,11 @@ export default function AssessmentPage() {
                         >
                             {/* Header */}
                             <div className="space-y-4">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest border border-primary/10">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-muted text-muted-foreground text-[10px] font-bold uppercase tracking-widest border border-border">
                                     <ClipboardList size={12} /> Diagnostic Center
                                 </div>
                                 <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
-                                    Personal <span className="text-primary">Assessments</span>
+                                    Personal Assessments
                                 </h1>
                                 <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-2xl font-medium">
                                     Self-reflection is the first step toward growth. Use our clinically-validated tools to understand your internal landscape better.
@@ -299,7 +299,7 @@ export default function AssessmentPage() {
                                 <div className="flex bg-muted/50 p-1 rounded-2xl w-full sm:w-auto">
                                     <button
                                         onClick={() => setView("list")}
-                                        className={`flex-1 sm:px-6 py-2 rounded-xl text-xs font-bold transition-all ${view === "list" ? "bg-background text-primary shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                                        className={`flex-1 sm:px-6 py-2 rounded-xl text-xs font-bold transition-all ${view === "list" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
                                     >
                                         All Assessments
                                     </button>
@@ -311,11 +311,11 @@ export default function AssessmentPage() {
                                     </button>
                                 </div>
                                 <div className="relative w-full sm:w-80 group">
-                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={16} />
+                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-foreground transition-colors" size={16} />
                                     <input
                                         type="text"
                                         placeholder="Search..."
-                                        className="w-full bg-muted/50 border border-border rounded-2xl py-3.5 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all text-foreground placeholder:text-muted-foreground/60"
+                                        className="w-full bg-muted/50 border border-border rounded-2xl py-3.5 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-foreground/10 focus:border-border transition-all text-foreground placeholder:text-muted-foreground/60"
                                     />
                                 </div>
                             </div>
@@ -348,7 +348,7 @@ export default function AssessmentPage() {
                                                 </div>
 
                                                 <div className="space-y-3">
-                                                    <h3 className="text-2xl font-black text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">
+                                                    <h3 className="text-2xl font-black text-foreground tracking-tight group-hover:text-foreground transition-colors duration-300">
                                                         {a.title}
                                                     </h3>
                                                     <p className="text-sm text-muted-foreground leading-relaxed font-medium line-clamp-2">
@@ -427,7 +427,7 @@ export default function AssessmentPage() {
                                                     <div className="flex items-center gap-8">
                                                         <div className="text-center px-4 md:border-l border-border">
                                                             <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Score</p>
-                                                            <p className="text-2xl font-black text-primary">{record.score}</p>
+                                                            <p className="text-2xl font-black text-foreground">{record.score}</p>
                                                         </div>
                                                         <div className="text-center px-4 border-l border-border">
                                                             <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Result</p>
@@ -454,7 +454,7 @@ export default function AssessmentPage() {
                                     <ShieldCheck size={120} className="text-primary" />
                                 </div>
                                 <div className="relative z-10 space-y-6 max-w-2xl text-center md:text-left">
-                                    <h2 className="text-3xl font-extrabold tracking-tight">Your data is <span className="text-primary">private & safe.</span></h2>
+                                    <h2 className="text-3xl font-extrabold tracking-tight">Your data is private & safe.</h2>
                                     <p className="text-muted-foreground font-medium">
                                         MindBridge uses industry-standard encryption. Your assessment results are never shared and are used only to personalize your wellness path.
                                     </p>
@@ -489,7 +489,7 @@ export default function AssessmentPage() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-muted/30 rounded-[2.5rem] p-8">
                                     <div className="space-y-2">
                                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Total Score</p>
-                                        <p className="text-6xl font-black text-primary">{score}</p>
+                                        <p className="text-6xl font-black text-foreground">{score}</p>
                                     </div>
                                     <div className="space-y-2 border-t md:border-t-0 md:border-l border-primary/10 pt-6 md:pt-0 md:pl-6 text-center md:text-left">
                                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Indication</p>
@@ -497,8 +497,8 @@ export default function AssessmentPage() {
                                     </div>
                                 </div>
 
-                                <div className="p-8 rounded-[2rem] bg-primary/5 border border-primary/10 space-y-4">
-                                    <div className="flex items-center gap-2 justify-center md:justify-start text-primary">
+                                <div className="p-8 rounded-[2rem] bg-muted/40 border border-border space-y-4">
+                                    <div className="flex items-center gap-2 justify-center md:justify-start text-foreground">
                                         <Info size={20} strokeWidth={2.5} />
                                         <span className="text-xs font-black uppercase tracking-[0.2em]">Expert Analysis</span>
                                     </div>
@@ -566,7 +566,7 @@ export default function AssessmentPage() {
 
                             <div className="bg-card glass rounded-[3rem] p-8 md:p-14 border border-primary/10 shadow-premium space-y-12 min-h-[500px] flex flex-col justify-center">
                                 <div className="space-y-6 text-center">
-                                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary bg-primary/5 px-4 py-2 rounded-full border border-primary/10">
+                                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground bg-muted px-4 py-2 rounded-full border border-border">
                                         Question {currentStep + 1} of {activeAssessment.questions.length}
                                     </span>
                                     <h2 className="text-3xl md:text-4xl font-black tracking-tight text-foreground leading-tight">

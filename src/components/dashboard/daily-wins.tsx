@@ -17,7 +17,7 @@ export function DailyWins() {
     const [completed, setCompleted] = useState<string[]>([]);
 
     const toggleWin = (id: string) => {
-        setCompleted(prev => 
+        setCompleted(prev =>
             prev.includes(id) ? prev.filter(winId => winId !== id) : [...prev, id]
         );
     };
@@ -67,9 +67,9 @@ export function DailyWins() {
                             onClick={() => toggleWin(win.id)}
                             className={cn(
                                 "w-full flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 group",
-                                isCompleted 
-                                    ? "bg-primary/10 border-primary/20 shadow-lg shadow-primary/5" 
-                                    : "bg-muted/30 border-primary/5 hover:bg-muted/50"
+                                isCompleted
+                                    ? "bg-muted/80 border-border/80 shadow-premium"
+                                    : "bg-muted/30 border-border/30 hover:bg-muted/50"
                             )}
                         >
                             <div className="flex items-center gap-3">
@@ -97,11 +97,11 @@ export function DailyWins() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
-                        className="p-4 rounded-[1.5rem] bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 border border-primary/10 text-center"
+                        className="p-4 rounded-[1.5rem] bg-muted/20 border border-border/40 text-center"
                     >
                         <div className="flex items-center justify-center gap-2 mb-1">
                             <Sparkles className="h-4 w-4 text-primary animate-pulse" />
-                            <p className="text-xs font-black text-primary uppercase tracking-widest">Mastery Achieved!</p>
+                            <p className="text-xs font-black text-foreground uppercase tracking-widest">Mastery Achieved!</p>
                             <Sparkles className="h-4 w-4 text-primary animate-pulse" />
                         </div>
                         <p className="text-[10px] font-bold text-muted-foreground/80 lowercase italic"> consistency is the ultimate superpower. keep going! </p>

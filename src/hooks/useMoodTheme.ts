@@ -28,19 +28,19 @@ export function useMoodTheme() {
   const applyTheme = (avg: number, trend: string) => {
     const root = document.documentElement;
     
-    // Default (Stable/Positive) - Antique Gold
-    let primary = '#c5a059'; 
+    // Default (Stable/Positive) - Ocean Blue
+    let primary = '#0077b6'; 
     let secondary = '#d5bdaf'; // Almond Silk
-    let bgGradient = 'linear-gradient(to bottom right, rgba(197, 160, 89, 0.08), rgba(213, 189, 175, 0.05))';
+    let bgGradient = 'linear-gradient(to bottom right, rgba(0, 119, 182, 0.08), rgba(213, 189, 175, 0.05))';
 
     if (avg < 2.5 || trend === 'DECLINING') {
-      // supportive (Warmer/Deeper Gold)
-      primary = '#ae9164'; 
-      bgGradient = 'linear-gradient(to bottom right, rgba(174, 145, 100, 0.1), rgba(174, 145, 100, 0.05))';
+      // supportive (Vibrant Blue)
+      primary = '#00b4d8'; 
+      bgGradient = 'linear-gradient(to bottom right, rgba(0, 180, 216, 0.1), rgba(0, 180, 216, 0.05))';
     } else if (avg < 3.5) {
-      // Balanced (Muted Gold-Sage)
-      primary = '#9ba08d';
-      bgGradient = 'linear-gradient(to bottom right, rgba(155, 160, 141, 0.08), rgba(155, 160, 141, 0.03))';
+      // Balanced (Soft Blue)
+      primary = '#48cae4';
+      bgGradient = 'linear-gradient(to bottom right, rgba(72, 202, 228, 0.08), rgba(72, 202, 228, 0.03))';
     }
 
     root.style.setProperty('--primary', primary);

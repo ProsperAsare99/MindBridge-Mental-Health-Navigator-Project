@@ -40,10 +40,10 @@ export function MotivationalCarousel() {
                     "{currentQuote.text}"
                 </p>
                 <div className="flex items-center justify-between pt-2">
-                    <span className="text-sm font-black uppercase tracking-[0.2em] text-primary">
+                    <span className="text-sm font-black uppercase tracking-[0.2em] text-foreground">
                         — {currentQuote.author}
                     </span>
-                    <QuoteIcon className="h-8 w-8 text-primary opacity-20" strokeWidth={3} />
+                    <QuoteIcon className="h-8 w-8 text-muted-foreground opacity-10" strokeWidth={3} />
                 </div>
             </motion.div>
         </AnimatePresence>

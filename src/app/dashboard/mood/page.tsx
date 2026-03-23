@@ -120,13 +120,13 @@ export default function MoodPage() {
             });
             setSelectedMood(null);
             setNote("");
-            
+
             if (res.crisisFlag) {
                 alert("We noticed some concerning patterns in your note. Please remember that help is always available at the Crisis Support section.");
             } else {
                 alert("Mood logged successfully!");
             }
-            
+
             fetchMoodData(); // Refresh
         } catch (error) {
             console.error('Error logging mood:', error);
@@ -148,7 +148,7 @@ export default function MoodPage() {
         recognition.onstart = () => setIsListening(true);
         recognition.onend = () => setIsListening(false);
         recognition.onerror = () => setIsListening(false);
-        
+
         recognition.onresult = (event: any) => {
             const transcript = event.results[0][0].transcript;
             setNote(prev => prev ? `${prev} ${transcript}` : transcript);
@@ -247,11 +247,11 @@ export default function MoodPage() {
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between ml-1 pr-2">
                                     <div className="flex items-center gap-2 text-sm font-bold text-foreground/80">
-                                        <PenLine size={16} className="text-primary" /> Journal Reflection <span className="text-[10px] text-muted-foreground font-normal">(Optional)</span>
+                                        <PenLine size={16} className="text-muted-foreground" /> Journal Reflection <span className="text-[10px] text-muted-foreground font-normal">(Optional)</span>
                                     </div>
-                                    <button 
+                                    <button
                                         onClick={startListening}
-                                        className={`p-2 rounded-full transition-all ${isListening ? "bg-red-500/20 text-red-500 animate-pulse" : "bg-primary/10 text-primary hover:bg-primary/20"}`}
+                                        className={`p-2 rounded-full transition-all ${isListening ? "bg-red-500/20 text-red-500 animate-pulse" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
                                         title={isListening ? "Listening..." : "Voice Check-in"}
                                     >
                                         {isListening ? <MicOff size={18} /> : <Mic size={18} />}
@@ -337,8 +337,8 @@ export default function MoodPage() {
                                                     const dateStr = weekData.find(d => d.name === label)?.date;
                                                     const event = academicEvents.find(e => new Date(e.date).toDateString() === dateStr);
                                                     return (
-                                                        <div className="glass p-4 rounded-2xl border border-primary/20 shadow-xl space-y-2">
-                                                            <p className="text-xs font-black text-primary">{label}</p>
+                                                        <div className="glass p-4 rounded-2xl border border-border/40 shadow-xl space-y-2">
+                                                            <p className="text-xs font-black text-muted-foreground">{label}</p>
                                                             <p className="text-lg font-black text-foreground">{payload[0].value}/5</p>
                                                             {event && (
                                                                 <div className="pt-2 border-t border-primary/10">
@@ -357,17 +357,17 @@ export default function MoodPage() {
                                         <Area
                                             type="monotone"
                                             dataKey="mood"
-                                            stroke="var(--color-primary)"
+                                            stroke="var(--ash-stroke)"
                                             strokeWidth={4}
                                             fillOpacity={1}
                                             fill="url(#moodGradient)"
                                         />
                                         {/* Stress Points Overlay */}
                                         {weekData.map((d, i) => {
-                                             const event = academicEvents.find(e => new Date(e.date).toDateString() === d.date);
-                                             if (event) {
-                                                 return (
-                                                     <rect 
+                                            const event = academicEvents.find(e => new Date(e.date).toDateString() === d.date);
+                                            if (event) {
+                                                return (
+                                                    <rect
                                                         key={i}
                                                         x={`${(i / 6) * 90 + 5}%`}
                                                         y="0"
@@ -375,10 +375,10 @@ export default function MoodPage() {
                                                         height="100%"
                                                         fill="rgba(239, 68, 68, 0.1)"
                                                         className="pointer-events-none"
-                                                     />
-                                                 );
-                                             }
-                                             return null;
+                                                    />
+                                                );
+                                            }
+                                            return null;
                                         })}
                                     </AreaChart>
                                 </ResponsiveContainer>
@@ -403,12 +403,11 @@ export default function MoodPage() {
                                                             {date.toLocaleDateString('en-US', { weekday: 'short' })}
                                                         </p>
                                                         {entry.sentimentLabel && (
-                                                            <span className={`text-[8px] px-1.5 py-0.5 rounded-full font-black uppercase tracking-widest ${
-                                                                entry.sentimentLabel === 'Positive' ? 'bg-emerald-500/10 text-emerald-500' :
-                                                                entry.sentimentLabel === 'Concerned' ? 'bg-amber-500/10 text-amber-500' :
-                                                                entry.sentimentLabel === 'Distressed' ? 'bg-rose-500/10 text-rose-500' :
-                                                                'bg-slate-500/10 text-slate-500'
-                                                            }`}>
+                                                            <span className={`text-[8px] px-1.5 py-0.5 rounded-full font-black uppercase tracking-widest ${entry.sentimentLabel === 'Positive' ? 'bg-emerald-500/10 text-emerald-500' :
+                                                                    entry.sentimentLabel === 'Concerned' ? 'bg-amber-500/10 text-amber-500' :
+                                                                        entry.sentimentLabel === 'Distressed' ? 'bg-[#D5BDAF]/10 text-[#D5BDAF]' :
+                                                                            'bg-slate-500/10 text-slate-500'
+                                                                }`}>
                                                                 {entry.sentimentLabel}
                                                             </span>
                                                         )}

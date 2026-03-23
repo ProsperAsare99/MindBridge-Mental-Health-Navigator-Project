@@ -2,8 +2,8 @@
 
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
-import { 
-    TrendingUp, 
+import {
+    TrendingUp,
     Calendar,
     Activity
 } from "lucide-react";
@@ -86,8 +86,8 @@ export function MoodTrendChart({ moodHistory }: MoodTrendChartProps) {
                                 return (
                                     <div className="glass p-4 rounded-3xl border border-primary/40 shadow-2xl backdrop-blur-md">
                                         <div className="flex items-center gap-2 mb-1">
-                                            <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-                                            <p className="text-[10px] font-black text-primary uppercase tracking-widest">{label}</p>
+                                            <div className="h-2 w-2 rounded-full bg-slate-400 animate-pulse" />
+                                            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{label}</p>
                                         </div>
                                         <div className="flex items-baseline gap-1">
                                             <p className="text-2xl font-black text-foreground">{payload[0].value}</p>
@@ -107,17 +107,17 @@ export function MoodTrendChart({ moodHistory }: MoodTrendChartProps) {
                         fillOpacity={1}
                         fill="url(#moodTrendGradient)"
                         animationDuration={2000}
-                        dot={{ 
-                            r: 6, 
-                            fill: 'var(--primary)', 
-                            stroke: 'var(--background)', 
+                        dot={{
+                            r: 6,
+                            fill: 'var(--primary)',
+                            stroke: 'var(--background)',
                             strokeWidth: 2,
                             fillOpacity: 1
                         }}
-                        activeDot={{ 
-                            r: 9, 
-                            fill: 'var(--primary)', 
-                            stroke: 'var(--background)', 
+                        activeDot={{
+                            r: 9,
+                            fill: 'var(--primary)',
+                            stroke: 'var(--background)',
                             strokeWidth: 3
                         }}
                     />

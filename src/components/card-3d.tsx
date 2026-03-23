@@ -333,7 +333,7 @@ function PointLights() {
             <directionalLight
                 position={[10, 0, 5]}
                 intensity={0.4}
-                color="#ae9164"
+                color="#00b4d8"
             />
         </>
     );

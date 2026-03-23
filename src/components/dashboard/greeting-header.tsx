@@ -30,10 +30,10 @@ export function GreetingHeader({ displayName }: GreetingHeaderProps) {
       <motion.div
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
-        className="flex items-center gap-2 text-primary font-bold tracking-widest text-[10px] uppercase"
+        className="flex items-center gap-3 text-muted-foreground font-bold tracking-widest text-[10px] uppercase"
       >
-        <Calendar className="h-3 w-3" />
-        {dateStr}
+        <span className="h-1 w-1 rounded-full bg-primary" />
+        {greeting}, <span className="text-foreground">{displayName || "Student"}</span>
       </motion.div>
       <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
         {greeting}, <span className="text-primary">{displayName || "Student"}</span>
