@@ -13,6 +13,7 @@ import {
     Menu,
     X,
     UserCircle,
+    Users,
     Settings,
     Heart,
     ClipboardList,
@@ -49,6 +50,7 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
         { href: "/dashboard/assessment", label: "Assessment", icon: ClipboardList },
         { href: "/dashboard/resources", label: "Resources", icon: BookOpen },
         { href: "/dashboard/crisis", label: "Crisis Support", icon: Phone },
+        { href: "/dashboard/community", label: "Community", icon: Users },
         { href: "/dashboard/profile", label: "My Profile", icon: UserCircle },
         { href: "/dashboard/settings", label: "Settings", icon: Settings },
     ];
