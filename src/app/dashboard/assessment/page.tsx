@@ -178,8 +178,27 @@ export default function AssessmentPage() {
     const [currentStep, setCurrentStep] = useState(0);
     const [answers, setAnswers] = useState<number[]>([]);
     const [isFinished, setIsFinished] = useState(false);
+    const [history, setHistory] = useState<any[]>([]);
+    const [view, setView] = useState<"list" | "history">("list");
+    const [loading, setLoading] = useState(false);
 
     const activeAssessment = activeId ? (ASSESSMENT_DATA as any)[activeId] : null;
+
+    useEffect(() => {
+        fetchHistory();
+    }, []);
+
+    const fetchHistory = async () => {
+        setLoading(true);
+        try {
+            const data = await api.get('/assessments');
+            setHistory(data);
+        } catch (error) {
+            console.error("Error fetching assessment history:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleStart = (id: string) => {
         if (!(ASSESSMENT_DATA as any)[id]) {
@@ -217,6 +236,7 @@ export default function AssessmentPage() {
         setCurrentStep(0);
         setAnswers([]);
         setIsFinished(false);
+        fetchHistory(); // Refresh history
     };
 
     const score = useMemo(() => answers.reduce((a, b) => a + b, 0), [answers]);
@@ -231,6 +251,7 @@ export default function AssessmentPage() {
                 severity: analysis.level
             });
             console.log("Assessment saved successfully");
+            fetchHistory(); // Update history immediately
         } catch (error) {
             console.error("Error saving assessment:", error);
         }
@@ -275,94 +296,155 @@ export default function AssessmentPage() {
 
                             {/* Filters/Search Row */}
                             <div className="flex flex-col sm:flex-row gap-4 justify-between items-center glass p-4 rounded-3xl border border-border">
+                                <div className="flex bg-muted/50 p-1 rounded-2xl w-full sm:w-auto">
+                                    <button
+                                        onClick={() => setView("list")}
+                                        className={`flex-1 sm:px-6 py-2 rounded-xl text-xs font-bold transition-all ${view === "list" ? "bg-background text-primary shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                                    >
+                                        All Assessments
+                                    </button>
+                                    <button
+                                        onClick={() => setView("history")}
+                                        className={`flex-1 sm:px-6 py-2 rounded-xl text-xs font-bold transition-all ${view === "history" ? "bg-background text-primary shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                                    >
+                                        My History
+                                    </button>
+                                </div>
                                 <div className="relative w-full sm:w-80 group">
                                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={16} />
                                     <input
                                         type="text"
-                                        placeholder="Search assessments..."
+                                        placeholder="Search..."
                                         className="w-full bg-muted/50 border border-border rounded-2xl py-3.5 pl-12 pr-4 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all text-foreground placeholder:text-muted-foreground/60"
                                     />
                                 </div>
-                                <div className="flex gap-2 w-full sm:w-auto">
-                                    <Button variant="outline" className="flex-1 sm:flex-none h-11 rounded-2xl gap-2 active:scale-95 transition-transform">
-                                        <Filter size={16} /> Categories
-                                    </Button>
-                                    <Button variant="outline" className="flex-1 sm:flex-none h-11 rounded-2xl gap-2 active:scale-95 transition-transform">
-                                        Recent First
-                                    </Button>
+                            </div>
+
+                            {view === "list" ? (
+                                <>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {assessments.map((a, i) => (
+                                        <motion.div
+                                            key={a.id}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            whileHover={{ y: -8 }}
+                                            transition={{
+                                                delay: i * 0.1,
+                                                type: "spring",
+                                                stiffness: 300,
+                                                damping: 20
+                                            }}
+                                            className="group relative glass rounded-[2.5rem] p-8 shadow-premium hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 overflow-hidden cursor-pointer"
+                                            onClick={() => handleStart(a.id)}
+                                        >
+                                            <div className={`absolute -right-8 -top-8 w-24 h-24 rounded-full blur-3xl opacity-20 ${a.bgColor}`} />
+
+                                            <div className="relative space-y-6">
+                                                <div className="flex justify-between items-start">
+                                                    <div className={`h-14 w-14 rounded-2xl ${a.bgColor} flex items-center justify-center ${a.color} transition-transform group-hover:scale-110 duration-500 bg-opacity-20`}>
+                                                        <ClipboardList size={28} strokeWidth={2.5} />
+                                                    </div>
+                                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">{a.category}</span>
+                                                </div>
+
+                                                <div className="space-y-3">
+                                                    <h3 className="text-2xl font-black text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">
+                                                        {a.title}
+                                                    </h3>
+                                                    <p className="text-sm text-muted-foreground leading-relaxed font-medium line-clamp-2">
+                                                        {a.description}
+                                                    </p>
+                                                </div>
+
+                                                <div className="flex items-center gap-6 text-muted-foreground">
+                                                    <div className="flex items-center gap-2">
+                                                        <Timer size={16} className="text-secondary" />
+                                                        <span className="text-[11px] font-bold uppercase tracking-wider">{a.duration}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <ShieldCheck size={16} className="text-primary" />
+                                                        <span className="text-[11px] font-bold uppercase tracking-wider">{a.questions} Qs</span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="pt-4 flex items-center justify-between">
+                                                    <div className="flex -space-x-2">
+                                                        {[1, 2, 3].map(i => (
+                                                            <div key={i} className="h-6 w-6 rounded-full border-2 border-background bg-muted text-[8px] flex items-center justify-center font-bold">
+                                                                {i}+
+                                                            </div>
+                                                        ))}
+                                                        <span className="ml-4 text-[10px] text-muted-foreground font-bold flex items-center uppercase tracking-widest">
+                                                            8.4k+ Taken
+                                                        </span>
+                                                    </div>
+
+                                                    <Button
+                                                        onClick={() => handleStart(a.id)}
+                                                        className="h-12 px-6 rounded-2xl font-bold shadow-lg shadow-primary/10 flex items-center gap-2 group/btn active:scale-95 transition-all"
+                                                    >
+                                                        Begin <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    ))}
                                 </div>
-                            </div>
-
-                            {/* Grid */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {assessments.map((a, i) => (
-                                    <motion.div
-                                        key={a.id}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        whileHover={{ y: -8 }}
-                                        transition={{
-                                            delay: i * 0.1,
-                                            type: "spring",
-                                            stiffness: 300,
-                                            damping: 20
-                                        }}
-                                        className="group relative glass rounded-[2.5rem] p-8 shadow-premium hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 overflow-hidden cursor-pointer"
-                                        onClick={() => handleStart(a.id)}
-                                    >
-                                        <div className={`absolute -right-8 -top-8 w-24 h-24 rounded-full blur-3xl opacity-20 ${a.bgColor}`} />
-
-                                        <div className="relative space-y-6">
-                                            <div className="flex justify-between items-start">
-                                                <div className={`h-14 w-14 rounded-2xl ${a.bgColor} flex items-center justify-center ${a.color} transition-transform group-hover:scale-110 duration-500 bg-opacity-20`}>
-                                                    <ClipboardList size={28} strokeWidth={2.5} />
-                                                </div>
-                                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">{a.category}</span>
-                                            </div>
-
-                                            <div className="space-y-3">
-                                                <h3 className="text-2xl font-black text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">
-                                                    {a.title}
-                                                </h3>
-                                                <p className="text-sm text-muted-foreground leading-relaxed font-medium line-clamp-2">
-                                                    {a.description}
-                                                </p>
-                                            </div>
-
-                                            <div className="flex items-center gap-6 text-muted-foreground">
-                                                <div className="flex items-center gap-2">
-                                                    <Timer size={16} className="text-secondary" />
-                                                    <span className="text-[11px] font-bold uppercase tracking-wider">{a.duration}</span>
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <ShieldCheck size={16} className="text-primary" />
-                                                    <span className="text-[11px] font-bold uppercase tracking-wider">{a.questions} Qs</span>
-                                                </div>
-                                            </div>
-
-                                            <div className="pt-4 flex items-center justify-between">
-                                                <div className="flex -space-x-2">
-                                                    {[1, 2, 3].map(i => (
-                                                        <div key={i} className="h-6 w-6 rounded-full border-2 border-background bg-muted text-[8px] flex items-center justify-center font-bold">
-                                                            {i}+
-                                                        </div>
-                                                    ))}
-                                                    <span className="ml-4 text-[10px] text-muted-foreground font-bold flex items-center uppercase tracking-widest">
-                                                        8.4k+ Taken
-                                                    </span>
-                                                </div>
-
-                                                <Button
-                                                    onClick={() => handleStart(a.id)}
-                                                    className="h-12 px-6 rounded-2xl font-bold shadow-lg shadow-primary/10 flex items-center gap-2 group/btn active:scale-95 transition-all"
-                                                >
-                                                    Begin <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
-                                                </Button>
-                                            </div>
+                            ) : (
+                                <div className="space-y-6">
+                                    {loading ? (
+                                        <div className="flex justify-center py-20">
+                                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
                                         </div>
-                                    </motion.div>
-                                ))}
-                            </div>
+                                    ) : history.length === 0 ? (
+                                        <div className="glass rounded-[2.5rem] p-20 text-center space-y-4">
+                                            <div className="h-20 w-20 rounded-full bg-muted flex items-center justify-center mx-auto text-muted-foreground">
+                                                <ClipboardList size={40} />
+                                            </div>
+                                            <h3 className="text-xl font-bold">No history yet</h3>
+                                            <p className="text-muted-foreground max-w-sm mx-auto">Complete your first assessment to see your progress and insights here.</p>
+                                            <Button onClick={() => setView("list")} variant="outline" className="rounded-xl">Browse Assessments</Button>
+                                        </div>
+                                    ) : (
+                                        <div className="grid gap-4">
+                                            {history.map((record, i) => (
+                                                <motion.div
+                                                    key={record.id}
+                                                    initial={{ opacity: 0, x: -20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: i * 0.05 }}
+                                                    className="glass p-6 rounded-3xl border border-border flex flex-col md:flex-row md:items-center justify-between gap-6 hover:border-primary/20 transition-all group"
+                                                >
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                                                            <ClipboardList size={24} />
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="font-bold text-lg">{ASSESSMENT_DATA[record.type as keyof typeof ASSESSMENT_DATA]?.title || record.type}</h4>
+                                                            <p className="text-xs text-muted-foreground font-medium">{new Date(record.createdAt).toLocaleDateString()} at {new Date(record.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-8">
+                                                        <div className="text-center px-4 md:border-l border-border">
+                                                            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Score</p>
+                                                            <p className="text-2xl font-black text-primary">{record.score}</p>
+                                                        </div>
+                                                        <div className="text-center px-4 border-l border-border">
+                                                            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Result</p>
+                                                            <p className={`text-sm font-bold uppercase tracking-tight`}>{record.severity}</p>
+                                                        </div>
+                                                        <Button variant="ghost" size="icon" className="rounded-xl group-hover:bg-primary/10 group-hover:text-primary transition-all">
+                                                            <ArrowRight size={18} />
+                                                        </Button>
+                                                    </div>
+                                                </motion.div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                </div>
+                            )}
 
                             {/* Footer Banner */}
                             <motion.div

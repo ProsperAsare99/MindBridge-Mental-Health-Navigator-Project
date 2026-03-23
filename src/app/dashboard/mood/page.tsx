@@ -30,6 +30,7 @@ import {
     AlertTriangle
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { MoodInsight } from "@/components/dashboard/MoodInsight";
 
 export default function MoodPage() {
     const { user, loading } = useAuth();
@@ -428,6 +429,15 @@ export default function MoodPage() {
                         </motion.div>
                     </div>
                 </div>
+
+                {/* AI Insights Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                >
+                    <MoodInsight moodHistory={moodHistory} />
+                </motion.div>
             </div>
         </div>
     );
