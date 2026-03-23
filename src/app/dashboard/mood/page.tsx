@@ -31,15 +31,13 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MoodInsight } from "@/components/dashboard/MoodInsight";
+import { MoodLogger } from "@/components/mood/MoodLogger";
 
 export default function MoodPage() {
     const { user, loading } = useAuth();
-    const [selectedMood, setSelectedMood] = useState<number | null>(null);
-    const [note, setNote] = useState("");
     const [activeTimeRange, setActiveTimeRange] = useState<"week" | "month">("week");
     const [moodHistory, setMoodHistory] = useState<any[]>([]);
     const [moodStats, setMoodStats] = useState({ average: 0, count: 0, streak: 0 });
-    const [isListening, setIsListening] = useState(false);
     const [academicEvents, setAcademicEvents] = useState<any[]>([]);
 
     const fetchMoodData = useCallback(async () => {
@@ -111,51 +109,6 @@ export default function MoodPage() {
         { label: "Active Streak", value: `${moodStats.streak}-Day`, icon: Flame, color: "text-primary" },
     ];
 
-    const handleLogEntry = useCallback(async () => {
-        if (selectedMood === null) return;
-        try {
-            const res = await api.post('/moods', {
-                value: selectedMood,
-                note
-            });
-            setSelectedMood(null);
-            setNote("");
-
-            if (res.crisisFlag) {
-                alert("We noticed some concerning patterns in your note. Please remember that help is always available at the Crisis Support section.");
-            } else {
-                alert("Mood logged successfully!");
-            }
-
-            fetchMoodData(); // Refresh
-        } catch (error) {
-            console.error('Error logging mood:', error);
-            alert("Failed to log mood. Please try again.");
-        }
-    }, [selectedMood, note, fetchMoodData]);
-
-    const startListening = () => {
-        if (!('webkitSpeechRecognition' in window)) {
-            alert("Speech recognition is not supported in this browser.");
-            return;
-        }
-
-        const recognition = new (window as any).webkitSpeechRecognition();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
-
-        recognition.onstart = () => setIsListening(true);
-        recognition.onend = () => setIsListening(false);
-        recognition.onerror = () => setIsListening(false);
-
-        recognition.onresult = (event: any) => {
-            const transcript = event.results[0][0].transcript;
-            setNote(prev => prev ? `${prev} ${transcript}` : transcript);
-        };
-
-        recognition.start();
-    };
 
     return (
         <div className="min-h-screen relative pb-20 selection:bg-primary/10">
@@ -212,67 +165,7 @@ export default function MoodPage() {
                 <div className="grid gap-8 lg:grid-cols-5">
                     {/* Logger Section */}
                     <div className="lg:col-span-3 space-y-8">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.98 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="glass rounded-[2.5rem] p-8 md:p-10 shadow-premium space-y-10"
-                        >
-                            <div className="space-y-2">
-                                <h3 className="text-2xl font-bold text-foreground">How is your spirit today?</h3>
-                                <p className="text-sm text-muted-foreground font-medium">Select the icon that best mirrors your current state.</p>
-                            </div>
-
-                            <div className="grid grid-cols-5 gap-4">
-                                {moods.map((m) => {
-                                    const Icon = m.icon;
-                                    const isSelected = selectedMood === m.value;
-                                    return (
-                                        <button
-                                            key={m.value}
-                                            onClick={() => setSelectedMood(m.value)}
-                                            className={`flex flex-col items-center gap-4 p-4 rounded-[2rem] transition-all group relative active:scale-95 border-2 ${isSelected
-                                                ? "bg-primary/20 border-primary shadow-lg shadow-primary/10"
-                                                : "bg-muted/50 border-transparent hover:border-primary/30 hover:bg-muted/80"
-                                                }`}
-                                        >
-                                            <div className={`h-12 w-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 ${isSelected ? m.color : "text-muted-foreground"}`}>
-                                                <Icon size={32} strokeWidth={isSelected ? 2.5 : 2} />
-                                            </div>
-                                            <span className={`text-[10px] font-bold uppercase tracking-widest ${isSelected ? m.color : "text-muted-foreground"}`}>{m.label}</span>
-                                        </button>
-                                    );
-                                })}
-                            </div>
-
-                            <div className="space-y-4">
-                                <div className="flex items-center justify-between ml-1 pr-2">
-                                    <div className="flex items-center gap-2 text-sm font-bold text-foreground/80">
-                                        <PenLine size={16} className="text-muted-foreground" /> Journal Reflection <span className="text-[10px] text-muted-foreground font-normal">(Optional)</span>
-                                    </div>
-                                    <button
-                                        onClick={startListening}
-                                        className={`p-2 rounded-full transition-all ${isListening ? "bg-red-500/20 text-red-500 animate-pulse" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
-                                        title={isListening ? "Listening..." : "Voice Check-in"}
-                                    >
-                                        {isListening ? <MicOff size={18} /> : <Mic size={18} />}
-                                    </button>
-                                </div>
-                                <textarea
-                                    placeholder={isListening ? "Listening to your wisdom..." : "What's on your mind?..."}
-                                    value={note}
-                                    onChange={(e) => setNote(e.target.value)}
-                                    className="w-full bg-muted/50 border border-border rounded-[2rem] p-6 text-sm font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all min-h-[120px] resize-none shadow-inner text-foreground placeholder:text-muted-foreground"
-                                />
-                            </div>
-
-                            <Button
-                                onClick={handleLogEntry}
-                                size="lg"
-                                className="w-full rounded-2xl font-bold shadow-xl shadow-primary/20 transition-transform"
-                            >
-                                Log Entry <ArrowUpRight className="ml-2" size={18} />
-                            </Button>
-                        </motion.div>
+                        <MoodLogger onComplete={fetchMoodData} />
                     </div>
 
                     {/* Chart Section */}

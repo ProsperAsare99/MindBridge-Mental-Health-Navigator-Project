@@ -165,6 +165,19 @@ model MoodEntry {
   social  Int? // 1-5 scale
   anxiety Int? // 1-10 scale
 
+  // Advanced Tracking
+  emotion          String? // Nuanced emotion (e.g., "Radiant", "Serene")
+  emotionIntensity Float? // 0.0 to 1.0
+  physicalSymptoms String[] // Array of symptoms (e.g., ["Headache", "Fatigue"])
+
+  // Media Journaling
+  photoUrl String?
+  audioUrl String?
+
+  // Environmental Context
+  weather  Json? // { temp, condition, icon }
+  location Json? // { city, country, lat, lng }
+
   notes          String?
   tags           String[] // Array of tags
   sentimentScore Float?

@@ -7582,6 +7582,7 @@ export namespace Prisma {
     sleep: number | null
     social: number | null
     anxiety: number | null
+    emotionIntensity: number | null
     sentimentScore: number | null
   }
 
@@ -7591,6 +7592,7 @@ export namespace Prisma {
     sleep: number | null
     social: number | null
     anxiety: number | null
+    emotionIntensity: number | null
     sentimentScore: number | null
   }
 
@@ -7602,6 +7604,10 @@ export namespace Prisma {
     sleep: number | null
     social: number | null
     anxiety: number | null
+    emotion: string | null
+    emotionIntensity: number | null
+    photoUrl: string | null
+    audioUrl: string | null
     notes: string | null
     sentimentScore: number | null
     sentimentLabel: string | null
@@ -7617,6 +7623,10 @@ export namespace Prisma {
     sleep: number | null
     social: number | null
     anxiety: number | null
+    emotion: string | null
+    emotionIntensity: number | null
+    photoUrl: string | null
+    audioUrl: string | null
     notes: string | null
     sentimentScore: number | null
     sentimentLabel: string | null
@@ -7632,6 +7642,13 @@ export namespace Prisma {
     sleep: number
     social: number
     anxiety: number
+    emotion: number
+    emotionIntensity: number
+    physicalSymptoms: number
+    photoUrl: number
+    audioUrl: number
+    weather: number
+    location: number
     notes: number
     tags: number
     sentimentScore: number
@@ -7648,6 +7665,7 @@ export namespace Prisma {
     sleep?: true
     social?: true
     anxiety?: true
+    emotionIntensity?: true
     sentimentScore?: true
   }
 
@@ -7657,6 +7675,7 @@ export namespace Prisma {
     sleep?: true
     social?: true
     anxiety?: true
+    emotionIntensity?: true
     sentimentScore?: true
   }
 
@@ -7668,6 +7687,10 @@ export namespace Prisma {
     sleep?: true
     social?: true
     anxiety?: true
+    emotion?: true
+    emotionIntensity?: true
+    photoUrl?: true
+    audioUrl?: true
     notes?: true
     sentimentScore?: true
     sentimentLabel?: true
@@ -7683,6 +7706,10 @@ export namespace Prisma {
     sleep?: true
     social?: true
     anxiety?: true
+    emotion?: true
+    emotionIntensity?: true
+    photoUrl?: true
+    audioUrl?: true
     notes?: true
     sentimentScore?: true
     sentimentLabel?: true
@@ -7698,6 +7725,13 @@ export namespace Prisma {
     sleep?: true
     social?: true
     anxiety?: true
+    emotion?: true
+    emotionIntensity?: true
+    physicalSymptoms?: true
+    photoUrl?: true
+    audioUrl?: true
+    weather?: true
+    location?: true
     notes?: true
     tags?: true
     sentimentScore?: true
@@ -7801,6 +7835,13 @@ export namespace Prisma {
     sleep: number | null
     social: number | null
     anxiety: number | null
+    emotion: string | null
+    emotionIntensity: number | null
+    physicalSymptoms: string[]
+    photoUrl: string | null
+    audioUrl: string | null
+    weather: JsonValue | null
+    location: JsonValue | null
     notes: string | null
     tags: string[]
     sentimentScore: number | null
@@ -7836,6 +7877,13 @@ export namespace Prisma {
     sleep?: boolean
     social?: boolean
     anxiety?: boolean
+    emotion?: boolean
+    emotionIntensity?: boolean
+    physicalSymptoms?: boolean
+    photoUrl?: boolean
+    audioUrl?: boolean
+    weather?: boolean
+    location?: boolean
     notes?: boolean
     tags?: boolean
     sentimentScore?: boolean
@@ -7853,6 +7901,13 @@ export namespace Prisma {
     sleep?: boolean
     social?: boolean
     anxiety?: boolean
+    emotion?: boolean
+    emotionIntensity?: boolean
+    physicalSymptoms?: boolean
+    photoUrl?: boolean
+    audioUrl?: boolean
+    weather?: boolean
+    location?: boolean
     notes?: boolean
     tags?: boolean
     sentimentScore?: boolean
@@ -7870,6 +7925,13 @@ export namespace Prisma {
     sleep?: boolean
     social?: boolean
     anxiety?: boolean
+    emotion?: boolean
+    emotionIntensity?: boolean
+    physicalSymptoms?: boolean
+    photoUrl?: boolean
+    audioUrl?: boolean
+    weather?: boolean
+    location?: boolean
     notes?: boolean
     tags?: boolean
     sentimentScore?: boolean
@@ -7887,6 +7949,13 @@ export namespace Prisma {
     sleep?: boolean
     social?: boolean
     anxiety?: boolean
+    emotion?: boolean
+    emotionIntensity?: boolean
+    physicalSymptoms?: boolean
+    photoUrl?: boolean
+    audioUrl?: boolean
+    weather?: boolean
+    location?: boolean
     notes?: boolean
     tags?: boolean
     sentimentScore?: boolean
@@ -7895,7 +7964,7 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type MoodEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "mood" | "energy" | "sleep" | "social" | "anxiety" | "notes" | "tags" | "sentimentScore" | "sentimentLabel" | "crisisFlag" | "createdAt", ExtArgs["result"]["moodEntry"]>
+  export type MoodEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "mood" | "energy" | "sleep" | "social" | "anxiety" | "emotion" | "emotionIntensity" | "physicalSymptoms" | "photoUrl" | "audioUrl" | "weather" | "location" | "notes" | "tags" | "sentimentScore" | "sentimentLabel" | "crisisFlag" | "createdAt", ExtArgs["result"]["moodEntry"]>
   export type MoodEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -7919,6 +7988,13 @@ export namespace Prisma {
       sleep: number | null
       social: number | null
       anxiety: number | null
+      emotion: string | null
+      emotionIntensity: number | null
+      physicalSymptoms: string[]
+      photoUrl: string | null
+      audioUrl: string | null
+      weather: Prisma.JsonValue | null
+      location: Prisma.JsonValue | null
       notes: string | null
       tags: string[]
       sentimentScore: number | null
@@ -8356,6 +8432,13 @@ export namespace Prisma {
     readonly sleep: FieldRef<"MoodEntry", 'Int'>
     readonly social: FieldRef<"MoodEntry", 'Int'>
     readonly anxiety: FieldRef<"MoodEntry", 'Int'>
+    readonly emotion: FieldRef<"MoodEntry", 'String'>
+    readonly emotionIntensity: FieldRef<"MoodEntry", 'Float'>
+    readonly physicalSymptoms: FieldRef<"MoodEntry", 'String[]'>
+    readonly photoUrl: FieldRef<"MoodEntry", 'String'>
+    readonly audioUrl: FieldRef<"MoodEntry", 'String'>
+    readonly weather: FieldRef<"MoodEntry", 'Json'>
+    readonly location: FieldRef<"MoodEntry", 'Json'>
     readonly notes: FieldRef<"MoodEntry", 'String'>
     readonly tags: FieldRef<"MoodEntry", 'String[]'>
     readonly sentimentScore: FieldRef<"MoodEntry", 'Float'>
@@ -28741,6 +28824,13 @@ export namespace Prisma {
     sleep: 'sleep',
     social: 'social',
     anxiety: 'anxiety',
+    emotion: 'emotion',
+    emotionIntensity: 'emotionIntensity',
+    physicalSymptoms: 'physicalSymptoms',
+    photoUrl: 'photoUrl',
+    audioUrl: 'audioUrl',
+    weather: 'weather',
+    location: 'location',
     notes: 'notes',
     tags: 'tags',
     sentimentScore: 'sentimentScore',
@@ -29812,6 +29902,13 @@ export namespace Prisma {
     sleep?: IntNullableFilter<"MoodEntry"> | number | null
     social?: IntNullableFilter<"MoodEntry"> | number | null
     anxiety?: IntNullableFilter<"MoodEntry"> | number | null
+    emotion?: StringNullableFilter<"MoodEntry"> | string | null
+    emotionIntensity?: FloatNullableFilter<"MoodEntry"> | number | null
+    physicalSymptoms?: StringNullableListFilter<"MoodEntry">
+    photoUrl?: StringNullableFilter<"MoodEntry"> | string | null
+    audioUrl?: StringNullableFilter<"MoodEntry"> | string | null
+    weather?: JsonNullableFilter<"MoodEntry">
+    location?: JsonNullableFilter<"MoodEntry">
     notes?: StringNullableFilter<"MoodEntry"> | string | null
     tags?: StringNullableListFilter<"MoodEntry">
     sentimentScore?: FloatNullableFilter<"MoodEntry"> | number | null
@@ -29829,6 +29926,13 @@ export namespace Prisma {
     sleep?: SortOrderInput | SortOrder
     social?: SortOrderInput | SortOrder
     anxiety?: SortOrderInput | SortOrder
+    emotion?: SortOrderInput | SortOrder
+    emotionIntensity?: SortOrderInput | SortOrder
+    physicalSymptoms?: SortOrder
+    photoUrl?: SortOrderInput | SortOrder
+    audioUrl?: SortOrderInput | SortOrder
+    weather?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     tags?: SortOrder
     sentimentScore?: SortOrderInput | SortOrder
@@ -29849,6 +29953,13 @@ export namespace Prisma {
     sleep?: IntNullableFilter<"MoodEntry"> | number | null
     social?: IntNullableFilter<"MoodEntry"> | number | null
     anxiety?: IntNullableFilter<"MoodEntry"> | number | null
+    emotion?: StringNullableFilter<"MoodEntry"> | string | null
+    emotionIntensity?: FloatNullableFilter<"MoodEntry"> | number | null
+    physicalSymptoms?: StringNullableListFilter<"MoodEntry">
+    photoUrl?: StringNullableFilter<"MoodEntry"> | string | null
+    audioUrl?: StringNullableFilter<"MoodEntry"> | string | null
+    weather?: JsonNullableFilter<"MoodEntry">
+    location?: JsonNullableFilter<"MoodEntry">
     notes?: StringNullableFilter<"MoodEntry"> | string | null
     tags?: StringNullableListFilter<"MoodEntry">
     sentimentScore?: FloatNullableFilter<"MoodEntry"> | number | null
@@ -29866,6 +29977,13 @@ export namespace Prisma {
     sleep?: SortOrderInput | SortOrder
     social?: SortOrderInput | SortOrder
     anxiety?: SortOrderInput | SortOrder
+    emotion?: SortOrderInput | SortOrder
+    emotionIntensity?: SortOrderInput | SortOrder
+    physicalSymptoms?: SortOrder
+    photoUrl?: SortOrderInput | SortOrder
+    audioUrl?: SortOrderInput | SortOrder
+    weather?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     tags?: SortOrder
     sentimentScore?: SortOrderInput | SortOrder
@@ -29890,6 +30008,13 @@ export namespace Prisma {
     sleep?: IntNullableWithAggregatesFilter<"MoodEntry"> | number | null
     social?: IntNullableWithAggregatesFilter<"MoodEntry"> | number | null
     anxiety?: IntNullableWithAggregatesFilter<"MoodEntry"> | number | null
+    emotion?: StringNullableWithAggregatesFilter<"MoodEntry"> | string | null
+    emotionIntensity?: FloatNullableWithAggregatesFilter<"MoodEntry"> | number | null
+    physicalSymptoms?: StringNullableListFilter<"MoodEntry">
+    photoUrl?: StringNullableWithAggregatesFilter<"MoodEntry"> | string | null
+    audioUrl?: StringNullableWithAggregatesFilter<"MoodEntry"> | string | null
+    weather?: JsonNullableWithAggregatesFilter<"MoodEntry">
+    location?: JsonNullableWithAggregatesFilter<"MoodEntry">
     notes?: StringNullableWithAggregatesFilter<"MoodEntry"> | string | null
     tags?: StringNullableListFilter<"MoodEntry">
     sentimentScore?: FloatNullableWithAggregatesFilter<"MoodEntry"> | number | null
@@ -31679,6 +31804,13 @@ export namespace Prisma {
     sleep?: number | null
     social?: number | null
     anxiety?: number | null
+    emotion?: string | null
+    emotionIntensity?: number | null
+    physicalSymptoms?: MoodEntryCreatephysicalSymptomsInput | string[]
+    photoUrl?: string | null
+    audioUrl?: string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: string | null
     tags?: MoodEntryCreatetagsInput | string[]
     sentimentScore?: number | null
@@ -31696,6 +31828,13 @@ export namespace Prisma {
     sleep?: number | null
     social?: number | null
     anxiety?: number | null
+    emotion?: string | null
+    emotionIntensity?: number | null
+    physicalSymptoms?: MoodEntryCreatephysicalSymptomsInput | string[]
+    photoUrl?: string | null
+    audioUrl?: string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: string | null
     tags?: MoodEntryCreatetagsInput | string[]
     sentimentScore?: number | null
@@ -31711,6 +31850,13 @@ export namespace Prisma {
     sleep?: NullableIntFieldUpdateOperationsInput | number | null
     social?: NullableIntFieldUpdateOperationsInput | number | null
     anxiety?: NullableIntFieldUpdateOperationsInput | number | null
+    emotion?: NullableStringFieldUpdateOperationsInput | string | null
+    emotionIntensity?: NullableFloatFieldUpdateOperationsInput | number | null
+    physicalSymptoms?: MoodEntryUpdatephysicalSymptomsInput | string[]
+    photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: MoodEntryUpdatetagsInput | string[]
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -31728,6 +31874,13 @@ export namespace Prisma {
     sleep?: NullableIntFieldUpdateOperationsInput | number | null
     social?: NullableIntFieldUpdateOperationsInput | number | null
     anxiety?: NullableIntFieldUpdateOperationsInput | number | null
+    emotion?: NullableStringFieldUpdateOperationsInput | string | null
+    emotionIntensity?: NullableFloatFieldUpdateOperationsInput | number | null
+    physicalSymptoms?: MoodEntryUpdatephysicalSymptomsInput | string[]
+    photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: MoodEntryUpdatetagsInput | string[]
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -31744,6 +31897,13 @@ export namespace Prisma {
     sleep?: number | null
     social?: number | null
     anxiety?: number | null
+    emotion?: string | null
+    emotionIntensity?: number | null
+    physicalSymptoms?: MoodEntryCreatephysicalSymptomsInput | string[]
+    photoUrl?: string | null
+    audioUrl?: string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: string | null
     tags?: MoodEntryCreatetagsInput | string[]
     sentimentScore?: number | null
@@ -31759,6 +31919,13 @@ export namespace Prisma {
     sleep?: NullableIntFieldUpdateOperationsInput | number | null
     social?: NullableIntFieldUpdateOperationsInput | number | null
     anxiety?: NullableIntFieldUpdateOperationsInput | number | null
+    emotion?: NullableStringFieldUpdateOperationsInput | string | null
+    emotionIntensity?: NullableFloatFieldUpdateOperationsInput | number | null
+    physicalSymptoms?: MoodEntryUpdatephysicalSymptomsInput | string[]
+    photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: MoodEntryUpdatetagsInput | string[]
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -31775,6 +31942,13 @@ export namespace Prisma {
     sleep?: NullableIntFieldUpdateOperationsInput | number | null
     social?: NullableIntFieldUpdateOperationsInput | number | null
     anxiety?: NullableIntFieldUpdateOperationsInput | number | null
+    emotion?: NullableStringFieldUpdateOperationsInput | string | null
+    emotionIntensity?: NullableFloatFieldUpdateOperationsInput | number | null
+    physicalSymptoms?: MoodEntryUpdatephysicalSymptomsInput | string[]
+    photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: MoodEntryUpdatetagsInput | string[]
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -33899,14 +34073,6 @@ export namespace Prisma {
     _max?: NestedEnumMessageRoleFilter<$PrismaModel>
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
   export type FloatNullableFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -33918,6 +34084,14 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type MoodEntryCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -33926,6 +34100,13 @@ export namespace Prisma {
     sleep?: SortOrder
     social?: SortOrder
     anxiety?: SortOrder
+    emotion?: SortOrder
+    emotionIntensity?: SortOrder
+    physicalSymptoms?: SortOrder
+    photoUrl?: SortOrder
+    audioUrl?: SortOrder
+    weather?: SortOrder
+    location?: SortOrder
     notes?: SortOrder
     tags?: SortOrder
     sentimentScore?: SortOrder
@@ -33940,6 +34121,7 @@ export namespace Prisma {
     sleep?: SortOrder
     social?: SortOrder
     anxiety?: SortOrder
+    emotionIntensity?: SortOrder
     sentimentScore?: SortOrder
   }
 
@@ -33951,6 +34133,10 @@ export namespace Prisma {
     sleep?: SortOrder
     social?: SortOrder
     anxiety?: SortOrder
+    emotion?: SortOrder
+    emotionIntensity?: SortOrder
+    photoUrl?: SortOrder
+    audioUrl?: SortOrder
     notes?: SortOrder
     sentimentScore?: SortOrder
     sentimentLabel?: SortOrder
@@ -33966,6 +34152,10 @@ export namespace Prisma {
     sleep?: SortOrder
     social?: SortOrder
     anxiety?: SortOrder
+    emotion?: SortOrder
+    emotionIntensity?: SortOrder
+    photoUrl?: SortOrder
+    audioUrl?: SortOrder
     notes?: SortOrder
     sentimentScore?: SortOrder
     sentimentLabel?: SortOrder
@@ -33979,6 +34169,7 @@ export namespace Prisma {
     sleep?: SortOrder
     social?: SortOrder
     anxiety?: SortOrder
+    emotionIntensity?: SortOrder
     sentimentScore?: SortOrder
   }
 
@@ -35861,6 +36052,10 @@ export namespace Prisma {
     update?: XOR<XOR<ConversationUpdateToOneWithWhereWithoutMessagesInput, ConversationUpdateWithoutMessagesInput>, ConversationUncheckedUpdateWithoutMessagesInput>
   }
 
+  export type MoodEntryCreatephysicalSymptomsInput = {
+    set: string[]
+  }
+
   export type MoodEntryCreatetagsInput = {
     set: string[]
   }
@@ -35871,17 +36066,22 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type MoodEntryUpdatetagsInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
   export type NullableFloatFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type MoodEntryUpdatephysicalSymptomsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type MoodEntryUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type UserUpdateOneRequiredWithoutMoodEntriesNestedInput = {
@@ -37024,6 +37224,13 @@ export namespace Prisma {
     sleep?: number | null
     social?: number | null
     anxiety?: number | null
+    emotion?: string | null
+    emotionIntensity?: number | null
+    physicalSymptoms?: MoodEntryCreatephysicalSymptomsInput | string[]
+    photoUrl?: string | null
+    audioUrl?: string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: string | null
     tags?: MoodEntryCreatetagsInput | string[]
     sentimentScore?: number | null
@@ -37039,6 +37246,13 @@ export namespace Prisma {
     sleep?: number | null
     social?: number | null
     anxiety?: number | null
+    emotion?: string | null
+    emotionIntensity?: number | null
+    physicalSymptoms?: MoodEntryCreatephysicalSymptomsInput | string[]
+    photoUrl?: string | null
+    audioUrl?: string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: string | null
     tags?: MoodEntryCreatetagsInput | string[]
     sentimentScore?: number | null
@@ -37609,6 +37823,13 @@ export namespace Prisma {
     sleep?: IntNullableFilter<"MoodEntry"> | number | null
     social?: IntNullableFilter<"MoodEntry"> | number | null
     anxiety?: IntNullableFilter<"MoodEntry"> | number | null
+    emotion?: StringNullableFilter<"MoodEntry"> | string | null
+    emotionIntensity?: FloatNullableFilter<"MoodEntry"> | number | null
+    physicalSymptoms?: StringNullableListFilter<"MoodEntry">
+    photoUrl?: StringNullableFilter<"MoodEntry"> | string | null
+    audioUrl?: StringNullableFilter<"MoodEntry"> | string | null
+    weather?: JsonNullableFilter<"MoodEntry">
+    location?: JsonNullableFilter<"MoodEntry">
     notes?: StringNullableFilter<"MoodEntry"> | string | null
     tags?: StringNullableListFilter<"MoodEntry">
     sentimentScore?: FloatNullableFilter<"MoodEntry"> | number | null
@@ -43350,6 +43571,13 @@ export namespace Prisma {
     sleep?: number | null
     social?: number | null
     anxiety?: number | null
+    emotion?: string | null
+    emotionIntensity?: number | null
+    physicalSymptoms?: MoodEntryCreatephysicalSymptomsInput | string[]
+    photoUrl?: string | null
+    audioUrl?: string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: string | null
     tags?: MoodEntryCreatetagsInput | string[]
     sentimentScore?: number | null
@@ -43557,6 +43785,13 @@ export namespace Prisma {
     sleep?: NullableIntFieldUpdateOperationsInput | number | null
     social?: NullableIntFieldUpdateOperationsInput | number | null
     anxiety?: NullableIntFieldUpdateOperationsInput | number | null
+    emotion?: NullableStringFieldUpdateOperationsInput | string | null
+    emotionIntensity?: NullableFloatFieldUpdateOperationsInput | number | null
+    physicalSymptoms?: MoodEntryUpdatephysicalSymptomsInput | string[]
+    photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: MoodEntryUpdatetagsInput | string[]
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -43572,6 +43807,13 @@ export namespace Prisma {
     sleep?: NullableIntFieldUpdateOperationsInput | number | null
     social?: NullableIntFieldUpdateOperationsInput | number | null
     anxiety?: NullableIntFieldUpdateOperationsInput | number | null
+    emotion?: NullableStringFieldUpdateOperationsInput | string | null
+    emotionIntensity?: NullableFloatFieldUpdateOperationsInput | number | null
+    physicalSymptoms?: MoodEntryUpdatephysicalSymptomsInput | string[]
+    photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: MoodEntryUpdatetagsInput | string[]
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -43587,6 +43829,13 @@ export namespace Prisma {
     sleep?: NullableIntFieldUpdateOperationsInput | number | null
     social?: NullableIntFieldUpdateOperationsInput | number | null
     anxiety?: NullableIntFieldUpdateOperationsInput | number | null
+    emotion?: NullableStringFieldUpdateOperationsInput | string | null
+    emotionIntensity?: NullableFloatFieldUpdateOperationsInput | number | null
+    physicalSymptoms?: MoodEntryUpdatephysicalSymptomsInput | string[]
+    photoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    weather?: NullableJsonNullValueInput | InputJsonValue
+    location?: NullableJsonNullValueInput | InputJsonValue
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: MoodEntryUpdatetagsInput | string[]
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null

@@ -5,7 +5,19 @@ import { ai } from '../lib/genkit-config';
 import { MessageRole, University } from '../generated/client_new';
 
 export const createMood = async (req: AuthRequest, res: Response) => {
-    const { value, note } = req.body;
+    const { 
+        value, 
+        note, 
+        energy, 
+        sleep, 
+        social, 
+        anxiety, 
+        emotion, 
+        emotionIntensity, 
+        physicalSymptoms, 
+        weather, 
+        location 
+    } = req.body;
 
     try {
         if (!req.user || !req.userId) return res.status(401).json({ error: 'Not authenticated' });
@@ -27,7 +39,6 @@ export const createMood = async (req: AuthRequest, res: Response) => {
                     Entry: "${note}"`
                 });
 
-                // Extract JSON from response (handling potential markdown)
                 const text = result.text.replace(/```json|```/g, '').trim();
                 const analysis = JSON.parse(text);
                 
@@ -39,11 +50,32 @@ export const createMood = async (req: AuthRequest, res: Response) => {
             }
         }
 
+        // Handle File Uploads
+        const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+        const photoUrl = files?.moodPhoto ? `/uploads/mood/photos/${files.moodPhoto[0].filename}` : undefined;
+        const audioUrl = files?.moodAudio ? `/uploads/mood/audio/${files.moodAudio[0].filename}` : undefined;
+
+        // Parse JSON fields if they are strings
+        const parsedWeather = typeof weather === 'string' ? JSON.parse(weather) : weather;
+        const parsedLocation = typeof location === 'string' ? JSON.parse(location) : location;
+        const parsedSymptoms = Array.isArray(physicalSymptoms) ? physicalSymptoms : (physicalSymptoms ? [physicalSymptoms] : []);
+
         const mood = await prisma.moodEntry.create({
             data: {
                 userId,
-                mood: parseInt(value),
-                notes: note,
+                mood: parseInt(value as string),
+                energy: energy ? parseInt(energy as string) : null,
+                sleep: sleep ? parseInt(sleep as string) : null,
+                social: social ? parseInt(social as string) : null,
+                anxiety: anxiety ? parseInt(anxiety as string) : null,
+                emotion: emotion as string,
+                emotionIntensity: emotionIntensity ? parseFloat(emotionIntensity as string) : null,
+                physicalSymptoms: parsedSymptoms,
+                photoUrl,
+                audioUrl,
+                weather: parsedWeather,
+                location: parsedLocation,
+                notes: note as string,
                 sentimentScore,
                 sentimentLabel,
                 crisisFlag
