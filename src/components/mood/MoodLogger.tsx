@@ -62,7 +62,7 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
             setMediaRecorder(recorder);
             setAudioChunks([]);
             
-            recorder.ondataavailable = (e) => {
+            recorder.ondataavailable = (e: any) => {
                 if (e.data.size > 0) setAudioChunks((prev) => [...prev, e.data]);
             };
 

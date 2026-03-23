@@ -8,8 +8,10 @@ const createPrismaClient = () => {
     console.log(`[STABILITY FIX] Initializing Prisma with PG Driver Adapter...`);
     
     const pool = new Pool({ 
-        connectionString: connectionString.replace(/connection_limit=\d+/, 'connection_limit=10'),
-        max: 10, // Increased to handle concurrent dashboard widgets
+        connectionString: connectionString
+            .replace(/connection_limit=\d+/, 'connection_limit=10')
+            .replace(/sslmode=[^&]+/, 'sslmode=verify-full'),
+        max: 10,
         idleTimeoutMillis: 30000,
         connectionTimeoutMillis: 30000,
         keepAlive: true
