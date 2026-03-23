@@ -1,46 +1,57 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Moon, Sun, Monitor } from "lucide-react"
-import { useTheme } from "next-themes"
-
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils" // Assuming cn utility is available here
+import React, { useEffect, useState } from "react";
+import { Moon, Sun, Monitor } from "lucide-react";
+import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 export function ModeToggle() {
-    const { setTheme, theme } = useTheme()
+    const { setTheme, theme } = useTheme();
+    const [mounted, setMounted] = useState(false);
 
-    const cycleTheme = () => {
-        if (theme === "system") setTheme("light")
-        else if (theme === "light") setTheme("dark")
-        else setTheme("system")
-    }
+    // Effect to handle hydration mismatch
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return (
+        <div className="flex bg-muted/50 rounded-full p-1 border border-border/40 w-[120px] h-10 animate-pulse" />
+    );
+
+    const OPTIONS = [
+        { id: 'light', icon: Sun, label: 'Light' },
+        { id: 'dark', icon: Moon, label: 'Dark' },
+        { id: 'system', icon: Monitor, label: 'System' }
+    ];
 
     return (
-        <Button
-            variant="ghost"
-            size="icon"
-            onClick={cycleTheme}
-            className="text-foreground hover:bg-accent hover:text-accent-foreground rounded-full w-9 h-9 relative group"
-        >
-            <Sun className={cn(
-                "h-[1.2rem] w-[1.2rem] transition-all",
-                theme === "light" ? "scale-100 rotate-0 text-orange-500" : "scale-0 rotate-90"
-            )} />
-            <Moon className={cn(
-                "absolute h-[1.2rem] w-[1.2rem] transition-all",
-                theme === "dark" ? "scale-100 rotate-0 text-indigo-400" : "scale-0 rotate-90"
-            )} />
-            <Monitor className={cn(
-                "absolute h-[1.2rem] w-[1.2rem] transition-all",
-                theme === "system" ? "scale-100 rotate-0 text-muted-foreground" : "scale-0 rotate-90"
-            )} />
-            <span className="sr-only">Toggle theme</span>
-            
-            {/* Tooltip hint */}
-            <span className="absolute -top-8 bg-popover text-popover-foreground text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none capitalize border border-border">
-                {theme}
-            </span>
-        </Button>
-    )
+        <div className="bg-muted/80 backdrop-blur-md rounded-full p-1 border border-border/50 flex items-center gap-1 shadow-inner relative overflow-hidden h-10 w-[120px]">
+            {OPTIONS.map((opt) => {
+                const isActive = theme === opt.id;
+                const Icon = opt.icon;
+                return (
+                    <button
+                        key={opt.id}
+                        onClick={() => setTheme(opt.id)}
+                        title={opt.label}
+                        className={cn(
+                            "flex-1 flex items-center justify-center h-full rounded-full transition-all duration-300 relative z-10",
+                            isActive ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                        )}
+                    >
+                        <Icon size={16} className={cn("transition-transform", isActive ? "scale-110" : "scale-100")} />
+                        
+                        {isActive && (
+                            <motion.div
+                                layoutId="theme-active-pill"
+                                className="absolute inset-0 bg-primary rounded-full -z-10 shadow-lg"
+                                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                            />
+                        )}
+                    </button>
+                );
+            })}
+        </div>
+    );
 }

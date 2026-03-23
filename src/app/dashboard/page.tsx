@@ -11,7 +11,8 @@ import {
     Flame,
     CheckCircle2,
     Users,
-    ShieldCheck
+    ShieldCheck,
+    HeartPulse
 } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -64,9 +65,9 @@ export default async function DashboardPage() {
                             <div className="text-[9px] font-bold text-muted-foreground uppercase">Ghanaian Data Standards</div>
                         </div>
                         <Link href="/dashboard/mood">
-                            <Button className="rounded-2xl shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90">
-                                <PlusCircle className="mr-2 h-4 w-4" />
-                                Log New Mood
+                            <Button className="rounded-2xl shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90 text-[11px] font-black uppercase tracking-widest px-6 h-12">
+                                <HeartPulse className="mr-2 h-4.5 w-4.5" />
+                                Daily Check-in
                             </Button>
                         </Link>
                     </div>

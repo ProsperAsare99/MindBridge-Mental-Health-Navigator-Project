@@ -34,31 +34,31 @@
 :root {
   color-scheme: light dark;
 
-  /* MindBridge Clean Modern Light Theme (SLATE-BASED CLARITY) */
-  --background: #f1f5f9; /* Slate 100 - Clean, distinct base */
-  --foreground: #020617; /* Sinking the text for better readability */
-  --ash-grey: #f8fafc; 
-  --ash-stroke: #cbd5e1; 
+  /* MindBridge High-Clarity Light Theme (MATTE SLATE) */
+  --background: #e2e8f0; /* Slate 200 - Sinking the base to reduce glare */
+  --foreground: #020617; 
+  --ash-grey: #f1f5f9; 
+  --ash-stroke: #94a3b8; /* Slate 400 - Stronger definition */
 
   --primary: #0077b6; 
   --primary-foreground: #ffffff;
 
-  --secondary: #e2e8f0; /* Slate 200 */
+  --secondary: #f1f5f9; /* Slate 100 */
   --secondary-foreground: #020617;
 
-  --muted: #f8fafc; 
+  --muted: #f1f5f9; 
   --muted-foreground: #64748b; 
 
   --accent: #0077b6; 
   --accent-foreground: #ffffff;
 
-  --border: #cbd5e1; /* Slate 300 - Clear, professional definition */
+  --border: #94a3b8; /* Slate 400 - Clear, grounded definition */
   --input: #cbd5e1;
   --ring: #0077b6;
 
   --card: #ffffff; 
   --card-foreground: #020617;
-  --surface-above: #e2e8f0;
+  --surface-above: #f1f5f9;
 }
 
 .dark {
@@ -139,10 +139,10 @@
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.8); /* Pure white with slightly less transparency */
+  background: rgba(255, 255, 255, 0.45); /* Reduced opacity for better groundness in light mode */
   backdrop-filter: blur(16px) saturate(140%);
-  border: 1px solid rgba(15, 23, 42, 0.12); /* Subtle slate stroke for visibility */
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(15, 23, 42, 0.15); /* Stronger slate stroke for visibility */
+  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.04);
 }
 
 .dark .glass {

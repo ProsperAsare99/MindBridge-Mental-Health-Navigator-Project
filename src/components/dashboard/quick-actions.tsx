@@ -5,6 +5,7 @@ import {
     ClipboardList, 
     ShieldAlert, 
     BookOpen, 
+    HeartPulse,
     Brain,
     Calendar,
     Phone,
@@ -15,7 +16,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const ACTIONS = [
-    { label: "Log Mood", icon: PlusCircle, href: "/dashboard/mood", color: "text-primary", bgColor: "bg-primary/10" },
+    { label: "Daily Check-in", icon: HeartPulse, href: "/dashboard/mood", color: "text-primary", bgColor: "bg-primary/20" },
     { label: "Assessment", icon: ClipboardList, href: "/dashboard/assessment", color: "text-secondary", bgColor: "bg-secondary/10" },
     { label: "Resources", icon: BookOpen, href: "/dashboard/resources", color: "text-emerald-500", bgColor: "bg-emerald-500/10" },
     { label: "Crisis Info", icon: ShieldAlert, href: "/dashboard/crisis", color: "text-[#D5BDAF]", bgColor: "bg-[#D5BDAF]/10" },
