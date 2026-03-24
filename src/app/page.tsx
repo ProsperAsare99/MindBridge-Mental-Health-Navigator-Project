@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import ParallaxSection from "@/components/parallax-section";
@@ -29,8 +30,15 @@ const Card3D = dynamic(() => import("@/components/card-3d").then((mod) => mod.Ca
 });
 
 export default function Home() {
-  // removed useSensors hook usage
+  const router = useRouter();
   const { toggle } = useSearch();
+
+  useEffect(() => {
+    // Redirect mobile app users straight to login/onboarding
+    if ((window as any).Capacitor) {
+      router.push("/login");
+    }
+  }, [router]);
 
   // Performance: Memoize static data
   const innovationFeatures = useMemo(() => [

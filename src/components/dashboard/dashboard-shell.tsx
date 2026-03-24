@@ -29,6 +29,7 @@ import { ModeToggle } from "@/components/theme-toggle";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearch } from "@/components/providers/SearchProvider";
 import { DistressButton } from "@/components/ui/distress-button";
+import { MobileBottomNav } from "./MobileBottomNav";
 
 interface DashboardShellProps {
     children: React.ReactNode;
@@ -95,7 +96,7 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
 
             {/* Sidebar */}
             <aside className={cn(
-                "fixed inset-y-0 left-0 z-50 w-64 transform border-r border-border/50 bg-background/80 backdrop-blur-2xl transition-all duration-500 ease-[0.23,1,0.32,1] lg:translate-x-0",
+                "fixed inset-y-0 left-0 z-50 w-64 transform border-r border-border/50 bg-background/80 backdrop-blur-2xl transition-all duration-500 ease-[0.23,1,0.32,1] lg:translate-x-0 hidden lg:block",
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="flex h-20 items-center justify-between px-6">
@@ -219,24 +220,27 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
 
             {/* Main Content */}
             <div className="lg:pl-64 relative z-10 min-h-screen transition-all duration-500">
-                {/* Topbar (Mobile) */}
+                {/* Topbar (Mobile) - Refined for Native Look */}
                 <header className="sticky top-0 z-30 flex h-20 items-center justify-between bg-background/80 px-8 backdrop-blur-2xl border-b border-primary/5 lg:hidden">
-                    <button onClick={() => setIsSidebarOpen(true)} className="text-foreground">
-                        <Menu className="h-6 w-6" />
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <Logo size="sm" />
+                    </div>
                     
-                    {/* Mobile Search Button */}
-                    <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        onClick={toggle}
-                        className="rounded-full hover:bg-primary/5"
-                    >
-                        <Search className="h-5 w-5 text-muted-foreground" />
-                    </Button>
+                    <div className="flex items-center gap-4">
+                        {/* Mobile Search Button */}
+                        <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            onClick={toggle}
+                            className="rounded-full hover:bg-primary/5 h-10 w-10"
+                        >
+                            <Search className="h-5 w-5 text-muted-foreground" />
+                        </Button>
 
-                    <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center overflow-hidden">
+                        <div 
+                            onClick={() => router.push("/dashboard/profile")}
+                            className="h-9 w-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden cursor-pointer"
+                        >
                             {user?.image ? (
                                 <img
                                     src={user.image.startsWith('http') ? user.image : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'}${user.image}`}
@@ -244,17 +248,17 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
                                     className="h-full w-full object-cover"
                                 />
                             ) : (
-                                <Heart className="h-4 w-4 text-white" />
+                                <UserCircle className="h-5 w-5 text-primary" />
                             )}
                         </div>
                     </div>
-                    <div className="w-6" /> {/* Spacer */}
                 </header>
 
-                <main className="animate-in fade-in duration-1000">
+                <main className="animate-in fade-in duration-1000 pb-24 lg:pb-0">
                     {children}
                 </main>
                 <DistressButton />
+                <MobileBottomNav />
             </div>
         </div>
     );
