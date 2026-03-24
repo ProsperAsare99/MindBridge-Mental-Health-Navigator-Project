@@ -18,7 +18,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../services/api';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const INSTITUTIONS = [
   "University of Ghana",
@@ -56,7 +56,8 @@ export default function SignUpScreen({ navigation }) {
     phoneNumber: '',
     institution: '',
     studentId: '',
-    course: ''
+    course: '',
+    otherInstitution: ''
   });
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -74,9 +75,18 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
 
+    if (institution === 'Other' && !formData.otherInstitution) {
+      Alert.alert('Error', 'Please enter your institution name');
+      return;
+    }
+
     setLoading(true);
     try {
-      const response = await api.post('/auth/register', formData);
+      const payload = {
+        ...formData,
+        institution: institution === 'Other' ? formData.otherInstitution : institution
+      };
+      const response = await api.post('/auth/register', payload);
       const { token, user } = response.data;
 
       await AsyncStorage.setItem('userToken', token);
@@ -109,7 +119,7 @@ export default function SignUpScreen({ navigation }) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Image 
             source={require('../../assets/logo.png')} 
@@ -121,7 +131,6 @@ export default function SignUpScreen({ navigation }) {
         </View>
 
         <View style={styles.form}>
-          {/* ... Name, Email, Phone, Password inputs same as before ... */}
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Full Name *</Text>
             <TextInput
@@ -150,7 +159,7 @@ export default function SignUpScreen({ navigation }) {
             <Text style={styles.label}>Phone Number *</Text>
             <TextInput
               style={styles.input}
-              placeholder="+233 50 000 0000"
+              placeholder="+233 123 456 789"
               placeholderTextColor="#94a3b8"
               value={formData.phoneNumber}
               onChangeText={(v) => updateField('phoneNumber', v)}
@@ -175,6 +184,7 @@ export default function SignUpScreen({ navigation }) {
             <TouchableOpacity 
               style={styles.input} 
               onPress={() => setModalVisible(true)}
+              activeOpacity={0.7}
             >
               <Text style={[
                 styles.inputText, 
@@ -185,12 +195,25 @@ export default function SignUpScreen({ navigation }) {
             </TouchableOpacity>
           </View>
 
+          {formData.institution === 'Other' && (
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Other Institution Name *</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your school name"
+                placeholderTextColor="#94a3b8"
+                value={formData.otherInstitution}
+                onChangeText={(v) => updateField('otherInstitution', v)}
+              />
+            </View>
+          )}
+
           <View style={styles.row}>
             <View style={[styles.inputContainer, { flex: 1, marginRight: 10 }]}>
               <Text style={styles.label}>Student ID</Text>
               <TextInput
                 style={styles.input}
-                placeholder="208... "
+                placeholder="20XXXXXX"
                 placeholderTextColor="#94a3b8"
                 value={formData.studentId}
                 onChangeText={(v) => updateField('studentId', v)}
@@ -200,7 +223,7 @@ export default function SignUpScreen({ navigation }) {
               <Text style={styles.label}>Program / Course</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Comp Eng"
+                placeholder="e.g. Computer Science"
                 placeholderTextColor="#94a3b8"
                 value={formData.course}
                 onChangeText={(v) => updateField('course', v)}
@@ -235,7 +258,7 @@ export default function SignUpScreen({ navigation }) {
           <View style={styles.modalOverlay}>
             <View style={styles.modalContainer}>
               <View style={styles.modalHeader}>
-                <Text style={styles.modalTitle}>Choose University</Text>
+                <Text style={styles.modalTitle}>Select University</Text>
                 <TouchableOpacity onPress={() => setModalVisible(false)}>
                   <Text style={styles.closeText}>Cancel</Text>
                 </TouchableOpacity>
@@ -246,7 +269,8 @@ export default function SignUpScreen({ navigation }) {
                 placeholder="Search schools..."
                 value={searchQuery}
                 onChangeText={setSearchQuery}
-                autoFocus={true}
+                placeholderTextColor="#94a3b8"
+                autoFocus={Platform.OS === 'ios'}
               />
 
               <FlatList
@@ -261,6 +285,7 @@ export default function SignUpScreen({ navigation }) {
                   </TouchableOpacity>
                 )}
                 contentContainerStyle={{ paddingBottom: 40 }}
+                showsVerticalScrollIndicator={false}
               />
             </View>
           </View>
@@ -277,7 +302,8 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: 30,
-    paddingTop: 60,
+    paddingTop: Platform.OS === 'ios' ? 60 : 40,
+    paddingBottom: 40,
   },
   header: {
     alignItems: 'center',
@@ -365,19 +391,22 @@ const styles = StyleSheet.create({
     color: '#0077b6',
     fontWeight: '800',
   },
-  
-  // Modal Styles
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(27, 38, 59, 0.4)', // Deep Navy overlay
+    backgroundColor: 'rgba(27, 38, 59, 0.5)',
     justifyContent: 'flex-end',
   },
   modalContainer: {
     backgroundColor: '#ffffff',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
-    height: height * 0.7,
+    height: height * 0.75,
     padding: 25,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -10 },
+    shadowOpacity: 0.1,
+    shadowRadius: 20,
+    elevation: 20,
   },
   modalHeader: {
     flexDirection: 'row',
@@ -392,18 +421,20 @@ const styles = StyleSheet.create({
   },
   closeText: {
     color: '#0077b6',
-    fontWeight: '700',
+    fontWeight: '800',
+    fontSize: 14,
   },
   searchBar: {
     backgroundColor: '#f1f5f9',
     borderRadius: 15,
-    padding: 12,
+    padding: 14,
     marginBottom: 20,
-    fontSize: 14,
+    fontSize: 15,
     color: '#1b263b',
+    fontWeight: '600',
   },
   instOption: {
-    paddingVertical: 16,
+    paddingVertical: 18,
     borderBottomWidth: 1,
     borderBottomColor: '#f1f5f9',
   },
@@ -411,140 +442,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#1b263b',
     fontWeight: '600',
-  },
-});
-
-          <View style={styles.row}>
-            <View style={[styles.inputContainer, { flex: 1, marginRight: 10 }]}>
-              <Text style={styles.label}>Student ID</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="208... "
-                placeholderTextColor="#94a3b8"
-                value={formData.studentId}
-                onChangeText={(v) => updateField('studentId', v)}
-              />
-            </View>
-            <View style={[styles.inputContainer, { flex: 1.5 }]}>
-              <Text style={styles.label}>Program / Course</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Comp Eng"
-                placeholderTextColor="#94a3b8"
-                value={formData.course}
-                onChangeText={(v) => updateField('course', v)}
-              />
-            </View>
-          </View>
-
-          <TouchableOpacity 
-            style={styles.button}
-            onPress={handleSignUp}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text style={styles.buttonText}>Create Account</Text>
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.linkButton} onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.linkText}>Already have an account? <Text style={styles.linkHighlight}>Sign In</Text></Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fdfcf9',
-  },
-  scrollContent: {
-    padding: 30,
-    paddingTop: 60,
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 30,
-  },
-  logo: {
-    width: 60,
-    height: 60,
-    marginBottom: 12,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '900',
-    color: '#1b263b',
-    letterSpacing: -0.5,
-  },
-  subtitle: {
-    fontSize: 12,
-    color: '#8a7e72',
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    letterSpacing: 2,
-    marginTop: 4,
-  },
-  form: {
-    width: '100%',
-  },
-  inputContainer: {
-    marginBottom: 16,
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  label: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#1b263b',
-    marginBottom: 6,
-    marginLeft: 4,
-  },
-  input: {
-    backgroundColor: '#ffffff',
-    borderRadius: 15,
-    padding: 14,
-    color: '#1b263b',
-    fontSize: 15,
-    borderWidth: 1.5,
-    borderColor: '#e3d9cf',
-  },
-  button: {
-    backgroundColor: '#0077b6',
-    borderRadius: 15,
-    padding: 18,
-    alignItems: 'center',
-    marginTop: 10,
-    shadowColor: '#0077b6',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 4,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '800',
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-  },
-  linkButton: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  linkText: {
-    color: '#8a7e72',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  linkHighlight: {
-    color: '#0077b6',
-    fontWeight: '800',
   },
 });
