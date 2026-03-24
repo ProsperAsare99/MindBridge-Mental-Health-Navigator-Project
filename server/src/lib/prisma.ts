@@ -12,8 +12,8 @@ const createPrismaClient = () => {
             .replace(/connection_limit=\d+/, 'connection_limit=10')
             .replace(/sslmode=[^&]+/, 'sslmode=verify-full'),
         max: 10,
-        idleTimeoutMillis: 10000, // Reduced from 30s to 10s to avoid stale connections
-        connectionTimeoutMillis: 15000,
+        idleTimeoutMillis: 30000, // Increased back to 30s
+        connectionTimeoutMillis: 30000, // Increased back to 30s
         keepAlive: true
     });
 

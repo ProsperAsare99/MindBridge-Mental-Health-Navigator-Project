@@ -6,6 +6,10 @@
     "dev": "next dev",
     "dev:all": "concurrently \"npm run dev\" \"cd server && npm run dev\"",
     "build": "next build",
+    "static": "cross-env STATIC_EXPORT=true next build",
+    "mobile:sync": "npm run static && npx cap sync",
+    "mobile:open:android": "npx cap open android",
+    "mobile:open:ios": "npx cap open ios",
     "start": "next start",
     "lint": "eslint"
   },
@@ -49,6 +53,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "concurrently": "^9.1.2",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
