@@ -32,6 +32,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { MoodInsight } from "@/components/dashboard/MoodInsight";
 import { MoodLogger } from "@/components/mood/MoodLogger";
+import { MoodTimeline } from "@/components/mood/MoodTimeline";
 
 export default function MoodPage() {
     const { user, loading } = useAuth();
@@ -329,6 +330,15 @@ export default function MoodPage() {
                     transition={{ delay: 0.2 }}
                 >
                     <MoodInsight moods={moodHistory} />
+                </motion.div>
+
+                {/* Detailed Journal Timeline */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                >
+                    <MoodTimeline entries={moodHistory} />
                 </motion.div>
             </div>
         </div>

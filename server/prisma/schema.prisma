@@ -645,4 +645,5 @@ enum Service {
   CHAT
   MOOD
   ASSESSMENT
+  RESOURCE
 }

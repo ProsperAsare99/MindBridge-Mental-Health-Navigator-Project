@@ -321,7 +321,8 @@ export const Service: {
   GEMINI: 'GEMINI',
   CHAT: 'CHAT',
   MOOD: 'MOOD',
-  ASSESSMENT: 'ASSESSMENT'
+  ASSESSMENT: 'ASSESSMENT',
+  RESOURCE: 'RESOURCE'
 };
 
 export type Service = (typeof Service)[keyof typeof Service]

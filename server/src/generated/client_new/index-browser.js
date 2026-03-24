@@ -541,7 +541,8 @@ exports.Service = exports.$Enums.Service = {
   GEMINI: 'GEMINI',
   CHAT: 'CHAT',
   MOOD: 'MOOD',
-  ASSESSMENT: 'ASSESSMENT'
+  ASSESSMENT: 'ASSESSMENT',
+  RESOURCE: 'RESOURCE'
 };
 
 exports.GoalStatus = exports.$Enums.GoalStatus = {

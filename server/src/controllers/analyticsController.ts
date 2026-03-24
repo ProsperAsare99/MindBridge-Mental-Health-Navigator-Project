@@ -138,3 +138,81 @@ export const getMoodInsight = async (req: AuthRequest, res: Response) => {
         res.status(500).json({ error: 'Failed to process clinical insights.' });
     }
 };
+
+export const getActivityFeed = async (req: AuthRequest, res: Response) => {
+    try {
+        if (!req.user || !req.userId) return res.status(401).json({ error: 'Not authenticated' });
+        const userId = req.userId;
+
+        // 1. Fetch all relevant activities
+        const [moods, assessments, achievements, participants] = await Promise.all([
+            prisma.moodEntry.findMany({
+                where: { userId },
+                orderBy: { createdAt: 'desc' },
+                take: 50
+            }),
+            prisma.assessment.findMany({
+                where: { userId },
+                orderBy: { createdAt: 'desc' },
+                take: 20
+            }),
+            prisma.achievement.findMany({
+                where: { userId },
+                orderBy: { unlockedAt: 'desc' },
+                take: 20
+            }),
+            prisma.challengeParticipation.findMany({
+                where: { userId },
+                include: { challenge: true },
+                orderBy: { startDate: 'desc' },
+                take: 10
+            })
+        ]);
+
+        // 2. Transform into a unified feed format
+        const feed = [
+            ...moods.map(m => ({
+                id: m.id,
+                type: 'mood',
+                title: 'Mood Log',
+                value: m.mood,
+                sentiment: m.sentimentLabel,
+                notes: m.notes,
+                hasAudio: !!m.audioUrl,
+                hasPhoto: !!m.photoUrl,
+                timestamp: m.createdAt
+            })),
+            ...assessments.map(a => ({
+                id: a.id,
+                type: 'assessment',
+                title: `${a.type.toUpperCase()} Assessment`,
+                score: a.score,
+                severity: a.severity,
+                timestamp: a.createdAt
+            })),
+            ...achievements.map(ac => ({
+                id: ac.id,
+                type: 'achievement',
+                title: ac.title,
+                description: ac.description,
+                icon: ac.icon,
+                timestamp: ac.unlockedAt
+            })),
+            ...participants.map(p => ({
+                id: p.id,
+                type: 'challenge',
+                title: `Joined ${p.challenge.title}`,
+                description: p.challenge.description,
+                timestamp: p.startDate
+            }))
+        ];
+
+        // 3. Sort chronologically
+        feed.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+        res.json(feed);
+    } catch (error) {
+        console.error('Activity Feed Error:', error);
+        res.status(500).json({ error: 'Failed to fetch your unified activity feed.' });
+    }
+};
