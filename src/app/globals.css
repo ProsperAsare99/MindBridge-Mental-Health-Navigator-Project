@@ -22,6 +22,8 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-surface-above: var(--surface-above);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
   --color-ash-grey: var(--ash-grey);
   --color-ash-stroke: var(--ash-stroke);
 
@@ -58,6 +60,8 @@
 
   --card: #ffffff; 
   --card-foreground: #020617;
+  --success: #10b981;
+  --success-foreground: #ffffff;
   --surface-above: #f1f5f9;
 }
 
@@ -86,6 +90,8 @@
 
   --card: #1a1a1b; 
   --card-foreground: #d1d1c7;
+  --success: #10b981;
+  --success-foreground: #141415;
   --surface-above: #27272a;
 }
 
