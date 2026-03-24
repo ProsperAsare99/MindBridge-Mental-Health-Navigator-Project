@@ -1,23 +1,36 @@
-import { getAuthSession } from "@/lib/server-api";
-import { redirect } from "next/navigation";
-import { DashboardShell } from "@/components/dashboard/dashboard-shell";
+"use client";
 
-export default async function DashboardLayout({
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { DashboardShell } from "@/components/dashboard/dashboard-shell";
+import { Loader2 } from "lucide-react";
+
+export default function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const session = await getAuthSession();
+    const { data: session, status } = useSession();
+    const router = useRouter();
 
-    // Middleware handles redirects, but we still need session for the shell
-    // If somehow session is missing, redirect to login
-    if (!session) {
-        redirect("/login");
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login");
+        } else if (status === "authenticated" && !(session?.user as any).onboardingCompleted) {
+            router.push("/onboarding");
+        }
+    }, [status, session, router]);
+
+    if (status === "loading") {
+        return (
+            <div className="flex h-screen w-full items-center justify-center">
+                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+            </div>
+        );
     }
 
-    if (!(session.user as any).onboardingCompleted) {
-        redirect("/onboarding");
-    }
+    if (!session) return null;
 
     return (
         <DashboardShell user={session.user}>

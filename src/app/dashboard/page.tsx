@@ -1,4 +1,9 @@
-import { getAuthSession, serverApi } from "@/lib/server-api";
+"use client";
+
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -12,10 +17,10 @@ import {
     CheckCircle2,
     Users,
     ShieldCheck,
-    HeartPulse
+    HeartPulse,
+    Loader2
 } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { MotivationalCarousel } from "@/components/dashboard/motivational-carousel";
 import { GreetingHeader } from "@/components/dashboard/greeting-header";
 import { DashboardContainer, DashboardItem } from "@/components/dashboard/dashboard-animations";
@@ -25,30 +30,53 @@ import { QuickActions } from "@/components/dashboard/quick-actions";
 import { MoodInsight } from "@/components/dashboard/MoodInsight";
 import { TrendingUp } from "lucide-react";
 import { GamificationPortal } from "@/components/dashboard/GamificationPortal";
-
-
 import { DailyPerspective } from "@/components/dashboard/daily-perspective";
 
-export default async function DashboardPage() {
-    const session = await getAuthSession();
-    
-    if (!session) {
-        redirect("/login");
+export default function DashboardPage() {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+    const [moodStats, setMoodStats] = useState({ average: 0, count: 0, streak: 0 });
+    const [moodHistory, setMoodHistory] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login");
+        }
+    }, [status, router]);
+
+    useEffect(() => {
+        if (status === "authenticated" && session) {
+            fetchDashboardData();
+        }
+    }, [status, session]);
+
+    const fetchDashboardData = async () => {
+        setLoading(true);
+        try {
+            const statsData = await api.get('/moods/stats');
+            setMoodStats(statsData);
+            
+            const historyData = await api.get('/moods');
+            setMoodHistory(historyData);
+        } catch (error) {
+            console.error("Error fetching dashboard data on client:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (status === "loading" || (status === "authenticated" && loading)) {
+        return (
+            <div className="flex h-screen w-full items-center justify-center py-20">
+                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+            </div>
+        );
     }
+
+    if (!session) return null;
 
     const user = session.user as any;
-    let moodStats = { average: 0, count: 0, streak: 0 };
-    let moodHistory = [];
-
-    try {
-        const statsData = await serverApi('/moods/stats');
-        moodStats = statsData;
-        
-        const historyData = await serverApi('/moods');
-        moodHistory = historyData;
-    } catch (error) {
-        console.error("Error fetching dashboard data on server:", error);
-    }
 
     return (
         <div className="min-h-screen pb-20 px-4 md:px-10 pt-24 md:pt-10 max-w-7xl mx-auto selection:bg-primary/20">
