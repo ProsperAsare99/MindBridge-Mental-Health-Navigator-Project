@@ -6,11 +6,14 @@ import {
   ScrollView, 
   RefreshControl,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import api from '../services/api';
+
+const { width } = Dimensions.get('window');
 
 export default function DashboardScreen({ navigation }) {
   const [user, setUser] = useState(null);
@@ -56,7 +59,7 @@ export default function DashboardScreen({ navigation }) {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#8b5cf6" />
+        <ActivityIndicator size="large" color="#0077b6" />
       </View>
     );
   }
@@ -65,17 +68,17 @@ export default function DashboardScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View>
-          <Text style={styles.welcomeText}>Hello,</Text>
+          <Text style={styles.welcomeText}>Welcome back,</Text>
           <Text style={styles.nameText}>{user?.name || 'User'}</Text>
         </View>
         <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
-          <Text style={styles.logoutText}>Logout</Text>
+          <Text style={styles.logoutText}>Sign Out</Text>
         </TouchableOpacity>
       </View>
 
       <ScrollView 
         contentContainerStyle={styles.scrollContent}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#8b5cf6" />}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0077b6" />}
       >
         {/* Stats Row */}
         <View style={styles.statsGrid}>
@@ -85,16 +88,24 @@ export default function DashboardScreen({ navigation }) {
           </View>
           <View style={styles.statCard}>
             <Text style={styles.statVal}>{stats.count}</Text>
-            <Text style={styles.statLabel}>Logs</Text>
+            <Text style={styles.statLabel}>Total logs</Text>
           </View>
         </View>
 
         {/* Activity Feed */}
-        <Text style={styles.sectionTitle}>Recent Journey</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Recent Journey</Text>
+          <TouchableOpacity>
+            <Text style={styles.viewAllText}>See All</Text>
+          </TouchableOpacity>
+        </View>
+
         {activities.map((item, index) => (
           <View key={index} style={styles.activityCard}>
             <View style={styles.activityHeader}>
-              <Text style={styles.activityType}>{item.type}</Text>
+              <View style={styles.typeTag}>
+                <Text style={styles.activityType}>{item.type}</Text>
+              </View>
               <Text style={styles.activityDate}>
                 {new Date(item.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' })}
               </Text>
@@ -105,7 +116,9 @@ export default function DashboardScreen({ navigation }) {
         ))}
 
         {activities.length === 0 && (
-          <Text style={styles.emptyText}>Your journey starts here. Log your first mood to see it in your history!</Text>
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>Your journey starts here. Log your first mood to see it in your history!</Text>
+          </View>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -115,11 +128,11 @@ export default function DashboardScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0f172a',
+    backgroundColor: '#fdfcf9', // Official Soft Ivory
   },
   loadingContainer: {
     flex: 1,
-    backgroundColor: '#0f172a',
+    backgroundColor: '#fdfcf9',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -129,106 +142,146 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 25,
     paddingVertical: 20,
+    backgroundColor: '#fdfcf9',
   },
   welcomeText: {
-    color: '#94a3b8',
-    fontSize: 16,
+    color: '#8a7e72', // Taupe
+    fontSize: 14,
     fontWeight: '600',
   },
   nameText: {
-    color: '#fff',
+    color: '#1b263b', // Deep Navy
     fontSize: 28,
-    fontWeight: '800',
+    fontWeight: '900',
+    letterSpacing: -0.5,
   },
   logoutBtn: {
-    padding: 8,
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#e3d9cf',
   },
   logoutText: {
-    color: '#f43f5e',
+    color: '#1b263b',
     fontWeight: '700',
-    fontSize: 12,
+    fontSize: 11,
     textTransform: 'uppercase',
   },
   scrollContent: {
     padding: 25,
-    paddingTop: 0,
+    paddingTop: 10,
   },
   statsGrid: {
     flexDirection: 'row',
     gap: 15,
-    marginBottom: 30,
+    marginBottom: 35,
   },
   statCard: {
     flex: 1,
-    backgroundColor: '#1e293b',
+    backgroundColor: '#ffffff',
     borderRadius: 24,
     padding: 20,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#334155',
+    borderWidth: 1.5,
+    borderColor: '#e3d9cf',
+    shadowColor: '#1b263b',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 2,
   },
   statVal: {
-    color: '#8b5cf6',
-    fontSize: 24,
-    fontWeight: '800',
+    color: '#0077b6', // Ocean Blue
+    fontSize: 28,
+    fontWeight: '900',
   },
   statLabel: {
-    color: '#94a3b8',
-    fontSize: 12,
-    fontWeight: '600',
+    color: '#8a7e72',
+    fontSize: 11,
+    fontWeight: '700',
     marginTop: 4,
     textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
   },
   sectionTitle: {
-    color: '#fff',
+    color: '#1b263b',
     fontSize: 20,
-    fontWeight: '800',
-    marginBottom: 20,
+    fontWeight: '900',
     letterSpacing: -0.5,
   },
+  viewAllText: {
+    color: '#0077b6',
+    fontSize: 14,
+    fontWeight: '700',
+  },
   activityCard: {
-    backgroundColor: '#1e293b',
+    backgroundColor: '#ffffff',
     borderRadius: 20,
     padding: 20,
-    marginBottom: 15,
-    borderLeftWidth: 4,
-    borderLeftColor: '#8b5cf6',
+    marginBottom: 16,
+    borderWidth: 1.5,
+    borderColor: '#e3d9cf',
+    shadowColor: '#1b263b',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 5,
+    elevation: 1,
   },
   activityHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  typeTag: {
+    backgroundColor: '#f1f5f9',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
   },
   activityType: {
-    color: '#8b5cf6',
+    color: '#0077b6',
     fontSize: 10,
     fontWeight: '900',
     textTransform: 'uppercase',
-    letterSpacing: 1,
+    letterSpacing: 0.5,
   },
   activityDate: {
-    color: '#64748b',
-    fontSize: 10,
+    color: '#8a7e72',
+    fontSize: 11,
     fontWeight: '700',
   },
   activityTitle: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '700',
+    color: '#1b263b',
+    fontSize: 17,
+    fontWeight: '800',
     marginBottom: 4,
   },
   activityDesc: {
-    color: '#94a3b8',
-    fontSize: 13,
-    lineHeight: 18,
-    fontWeight: '500',
-  },
-  emptyText: {
-    color: '#64748b',
-    textAlign: 'center',
-    marginTop: 50,
+    color: '#1b263b',
+    opacity: 0.7,
     fontSize: 14,
     lineHeight: 20,
+    fontWeight: '500',
+  },
+  emptyContainer: {
+    padding: 40,
+    alignItems: 'center',
+  },
+  emptyText: {
+    color: '#8a7e72',
+    textAlign: 'center',
+    fontSize: 14,
+    lineHeight: 22,
+    fontWeight: '500',
     fontStyle: 'italic',
   },
 });
