@@ -91,28 +91,28 @@ export function DailyPerspective({ moodStats, className }: DailyPerspectiveProps
                         Deep Dive <ChevronRight size={18} />
                     </Button>
                     
-                    <div className="group/wellness relative flex items-center gap-4 px-5 py-4 rounded-[2rem] bg-gradient-to-br from-white/40 to-white/10 dark:from-white/10 dark:to-transparent backdrop-blur-md border border-white/20 shadow-xl overflow-hidden active:scale-95 transition-all duration-300 cursor-pointer">
-                        {/* Animated Background Glow */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 opacity-0 group-hover/wellness:opacity-100 transition-opacity duration-700 -translate-x-full group-hover/wellness:translate-x-full" />
+                    <div className="group/wellness relative flex items-center gap-4 px-5 py-4 rounded-[2rem] bg-gradient-to-br from-white/30 to-white/5 dark:from-white/5 dark:to-transparent backdrop-blur-sm border border-white/10 shadow-lg overflow-hidden active:scale-95 transition-all duration-300 cursor-pointer">
+                        {/* Animated Background Glow - Toned down */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/2 to-emerald-500/0 opacity-0 group-hover/wellness:opacity-100 transition-opacity duration-700 -translate-x-full group-hover/wellness:translate-x-full" />
                         
-                        {/* Icon Container with Pulse */}
+                        {/* Icon Container with subtle Pulse */}
                         <div className="relative flex-shrink-0">
-                            <div className="absolute inset-0 bg-emerald-500/20 blur-xl rounded-full scale-150 animate-pulse" />
-                            <div className="relative h-11 w-11 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white shadow-lg shadow-emerald-500/30">
-                                <HeartPulse size={22} className="group-hover/wellness:scale-110 transition-transform duration-300" />
+                            <div className="absolute inset-0 bg-emerald-500/10 blur-lg rounded-full scale-125 animate-pulse" />
+                            <div className="relative h-11 w-11 rounded-2xl bg-gradient-to-br from-emerald-500/80 to-emerald-600/80 flex items-center justify-center text-white shadow-md shadow-emerald-500/10">
+                                <HeartPulse size={22} className="group-hover/wellness:scale-105 transition-transform duration-300" />
                             </div>
                         </div>
 
                         {/* Text Section */}
                         <div className="relative z-10 space-y-0.5">
-                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600/70 dark:text-emerald-400/70 leading-none">
+                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600/60 dark:text-emerald-400/60 leading-none">
                                 Overall Wellness
                             </p>
                             <div className="flex items-center gap-2">
-                                <p className="text-sm font-black text-foreground tracking-tight">
+                                <p className="text-sm font-black text-foreground/90 tracking-tight">
                                     Stably Improving
                                 </p>
-                                <div className="flex gap-0.5">
+                                <div className="flex gap-0.5 opacity-60">
                                     <div className="h-1 w-1 rounded-full bg-emerald-500 animate-bounce [animation-delay:-0.3s]" />
                                     <div className="h-1 w-1 rounded-full bg-emerald-500 animate-bounce [animation-delay:-0.15s]" />
                                     <div className="h-1 w-1 rounded-full bg-emerald-500 animate-bounce" />
