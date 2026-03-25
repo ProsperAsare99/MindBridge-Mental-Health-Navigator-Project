@@ -225,10 +225,9 @@ export default function RegisterPage() {
                             </button>
                         </div>
 
-                        <div className="relative">
-                            <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-border" /></div>
-                            <div className="relative flex justify-center text-[8px] font-extrabold uppercase tracking-[.4em] text-muted-foreground/40">
-                                <span className="bg-card px-4">Profile Specifications</span>
+                        <div className="relative py-4 flex items-center justify-center">
+                            <div className="text-[12px] font-extrabold uppercase tracking-[.4em] text-muted-foreground/40">
+                                Standard Authentication
                             </div>
                         </div>
 
