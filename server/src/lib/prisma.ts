@@ -33,30 +33,45 @@ const createPrismaClient = () => {
     return client.$extends({
         query: {
             $allOperations: async ({ model, operation, args, query }) => {
-                let retries = 3;
+                let retries = 5; // Increased from 3 to 5 for tougher network conditions
+                const maxRetries = retries;
                 while (retries > 0) {
                     try {
                         return await query(args);
                     } catch (error: any) {
+                        const errorMessage = error.message || '';
+                        const errorCode = error.code || '';
+                        
                         const isTransient = 
-                            error.message?.includes('ECONNRESET') || 
-                            error.message?.includes('ETIMEDOUT') ||
-                            error.message?.includes('ENOTFOUND') ||
-                            error.message?.includes('terminated unexpectedly') ||
-                            error.code === 'ECONNRESET' ||
-                            error.code === 'ETIMEDOUT' ||
-                            error.code === 'ENOTFOUND' ||
-                            error.code === 'P1001' ||
-                            error.code === 'P1017' ||
-                            error.code === 'P2024'; // Connection timeout
+                            errorMessage.includes('ECONNRESET') || 
+                            errorMessage.includes('ETIMEDOUT') ||
+                            errorMessage.includes('ENOTFOUND') ||
+                            errorMessage.includes('EAI_AGAIN') || // DNS lookup timed out
+                            errorMessage.includes('terminated unexpectedly') ||
+                            errorCode === 'ECONNRESET' ||
+                            errorCode === 'ETIMEDOUT' ||
+                            errorCode === 'ENOTFOUND' ||
+                            errorCode === 'EAI_AGAIN' ||
+                            errorCode === 'P1001' || // Can't reach DB server
+                            errorCode === 'P1017' || // Server closed connection
+                            errorCode === 'P2024'; // Connection timeout
 
                         if (isTransient && retries > 1) {
                             retries--;
-                            const delay = (3 - retries) * 1000;
-                            console.warn(`[PRISMA RETRY] ${operation} on ${model} failed (Transient: ${error.message}). Retrying in ${delay}ms... (${retries} retries left)`);
+                            // Exponential backoff: 2s, 4s, 8s, 16s
+                            const attempt = maxRetries - retries;
+                            const delay = Math.pow(2, attempt) * 1000;
+                            
+                            console.warn(`[PRISMA RETRY] ${operation} on ${model} failed (Transient: ${errorCode || 'DNS/Network'}). Attempt ${attempt}/${maxRetries}. Retrying in ${delay}ms...`);
+                            
                             await new Promise(resolve => setTimeout(resolve, delay));
                             continue;
                         }
+                        
+                        if (errorCode === 'ENOTFOUND' || errorMessage.includes('ENOTFOUND')) {
+                            console.error(`[PRISMA CRITICAL] Hostname resolution failed for the database. Please check your internet connection and DNS settings.`);
+                        }
+                        
                         throw error;
                     }
                 }

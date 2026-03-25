@@ -57,6 +57,14 @@ axiosInstance.interceptors.response.use(
             }
         }
 
+        if (error.response?.status === 503) {
+            if (typeof window !== 'undefined') {
+                window.dispatchEvent(new CustomEvent('mindbridge:connectivity-error', { 
+                    detail: { message } 
+                }));
+            }
+        }
+
         return Promise.reject(new Error(message));
     }
 );

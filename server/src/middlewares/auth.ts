@@ -60,8 +60,15 @@ export const authenticateToken = async (req: AuthRequest, res: Response, next: N
             return res.status(401).json({ error: 'Token expired.' });
         }
 
-        // Handle Database connection issues specifically
-        if (error.message?.includes('ECONNRESET') || error.code?.startsWith('P')) {
+        // Handle Database connection issues specifically (Prisma codes or Node network codes)
+        const isDbError = 
+            error.code?.startsWith('P') || 
+            error.code === 'ENOTFOUND' || 
+            error.code === 'EAI_AGAIN' ||
+            error.message?.includes('ECONNRESET') ||
+            error.message?.includes('ENOTFOUND');
+
+        if (isDbError) {
             return res.status(503).json({ 
                 error: 'Service temporarily unavailable due to database connectivity. Please try again in a moment.',
                 details: 'DB_CONNECTION_FAILURE'

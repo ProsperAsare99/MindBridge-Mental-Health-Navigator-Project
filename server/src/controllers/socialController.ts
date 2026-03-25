@@ -187,18 +187,27 @@ export const requestMentor = async (req: AuthRequest, res: Response) => {
 
 // Seed initial circles if none exist
 export const initializeCircles = async () => {
-    const count = await prisma.supportCircle.count();
-    if (count === 0) {
-        const initialCircles = [
-            { name: 'Academic Stress Circle', description: 'Share strategies for managing exams, deadlines, and study pressure.', category: Concern.ACADEMIC_STRESS },
-            { name: 'Anxiety Support', description: 'A safe space to talk about coping with anxiety and finding calm.', category: Concern.ANXIETY },
-            { name: 'Growth & Resilience', description: 'Focus on building strength and overcoming personal challenges.', category: Concern.OTHER },
-            { name: 'Loneliness & Connection', description: 'Find community and share experiences of navigated university life.', category: Concern.LONELINESS },
-        ];
+    try {
+        const count = await prisma.supportCircle.count();
+        if (count === 0) {
+            const initialCircles = [
+                { name: 'Academic Stress Circle', description: 'Share strategies for managing exams, deadlines, and study pressure.', category: Concern.ACADEMIC_STRESS },
+                { name: 'Anxiety Support', description: 'A safe space to talk about coping with anxiety and finding calm.', category: Concern.ANXIETY },
+                { name: 'Growth & Resilience', description: 'Focus on building strength and overcoming personal challenges.', category: Concern.OTHER },
+                { name: 'Loneliness & Connection', description: 'Find community and share experiences of navigated university life.', category: Concern.LONELINESS },
+            ];
 
-        for (const circle of initialCircles) {
-            await prisma.supportCircle.create({ data: circle });
+            for (const circle of initialCircles) {
+                await prisma.supportCircle.create({ data: circle });
+            }
+            console.log('[SOCIAL] Initial circles seeded successfully.');
         }
-        console.log('[SOCIAL] Initial circles seeded successfully.');
+    } catch (error: any) {
+        if (error.code === 'ENOTFOUND' || error.message?.includes('ENOTFOUND')) {
+            console.warn('[SOCIAL] Database seeding skipped: Hostname not found. Is the internet connected?');
+        } else {
+            console.error('[SOCIAL] Database seeding failed:', error.message);
+        }
+        // Do not rethrow, as this is a background task
     }
 };

@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/providers/SessionProvider";
 import { SearchProvider } from "@/components/providers/SearchProvider";
 import { CommandMenu } from "@/components/search/command-menu";
+import { ConnectivityBanner } from "@/components/brand/ConnectivityBanner";
 
 // const outfit = Outfit({
 //   variable: "--font-outfit",
@@ -43,6 +44,7 @@ export default function RootLayout({
               >
                 {children}
                 <CommandMenu />
+                <ConnectivityBanner />
               </ThemeProvider>
             </SearchProvider>
 
