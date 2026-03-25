@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { updateOnboarding, getOnboardingStatus } from '../controllers/onboardingController';
-import { authenticateToken } from '../middleware/auth';
+import { authenticateToken } from '../middlewares/auth';
 
 const router = Router();
 

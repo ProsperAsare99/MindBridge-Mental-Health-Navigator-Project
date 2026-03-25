@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../middlewares/auth';
 import prisma from '../lib/prisma';
 import { University } from '../generated/client_new';
 

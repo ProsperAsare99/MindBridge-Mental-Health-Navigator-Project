@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import prisma from '../lib/prisma';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../middlewares/auth';
 import { calculateStreak, ACHIEVEMENTS } from '../utils/gamification';
 
 export const getGamificationStats = async (req: AuthRequest, res: Response) => {

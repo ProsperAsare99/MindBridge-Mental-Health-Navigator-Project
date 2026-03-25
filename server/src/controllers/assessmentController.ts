@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import prisma from '../lib/prisma';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../middlewares/auth';
 import { AssessmentType, Severity } from '../generated/client_new';
 
 export const createAssessment = async (req: AuthRequest, res: Response) => {

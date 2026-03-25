@@ -9,7 +9,7 @@ import {
     sendEncouragement, 
     requestMentor 
 } from '../controllers/socialController';
-import { authenticateToken } from '../middleware/auth';
+import { authenticateToken } from '../middlewares/auth';
 
 const router = Router();
 

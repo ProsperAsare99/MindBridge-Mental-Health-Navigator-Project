@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getUserAnalytics, getMoodInsight, getActivityFeed, logActivity } from '../controllers/analyticsController';
-import { authenticateToken } from '../middleware/auth';
+import { authenticateToken } from '../middlewares/auth';
 
 const router = Router();
 

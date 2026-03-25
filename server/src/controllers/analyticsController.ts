@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import prisma from '../lib/prisma';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../middlewares/auth';
 // AI imports removed to maintain "Advanced Analytics" identity
 
 export const getUserAnalytics = async (req: AuthRequest, res: Response) => {

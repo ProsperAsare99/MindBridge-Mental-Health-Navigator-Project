@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { createAssessment, getUserAssessments } from '../controllers/assessmentController';
-import { authenticateToken } from '../middleware/auth';
+import { authenticateToken } from '../middlewares/auth';
 
 const router = Router();
 

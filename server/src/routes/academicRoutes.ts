@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getAcademicEvents, createAcademicEvent } from '../controllers/academicController';
-import { authenticateToken } from '../middleware/auth';
+import { authenticateToken } from '../middlewares/auth';
 
 const router = Router();
 

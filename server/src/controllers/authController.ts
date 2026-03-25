@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import prisma from '../lib/prisma';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../middlewares/auth';
 import { sendVerificationEmail } from '../utils/emailService';
 import { OAuth2Client } from 'google-auth-library';
 import { University } from '../generated/client_new';

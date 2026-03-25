@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { createMood, getUserMoods, getMoodStats, getProactiveNudges } from '../controllers/moodController';
-import { authenticateToken } from '../middleware/auth';
-import { upload } from '../middleware/upload';
+import { authenticateToken } from '../middlewares/auth';
+import { upload } from '../middlewares/upload';
 
 const router = Router();
 
