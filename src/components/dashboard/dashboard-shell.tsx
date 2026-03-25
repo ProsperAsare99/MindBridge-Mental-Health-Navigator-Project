@@ -96,7 +96,7 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
 
             {/* Sidebar */}
             <aside className={cn(
-                "fixed inset-y-0 left-0 z-50 w-64 transform border-r border-border/50 bg-background/80 backdrop-blur-2xl transition-all duration-500 ease-[0.23,1,0.32,1] lg:translate-x-0 hidden lg:block",
+                "fixed inset-y-0 left-0 z-50 w-64 transform border-r border-border/50 bg-background/90 backdrop-blur-md transition-all duration-500 ease-[0.23,1,0.32,1] lg:translate-x-0 hidden lg:block",
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="flex h-20 items-center justify-between px-6">
@@ -221,7 +221,7 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
             {/* Main Content */}
             <div className="lg:pl-64 relative z-10 min-h-screen transition-all duration-500">
                 {/* Topbar (Mobile) - Refined for Native Look */}
-                <header className="sticky top-0 z-30 flex h-20 items-center justify-between bg-background/80 px-8 backdrop-blur-2xl border-b border-primary/5 lg:hidden">
+                <header className="sticky top-0 z-30 flex h-20 items-center justify-between bg-background/90 px-8 backdrop-blur-md border-b border-primary/5 lg:hidden">
                     <div className="flex items-center gap-3">
                         <Logo size="sm" />
                     </div>

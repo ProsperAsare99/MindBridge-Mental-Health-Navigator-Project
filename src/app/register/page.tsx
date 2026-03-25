@@ -373,7 +373,7 @@ export default function RegisterPage() {
                                 onHoverEnd={() => setIsHovered(false)}
                                 type="submit"
                                 disabled={loading}
-                                className="w-full h-14 mt-4 bg-primary hover:bg-primary/90 text-white font-extrabold rounded-2xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-primary/10 disabled:opacity-50 relative overflow-hidden"
+                                className="w-full h-14 mt-4 bg-primary hover:bg-primary/90 text-white font-extrabold rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-primary/5 disabled:opacity-50 relative overflow-hidden"
                             >
                                 {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <>INITIALIZE PROFILE <ArrowRight className="h-4 w-4" /></>}
                                 {isHovered && !loading && (

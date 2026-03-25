@@ -126,7 +126,7 @@ export default function Home() {
               </Button>
             </Link>
             <Link href="/register">
-              <Button className="rounded-full px-8 h-12 text-sm font-bold bg-primary text-black hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
+              <Button className="rounded-full px-8 h-12 text-sm font-bold bg-primary text-black hover:bg-primary/90 shadow-md shadow-primary/5 transition-all hover:scale-105 active:scale-95">
                 Get Started
               </Button>
             </Link>
@@ -198,11 +198,14 @@ export default function Home() {
                 The Mission
               </div>
               <h2 className="text-4xl md:text-6xl font-black text-foreground leading-[1.1] tracking-tight">
-                Empowering Minds across <span className="relative inline-block text-primary">
-                  Ghanaian
+                Empowering Minds across <span className="relative inline-block font-black">
+                  <span className="bg-gradient-to-r from-[#EF3340] via-[#FFD700] to-[#009739] bg-clip-text text-transparent">
+                    Ghanaian
+                  </span>
+                  <span className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-black text-[0.4em] opacity-80 pointer-events-none">★</span>
                   <motion.svg 
                     viewBox="0 0 200 20" 
-                    className="absolute -bottom-2 left-0 w-full h-3 text-primary/30"
+                    className="absolute -bottom-2 left-0 w-full h-3 text-[#FFD700]/30"
                     initial={{ pathLength: 0, opacity: 0 }}
                     whileInView={{ pathLength: 1, opacity: 1 }}
                     transition={{ duration: 1, delay: 0.5 }}

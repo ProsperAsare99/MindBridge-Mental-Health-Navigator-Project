@@ -87,7 +87,7 @@ export function AnimatedSelect({
             className={cn(
               'absolute top-[calc(100%+0.5rem)] left-0 z-[100] w-full',
               'overflow-hidden rounded-2xl',
-              'bg-card shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-border/50 backdrop-blur-xl',
+              'bg-card shadow-[0_15px_40px_rgba(0,0,0,0.15)] border border-border/50 backdrop-blur-md',
               'dark:bg-zinc-900/95'
             )}
           >

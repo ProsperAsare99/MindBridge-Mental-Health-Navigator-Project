@@ -69,7 +69,7 @@ export default function CommunityPage() {
                                     onClick={() => setActiveTab(tab.id)}
                                     className={cn(
                                         "group flex items-center gap-3 px-6 py-3 rounded-2xl transition-all relative overflow-hidden",
-                                        isActive ? "bg-primary text-white shadow-xl shadow-primary/20 scale-105" : "bg-muted/50 text-muted-foreground hover:bg-muted"
+                                        isActive ? "bg-primary text-white shadow-lg shadow-primary/10 scale-105" : "bg-muted/50 text-muted-foreground hover:bg-muted"
                                     )}
                                 >
                                     <Icon size={18} className={cn("transition-transform", isActive ? "scale-110" : "group-hover:scale-110")} />
