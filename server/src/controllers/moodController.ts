@@ -2,7 +2,7 @@ import { Response } from 'express';
 import type { MessageRole } from '@prisma/client';
 import prisma from '../lib/prisma';
 import { AuthRequest } from '../middlewares/auth';
-// import { ai } from '../lib/genkit-config';
+import { ai } from '../lib/genkit-config';
 // import { MessageRole, University } from '@prisma/client';
 import { GamificationService } from '../services/gamificationService';
 import fs from 'fs';
@@ -31,28 +31,41 @@ export const createMood = async (req: AuthRequest, res: Response) => {
         let sentimentLabel = null;
         let crisisFlag = false;
 
-        // if (note && note.trim().length > 0) {
-        //     try {
-        //         const result = await ai.generate({
-        //             prompt: `Analyze the following journal entry for sentiment and potential crisis. 
-        //             Provide the result as a JSON object with:
-        //             - score: a float between -1.0 (very negative) and 1.0 (very positive)
-        //             - label: a short string (e.g., "Positive", "Neutral", "Concerned", "Distressed")
-        //             - crisis: boolean, true if the text indicates immediate self-harm or severe clinical distress.
-        //             
-        //             Entry: "${note}"`
-        //         });
-        // 
-        //         const text = result.text.replace(/```json|```/g, '').trim();
-        //         const analysis = JSON.parse(text);
-        //         
-        //         sentimentScore = analysis.score;
-        //         sentimentLabel = analysis.label;
-        //         crisisFlag = analysis.crisis || false;
-        //     } catch (aiError) {
-        //         console.error('Sentiment Analysis Error:', aiError);
-        //     }
-        // }
+        const now = new Date();
+        const timeContext = now.toLocaleString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+
+        if (note && note.trim().length > 0) {
+            try {
+                const result = await ai.generate({
+                    prompt: `
+                    Current System Time: ${timeContext}
+                    
+                    Analyze the following journal entry for sentiment and potential crisis. 
+                    Provide the result as a JSON object with:
+                    - score: a float between -1.0 (very negative) and 1.0 (very positive)
+                    - label: a short string (e.g., "Positive", "Neutral", "Concerned", "Distressed")
+                    - crisis: boolean, true if the text indicates immediate self-harm or severe clinical distress.
+                    
+                    Entry: "${note}"`
+                });
+
+                const text = result.text.replace(/```json|```/g, '').trim();
+                const analysis = JSON.parse(text);
+                
+                sentimentScore = analysis.score;
+                sentimentLabel = analysis.label;
+                crisisFlag = analysis.crisis || false;
+            } catch (aiError) {
+                console.error('Sentiment Analysis Error:', aiError);
+            }
+        }
 
         // Handle File Uploads
         const files = req.files as { [fieldname: string]: Express.Multer.File[] };

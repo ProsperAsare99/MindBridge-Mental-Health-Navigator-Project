@@ -1,11 +1,17 @@
-// Genkit configuration is currently disabled to resolve Node 22 tracing conflicts
-/*
 import { genkit } from 'genkit';
 import { googleAI } from '@genkit-ai/googleai';
 
-export const ai = genkit({
-    plugins: [googleAI({ apiKey: process.env.GEMINI_API_KEY })],
-    model: 'googleai/gemini-1.5-flash',
-});
-*/
-export const ai = {} as any; // Mock for type safety if needed elsewhere
+let _ai: any = null;
+
+export const ai = new Proxy({}, {
+    get: (target, prop) => {
+        if (!_ai) {
+            console.log('[GENKIT] Lazy instantiating Genkit...');
+            _ai = genkit({
+                plugins: [googleAI({ apiKey: process.env.GEMINI_API_KEY })],
+                model: 'googleai/gemini-1.5-flash',
+            });
+        }
+        return _ai[prop];
+    }
+}) as any;

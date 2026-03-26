@@ -14,6 +14,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next) => {
+    console.log(`[SERVER] ${new Date().toISOString()} ${req.method} ${req.url}`);
+    next();
+});
 app.use('/uploads', express.static('uploads'));
 
 // Routes
@@ -30,6 +34,12 @@ app.use('/api/social', socialRoutes);
 
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date() });
+});
+
+// Catch-all 404 for debugging
+app.use((req, res) => {
+    console.warn(`[SERVER 404] No route found for: ${req.method} ${req.url}`);
+    res.status(404).json({ error: `Path not found: ${req.method} ${req.url}` });
 });
 
 export default app;

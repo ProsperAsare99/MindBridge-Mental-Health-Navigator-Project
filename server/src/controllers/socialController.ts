@@ -3,7 +3,7 @@ import type { Concern } from '@prisma/client';
 import prisma from '../lib/prisma';
 import { AuthRequest } from '../middlewares/auth';
 // import { Concern } from '@prisma/client';
-// import { ai } from '../lib/genkit-config';
+import { ai } from '../lib/genkit-config';
 
 const detectCrisis = async (content: string) => {
     const crisisKeywords = ['suicide', 'self-harm', 'end it all', 'kill myself', 'no point living', 'hurt myself', 'better off dead', 'dying', 'goodbye world'];
@@ -11,31 +11,42 @@ const detectCrisis = async (content: string) => {
     
     if (hasKeyword) return true;
 
-    // try {
-    //     const result = await ai.generate({
-    //         prompt: `
-    //         Analyze the following student community post for immediate mental health crisis, suicidal ideation, or severe self-harm intent.
-    //         The platform is MindBridge, a mental health navigator for university students.
-    //         
-    //         Look for:
-    //         1. Direct threats of self-harm or suicide.
-    //         2. Expressions of hopelessness and lack of reason to live.
-    //         3. Finality statements (e.g., "I'm done", "Goodbye everyone").
-    //         4. Severe clinical distress that requires immediate human intervention.
-    //         
-    //         Contextual nuance: Students mapping exam stress or typical academic frustration should NOT be flagged unless they transition into hopeless/self-destructive territory.
-    //         
-    //         Respond with ONLY 'true' if a crisis/intervention is needed, or 'false' otherwise.
-    //         
-    //         Text: "${content}"`
-    //     });
-    //     const responseText = result.text.trim().toLowerCase();
-    //     return responseText.includes('true') && !responseText.includes('false');
-    // } catch (e) {
-    //     console.error("AI Crisis Detection Error:", e);
-    //     return false;
-    // }
-    return false;
+    const now = new Date();
+    const timeContext = now.toLocaleString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit' 
+    });
+
+    try {
+        const result = await ai.generate({
+            prompt: `
+            Current System Time: ${timeContext}
+            
+            Analyze the following student community post for immediate mental health crisis, suicidal ideation, or severe self-harm intent.
+            The platform is MindBridge, a mental health navigator for university students.
+            
+            Look for:
+            1. Direct threats of self-harm or suicide.
+            2. Expressions of hopelessness and lack of reason to live.
+            3. Finality statements (e.g., "I'm done", "Goodbye everyone").
+            4. Severe clinical distress that requires immediate human intervention.
+            
+            Contextual nuance: Students mapping exam stress or typical academic frustration should NOT be flagged unless they transition into hopeless/self-destructive territory.
+            
+            Respond with ONLY 'true' if a crisis/intervention is needed, or 'false' otherwise.
+            
+            Text: "${content}"`
+        });
+        const responseText = result.text.trim().toLowerCase();
+        return responseText.includes('true') && !responseText.includes('false');
+    } catch (e) {
+        console.error("AI Crisis Detection Error:", e);
+        return false;
+    }
 };
 
 // ============================================
