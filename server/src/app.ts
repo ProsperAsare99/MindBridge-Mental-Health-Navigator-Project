@@ -33,18 +33,7 @@ app.use('/api/social', socialRoutes);
 
 
 app.get('/health', (req, res) => {
-    const jwtSecret = process.env.JWT_SECRET;
-    const isFallback = !jwtSecret || jwtSecret === 'your_fallback_secret_for_development';
-    
-    res.json({ 
-        status: 'ok', 
-        timestamp: new Date(),
-        auth: {
-            configured: !!jwtSecret,
-            usingFallback: isFallback,
-            secretLength: jwtSecret?.length || 0
-        }
-    });
+    res.json({ status: 'ok', timestamp: new Date() });
 });
 
 // Catch-all 404 for debugging
