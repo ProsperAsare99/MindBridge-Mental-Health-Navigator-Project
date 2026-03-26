@@ -3,9 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProactiveNudges = exports.getMoodStats = exports.getUserMoods = exports.createMood = void 0;
+exports.deleteMedia = exports.deleteMood = exports.getProactiveNudges = exports.getMoodStats = exports.getUserMoods = exports.createMood = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const genkit_config_1 = require("../lib/genkit-config");
+const gamificationService_1 = require("../services/gamificationService");
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 const createMood = async (req, res) => {
     const { value, note, energy, sleep, social, anxiety, emotion, emotionIntensity, physicalSymptoms, weather, location } = req.body;
     try {
@@ -65,7 +68,11 @@ const createMood = async (req, res) => {
                 crisisFlag
             }
         });
-        res.status(201).json(mood);
+        // Gamification: Reward XP and Check for Achievements
+        await gamificationService_1.GamificationService.rewardXP(userId, 'MOOD_LOG');
+        await gamificationService_1.GamificationService.updateMoodGarden(userId);
+        const newAchievements = await gamificationService_1.GamificationService.checkAchievements(userId);
+        res.status(201).json({ ...mood, newAchievements });
     }
     catch (error) {
         console.error(error);
@@ -216,4 +223,77 @@ const getProactiveNudges = async (req, res) => {
     }
 };
 exports.getProactiveNudges = getProactiveNudges;
+const deleteMood = async (req, res) => {
+    try {
+        if (!req.user || !req.userId)
+            return res.status(401).json({ error: 'Not authenticated' });
+        const { id } = req.params;
+        const mood = await prisma_1.default.moodEntry.findUnique({
+            where: { id, userId: req.userId }
+        });
+        if (!mood)
+            return res.status(404).json({ error: 'Mood entry not found' });
+        // Cleanup files
+        if (mood.photoUrl) {
+            const fullPath = path_1.default.join(process.cwd(), 'public', mood.photoUrl);
+            if (fs_1.default.existsSync(fullPath))
+                fs_1.default.unlinkSync(fullPath);
+        }
+        if (mood.audioUrl) {
+            const fullPath = path_1.default.join(process.cwd(), 'public', mood.audioUrl);
+            if (fs_1.default.existsSync(fullPath))
+                fs_1.default.unlinkSync(fullPath);
+        }
+        await prisma_1.default.moodEntry.delete({
+            where: { id }
+        });
+        res.json({ message: 'Mood entry and associated media deleted successfully' });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error deleting mood entry' });
+    }
+};
+exports.deleteMood = deleteMood;
+const deleteMedia = async (req, res) => {
+    try {
+        if (!req.user || !req.userId)
+            return res.status(401).json({ error: 'Not authenticated' });
+        const { id, type } = req.params; // type: 'photo' | 'audio'
+        const mood = await prisma_1.default.moodEntry.findUnique({
+            where: { id, userId: req.userId }
+        });
+        if (!mood)
+            return res.status(404).json({ error: 'Mood entry not found' });
+        let fileToPulse = null;
+        let updateData = {};
+        if (type === 'photo' && mood.photoUrl) {
+            fileToPulse = mood.photoUrl;
+            updateData.photoUrl = null;
+        }
+        else if (type === 'audio' && mood.audioUrl) {
+            fileToPulse = mood.audioUrl;
+            updateData.audioUrl = null;
+        }
+        else {
+            return res.status(400).json({ error: 'Invalid media type or media already deleted' });
+        }
+        // Physical cleanup
+        if (fileToPulse) {
+            const fullPath = path_1.default.join(process.cwd(), 'public', fileToPulse);
+            if (fs_1.default.existsSync(fullPath))
+                fs_1.default.unlinkSync(fullPath);
+        }
+        await prisma_1.default.moodEntry.update({
+            where: { id },
+            data: updateData
+        });
+        res.json({ message: `${type} deleted successfully`, updatedEntry: mood });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error deleting media' });
+    }
+};
+exports.deleteMedia = deleteMedia;
 //# sourceMappingURL=moodController.js.map

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.joinChallenge = exports.getChallenges = exports.getGamificationStats = void 0;
+exports.initializeChallenges = exports.joinChallenge = exports.getChallenges = exports.getGamificationStats = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const gamification_1 = require("../utils/gamification");
 const getGamificationStats = async (req, res) => {
@@ -11,20 +11,20 @@ const getGamificationStats = async (req, res) => {
         if (!req.userId)
             return res.status(401).json({ error: 'Not authenticated' });
         const userId = req.userId;
-        // 1. Get all mood entries for streak calculation
-        const moods = await prisma_1.default.moodEntry.findMany({
-            where: { userId },
-            orderBy: { createdAt: 'desc' }
+        // 1. Get user data with XP and level
+        const user = await prisma_1.default.user.findUnique({
+            where: { id: userId },
+            include: {
+                moodEntries: { orderBy: { createdAt: 'desc' }, take: 100 },
+                achievements: true,
+                moodGarden: true
+            }
         });
-        const currentStreak = (0, gamification_1.calculateStreak)(moods);
-        // 2. Get achievements
-        const achievements = await prisma_1.default.achievement.findMany({
-            where: { userId }
-        });
-        // 3. Get or Create Mood Garden
-        let garden = await prisma_1.default.moodGarden.findUnique({
-            where: { userId }
-        });
+        if (!user)
+            return res.status(404).json({ error: 'User not found' });
+        const currentStreak = (0, gamification_1.calculateStreak)(user.moodEntries);
+        // 2. Garden Evolution (Rule-based)
+        let garden = user.moodGarden;
         if (!garden) {
             garden = await prisma_1.default.moodGarden.create({
                 data: {
@@ -35,35 +35,8 @@ const getGamificationStats = async (req, res) => {
                 }
             });
         }
-        // 4. Achievement Logic (Auto-unlock)
-        const unlockedTypes = achievements.map(a => a.type);
-        const newAchievements = [];
-        for (const ach of gamification_1.ACHIEVEMENTS) {
-            if (!unlockedTypes.includes(ach.type)) {
-                let unlocked = false;
-                if (ach.type.startsWith('milestone_') && currentStreak >= ach.threshold) {
-                    unlocked = true;
-                }
-                else if (ach.type === 'self_awareness_champion' && moods.length >= ach.threshold) {
-                    unlocked = true;
-                }
-                if (unlocked) {
-                    const newAch = await prisma_1.default.achievement.create({
-                        data: {
-                            userId,
-                            type: ach.type,
-                            title: ach.title,
-                            description: ach.description,
-                            icon: ach.icon || 'Star'
-                        }
-                    });
-                    newAchievements.push(newAch);
-                }
-            }
-        }
-        // 5. Garden Evolution (Rule-based)
-        const avgMood = moods.length > 0
-            ? moods.slice(0, 5).reduce((acc, curr) => acc + curr.mood, 0) / Math.min(moods.length, 5)
+        const avgMood = user.moodEntries.length > 0
+            ? user.moodEntries.slice(0, 5).reduce((acc, curr) => acc + curr.mood, 0) / Math.min(user.moodEntries.length, 5)
             : 3;
         const newGrowthLevel = Math.min(5, Math.ceil(currentStreak / 7) + (avgMood >= 4 ? 1 : 0));
         if (newGrowthLevel !== garden.growthLevel) {
@@ -74,9 +47,12 @@ const getGamificationStats = async (req, res) => {
         }
         res.json({
             streak: currentStreak,
-            achievements: [...achievements, ...newAchievements],
+            longestStreak: user.longestStreak,
+            wellnessLevel: user.wellnessLevel,
+            wellnessXP: user.wellnessXP,
+            achievements: user.achievements,
             garden,
-            totalCheckIns: moods.length
+            totalCheckIns: user.moodEntries.length
         });
     }
     catch (error) {
@@ -107,7 +83,7 @@ const joinChallenge = async (req, res) => {
         const participation = await prisma_1.default.challengeParticipation.create({
             data: {
                 userId: req.userId,
-                challengeId,
+                challengeId: challengeId,
                 startDate: new Date(),
                 progress: 0
             }
@@ -119,4 +95,42 @@ const joinChallenge = async (req, res) => {
     }
 };
 exports.joinChallenge = joinChallenge;
+const initializeChallenges = async () => {
+    try {
+        const count = await prisma_1.default.challenge.count();
+        if (count === 0) {
+            const initialChallenges = [
+                {
+                    title: 'Gratitude Journey',
+                    description: 'Note 3 things you are thankful for every day to boost your mood and perspective.',
+                    durationDays: 30,
+                    type: 'GRATITUDE',
+                    isCommunity: true
+                },
+                {
+                    title: 'Mindfulness Month',
+                    description: 'Complete a 5-minute breathing or meditation exercise daily to build focus and calm.',
+                    durationDays: 30,
+                    type: 'MINDFULNESS',
+                    isCommunity: false
+                },
+                {
+                    title: 'Active Resiliency',
+                    description: 'Take a 15-minute walk outside every day to connect with nature and clear your mind.',
+                    durationDays: 14,
+                    type: 'EXERCISE',
+                    isCommunity: true
+                }
+            ];
+            for (const challenge of initialChallenges) {
+                await prisma_1.default.challenge.create({ data: challenge });
+            }
+            console.log('[GAMIFICATION] Initial challenges seeded successfully.');
+        }
+    }
+    catch (error) {
+        console.error('[GAMIFICATION] Challenge seeding failed:', error.message);
+    }
+};
+exports.initializeChallenges = initializeChallenges;
 //# sourceMappingURL=gamificationController.js.map

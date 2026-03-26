@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const onboardingController_1 = require("../controllers/onboardingController");
-const auth_1 = require("../middleware/auth");
+const auth_1 = require("../middlewares/auth");
 const router = (0, express_1.Router)();
 // All onboarding routes require authentication
 router.use(auth_1.authenticateToken);

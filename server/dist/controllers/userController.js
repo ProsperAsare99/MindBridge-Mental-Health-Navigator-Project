@@ -7,7 +7,7 @@ exports.createUser = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const zod_1 = require("zod");
 const prisma_1 = __importDefault(require("../lib/prisma"));
-const client_new_1 = require("../generated/client_new");
+const client_1 = require("@prisma/client");
 // Define the schema for input validation
 const createUserSchema = zod_1.z.object({
     email: zod_1.z.string().email('Invalid email format'),
@@ -75,15 +75,15 @@ exports.createUser = createUser;
 const mapInstitutionToUniversity = (institution) => {
     const inst = institution.toLowerCase();
     if (inst.includes('knust'))
-        return client_new_1.University.KNUST;
+        return client_1.University.KNUST;
     if (inst.includes('university of ghana') || inst.includes('legon'))
-        return client_new_1.University.UNIVERSITY_OF_GHANA;
+        return client_1.University.UNIVERSITY_OF_GHANA;
     if (inst.includes('cape coast') || inst.includes('ucc'))
-        return client_new_1.University.UNIVERSITY_OF_CAPE_COAST;
+        return client_1.University.UNIVERSITY_OF_CAPE_COAST;
     if (inst.includes('ashesi'))
-        return client_new_1.University.ASHESI_UNIVERSITY;
+        return client_1.University.ASHESI_UNIVERSITY;
     if (inst.includes('gimpa'))
-        return client_new_1.University.GIMPA;
-    return client_new_1.University.OTHER;
+        return client_1.University.GIMPA;
+    return client_1.University.OTHER;
 };
 //# sourceMappingURL=userController.js.map

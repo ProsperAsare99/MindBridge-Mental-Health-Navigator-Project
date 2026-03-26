@@ -3,9 +3,41 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.initializeCircles = exports.requestMentor = exports.sendEncouragement = exports.createStory = exports.getStories = exports.createPost = exports.getPosts = exports.joinCircle = exports.getCircles = void 0;
+exports.initializeCircles = exports.requestMentor = exports.getMentors = exports.getMyEncouragements = exports.sendEncouragement = exports.createStory = exports.getStories = exports.createPost = exports.getPosts = exports.joinCircle = exports.getCircles = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
-const client_new_1 = require("../generated/client_new");
+const client_1 = require("@prisma/client");
+const genkit_config_1 = require("../lib/genkit-config");
+const detectCrisis = async (content) => {
+    const crisisKeywords = ['suicide', 'self-harm', 'end it all', 'kill myself', 'no point living', 'hurt myself', 'better off dead', 'dying', 'goodbye world'];
+    const hasKeyword = crisisKeywords.some(kw => content.toLowerCase().includes(kw));
+    if (hasKeyword)
+        return true;
+    try {
+        const result = await genkit_config_1.ai.generate({
+            prompt: `
+            Analyze the following student community post for immediate mental health crisis, suicidal ideation, or severe self-harm intent.
+            The platform is MindBridge, a mental health navigator for university students.
+            
+            Look for:
+            1. Direct threats of self-harm or suicide.
+            2. Expressions of hopelessness and lack of reason to live.
+            3. Finality statements (e.g., "I'm done", "Goodbye everyone").
+            4. Severe clinical distress that requires immediate human intervention.
+            
+            Contextual nuance: Students mapping exam stress or typical academic frustration should NOT be flagged unless they transition into hopeless/self-destructive territory.
+            
+            Respond with ONLY 'true' if a crisis/intervention is needed, or 'false' otherwise.
+            
+            Text: "${content}"`
+        });
+        const responseText = result.text.trim().toLowerCase();
+        return responseText.includes('true') && !responseText.includes('false');
+    }
+    catch (e) {
+        console.error("AI Crisis Detection Error:", e);
+        return false;
+    }
+};
 // ============================================
 // SUPPORT CIRCLES
 // ============================================
@@ -82,13 +114,15 @@ const createPost = async (req, res) => {
     if (!userId)
         return res.status(401).json({ error: 'Unauthorized' });
     try {
+        const crisisFlag = await detectCrisis(content);
         const post = await prisma_1.default.circlePost.create({
             data: {
                 circleId,
                 authorId: userId,
                 content,
                 isAnonymous: isAnonymous ?? true,
-                isApproved: true // Auto-approve for now (can be changed to false for full moderation)
+                isApproved: !crisisFlag, // Require moderation for crisis content
+                crisisFlag
             }
         });
         res.status(201).json(post);
@@ -125,13 +159,15 @@ const createStory = async (req, res) => {
     if (!userId)
         return res.status(401).json({ error: 'Unauthorized' });
     try {
+        const crisisFlag = await detectCrisis(content);
         const story = await prisma_1.default.supportStory.create({
             data: {
                 authorId: userId,
                 title,
                 content,
                 category: category,
-                isApproved: true // Auto-approve for now
+                isApproved: !crisisFlag, // Hide and flag if crisis
+                crisisFlag
             }
         });
         res.status(201).json(story);
@@ -165,6 +201,58 @@ const sendEncouragement = async (req, res) => {
     }
 };
 exports.sendEncouragement = sendEncouragement;
+const getMyEncouragements = async (req, res) => {
+    const userId = req.userId;
+    if (!userId)
+        return res.status(401).json({ error: 'Unauthorized' });
+    try {
+        const encouragements = await prisma_1.default.supportEncouragement.findMany({
+            where: { receiverId: userId },
+            include: {
+                sender: { select: { displayName: true } }
+            },
+            orderBy: { createdAt: 'desc' }
+        });
+        // Map to a simpler format for the UI
+        const sanitized = encouragements.map(e => ({
+            id: e.id,
+            content: e.content,
+            createdAt: e.createdAt,
+            from: 'Anonymous Peer' // Always anonymous for now for safety
+        }));
+        res.json(sanitized);
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Failed to fetch encouragements', details: error.message });
+    }
+};
+exports.getMyEncouragements = getMyEncouragements;
+const getMentors = async (req, res) => {
+    try {
+        // Simple logic: users with high wellnessLevel or those who have signed up as mentors
+        // For now, let's just return users who have been active recently and have a high level
+        const mentors = await prisma_1.default.user.findMany({
+            where: {
+                wellnessLevel: { gte: 3 },
+                onboardingCompleted: true,
+                // In a real app, we'd have a 'isMentor' flag
+            },
+            select: {
+                id: true,
+                displayName: true,
+                program: true,
+                university: true,
+                wellnessLevel: true
+            },
+            take: 10
+        });
+        res.json(mentors);
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Failed to fetch mentors', details: error.message });
+    }
+};
+exports.getMentors = getMentors;
 const requestMentor = async (req, res) => {
     const { mentorId, topic } = req.body;
     const menteeId = req.userId;
@@ -188,18 +276,29 @@ const requestMentor = async (req, res) => {
 exports.requestMentor = requestMentor;
 // Seed initial circles if none exist
 const initializeCircles = async () => {
-    const count = await prisma_1.default.supportCircle.count();
-    if (count === 0) {
-        const initialCircles = [
-            { name: 'Academic Stress Circle', description: 'Share strategies for managing exams, deadlines, and study pressure.', category: client_new_1.Concern.ACADEMIC_STRESS },
-            { name: 'Anxiety Support', description: 'A safe space to talk about coping with anxiety and finding calm.', category: client_new_1.Concern.ANXIETY },
-            { name: 'Growth & Resilience', description: 'Focus on building strength and overcoming personal challenges.', category: client_new_1.Concern.OTHER },
-            { name: 'Loneliness & Connection', description: 'Find community and share experiences of navigated university life.', category: client_new_1.Concern.LONELINESS },
-        ];
-        for (const circle of initialCircles) {
-            await prisma_1.default.supportCircle.create({ data: circle });
+    try {
+        const count = await prisma_1.default.supportCircle.count();
+        if (count === 0) {
+            const initialCircles = [
+                { name: 'Academic Stress Circle', description: 'Share strategies for managing exams, deadlines, and study pressure.', category: client_1.Concern.ACADEMIC_STRESS },
+                { name: 'Anxiety Support', description: 'A safe space to talk about coping with anxiety and finding calm.', category: client_1.Concern.ANXIETY },
+                { name: 'Growth & Resilience', description: 'Focus on building strength and overcoming personal challenges.', category: client_1.Concern.OTHER },
+                { name: 'Loneliness & Connection', description: 'Find community and share experiences of navigated university life.', category: client_1.Concern.LONELINESS },
+            ];
+            for (const circle of initialCircles) {
+                await prisma_1.default.supportCircle.create({ data: circle });
+            }
+            console.log('[SOCIAL] Initial circles seeded successfully.');
         }
-        console.log('[SOCIAL] Initial circles seeded successfully.');
+    }
+    catch (error) {
+        if (error.code === 'ENOTFOUND' || error.message?.includes('ENOTFOUND')) {
+            console.warn('[SOCIAL] Database seeding skipped: Hostname not found. Is the internet connected?');
+        }
+        else {
+            console.error('[SOCIAL] Database seeding failed:', error.message);
+        }
+        // Do not rethrow, as this is a background task
     }
 };
 exports.initializeCircles = initializeCircles;

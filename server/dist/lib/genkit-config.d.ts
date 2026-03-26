@@ -1,1 +1,1 @@
-export declare const ai: import("genkit").Genkit;
+export declare const ai: any;

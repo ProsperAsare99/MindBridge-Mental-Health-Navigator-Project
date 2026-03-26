@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getOnboardingStatus = exports.updateOnboarding = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
-const client_new_1 = require("../generated/client_new");
+const client_1 = require("@prisma/client");
 const updateOnboarding = async (req, res) => {
     try {
         if (!req.user) {
@@ -114,18 +114,18 @@ const getOnboardingStatus = async (req, res) => {
 exports.getOnboardingStatus = getOnboardingStatus;
 const mapInstitutionToUniversity = (institution) => {
     if (!institution)
-        return client_new_1.University.OTHER;
+        return client_1.University.OTHER;
     const inst = institution.toLowerCase();
     if (inst.includes('knust'))
-        return client_new_1.University.KNUST;
+        return client_1.University.KNUST;
     if (inst.includes('university of ghana') || inst.includes('legon'))
-        return client_new_1.University.UNIVERSITY_OF_GHANA;
+        return client_1.University.UNIVERSITY_OF_GHANA;
     if (inst.includes('cape coast') || inst.includes('ucc'))
-        return client_new_1.University.UNIVERSITY_OF_CAPE_COAST;
+        return client_1.University.UNIVERSITY_OF_CAPE_COAST;
     if (inst.includes('ashesi'))
-        return client_new_1.University.ASHESI_UNIVERSITY;
+        return client_1.University.ASHESI_UNIVERSITY;
     if (inst.includes('gimpa'))
-        return client_new_1.University.GIMPA;
-    return client_new_1.University.OTHER;
+        return client_1.University.GIMPA;
+    return client_1.University.OTHER;
 };
 //# sourceMappingURL=onboardingController.js.map

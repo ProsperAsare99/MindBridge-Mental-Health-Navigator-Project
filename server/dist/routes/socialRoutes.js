@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const socialController_1 = require("../controllers/socialController");
-const auth_1 = require("../middleware/auth");
+const auth_1 = require("../middlewares/auth");
 const router = (0, express_1.Router)();
 // Circles
 router.get('/circles', auth_1.authenticateToken, socialController_1.getCircles);
@@ -14,6 +14,8 @@ router.get('/stories', auth_1.authenticateToken, socialController_1.getStories);
 router.post('/stories', auth_1.authenticateToken, socialController_1.createStory);
 // Encouragement & Mentorship
 router.post('/encourage', auth_1.authenticateToken, socialController_1.sendEncouragement);
+router.get('/encourage/my', auth_1.authenticateToken, socialController_1.getMyEncouragements);
+router.get('/mentors', auth_1.authenticateToken, socialController_1.getMentors);
 router.post('/mentor/request', auth_1.authenticateToken, socialController_1.requestMentor);
 exports.default = router;
 //# sourceMappingURL=socialRoutes.js.map

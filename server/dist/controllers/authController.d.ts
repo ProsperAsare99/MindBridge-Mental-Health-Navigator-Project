@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { AuthRequest } from '../middlewares/auth';
 export declare const register: (req: Request, res: Response) => Promise<Response<any, Record<string, any>> | undefined>;
 export declare const login: (req: Request, res: Response) => Promise<Response<any, Record<string, any>> | undefined>;
 export declare const googleLogin: (req: Request, res: Response) => Promise<Response<any, Record<string, any>> | undefined>;

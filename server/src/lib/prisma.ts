@@ -1,8 +1,8 @@
 import { Pool } from 'pg';
-import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from '@prisma/client';
 
 const createPrismaClient = () => {
+    const { PrismaClient } = require('@prisma/client');
+    const { PrismaPg } = require('@prisma/adapter-pg');
     const connectionString = process.env.DATABASE_URL || "postgresql://neondb_owner:npg_hvrlmMH2nBe7@ep-cold-art-al16we8v.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=verify-full&connection_limit=1";
     
     console.log(`[STABILITY FIX] Initializing Prisma with PG Driver Adapter...`);
@@ -25,15 +25,14 @@ const createPrismaClient = () => {
     
     // Base client
     const client = new PrismaClient({ 
-        // adapter,
         log: ['error', 'warn']
     });
 
     // Stability Extension: Automatic Retries for transient connection errors
     return client.$extends({
         query: {
-            $allOperations: async ({ model, operation, args, query }) => {
-                let retries = 5; // Increased from 3 to 5 for tougher network conditions
+            $allOperations: async ({ model, operation, args, query }: any) => {
+                let retries = 5;
                 const maxRetries = retries;
                 while (retries > 0) {
                     try {
@@ -46,44 +45,41 @@ const createPrismaClient = () => {
                             errorMessage.includes('ECONNRESET') || 
                             errorMessage.includes('ETIMEDOUT') ||
                             errorMessage.includes('ENOTFOUND') ||
-                            errorMessage.includes('EAI_AGAIN') || // DNS lookup timed out
+                            errorMessage.includes('EAI_AGAIN') ||
                             errorMessage.includes('terminated unexpectedly') ||
                             errorCode === 'ECONNRESET' ||
                             errorCode === 'ETIMEDOUT' ||
                             errorCode === 'ENOTFOUND' ||
                             errorCode === 'EAI_AGAIN' ||
-                            errorCode === 'P1001' || // Can't reach DB server
-                            errorCode === 'P1017' || // Server closed connection
-                            errorCode === 'P2024'; // Connection timeout
+                            errorCode === 'P1001' ||
+                            errorCode === 'P1017' ||
+                            errorCode === 'P2024';
 
                         if (isTransient && retries > 1) {
                             retries--;
-                            // Exponential backoff: 2s, 4s, 8s, 16s
                             const attempt = maxRetries - retries;
                             const delay = Math.pow(2, attempt) * 1000;
                             
-                            console.warn(`[PRISMA RETRY] ${operation} on ${model} failed (Transient: ${errorCode || 'DNS/Network'}). Attempt ${attempt}/${maxRetries}. Retrying in ${delay}ms...`);
+                            console.warn(`[PRISMA RETRY] ${operation} on ${model} failed. Attempt ${attempt}/${maxRetries}. Retrying in ${delay}ms...`);
                             
                             await new Promise(resolve => setTimeout(resolve, delay));
                             continue;
                         }
-                        
-                        if (errorCode === 'ENOTFOUND' || errorMessage.includes('ENOTFOUND')) {
-                            console.error(`[PRISMA CRITICAL] Hostname resolution failed for the database. Please check your internet connection and DNS settings.`);
-                        }
-                        
                         throw error;
                     }
                 }
             },
         },
-    }) as unknown as PrismaClient;
+    }) as any;
 };
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+let prisma: any;
 
-export const prisma = globalForPrisma.prisma || createPrismaClient();
+export const getPrisma = () => {
+    if (!prisma) {
+        prisma = createPrismaClient();
+    }
+    return prisma;
+};
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
-
-export default prisma;
+export default getPrisma();

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMoodInsight = exports.getUserAnalytics = void 0;
+exports.logActivity = exports.getActivityFeed = exports.getMoodInsight = exports.getUserAnalytics = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 // AI imports removed to maintain "Advanced Analytics" identity
 const getUserAnalytics = async (req, res) => {
@@ -130,4 +130,118 @@ const getMoodInsight = async (req, res) => {
     }
 };
 exports.getMoodInsight = getMoodInsight;
+const getActivityFeed = async (req, res) => {
+    try {
+        if (!req.user || !req.userId)
+            return res.status(401).json({ error: 'Not authenticated' });
+        const userId = req.userId;
+        // 1. Fetch all relevant activities
+        const [moods, assessments, achievements, participants, logs] = await Promise.all([
+            prisma_1.default.moodEntry.findMany({
+                where: { userId },
+                orderBy: { createdAt: 'desc' },
+                take: 50
+            }),
+            prisma_1.default.assessment.findMany({
+                where: { userId },
+                orderBy: { createdAt: 'desc' },
+                take: 20
+            }),
+            prisma_1.default.achievement.findMany({
+                where: { userId },
+                orderBy: { unlockedAt: 'desc' },
+                take: 20
+            }),
+            prisma_1.default.challengeParticipation.findMany({
+                where: { userId },
+                include: { challenge: true },
+                orderBy: { startDate: 'desc' },
+                take: 10
+            }),
+            prisma_1.default.usageLog.findMany({
+                where: {
+                    userId,
+                    model: { startsWith: 'RESOURCE:' }
+                },
+                orderBy: { timestamp: 'desc' },
+                take: 30
+            })
+        ]);
+        // 2. Transform into a unified feed format
+        const feed = [
+            ...moods.map(m => ({
+                id: m.id,
+                type: 'mood',
+                title: 'Mood Log',
+                value: m.mood,
+                sentiment: m.sentimentLabel,
+                notes: m.notes,
+                hasAudio: !!m.audioUrl,
+                hasPhoto: !!m.photoUrl,
+                timestamp: m.createdAt
+            })),
+            ...assessments.map(a => ({
+                id: a.id,
+                type: 'assessment',
+                title: `${a.type.toUpperCase()} Assessment`,
+                score: a.score,
+                severity: a.severity,
+                timestamp: a.createdAt
+            })),
+            ...achievements.map(ac => ({
+                id: ac.id,
+                type: 'achievement',
+                title: ac.title,
+                description: ac.description,
+                icon: ac.icon,
+                timestamp: ac.unlockedAt
+            })),
+            ...participants.map(p => ({
+                id: p.id,
+                type: 'challenge',
+                title: `Joined ${p.challenge.title}`,
+                description: p.challenge.description,
+                timestamp: p.startDate
+            })),
+            ...logs.map(l => ({
+                id: l.id,
+                type: 'resource',
+                title: 'Accessed Resource',
+                description: l.model?.split('RESOURCE:')[1] || 'Wellness Guide',
+                timestamp: l.timestamp
+            }))
+        ];
+        // 3. Sort chronologically
+        feed.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+        res.json(feed);
+    }
+    catch (error) {
+        console.error('Activity Feed Error:', error);
+        res.status(500).json({ error: 'Failed to fetch your unified activity feed.' });
+    }
+};
+exports.getActivityFeed = getActivityFeed;
+const logActivity = async (req, res) => {
+    try {
+        if (!req.userId)
+            return res.status(401).json({ error: 'Not authenticated' });
+        const { service, model } = req.body;
+        // Ensure service is a valid enum member or default to CHAT
+        const validServices = ['GEMINI', 'CHAT', 'MOOD', 'ASSESSMENT'];
+        const serviceType = validServices.includes(service) ? service : 'CHAT';
+        const log = await prisma_1.default.usageLog.create({
+            data: {
+                userId: req.userId,
+                service: serviceType,
+                model: model || 'GENERAL_ACTIVITY'
+            }
+        });
+        res.status(201).json(log);
+    }
+    catch (error) {
+        console.error('Log Activity Error:', error);
+        res.status(500).json({ error: 'Failed to record activity.' });
+    }
+};
+exports.logActivity = logActivity;
 //# sourceMappingURL=analyticsController.js.map

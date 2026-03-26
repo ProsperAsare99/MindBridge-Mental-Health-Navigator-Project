@@ -10,7 +10,7 @@ const crypto_1 = __importDefault(require("crypto"));
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const emailService_1 = require("../utils/emailService");
 const google_auth_library_1 = require("google-auth-library");
-const client_new_1 = require("../generated/client_new");
+const client_1 = require("@prisma/client");
 const googleClient = new google_auth_library_1.OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const JWT_SECRET = process.env.JWT_SECRET || 'your_fallback_secret_for_development';
 if (JWT_SECRET === 'your_fallback_secret_for_development') {
@@ -64,6 +64,7 @@ const register = async (req, res) => {
 exports.register = register;
 const login = async (req, res) => {
     const { email, password } = req.body;
+    console.log(`[AUTH] Login attempt received for: ${email}`);
     try {
         let user = await prisma_1.default.user.findUnique({ where: { email } });
         if (!user || !user.password) {
@@ -373,18 +374,18 @@ const verifyToken = async (req, res) => {
 exports.verifyToken = verifyToken;
 const mapInstitutionToUniversity = (institution) => {
     if (!institution)
-        return client_new_1.University.OTHER;
+        return client_1.University.OTHER;
     const inst = institution.toLowerCase();
     if (inst.includes('knust'))
-        return client_new_1.University.KNUST;
+        return client_1.University.KNUST;
     if (inst.includes('university of ghana') || inst.includes('legon'))
-        return client_new_1.University.UNIVERSITY_OF_GHANA;
+        return client_1.University.UNIVERSITY_OF_GHANA;
     if (inst.includes('cape coast') || inst.includes('ucc'))
-        return client_new_1.University.UNIVERSITY_OF_CAPE_COAST;
+        return client_1.University.UNIVERSITY_OF_CAPE_COAST;
     if (inst.includes('ashesi'))
-        return client_new_1.University.ASHESI_UNIVERSITY;
+        return client_1.University.ASHESI_UNIVERSITY;
     if (inst.includes('gimpa'))
-        return client_new_1.University.GIMPA;
-    return client_new_1.University.OTHER;
+        return client_1.University.GIMPA;
+    return client_1.University.OTHER;
 };
 //# sourceMappingURL=authController.js.map

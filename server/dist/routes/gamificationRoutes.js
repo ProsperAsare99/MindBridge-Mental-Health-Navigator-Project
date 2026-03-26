@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const gamificationController_1 = require("../controllers/gamificationController");
-const auth_1 = require("../middleware/auth");
+const auth_1 = require("../middlewares/auth");
 const router = (0, express_1.Router)();
 router.get('/stats', auth_1.authenticateToken, gamificationController_1.getGamificationStats);
 router.get('/challenges', auth_1.authenticateToken, gamificationController_1.getChallenges);
