@@ -90,155 +90,89 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
+  googleId: 'googleId',
   email: 'email',
   password: 'password',
-  googleId: 'googleId',
-  isVerified: 'isVerified',
-  isAnonymous: 'isAnonymous',
-  verificationToken: 'verificationToken',
-  image: 'image',
   displayName: 'displayName',
-  university: 'university',
-  academicLevel: 'academicLevel',
-  program: 'program',
-  phoneNumber: 'phoneNumber',
-  studentId: 'studentId',
-  language: 'language',
-  notificationPreference: 'notificationPreference',
-  preferredCheckInTime: 'preferredCheckInTime',
-  concerns: 'concerns',
-  supportLevel: 'supportLevel',
-  riskLevel: 'riskLevel',
-  copingStyles: 'copingStyles',
-  faithLevel: 'faithLevel',
-  approachPreference: 'approachPreference',
-  goals: 'goals',
-  stressors: 'stressors',
-  trackingPreferences: 'trackingPreferences',
-  emergencyContacts: 'emergencyContacts',
-  baselineMood: 'baselineMood',
-  baseline: 'baseline',
-  joinDate: 'joinDate',
-  moodCheckInsCount: 'moodCheckInsCount',
-  conversationsCount: 'conversationsCount',
-  wellnessXP: 'wellnessXP',
-  wellnessLevel: 'wellnessLevel',
-  longestStreak: 'longestStreak',
-  lastActive: 'lastActive',
-  onboardingStep: 'onboardingStep',
-  onboardingCompleted: 'onboardingCompleted',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.ConversationScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  startedAt: 'startedAt',
-  lastMessageAt: 'lastMessageAt',
-  endedAt: 'endedAt',
-  status: 'status',
-  metadata: 'metadata',
-  summary: 'summary',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.MessageScalarFieldEnum = {
-  id: 'id',
-  conversationId: 'conversationId',
+  avatar: 'avatar',
   role: 'role',
-  content: 'content',
-  timestamp: 'timestamp',
-  metadata: 'metadata'
+  institution: 'institution',
+  department: 'department',
+  yearOfStudy: 'yearOfStudy',
+  onboarded: 'onboarded',
+  points: 'points',
+  level: 'level',
+  streak: 'streak',
+  lastMoodLog: 'lastMoodLog',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.MoodEntryScalarFieldEnum = {
+exports.Prisma.MoodScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  mood: 'mood',
-  energy: 'energy',
-  sleep: 'sleep',
-  social: 'social',
-  anxiety: 'anxiety',
+  score: 'score',
   emotion: 'emotion',
-  emotionIntensity: 'emotionIntensity',
-  physicalSymptoms: 'physicalSymptoms',
+  intensity: 'intensity',
+  notes: 'notes',
+  activities: 'activities',
   photoUrl: 'photoUrl',
   audioUrl: 'audioUrl',
-  weather: 'weather',
-  location: 'location',
-  notes: 'notes',
-  tags: 'tags',
+  transcription: 'transcription',
+  sleepHours: 'sleepHours',
+  productivity: 'productivity',
+  stressLevel: 'stressLevel',
   sentimentScore: 'sentimentScore',
-  sentimentLabel: 'sentimentLabel',
   crisisFlag: 'crisisFlag',
-  createdAt: 'createdAt'
+  aiSummary: 'aiSummary',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.AssessmentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   type: 'type',
-  responses: 'responses',
   score: 'score',
   severity: 'severity',
-  interpretation: 'interpretation',
+  responses: 'responses',
   createdAt: 'createdAt'
 };
 
-exports.Prisma.AIInteractionScalarFieldEnum = {
+exports.Prisma.CircleScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  userMessage: 'userMessage',
-  aiResponse: 'aiResponse',
-  model: 'model',
-  tokensUsed: 'tokensUsed',
-  crisisDetected: 'crisisDetected',
-  emotionalIntensity: 'emotionalIntensity',
-  responseTime: 'responseTime',
-  timestamp: 'timestamp'
-};
-
-exports.Prisma.CrisisLogScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  message: 'message',
-  severity: 'severity',
-  categories: 'categories',
-  responseProvided: 'responseProvided',
-  resourcesShown: 'resourcesShown',
-  emergencyContactCalled: 'emergencyContactCalled',
-  timestamp: 'timestamp'
-};
-
-exports.Prisma.UsageLogScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  service: 'service',
-  model: 'model',
-  tokensUsed: 'tokensUsed',
-  finishReason: 'finishReason',
-  timestamp: 'timestamp'
-};
-
-exports.Prisma.MemoryEntryScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  content: 'content',
-  importance: 'importance',
+  name: 'name',
+  description: 'description',
   category: 'category',
-  embedding: 'embedding',
-  timestamp: 'timestamp',
+  icon: 'icon',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.AcademicEventScalarFieldEnum = {
+exports.Prisma.CircleMemberScalarFieldEnum = {
   id: 'id',
-  title: 'title',
-  type: 'type',
-  date: 'date',
-  importance: 'importance',
+  userId: 'userId',
+  circleId: 'circleId',
+  role: 'role',
+  joinedAt: 'joinedAt'
+};
+
+exports.Prisma.PostScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  isAnonymous: 'isAnonymous',
+  circleId: 'circleId',
+  authorId: 'authorId',
+  crisisFlag: 'crisisFlag',
+  moderationStatus: 'moderationStatus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.EncouragementScalarFieldEnum = {
+  id: 'id',
+  postId: 'postId',
+  userId: 'userId',
   createdAt: 'createdAt'
 };
 
@@ -246,123 +180,40 @@ exports.Prisma.UserGoalScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   title: 'title',
-  type: 'type',
+  description: 'description',
+  category: 'category',
   status: 'status',
-  progress: 'progress',
-  targetDate: 'targetDate',
-  milestones: 'milestones',
+  currentValue: 'currentValue',
+  targetValue: 'targetValue',
+  unit: 'unit',
+  deadline: 'deadline',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.CarePlanScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  weekNumber: 'weekNumber',
-  year: 'year',
-  summary: 'summary',
-  moodAnalysis: 'moodAnalysis',
-  growthTasks: 'growthTasks',
-  generatedAt: 'generatedAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.AchievementScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  type: 'type',
-  title: 'title',
-  description: 'description',
-  icon: 'icon',
-  unlockedAt: 'unlockedAt'
-};
-
-exports.Prisma.ChallengeScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  description: 'description',
-  durationDays: 'durationDays',
-  type: 'type',
-  isCommunity: 'isCommunity',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.ChallengeParticipationScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  challengeId: 'challengeId',
-  startDate: 'startDate',
-  progress: 'progress',
-  isCompleted: 'isCompleted',
-  lastUpdate: 'lastUpdate'
-};
-
-exports.Prisma.MoodGardenScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  growthLevel: 'growthLevel',
-  plantType: 'plantType',
-  healthScore: 'healthScore',
-  lastWateredAt: 'lastWateredAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.SupportCircleScalarFieldEnum = {
+exports.Prisma.BadgeScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  category: 'category',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  icon: 'icon',
+  points: 'points'
 };
 
-exports.Prisma.CircleMembershipScalarFieldEnum = {
+exports.Prisma.UserBadgeScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  circleId: 'circleId',
-  joinedAt: 'joinedAt',
-  role: 'role'
+  badgeId: 'badgeId',
+  unlockedAt: 'unlockedAt'
 };
 
-exports.Prisma.CirclePostScalarFieldEnum = {
+exports.Prisma.MedicationScalarFieldEnum = {
   id: 'id',
-  circleId: 'circleId',
-  authorId: 'authorId',
-  content: 'content',
-  isAnonymous: 'isAnonymous',
-  isApproved: 'isApproved',
-  crisisFlag: 'crisisFlag',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.SupportStoryScalarFieldEnum = {
-  id: 'id',
-  authorId: 'authorId',
-  title: 'title',
-  content: 'content',
-  category: 'category',
-  isApproved: 'isApproved',
-  crisisFlag: 'crisisFlag',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.SupportEncouragementScalarFieldEnum = {
-  id: 'id',
-  postId: 'postId',
-  senderId: 'senderId',
-  receiverId: 'receiverId',
-  content: 'content',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.MentorMatchScalarFieldEnum = {
-  id: 'id',
-  mentorId: 'mentorId',
-  menteeId: 'menteeId',
-  status: 'status',
-  topic: 'topic',
+  userId: 'userId',
+  name: 'name',
+  dosage: 'dosage',
+  frequency: 'frequency',
+  reminders: 'reminders',
+  schedule: 'schedule',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -372,12 +223,12 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
-exports.Prisma.NullableJsonNullValueInput = {
-  DbNull: Prisma.DbNull,
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
-exports.Prisma.JsonNullValueInput = {
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull
 };
 
@@ -386,51 +237,16 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
-
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
-};
-exports.CircleRole = exports.$Enums.CircleRole = {
-  MEMBER: 'MEMBER',
-  MODERATOR: 'MODERATOR'
-};
-
-exports.MatchStatus = exports.$Enums.MatchStatus = {
-  PENDING: 'PENDING',
-  ACTIVE: 'ACTIVE',
-  COMPLETED: 'COMPLETED',
-  DECLINED: 'DECLINED'
-};
-
-exports.University = exports.$Enums.University = {
-  KNUST: 'KNUST',
-  UNIVERSITY_OF_GHANA: 'UNIVERSITY_OF_GHANA',
-  UNIVERSITY_OF_CAPE_COAST: 'UNIVERSITY_OF_CAPE_COAST',
-  ASHESI_UNIVERSITY: 'ASHESI_UNIVERSITY',
-  GIMPA: 'GIMPA',
-  OTHER: 'OTHER'
-};
-
-exports.Language = exports.$Enums.Language = {
-  ENGLISH: 'ENGLISH',
-  TWI: 'TWI',
-  GA: 'GA',
-  EWE: 'EWE'
-};
-
-exports.NotificationFrequency = exports.$Enums.NotificationFrequency = {
-  DAILY: 'DAILY',
-  WEEKLY: 'WEEKLY',
-  ONLY_WHEN_NEEDED: 'ONLY_WHEN_NEEDED',
-  NONE: 'NONE'
-};
-
 exports.TimeOfDay = exports.$Enums.TimeOfDay = {
   MORNING: 'MORNING',
   AFTERNOON: 'AFTERNOON',
@@ -540,27 +356,16 @@ exports.Service = exports.$Enums.Service = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Conversation: 'Conversation',
-  Message: 'Message',
-  MoodEntry: 'MoodEntry',
+  Mood: 'Mood',
   Assessment: 'Assessment',
-  AIInteraction: 'AIInteraction',
-  CrisisLog: 'CrisisLog',
-  UsageLog: 'UsageLog',
-  MemoryEntry: 'MemoryEntry',
-  AcademicEvent: 'AcademicEvent',
+  Circle: 'Circle',
+  CircleMember: 'CircleMember',
+  Post: 'Post',
+  Encouragement: 'Encouragement',
   UserGoal: 'UserGoal',
-  CarePlan: 'CarePlan',
-  Achievement: 'Achievement',
-  Challenge: 'Challenge',
-  ChallengeParticipation: 'ChallengeParticipation',
-  MoodGarden: 'MoodGarden',
-  SupportCircle: 'SupportCircle',
-  CircleMembership: 'CircleMembership',
-  CirclePost: 'CirclePost',
-  SupportStory: 'SupportStory',
-  SupportEncouragement: 'SupportEncouragement',
-  MentorMatch: 'MentorMatch'
+  Badge: 'Badge',
+  UserBadge: 'UserBadge',
+  Medication: 'Medication'
 };
 /**
  * Create the Client
@@ -612,13 +417,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  previewFeatures = [\"driverAdapters\"]\n  output          = \"../src/generated/client_new\"\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"DATABASE_URL\")\n  directUrl = env(\"DIRECT_URL\")\n}\n\n// ============================================\n// USER MODEL\n// ============================================\nmodel User {\n  id       String  @id @default(uuid())\n  email    String  @unique\n  password String?\n\n  // Authentication Extras (Retained)\n  googleId          String? @unique\n  isVerified        Boolean @default(false)\n  isAnonymous       Boolean @default(false)\n  verificationToken String?\n  image             String?\n\n  // Basic Profile\n  displayName   String?\n  university    University?\n  academicLevel Int?\n  program       String?\n  phoneNumber   String?\n  studentId     String?\n\n  // Communication Preferences\n  language               Language              @default(ENGLISH)\n  notificationPreference NotificationFrequency @default(DAILY)\n  preferredCheckInTime   TimeOfDay             @default(MORNING)\n\n  // Mental Health Context\n  concerns     Concern[]    @default([])\n  supportLevel SupportLevel @default(SOMEWHAT)\n  riskLevel    RiskLevel    @default(LOW)\n\n  // Personalization\n  copingStyles       CopingStyle[]      @default([])\n  faithLevel         FaithLevel         @default(SOMEWHAT_IMPORTANT)\n  approachPreference ApproachPreference @default(HOLISTIC)\n  goals              Goal[]             @default([])\n\n  // Academic Stressors (JSON for flexibility)\n  stressors Json? // { exams: 3, assignments: 4, financial: 5, ... }\n\n  // Tracking Preferences (JSON)\n  trackingPreferences Json? // { mood: true, sleep: false, ... }\n\n  // Emergency Contacts (JSON array)\n  emergencyContacts Json? // [{ name: \"\", relationship: \"\", phone: \"\" }]\n\n  // Baseline Data\n  baselineMood Int?\n  baseline     Json? // Retained for existing complex baseline data\n  joinDate     DateTime @default(now())\n\n  // Usage Metrics\n  moodCheckInsCount  Int       @default(0)\n  conversationsCount Int       @default(0)\n  wellnessXP         Int       @default(0)\n  wellnessLevel      Int       @default(1)\n  longestStreak      Int       @default(0)\n  lastActive         DateTime?\n\n  // Onboarding Status (Retained)\n  onboardingStep      Int     @default(1)\n  onboardingCompleted Boolean @default(false)\n\n  // Timestamps\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Relations\n  conversations  Conversation[]\n  moodEntries    MoodEntry[]\n  assessments    Assessment[]\n  aiInteractions AIInteraction[]\n  crisisLogs     CrisisLog[]\n  usageLogs      UsageLog[]\n  memoryEntries  MemoryEntry[]\n  userGoals      UserGoal[]\n  carePlans      CarePlan[]\n  achievements   Achievement[]\n  challenges     ChallengeParticipation[]\n  moodGarden     MoodGarden?\n\n  // Community Relations\n  circleMemberships      CircleMembership[]\n  circlePosts            CirclePost[]\n  stories                SupportStory[]\n  sentEncouragements     SupportEncouragement[] @relation(\"SentEncouragement\")\n  receivedEncouragements SupportEncouragement[] @relation(\"ReceivedEncouragement\")\n  mentorMatches          MentorMatch[]          @relation(\"Mentor\")\n  menteeMatches          MentorMatch[]          @relation(\"Mentee\")\n\n  @@index([email])\n  @@index([university, academicLevel])\n  @@index([riskLevel])\n}\n\n// ============================================\n// CONVERSATION MODEL\n// ============================================\nmodel Conversation {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  startedAt     DateTime  @default(now())\n  lastMessageAt DateTime  @default(now())\n  endedAt       DateTime?\n\n  status ConversationStatus @default(ACTIVE)\n\n  // Metadata (JSON)\n  metadata Json? // { userRiskLevel: \"LOW\", initialMood: 3, context: \"\" }\n\n  summary String?\n\n  // Relations\n  messages Message[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([userId, startedAt(sort: Desc)])\n  @@index([status])\n}\n\n// ============================================\n// MESSAGE MODEL\n// ============================================\nmodel Message {\n  id             String       @id @default(uuid())\n  conversationId String\n  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)\n\n  role      MessageRole\n  content   String      @db.Text\n  timestamp DateTime    @default(now())\n\n  // Metadata (JSON)\n  metadata Json? // { model: \"\", tokensUsed: 0, crisisDetected: false, ... }\n\n  @@index([conversationId, timestamp(sort: Desc)])\n}\n\n// ============================================\n// MOOD ENTRY MODEL\n// ============================================\nmodel MoodEntry {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  mood    Int // 1-5 scale\n  energy  Int? // 1-5 scale\n  sleep   Int? // 1-5 scale\n  social  Int? // 1-5 scale\n  anxiety Int? // 1-10 scale\n\n  // Advanced Tracking\n  emotion          String? // Nuanced emotion (e.g., \"Radiant\", \"Serene\")\n  emotionIntensity Float? // 0.0 to 1.0\n  physicalSymptoms String[] // Array of symptoms (e.g., [\"Headache\", \"Fatigue\"])\n\n  // Media Journaling\n  photoUrl String?\n  audioUrl String?\n\n  // Environmental Context\n  weather  Json? // { temp, condition, icon }\n  location Json? // { city, country, lat, lng }\n\n  notes          String?\n  tags           String[] // Array of tags\n  sentimentScore Float?\n  sentimentLabel String?\n  crisisFlag     Boolean  @default(false)\n\n  createdAt DateTime @default(now())\n\n  @@index([userId, createdAt(sort: Desc)])\n}\n\n// ============================================\n// ASSESSMENT MODEL\n// ============================================\nmodel Assessment {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  type           AssessmentType\n  responses      Json // Array of { question: \"\", answer: \"\" }\n  score          Int\n  severity       Severity?\n  interpretation String?\n\n  createdAt DateTime @default(now())\n\n  @@index([userId, type, createdAt(sort: Desc)])\n}\n\n// ============================================\n// AI INTERACTION LOG\n// ============================================\nmodel AIInteraction {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  userMessage        String  @db.Text\n  aiResponse         String  @db.Text\n  model              String?\n  tokensUsed         Int?\n  crisisDetected     Boolean @default(false)\n  emotionalIntensity Int?\n  responseTime       Int? // milliseconds\n\n  timestamp DateTime @default(now())\n\n  @@index([userId, timestamp(sort: Desc)])\n  @@index([crisisDetected])\n}\n\n// ============================================\n// CRISIS LOG\n// ============================================\nmodel CrisisLog {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  message    String @db.Text\n  severity   Int // 1-10 scale\n  categories Json // Array of { category: \"\", matches: [], severity: 0 }\n\n  responseProvided       Boolean @default(false)\n  resourcesShown         Boolean @default(false)\n  emergencyContactCalled Boolean @default(false)\n\n  timestamp DateTime @default(now())\n\n  @@index([userId, timestamp(sort: Desc)])\n  @@index([severity(sort: Desc)])\n}\n\n// ============================================\n// USAGE LOG\n// ============================================\nmodel UsageLog {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  service      Service\n  model        String?\n  tokensUsed   Int?\n  finishReason String?\n\n  timestamp DateTime @default(now())\n\n  @@index([userId, timestamp(sort: Desc)])\n  @@index([service])\n}\n\nmodel MemoryEntry {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  content    String  @db.Text\n  importance Int     @default(1) // 1-10 scale\n  category   String? // ACADEMIC, PERSONAL, MEDICAL, GOAL\n\n  // Vector embedding stored as JSON array of numbers\n  embedding Json?\n\n  timestamp DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([userId])\n  @@index([category])\n}\n\nmodel AcademicEvent {\n  id         String   @id @default(uuid())\n  title      String\n  type       String\n  date       DateTime\n  importance Int      @default(1)\n  createdAt  DateTime @default(now())\n}\n\nmodel UserGoal {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  title    String\n  type     Goal\n  status   GoalStatus @default(ACTIVE)\n  progress Int        @default(0) // 0-100\n\n  targetDate DateTime?\n  milestones Json? // Array of { title: string, completed: boolean }\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([userId])\n  @@index([status])\n}\n\nmodel CarePlan {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  weekNumber Int\n  year       Int\n\n  summary      String @db.Text\n  moodAnalysis Json? // e.g., { avgMood: number, trend: string }\n  growthTasks  Json // Array of { task: string, reason: string, completed: boolean }\n\n  generatedAt DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  @@unique([userId, weekNumber, year])\n  @@index([userId])\n}\n\nmodel Achievement {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  type        String // milestone_7, milestone_30, resilience_builder, etc.\n  title       String\n  description String?\n  icon        String?\n  unlockedAt  DateTime @default(now())\n\n  @@unique([userId, type])\n  @@index([userId])\n}\n\nmodel Challenge {\n  id           String  @id @default(uuid())\n  title        String\n  description  String\n  durationDays Int     @default(30)\n  type         String // GRATITUDE, MINDFULNESS, etc.\n  isCommunity  Boolean @default(false)\n\n  participants ChallengeParticipation[]\n\n  createdAt DateTime @default(now())\n}\n\nmodel ChallengeParticipation {\n  id          String    @id @default(uuid())\n  userId      String\n  challengeId String\n  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)\n\n  startDate   DateTime  @default(now())\n  progress    Int       @default(0) // Number of days completed\n  isCompleted Boolean   @default(false)\n  lastUpdate  DateTime?\n\n  @@unique([userId, challengeId])\n}\n\nmodel MoodGarden {\n  id     String @id @default(uuid())\n  userId String @unique\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  growthLevel   Int      @default(1) // 1-5\n  plantType     String   @default(\"OAK\")\n  healthScore   Float    @default(50.0) // 0-100\n  lastWateredAt DateTime @default(now())\n\n  updatedAt DateTime @updatedAt\n}\n\n// ============================================\n// SOCIAL & COMMUNITY MODELS\n// ============================================\n\nmodel SupportCircle {\n  id          String  @id @default(uuid())\n  name        String\n  description String?\n  category    Concern // Uses existing Concern enum\n\n  members CircleMembership[]\n  posts   CirclePost[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([category])\n}\n\nmodel CircleMembership {\n  id       String        @id @default(uuid())\n  userId   String\n  circleId String\n  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)\n  circle   SupportCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)\n\n  joinedAt DateTime   @default(now())\n  role     CircleRole @default(MEMBER)\n\n  @@unique([userId, circleId])\n}\n\nmodel CirclePost {\n  id       String        @id @default(uuid())\n  circleId String\n  circle   SupportCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)\n\n  authorId String\n  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)\n\n  content     String  @db.Text\n  isAnonymous Boolean @default(true)\n  isApproved  Boolean @default(false)\n  crisisFlag  Boolean @default(false)\n\n  encouragements SupportEncouragement[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([circleId])\n}\n\nmodel SupportStory {\n  id       String @id @default(uuid())\n  authorId String\n  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)\n\n  title      String\n  content    String  @db.Text\n  category   Concern\n  isApproved Boolean @default(false)\n  crisisFlag Boolean @default(false)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([category])\n  @@index([authorId])\n}\n\nmodel SupportEncouragement {\n  id     String      @id @default(uuid())\n  postId String?\n  post   CirclePost? @relation(fields: [postId], references: [id], onDelete: Cascade)\n\n  senderId String\n  sender   User   @relation(\"SentEncouragement\", fields: [senderId], references: [id], onDelete: Cascade)\n\n  receiverId String?\n  receiver   User?   @relation(\"ReceivedEncouragement\", fields: [receiverId], references: [id], onDelete: Cascade)\n\n  content   String   @db.Text\n  createdAt DateTime @default(now())\n\n  @@index([postId])\n  @@index([receiverId])\n}\n\nmodel MentorMatch {\n  id       String @id @default(uuid())\n  mentorId String\n  mentor   User   @relation(\"Mentor\", fields: [mentorId], references: [id], onDelete: Cascade)\n\n  menteeId String\n  mentee   User   @relation(\"Mentee\", fields: [menteeId], references: [id], onDelete: Cascade)\n\n  status MatchStatus @default(PENDING)\n  topic  Concern\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([mentorId])\n  @@index([menteeId])\n  @@index([status])\n}\n\nenum CircleRole {\n  MEMBER\n  MODERATOR\n}\n\nenum MatchStatus {\n  PENDING\n  ACTIVE\n  COMPLETED\n  DECLINED\n}\n\n// ============================================\n// ENUMS\n// ============================================\n\nenum University {\n  KNUST\n  UNIVERSITY_OF_GHANA\n  UNIVERSITY_OF_CAPE_COAST\n  ASHESI_UNIVERSITY\n  GIMPA\n  OTHER\n}\n\nenum Language {\n  ENGLISH\n  TWI\n  GA\n  EWE\n}\n\nenum NotificationFrequency {\n  DAILY\n  WEEKLY\n  ONLY_WHEN_NEEDED\n  NONE\n}\n\nenum TimeOfDay {\n  MORNING\n  AFTERNOON\n  EVENING\n  NIGHT\n}\n\nenum Concern {\n  ACADEMIC_STRESS\n  ANXIETY\n  DEPRESSION\n  LONELINESS\n  RELATIONSHIP_ISSUES\n  FINANCIAL_STRESS\n  FAMILY_PRESSURE\n  OTHER\n}\n\nenum SupportLevel {\n  ALONE\n  SOMEWHAT\n  STRONG\n}\n\nenum RiskLevel {\n  LOW\n  MODERATE\n  HIGH\n  CRITICAL\n}\n\nenum CopingStyle {\n  EXERCISE\n  JOURNAL\n  PRAY\n  TALK\n  MUSIC\n  SLEEP\n  MEDITATE\n  OTHER\n}\n\nenum FaithLevel {\n  VERY_IMPORTANT\n  SOMEWHAT_IMPORTANT\n  NOT_IMPORTANT\n}\n\nenum ApproachPreference {\n  CLINICAL\n  HOLISTIC\n  CULTURAL\n  MIXED\n}\n\nenum Goal {\n  REDUCE_STRESS\n  IMPROVE_MOOD\n  BUILD_RESILIENCE\n  BETTER_SLEEP\n  DEVELOP_HABITS\n  CONNECT_SUPPORT\n  TRACK_JOURNEY\n  PREPARE_COUNSELING\n  BE_MINDFUL\n  IMPROVE_ACADEMICS\n}\n\nenum GoalStatus {\n  ACTIVE\n  COMPLETED\n  ARCHIVED\n}\n\nenum ConversationStatus {\n  ACTIVE\n  ENDED\n  ARCHIVED\n}\n\nenum MessageRole {\n  USER\n  ASSISTANT\n}\n\nenum AssessmentType {\n  PHQ9\n  GAD7\n  PSS\n  CUSTOM\n}\n\nenum Severity {\n  MINIMAL\n  MILD\n  MODERATE\n  MODERATELY_SEVERE\n  SEVERE\n}\n\nenum Service {\n  GEMINI\n  CHAT\n  MOOD\n  ASSESSMENT\n}\n",
-  "inlineSchemaHash": "9f12bd629acadfbd21e734637f889fe93ddc620d1ffba9c335a6ae1e26d68a42",
+  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  previewFeatures = [\"driverAdapters\"]\n  output          = \"../src/generated/client_new\"\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"DATABASE_URL\")\n  directUrl = env(\"DIRECT_URL\")\n}\n\n// ============================================\n// CORE USER MODELS\n// ============================================\n\nmodel User {\n  id          String  @id @default(uuid())\n  googleId    String? @unique\n  email       String  @unique\n  password    String?\n  displayName String\n  avatar      String?\n  role        String  @default(\"user\")\n  institution String?\n  department  String?\n  yearOfStudy Int?\n\n  // Wellness Profile\n  onboarded Boolean @default(false)\n\n  // Social\n  circles        CircleMember[]\n  posts          Post[]\n  encouragements Encouragement[]\n\n  // Health Data\n  moods       Mood[]\n  assessments Assessment[]\n  goals       UserGoal[]\n  medications Medication[]\n\n  // Gamification\n  points      Int         @default(0)\n  level       Int         @default(1)\n  badges      UserBadge[]\n  streak      Int         @default(0)\n  lastMoodLog DateTime?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Mood {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  score     Int // 1-10 scale\n  emotion   String // Main emotion from wheel\n  intensity Int // 1-100%\n\n  notes      String?  @db.Text\n  activities String[] // Tagged activities\n\n  // Media Attachments\n  photoUrl      String?\n  audioUrl      String?\n  transcription String? @db.Text\n\n  // Context\n  sleepHours   Float?\n  productivity Int? // 1-10\n  stressLevel  Int? // 1-10\n\n  // AI Insights\n  sentimentScore Float? // -1.0 to 1.0\n  crisisFlag     Boolean @default(false)\n  aiSummary      String? @db.Text\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Assessment {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  type      AssessmentType\n  score     Int\n  severity  Severity\n  responses Json\n\n  createdAt DateTime @default(now())\n}\n\nmodel Circle {\n  id          String  @id @default(uuid())\n  name        String  @unique\n  description String\n  category    String // Academic, Mental Health, Social, etc.\n  icon        String?\n\n  members CircleMember[]\n  posts   Post[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel CircleMember {\n  id       String @id @default(uuid())\n  userId   String\n  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n  circleId String\n  circle   Circle @relation(fields: [circleId], references: [id], onDelete: Cascade)\n  role     String @default(\"member\")\n\n  joinedAt DateTime @default(now())\n\n  @@unique([userId, circleId])\n}\n\nmodel Post {\n  id          String  @id @default(uuid())\n  content     String  @db.Text\n  isAnonymous Boolean @default(true)\n\n  circleId String\n  circle   Circle @relation(fields: [circleId], references: [id], onDelete: Cascade)\n  authorId String\n  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)\n\n  encouragements Encouragement[]\n\n  // Safety\n  crisisFlag       Boolean @default(false)\n  moderationStatus String  @default(\"pending\") // pending, approved, flagged\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Encouragement {\n  id     String @id @default(uuid())\n  postId String\n  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  createdAt DateTime @default(now())\n\n  @@unique([postId, userId])\n}\n\nmodel UserGoal {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  title       String\n  description String?\n  category    String\n  status      GoalStatus @default(ACTIVE)\n\n  currentValue Float   @default(0)\n  targetValue  Float\n  unit         String?\n\n  deadline  DateTime?\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n}\n\nmodel Badge {\n  id          String @id @default(uuid())\n  name        String @unique\n  description String\n  icon        String\n  points      Int    @default(50)\n\n  users UserBadge[]\n}\n\nmodel UserBadge {\n  id      String @id @default(uuid())\n  userId  String\n  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n  badgeId String\n  badge   Badge  @relation(fields: [badgeId], references: [id], onDelete: Cascade)\n\n  unlockedAt DateTime @default(now())\n\n  @@unique([userId, badgeId])\n}\n\nmodel Medication {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  name      String\n  dosage    String\n  frequency String\n  reminders Boolean @default(true)\n  schedule  Json? // {\"time\": \"08:00\", \"days\": [\"mon\", \"wed\"]}\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\n// ============================================\n// ENUMS\n// ============================================\n\nenum TimeOfDay {\n  MORNING\n  AFTERNOON\n  EVENING\n  NIGHT\n}\n\nenum Concern {\n  ACADEMIC_STRESS\n  ANXIETY\n  DEPRESSION\n  LONELINESS\n  RELATIONSHIP_ISSUES\n  FINANCIAL_STRESS\n  FAMILY_PRESSURE\n  OTHER\n}\n\nenum SupportLevel {\n  ALONE\n  SOMEWHAT\n  STRONG\n}\n\nenum RiskLevel {\n  LOW\n  MODERATE\n  HIGH\n  CRITICAL\n}\n\nenum CopingStyle {\n  EXERCISE\n  JOURNAL\n  PRAY\n  TALK\n  MUSIC\n  SLEEP\n  MEDITATE\n  OTHER\n}\n\nenum FaithLevel {\n  VERY_IMPORTANT\n  SOMEWHAT_IMPORTANT\n  NOT_IMPORTANT\n}\n\nenum ApproachPreference {\n  CLINICAL\n  HOLISTIC\n  CULTURAL\n  MIXED\n}\n\nenum Goal {\n  REDUCE_STRESS\n  IMPROVE_MOOD\n  BUILD_RESILIENCE\n  BETTER_SLEEP\n  DEVELOP_HABITS\n  CONNECT_SUPPORT\n  TRACK_JOURNEY\n  PREPARE_COUNSELING\n  BE_MINDFUL\n  IMPROVE_ACADEMICS\n}\n\nenum GoalStatus {\n  ACTIVE\n  COMPLETED\n  ARCHIVED\n}\n\nenum ConversationStatus {\n  ACTIVE\n  ENDED\n  ARCHIVED\n}\n\nenum MessageRole {\n  USER\n  ASSISTANT\n}\n\nenum AssessmentType {\n  PHQ9\n  GAD7\n  PSS\n  CUSTOM\n}\n\nenum Severity {\n  MINIMAL\n  MILD\n  MODERATE\n  MODERATELY_SEVERE\n  SEVERE\n}\n\nenum Service {\n  GEMINI\n  CHAT\n  MOOD\n  ASSESSMENT\n}\n",
+  "inlineSchemaHash": "13d5e2715da5fb739cff43ca2304e34740d90f5a6f0499b8e410cbf431f91e2d",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"googleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"isAnonymous\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"verificationToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"displayName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"university\",\"kind\":\"enum\",\"type\":\"University\"},{\"name\":\"academicLevel\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"program\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phoneNumber\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"studentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"language\",\"kind\":\"enum\",\"type\":\"Language\"},{\"name\":\"notificationPreference\",\"kind\":\"enum\",\"type\":\"NotificationFrequency\"},{\"name\":\"preferredCheckInTime\",\"kind\":\"enum\",\"type\":\"TimeOfDay\"},{\"name\":\"concerns\",\"kind\":\"enum\",\"type\":\"Concern\"},{\"name\":\"supportLevel\",\"kind\":\"enum\",\"type\":\"SupportLevel\"},{\"name\":\"riskLevel\",\"kind\":\"enum\",\"type\":\"RiskLevel\"},{\"name\":\"copingStyles\",\"kind\":\"enum\",\"type\":\"CopingStyle\"},{\"name\":\"faithLevel\",\"kind\":\"enum\",\"type\":\"FaithLevel\"},{\"name\":\"approachPreference\",\"kind\":\"enum\",\"type\":\"ApproachPreference\"},{\"name\":\"goals\",\"kind\":\"enum\",\"type\":\"Goal\"},{\"name\":\"stressors\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"trackingPreferences\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"emergencyContacts\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"baselineMood\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"baseline\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"joinDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"moodCheckInsCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"conversationsCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"wellnessXP\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"wellnessLevel\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"longestStreak\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"lastActive\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"onboardingStep\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"onboardingCompleted\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"conversations\",\"kind\":\"object\",\"type\":\"Conversation\",\"relationName\":\"ConversationToUser\"},{\"name\":\"moodEntries\",\"kind\":\"object\",\"type\":\"MoodEntry\",\"relationName\":\"MoodEntryToUser\"},{\"name\":\"assessments\",\"kind\":\"object\",\"type\":\"Assessment\",\"relationName\":\"AssessmentToUser\"},{\"name\":\"aiInteractions\",\"kind\":\"object\",\"type\":\"AIInteraction\",\"relationName\":\"AIInteractionToUser\"},{\"name\":\"crisisLogs\",\"kind\":\"object\",\"type\":\"CrisisLog\",\"relationName\":\"CrisisLogToUser\"},{\"name\":\"usageLogs\",\"kind\":\"object\",\"type\":\"UsageLog\",\"relationName\":\"UsageLogToUser\"},{\"name\":\"memoryEntries\",\"kind\":\"object\",\"type\":\"MemoryEntry\",\"relationName\":\"MemoryEntryToUser\"},{\"name\":\"userGoals\",\"kind\":\"object\",\"type\":\"UserGoal\",\"relationName\":\"UserToUserGoal\"},{\"name\":\"carePlans\",\"kind\":\"object\",\"type\":\"CarePlan\",\"relationName\":\"CarePlanToUser\"},{\"name\":\"achievements\",\"kind\":\"object\",\"type\":\"Achievement\",\"relationName\":\"AchievementToUser\"},{\"name\":\"challenges\",\"kind\":\"object\",\"type\":\"ChallengeParticipation\",\"relationName\":\"ChallengeParticipationToUser\"},{\"name\":\"moodGarden\",\"kind\":\"object\",\"type\":\"MoodGarden\",\"relationName\":\"MoodGardenToUser\"},{\"name\":\"circleMemberships\",\"kind\":\"object\",\"type\":\"CircleMembership\",\"relationName\":\"CircleMembershipToUser\"},{\"name\":\"circlePosts\",\"kind\":\"object\",\"type\":\"CirclePost\",\"relationName\":\"CirclePostToUser\"},{\"name\":\"stories\",\"kind\":\"object\",\"type\":\"SupportStory\",\"relationName\":\"SupportStoryToUser\"},{\"name\":\"sentEncouragements\",\"kind\":\"object\",\"type\":\"SupportEncouragement\",\"relationName\":\"SentEncouragement\"},{\"name\":\"receivedEncouragements\",\"kind\":\"object\",\"type\":\"SupportEncouragement\",\"relationName\":\"ReceivedEncouragement\"},{\"name\":\"mentorMatches\",\"kind\":\"object\",\"type\":\"MentorMatch\",\"relationName\":\"Mentor\"},{\"name\":\"menteeMatches\",\"kind\":\"object\",\"type\":\"MentorMatch\",\"relationName\":\"Mentee\"}],\"dbName\":null},\"Conversation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ConversationToUser\"},{\"name\":\"startedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"lastMessageAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"ConversationStatus\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"summary\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"messages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"ConversationToMessage\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Message\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"conversationId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"conversation\",\"kind\":\"object\",\"type\":\"Conversation\",\"relationName\":\"ConversationToMessage\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"MessageRole\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"timestamp\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"}],\"dbName\":null},\"MoodEntry\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MoodEntryToUser\"},{\"name\":\"mood\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"energy\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"sleep\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"social\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"anxiety\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"emotion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emotionIntensity\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"physicalSymptoms\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"photoUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"audioUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"weather\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"location\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tags\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sentimentScore\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"sentimentLabel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"crisisFlag\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Assessment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AssessmentToUser\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"AssessmentType\"},{\"name\":\"responses\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"score\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"severity\",\"kind\":\"enum\",\"type\":\"Severity\"},{\"name\":\"interpretation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"AIInteraction\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AIInteractionToUser\"},{\"name\":\"userMessage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"aiResponse\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"model\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tokensUsed\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"crisisDetected\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"emotionalIntensity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"responseTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"timestamp\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"CrisisLog\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CrisisLogToUser\"},{\"name\":\"message\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"severity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"categories\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"responseProvided\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"resourcesShown\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"emergencyContactCalled\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"timestamp\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"UsageLog\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UsageLogToUser\"},{\"name\":\"service\",\"kind\":\"enum\",\"type\":\"Service\"},{\"name\":\"model\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tokensUsed\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"finishReason\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"timestamp\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"MemoryEntry\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MemoryEntryToUser\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"importance\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"embedding\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"timestamp\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"AcademicEvent\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"importance\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"UserGoal\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserGoal\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"Goal\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"GoalStatus\"},{\"name\":\"progress\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"targetDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"milestones\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"CarePlan\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CarePlanToUser\"},{\"name\":\"weekNumber\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"year\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"summary\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"moodAnalysis\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"growthTasks\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"generatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Achievement\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AchievementToUser\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"icon\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"unlockedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Challenge\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"durationDays\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isCommunity\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"participants\",\"kind\":\"object\",\"type\":\"ChallengeParticipation\",\"relationName\":\"ChallengeToChallengeParticipation\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"ChallengeParticipation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"challengeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ChallengeParticipationToUser\"},{\"name\":\"challenge\",\"kind\":\"object\",\"type\":\"Challenge\",\"relationName\":\"ChallengeToChallengeParticipation\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"progress\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"isCompleted\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"lastUpdate\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"MoodGarden\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MoodGardenToUser\"},{\"name\":\"growthLevel\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"plantType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"healthScore\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"lastWateredAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"SupportCircle\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"enum\",\"type\":\"Concern\"},{\"name\":\"members\",\"kind\":\"object\",\"type\":\"CircleMembership\",\"relationName\":\"CircleMembershipToSupportCircle\"},{\"name\":\"posts\",\"kind\":\"object\",\"type\":\"CirclePost\",\"relationName\":\"CirclePostToSupportCircle\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"CircleMembership\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"circleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CircleMembershipToUser\"},{\"name\":\"circle\",\"kind\":\"object\",\"type\":\"SupportCircle\",\"relationName\":\"CircleMembershipToSupportCircle\"},{\"name\":\"joinedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"CircleRole\"}],\"dbName\":null},\"CirclePost\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"circleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"circle\",\"kind\":\"object\",\"type\":\"SupportCircle\",\"relationName\":\"CirclePostToSupportCircle\"},{\"name\":\"authorId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"author\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CirclePostToUser\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isAnonymous\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"isApproved\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"crisisFlag\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"encouragements\",\"kind\":\"object\",\"type\":\"SupportEncouragement\",\"relationName\":\"CirclePostToSupportEncouragement\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"SupportStory\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"authorId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"author\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SupportStoryToUser\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"enum\",\"type\":\"Concern\"},{\"name\":\"isApproved\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"crisisFlag\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"SupportEncouragement\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"post\",\"kind\":\"object\",\"type\":\"CirclePost\",\"relationName\":\"CirclePostToSupportEncouragement\"},{\"name\":\"senderId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sender\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SentEncouragement\"},{\"name\":\"receiverId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"receiver\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ReceivedEncouragement\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"MentorMatch\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"mentorId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"mentor\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"Mentor\"},{\"name\":\"menteeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"mentee\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"Mentee\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"MatchStatus\"},{\"name\":\"topic\",\"kind\":\"enum\",\"type\":\"Concern\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"googleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"displayName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatar\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"institution\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"department\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"yearOfStudy\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"onboarded\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"circles\",\"kind\":\"object\",\"type\":\"CircleMember\",\"relationName\":\"CircleMemberToUser\"},{\"name\":\"posts\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToUser\"},{\"name\":\"encouragements\",\"kind\":\"object\",\"type\":\"Encouragement\",\"relationName\":\"EncouragementToUser\"},{\"name\":\"moods\",\"kind\":\"object\",\"type\":\"Mood\",\"relationName\":\"MoodToUser\"},{\"name\":\"assessments\",\"kind\":\"object\",\"type\":\"Assessment\",\"relationName\":\"AssessmentToUser\"},{\"name\":\"goals\",\"kind\":\"object\",\"type\":\"UserGoal\",\"relationName\":\"UserToUserGoal\"},{\"name\":\"medications\",\"kind\":\"object\",\"type\":\"Medication\",\"relationName\":\"MedicationToUser\"},{\"name\":\"points\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"level\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"badges\",\"kind\":\"object\",\"type\":\"UserBadge\",\"relationName\":\"UserToUserBadge\"},{\"name\":\"streak\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"lastMoodLog\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Mood\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MoodToUser\"},{\"name\":\"score\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"emotion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"intensity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"activities\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"photoUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"audioUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transcription\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sleepHours\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"productivity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"stressLevel\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"sentimentScore\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"crisisFlag\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"aiSummary\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Assessment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AssessmentToUser\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"AssessmentType\"},{\"name\":\"score\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"severity\",\"kind\":\"enum\",\"type\":\"Severity\"},{\"name\":\"responses\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Circle\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"icon\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"members\",\"kind\":\"object\",\"type\":\"CircleMember\",\"relationName\":\"CircleToCircleMember\"},{\"name\":\"posts\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"CircleToPost\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"CircleMember\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CircleMemberToUser\"},{\"name\":\"circleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"circle\",\"kind\":\"object\",\"type\":\"Circle\",\"relationName\":\"CircleToCircleMember\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"joinedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isAnonymous\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"circleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"circle\",\"kind\":\"object\",\"type\":\"Circle\",\"relationName\":\"CircleToPost\"},{\"name\":\"authorId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"author\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"PostToUser\"},{\"name\":\"encouragements\",\"kind\":\"object\",\"type\":\"Encouragement\",\"relationName\":\"EncouragementToPost\"},{\"name\":\"crisisFlag\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"moderationStatus\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Encouragement\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"post\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"EncouragementToPost\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"EncouragementToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"UserGoal\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserGoal\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"GoalStatus\"},{\"name\":\"currentValue\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"targetValue\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"unit\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"deadline\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Badge\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"icon\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"points\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"UserBadge\",\"relationName\":\"BadgeToUserBadge\"}],\"dbName\":null},\"UserBadge\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserBadge\"},{\"name\":\"badgeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"badge\",\"kind\":\"object\",\"type\":\"Badge\",\"relationName\":\"BadgeToUserBadge\"},{\"name\":\"unlockedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Medication\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MedicationToUser\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"dosage\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"frequency\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reminders\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"schedule\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: () => require('./query_engine_bg.js'),
