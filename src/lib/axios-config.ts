@@ -43,32 +43,64 @@ axiosInstance.interceptors.request.use(
     }
 );
 
-// Response interceptor for handling common errors
+// Response interceptor for handling common errors and retries
 axiosInstance.interceptors.response.use(
     (response) => response,
-    (error) => {
-        const message = error.response?.data?.error || error.response?.data?.message || error.message || 'API Request failed';
+    async (error) => {
+        const config = error.config;
         
-        if (error.response?.status === 401) {
-            console.warn('Unauthorized access - clearing stale session');
-            if (typeof window !== 'undefined') {
-                localStorage.removeItem('token');
-                // Optional: window.location.href = '/login';
+        // If config does not exist or retry option is not set, reject
+        if (!config || !config.retry) {
+            const message = error.response?.data?.error || error.response?.data?.message || error.message || 'API Request failed';
+            
+            if (error.response?.status === 401) {
+                console.warn('Unauthorized access - clearing stale session');
+                if (typeof window !== 'undefined') {
+                    localStorage.removeItem('token');
+                }
             }
+
+            // Dispatch connectivity error for 503 or network errors
+            if (error.response?.status === 503 || !error.response) {
+                if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('mindbridge:connectivity-error', { 
+                        detail: { message: "Cloud services are temporarily unreachable. Retrying..." } 
+                    }));
+                }
+            }
+
+            return Promise.reject(new Error(message));
         }
 
-        if (error.response?.status === 503) {
-            import('./api').then(({ api }) => {
-                api.connectivityError = message;
-            });
+        // Set the variable for keeping track of the retry count
+        config.__retryCount = config.__retryCount || 0;
+
+        // Check if we've maxed out the total number of retries
+        if (config.__retryCount >= config.retry) {
+            const finalMessage = error.response?.data?.error || error.response?.data?.message || error.message || 'Connection failed after multiple attempts';
             if (typeof window !== 'undefined') {
                 window.dispatchEvent(new CustomEvent('mindbridge:connectivity-error', { 
-                    detail: { message } 
+                    detail: { message: "Connection lost. Please check your internet or try again later." } 
                 }));
             }
+            return Promise.reject(new Error(finalMessage));
         }
 
-        return Promise.reject(new Error(message));
+        // Increase the retry count
+        config.__retryCount += 1;
+
+        // Create new promise to handle exponential backoff
+        const backoff = new Promise((resolve) => {
+            const delay = Math.pow(2, config.__retryCount) * 1000; // 2s, 4s, 8s
+            setTimeout(() => {
+                resolve(null);
+            }, delay);
+        });
+
+        // Return the promise in which recalls axios to retry the request
+        await backoff;
+        console.log(`[AXIOS] Retrying request (${config.__retryCount}/${config.retry}) for ${config.url}`);
+        return axiosInstance(config);
     }
 );
 

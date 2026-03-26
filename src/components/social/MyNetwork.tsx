@@ -10,7 +10,8 @@ import {
     Loader2,
     ShieldCheck,
     Star,
-    ArrowRight
+    ArrowRight,
+    RefreshCw
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -20,36 +21,66 @@ export function MyNetwork() {
     const [encouragements, setEncouragements] = useState<any[]>([]);
     const [mentors, setMentors] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchNetwork = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const [encouragementData, mentorData] = await Promise.all([
+                api.get('/social/encourage/my'),
+                api.get('/social/mentors')
+            ]);
+            setEncouragements(encouragementData);
+            setMentors(mentorData);
+        } catch (error) {
+            console.error('Failed to fetch network:', error);
+            setError('The support web is momentarily tangled. Please check your connection.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchNetwork = async () => {
-            try {
-                const [encouragementData, mentorData] = await Promise.all([
-                    api.get('/social/encourage/my'),
-                    api.get('/social/mentors')
-                ]);
-                setEncouragements(encouragementData);
-                setMentors(mentorData);
-            } catch (error) {
-                console.error('Failed to fetch network:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchNetwork();
     }, []);
 
-    if (loading) {
+    if (loading && encouragements.length === 0 && mentors.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
                 <Loader2 className="h-10 w-10 text-primary animate-spin" />
-                <p className="text-sm font-black uppercase tracking-widest text-muted-foreground">Connecting your support web...</p>
+                <p className="text-sm font-black uppercase tracking-widest text-muted-foreground animate-pulse">Connecting your support web...</p>
+            </div>
+        );
+    }
+
+    if (error && encouragements.length === 0 && mentors.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center py-20 gap-6 text-center">
+                <div className="h-20 w-20 rounded-3xl bg-primary/5 flex items-center justify-center text-primary/40 mb-2">
+                    <UserPlus size={40} />
+                </div>
+                <div className="space-y-2">
+                    <h3 className="text-xl font-black text-foreground uppercase tracking-tight">Network Offline</h3>
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest max-w-sm leading-relaxed px-4">{error}</p>
+                </div>
+                <Button 
+                    onClick={fetchNetwork}
+                    className="h-12 px-8 rounded-2xl bg-primary text-xs font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-105 transition-transform"
+                >
+                    <RefreshCw className="mr-2 h-4 w-4" /> Reconnect Web
+                </Button>
             </div>
         );
     }
 
     return (
-        <div className="space-y-12">
+        <div className="space-y-12 relative">
+            {loading && (encouragements.length > 0 || mentors.length > 0) && (
+                <div className="absolute inset-0 z-50 glass flex items-center justify-center rounded-[3rem]">
+                    <Loader2 className="h-8 w-8 text-primary animate-spin" />
+                </div>
+            )}
             {/* Encouragement Wall */}
             <section className="space-y-6">
                 <div className="flex items-center justify-between">

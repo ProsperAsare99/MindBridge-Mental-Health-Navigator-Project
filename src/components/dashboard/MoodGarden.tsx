@@ -10,9 +10,10 @@ interface MoodGardenProps {
     health: number; // 0-100
     plantType?: string; // 'oak', 'baobab', etc.
     className?: string;
+    loading?: boolean;
 }
 
-export const MoodGarden = ({ level, health, plantType = 'oak', className }: MoodGardenProps) => {
+export const MoodGarden = ({ level, health, plantType = 'oak', className, loading }: MoodGardenProps) => {
     // Stage configurations
     const stages = [
         { label: 'Seedling', color: 'text-emerald-400' },
@@ -42,15 +43,24 @@ export const MoodGarden = ({ level, health, plantType = 'oak', className }: Mood
                     transition={{ type: 'spring', damping: 20, stiffness: 100 }}
                     className="relative"
                 >
-                    <img 
-                        src={imagePath} 
-                        alt={currentStage.label}
-                        className={cn(
-                            "h-56 w-56 md:h-72 md:w-72 object-contain transition-all duration-1000",
-                            health < 40 && "grayscale-[40%] opacity-80",
-                            level === 5 && "drop-shadow-[0_0_30px_rgba(0,119,182,0.4)]"
+                    <div className={cn("relative", loading && "animate-pulse")}>
+                        <img 
+                            src={imagePath} 
+                            alt={currentStage.label}
+                            loading="eager"
+                            className={cn(
+                                "h-56 w-56 md:h-72 md:w-72 object-contain transition-all duration-1000",
+                                health < 40 && "grayscale-[40%] opacity-80",
+                                level === 5 && "drop-shadow-[0_0_30px_rgba(0,119,182,0.4)]",
+                                loading && "opacity-20 blur-sm"
+                            )}
+                        />
+                        {loading && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="h-16 w-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+                            </div>
                         )}
-                    />
+                    </div>
                     
                     {/* Floating Vitality Orbs */}
                     {health > 60 && (

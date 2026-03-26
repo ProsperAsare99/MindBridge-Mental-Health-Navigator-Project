@@ -54,17 +54,34 @@ export const GamificationPortal = ({ className }: { className?: string }) => {
         }
     }, [session]);
 
-    if (loading && !stats) {
+    if (error && !stats) {
         return (
-            <div className={cn("glass p-8 rounded-[3rem] animate-pulse flex flex-col items-center justify-center space-y-4", className)}>
-                <div className="h-40 w-40 bg-muted rounded-full" />
-                <div className="h-4 w-32 bg-muted rounded-full" />
+            <div className={cn("glass p-12 rounded-[3rem] flex flex-col items-center justify-center space-y-6 text-center border-red-500/10", className)}>
+                <div className="h-16 w-16 rounded-3xl bg-red-500/10 flex items-center justify-center text-red-500">
+                    <Activity size={32} />
+                </div>
+                <div className="space-y-2">
+                    <h3 className="text-sm font-black text-foreground uppercase tracking-tight">Sync Delayed</h3>
+                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest max-w-[200px]">{error}</p>
+                </div>
+                <button 
+                    onClick={fetchStats}
+                    className="px-6 py-3 rounded-2xl bg-primary text-white text-[10px] font-black uppercase tracking-widest hover:opacity-90 transition-all flex items-center gap-2 shadow-lg shadow-primary/20"
+                >
+                    <RefreshCw className="h-3.5 w-3.5" /> Retry Sync
+                </button>
             </div>
         );
     }
 
     return (
-        <div className={cn("space-y-8", className)}>
+        <div className={cn("space-y-8 relative", className)}>
+            {loading && !stats && (
+                <div className="absolute inset-0 z-50 glass rounded-[3rem] flex flex-col items-center justify-center space-y-4">
+                    <div className="h-20 w-20 border-4 border-primary/10 border-t-primary rounded-full animate-spin" />
+                    <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] animate-pulse">Growing your garden...</p>
+                </div>
+            )}
             <CelebrationModal 
                 isOpen={isCelebrationOpen} 
                 onClose={() => setIsCelebrationOpen(false)} 
@@ -95,6 +112,7 @@ export const GamificationPortal = ({ className }: { className?: string }) => {
                     <MoodGarden 
                         level={stats?.garden?.growthLevel || 1} 
                         health={stats?.garden?.healthScore || 50} 
+                        loading={loading}
                     />
                     
                     <div className="glass p-6 rounded-[2.5rem] bg-gradient-to-br from-primary/5 to-transparent border-primary/10">

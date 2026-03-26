@@ -7,7 +7,8 @@ import {
     MessageCircle, 
     ChevronRight, 
     Loader2,
-    PlusCircle
+    PlusCircle,
+    RefreshCw
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -28,20 +29,26 @@ interface Circle {
 export function SupportCircles() {
     const [circles, setCircles] = useState<Circle[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [selectedCircle, setSelectedCircle] = useState<Circle | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [joiningId, setJoiningId] = useState<string | null>(null);
+
+    const fetchCircles = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const data = await api.get('/social/circles');
+            setCircles(data);
+        } catch (error) {
+            console.error('Failed to fetch circles:', error);
+            setError('Communities temporarily unreachable. Please check your connection.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchCircles = async () => {
-            try {
-                const data = await api.get('/social/circles');
-                setCircles(data);
-            } catch (error) {
-                console.error('Failed to fetch circles:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchCircles();
     }, []);
 
@@ -49,13 +56,38 @@ export function SupportCircles() {
         return (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
                 <Loader2 className="h-10 w-10 text-primary animate-spin" />
-                <p className="text-sm font-black uppercase tracking-widest text-muted-foreground">Gathering Communities...</p>
+                <p className="text-sm font-black uppercase tracking-widest text-muted-foreground animate-pulse">Gathering Communities...</p>
+            </div>
+        );
+    }
+
+    if (error && circles.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center py-20 gap-6 text-center">
+                <div className="h-20 w-20 rounded-3xl bg-red-500/10 flex items-center justify-center text-red-500 mb-2">
+                    <Users size={40} />
+                </div>
+                <div className="space-y-2">
+                    <h3 className="text-xl font-black text-foreground uppercase tracking-tight">Sync Delayed</h3>
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest max-w-sm leading-relaxed px-4">{error}</p>
+                </div>
+                <Button 
+                    onClick={fetchCircles}
+                    className="h-12 px-8 rounded-2xl bg-primary text-xs font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-105 transition-transform"
+                >
+                    <RefreshCw className="mr-2 h-4 w-4" /> Retry Connection
+                </Button>
             </div>
         );
     }
 
     return (
-        <div className="space-y-12">
+        <div className="space-y-12 relative">
+            {loading && circles.length > 0 && (
+                <div className="absolute inset-0 z-50 glass flex items-center justify-center rounded-[2.5rem]">
+                    <Loader2 className="h-8 w-8 text-primary animate-spin" />
+                </div>
+            )}
             {/* Featured Section */}
             <div className="grid md:grid-cols-2 gap-6">
                 {circles.map((circle, i) => (

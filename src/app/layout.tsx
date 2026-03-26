@@ -16,8 +16,8 @@ import { ConnectivityBanner } from "@/components/brand/ConnectivityBanner";
 const outfit = { variable: "font-outfit" }; 
 
 export const metadata: Metadata = {
-  title: "MindBridge - Mental Health Navigator",
-  description: "Your safe space for mental wellness and navigation.",
+  title: "MindBridge | AI-Powered Mental Health Navigator",
+  description: "A safe, AI-driven space for mental wellness, peer support, and resilience tracking tailored for students.",
 };
 
 
