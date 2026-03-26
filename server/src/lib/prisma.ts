@@ -21,11 +21,11 @@ const createPrismaClient = () => {
         console.error('[PRISMA POOL ERROR]', err.message);
     });
     
-    const adapter = new PrismaPg(pool);
+    // const adapter = new PrismaPg(pool);
     
     // Base client
     const client = new PrismaClient({ 
-        adapter,
+        // adapter,
         log: ['error', 'warn']
     });
 
