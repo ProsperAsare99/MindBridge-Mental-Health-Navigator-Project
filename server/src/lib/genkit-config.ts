@@ -1,5 +1,5 @@
 import { genkit } from 'genkit';
-import { googleAI } from '@genkit-ai/googleai';
+import { googleAI, gemini15Flash } from '@genkit-ai/googleai';
 
 let _ai: any = null;
 
@@ -9,7 +9,7 @@ export const ai = new Proxy({}, {
             console.log('[GENKIT] Lazy instantiating Genkit...');
             _ai = genkit({
                 plugins: [googleAI({ apiKey: process.env.GEMINI_API_KEY })],
-                model: 'googleai/gemini-1.5-flash',
+                model: gemini15Flash,
             });
         }
         return _ai[prop];

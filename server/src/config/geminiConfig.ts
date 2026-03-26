@@ -4,7 +4,7 @@ export const geminiConfig = {
   models: {
     // Fast responses for simple interactions
     flash: {
-      name: 'gemini-1.5-flash',
+      name: 'gemini-1.5-flash-latest',
       useCase: 'quick_responses',
       config: {
         temperature: 0.7,
@@ -16,7 +16,7 @@ export const geminiConfig = {
     
     // Deep analysis and complex conversations
     pro: {
-      name: 'gemini-1.5-pro',
+      name: 'gemini-1.5-pro-latest',
       useCase: 'complex_analysis',
       config: {
         temperature: 0.8,
