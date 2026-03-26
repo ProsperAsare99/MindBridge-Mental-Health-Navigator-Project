@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { api } from "@/lib/api";
@@ -67,6 +68,14 @@ export function ResourceHub({
     const [activeVideo, setActiveVideo] = useState<string | null>(null);
     const [resourceStatus, setResourceStatus] = useState<string | null>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const searchParams = useSearchParams();
+    const categoryParam = searchParams.get('category');
+
+    useEffect(() => {
+        if (categoryParam && categories.includes(categoryParam)) {
+            setActiveCategory(categoryParam);
+        }
+    }, [categoryParam, categories]);
 
     const handleSearchIconClick = () => {
         searchInputRef.current?.focus();

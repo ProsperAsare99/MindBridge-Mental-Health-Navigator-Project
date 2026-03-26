@@ -39,15 +39,16 @@ export class RecommendationService {
                         title: 'Anxiety Support Circle',
                         description: 'Connect with peers who understand what you are going through.',
                         icon: 'Users',
+                        link: '/dashboard/community',
                         metadata: { category: 'ANXIETY' }
                     });
                     recommendations.push({
                         id: `gad7-resource-${assessment.id}`,
                         type: 'resource',
-                        title: 'Grounding Techniques',
-                        description: 'A quick guide to the 5-4-3-2-1 technique for acute anxiety.',
+                        title: 'Mindfulness Hub',
+                        description: 'Access guided sessions specifically for student anxiety.',
                         icon: 'Wind',
-                        link: 'https://www.urmc.rochester.edu/behavioral-health-partners/bh-blog/april-2018/5-4-3-2-1-coping-technique-for-anxiety.aspx'
+                        link: '/dashboard/resources?category=Mindfulness'
                     });
                 }
             } else if (assessment.type === 'PHQ9') {
@@ -56,9 +57,9 @@ export class RecommendationService {
                         id: `phq9-action-${assessment.id}`,
                         type: 'action',
                         title: 'Professional Support',
-                        description: 'Your scores suggest you might benefit from professional guidance. View campus counseling options.',
+                        description: 'Your scores suggest you might benefit from professional guidance.',
                         icon: 'PhoneCall',
-                        link: '/support/counseling'
+                        link: '/dashboard/crisis'
                     });
                 }
             } else if (assessment.type === 'STRESS') {
@@ -66,10 +67,10 @@ export class RecommendationService {
                     recommendations.push({
                         id: `stress-resource-${assessment.id}`,
                         type: 'resource',
-                        title: 'Time Management Toolkit',
+                        title: 'Academic Toolkit',
                         description: 'Practical tools to regain control of your schedule and reduce academic overwhelm.',
                         icon: 'Clock',
-                        link: '/resources/time-management'
+                        link: '/dashboard/resources?category=Academic Stress'
                     });
                     recommendations.push({
                         id: `stress-circle-${assessment.id}`,
@@ -77,6 +78,7 @@ export class RecommendationService {
                         title: 'Academic Stress Circle',
                         description: 'Join a community sharing strategies for managing university pressure.',
                         icon: 'Users',
+                        link: '/dashboard/community',
                         metadata: { category: 'ACADEMIC_STRESS' }
                     });
                 }
@@ -88,7 +90,7 @@ export class RecommendationService {
                         title: 'Sleep Hygiene Routine',
                         description: 'Personalized steps to improve your restorative cycles tonight.',
                         icon: 'Moon',
-                        link: '/resources/sleep-hygiene'
+                        link: '/dashboard/resources?category=Self-Help'
                     });
                 }
             }
@@ -106,6 +108,7 @@ export class RecommendationService {
                     title: 'Guided Breathing',
                     description: 'Take 2 minutes for a box-breathing exercise to lower your current anxiety.',
                     icon: 'Wind',
+                    link: '/dashboard/activity',
                     metadata: { action: 'BREATHE' }
                 });
             }
@@ -117,6 +120,7 @@ export class RecommendationService {
                     title: 'Gratitude Journey',
                     description: 'Try noting 3 small wins today to shift your focus.',
                     icon: 'Star',
+                    link: '/dashboard/challenges',
                     metadata: { challengeType: 'GRATITUDE' }
                 });
             }
@@ -130,6 +134,7 @@ export class RecommendationService {
                 title: 'Exam Season Support',
                 description: 'Exam season is here. Share study tips and de-stress with others.',
                 icon: 'Zap',
+                link: '/dashboard/community',
                 metadata: { category: 'ACADEMIC_STRESS' }
             });
         }
