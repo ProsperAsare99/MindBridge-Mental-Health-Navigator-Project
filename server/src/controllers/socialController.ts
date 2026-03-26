@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import prisma from '../lib/prisma';
 import { AuthRequest } from '../middlewares/auth';
-import { Concern } from '../generated/client_new';
+import { Concern } from '@prisma/client';
 import { ai } from '../lib/genkit-config';
 
 const detectCrisis = async (content: string) => {

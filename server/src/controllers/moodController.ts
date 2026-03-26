@@ -2,7 +2,7 @@ import { Response } from 'express';
 import prisma from '../lib/prisma';
 import { AuthRequest } from '../middlewares/auth';
 import { ai } from '../lib/genkit-config';
-import { MessageRole, University } from '../generated/client_new';
+import { MessageRole, University } from '@prisma/client';
 import { GamificationService } from '../services/gamificationService';
 import fs from 'fs';
 import path from 'path';

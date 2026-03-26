@@ -5,10 +5,13 @@ import app from './app';
 import { initializeCircles } from './controllers/socialController';
 import { initializeChallenges } from './controllers/gamificationController';
 
+console.log('[DEBUG] Imports complete');
+
 const PORT = parseInt(process.env.PORT || '5000');
 
 // Server entry point - Syncing innovative features.
 const HOST = '0.0.0.0';
+console.log(`[DEBUG] Attempting to listen on ${HOST}:${PORT}...`);
 app.listen(PORT, HOST, () => {
     console.log(`Server is running on http://${HOST}:${PORT}`);
     

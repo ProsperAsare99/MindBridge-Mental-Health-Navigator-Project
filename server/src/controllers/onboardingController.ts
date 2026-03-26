@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middlewares/auth';
 import prisma from '../lib/prisma';
-import { University } from '../generated/client_new';
+import { University } from '@prisma/client';
 
 export const updateOnboarding = async (req: AuthRequest, res: Response) => {
     try {
