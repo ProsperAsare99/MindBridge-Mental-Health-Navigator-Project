@@ -58,6 +58,9 @@ axiosInstance.interceptors.response.use(
         }
 
         if (error.response?.status === 503) {
+            import('./api').then(({ api }) => {
+                api.connectivityError = message;
+            });
             if (typeof window !== 'undefined') {
                 window.dispatchEvent(new CustomEvent('mindbridge:connectivity-error', { 
                     detail: { message } 

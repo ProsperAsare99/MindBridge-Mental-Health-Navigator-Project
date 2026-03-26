@@ -3,12 +3,19 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WifiOff, X, RefreshCw } from "lucide-react";
+import { api } from "@/lib/api";
 
 export function ConnectivityBanner() {
     const [isVisible, setIsVisible] = useState(false);
     const [message, setMessage] = useState("");
 
     useEffect(() => {
+        // Check if there was an error captured before mount
+        if (api.connectivityError) {
+            setMessage(api.connectivityError);
+            setIsVisible(true);
+        }
+
         const handleConnectivityError = (event: any) => {
             setMessage(event.detail?.message || "Cloud services are temporarily unreachable.");
             setIsVisible(true);

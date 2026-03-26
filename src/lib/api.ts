@@ -1,6 +1,8 @@
 import axiosInstance from './axios-config';
 
 class ApiClient {
+    connectivityError: string | null = null;
+
     setToken(token: string | null) {
         if (typeof window !== 'undefined') {
             if (token) {
