@@ -2,6 +2,16 @@ import prisma from '../lib/prisma';
 import { AssessmentType, Severity } from '../../prisma/generated/client';
 import { isHighStressPeriod } from '../utils/time';
 
+export interface Recommendation {
+    id: string;
+    type: 'circle' | 'challenge' | 'resource' | 'action';
+    title: string;
+    description: string;
+    icon: string;
+    link?: string;
+    metadata?: any;
+}
+
 export interface Feedback {
     tier: 'ENCOURAGEMENT' | 'COPING' | 'PROFESSIONAL';
     message: string;
@@ -22,7 +32,14 @@ export class RecommendationService {
             description: "Keep up with your daily check-ins to maintain your wellness momentum."
         };
 
+        const now = new Date();
+
         // 1. Fetch latest data
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: { lastActive: true, joinDate: true }
+        });
+
         const assessments = await prisma.assessment.findMany({
             where: { userId },
             orderBy: { createdAt: 'desc' },
@@ -35,7 +52,55 @@ export class RecommendationService {
             take: 10
         });
 
-        // 2. Assessment-Based Recommendations & Feedback
+        // 2. Behavioral Analysis (Soft Sensors)
+        if (latestMoods.length > 0) {
+            const lastLog = latestMoods[0].createdAt;
+            const daysSinceLastLog = (now.getTime() - new Date(lastLog).getTime()) / (1000 * 60 * 60 * 24);
+
+            if (daysSinceLastLog > 3) {
+                feedback = {
+                    tier: 'COPING',
+                    message: "We haven’t checked in for a while",
+                    description: "How are you feeling today? Taking a moment to log your mood can help you stay connected with your wellness."
+                };
+                
+                recommendations.push({
+                    id: 'behavioral-checkin',
+                    type: 'action',
+                    title: 'Quick Check-in',
+                    description: 'It only takes 30 seconds to log your current state.',
+                    icon: 'Activity',
+                    link: '/dashboard/mood'
+                });
+            }
+        } else if (user && (now.getTime() - new Date(user.joinDate).getTime()) / (1000 * 60 * 60 * 24) > 1) {
+             // New user who hasn't logged anything after 1 day
+             feedback = {
+                tier: 'ENCOURAGEMENT',
+                message: "Ready for your first check-in?",
+                description: "Start your journey by logging how you feel today. It helps us personalize your experience."
+            };
+        }
+
+        // Assessment Skipping Detection
+        const clinicalAssessments = assessments.filter(a => a.type === 'PHQ9' || a.type === 'GAD7');
+        const lastClinicalAssessment = clinicalAssessments.length > 0 ? clinicalAssessments[0].createdAt : null;
+        const daysSinceLastAssessment = lastClinicalAssessment 
+            ? (now.getTime() - new Date(lastClinicalAssessment).getTime()) / (1000 * 60 * 60 * 24)
+            : (user ? (now.getTime() - new Date(user.joinDate).getTime()) / (1000 * 60 * 60 * 24) : 0);
+
+        if (daysSinceLastAssessment > 14) {
+            recommendations.push({
+                id: 'behavioral-assessment-nudge',
+                type: 'resource',
+                title: 'Clinical Check-up',
+                description: "It's been a while since your last clinical assessment. Seeing your progress over time is key.",
+                icon: 'ShieldCheck',
+                link: '/dashboard/assessment'
+            });
+        }
+
+        // 3. Assessment-Based Recommendations & Feedback
         if (assessments.length > 0) {
             const latest = assessments[0];
             
