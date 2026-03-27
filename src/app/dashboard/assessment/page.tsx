@@ -51,11 +51,11 @@ const ASSESSMENT_DATA = {
             { label: "Nearly every day", value: 3 }
         ],
         getAnalysis: (score: number) => {
-            if (score <= 4) return { level: "Minimal", color: "text-emerald-500", desc: "Your score suggests minimal symptoms of depression." };
-            if (score <= 9) return { level: "Mild", color: "text-primary", desc: "Your score suggests mild symptoms. It might be helpful to monitor how you feel." };
-            if (score <= 14) return { level: "Moderate", color: "text-amber-500", desc: "Your score suggests moderate symptoms. Consider speaking with a professional." };
-            if (score <= 19) return { level: "Moderately Severe", color: "text-orange-500", desc: "Your score suggests moderately severe symptoms. We recommend reaching out to a therapist." };
-            return { level: "Severe", color: "text-red-500", desc: "Your score suggests severe symptoms. Please prioritize seeking professional support soon." };
+            if (score <= 4) return { level: "Minimal", color: "text-emerald-500", desc: "You're doing great! Your score suggests minimal symptoms. Keep up with your wellness routine." };
+            if (score <= 9) return { level: "Mild", color: "text-primary", desc: "You're experiencing mild symptoms. Trying some proactive coping strategies might help you feel better." };
+            if (score <= 14) return { level: "Moderate", color: "text-amber-500", desc: "Your score suggests moderate symptoms. We recommend exploring our coping resources or speaking with a counselor." };
+            if (score <= 19) return { level: "Moderately Severe", color: "text-orange-500", desc: "Your score indicates significant symptoms. Please prioritize seeking professional support and use our crisis resources if needed." };
+            return { level: "Severe", color: "text-red-500", desc: "Your score suggests severe symptoms. We strongly recommend reaching out to a mental health professional for immediate support." };
         }
     },
     gad7: {
@@ -77,10 +77,10 @@ const ASSESSMENT_DATA = {
             { label: "Nearly every day", value: 3 }
         ],
         getAnalysis: (score: number) => {
-            if (score <= 4) return { level: "Minimal", color: "text-emerald-500", desc: "Your score suggests minimal anxiety levels." };
-            if (score <= 9) return { level: "Mild", color: "text-primary", desc: "Your score suggests mild anxiety. Practice grounding exercises." };
-            if (score <= 14) return { level: "Moderate", color: "text-amber-500", desc: "Your score suggests moderate anxiety. Professional guidance may be beneficial." };
-            return { level: "Severe", color: "text-red-500", desc: "Your score suggests severe anxiety. Please consider connecting with a counselor." };
+            if (score <= 4) return { level: "Minimal", color: "text-emerald-500", desc: "You're doing well! Your anxiety levels are minimal. Continue practicing your grounding habits." };
+            if (score <= 9) return { level: "Mild", color: "text-primary", desc: "You're feeling some mild anxiety. Consider using our mindfulness tools to help stay centered." };
+            if (score <= 14) return { level: "Moderate", color: "text-amber-500", desc: "Your anxiety level is moderate. Professional guidance and coping exercises are highly recommended." };
+            return { level: "Severe", color: "text-red-500", desc: "Your scores suggest severe anxiety. Please prioritize connecting with a counselor for specialized support." };
         }
     },
     stress: {
@@ -106,9 +106,9 @@ const ASSESSMENT_DATA = {
             { label: "Very Often", value: 4 }
         ],
         getAnalysis: (score: number) => {
-            if (score <= 13) return { level: "Low", color: "text-emerald-500", desc: "You are handling stress well." };
-            if (score <= 26) return { level: "Moderate", color: "text-amber-500", desc: "You are experiencing a moderate level of stress." };
-            return { level: "High", color: "text-red-500", desc: "You are under significant stress. Consider relaxation techniques or support." };
+            if (score <= 13) return { level: "Low", color: "text-emerald-500", desc: "You're handling stress remarkably well. Keep maintaining this healthy balance." };
+            if (score <= 26) return { level: "Moderate", color: "text-amber-500", desc: "You're experiencing moderate stress. It might be time to use some of our academic and coping tools." };
+            return { level: "High", color: "text-red-500", desc: "Your stress levels are very high. We strongly recommend prioritizing relaxation and seeking support." };
         }
     },
     sleep: {
@@ -131,9 +131,9 @@ const ASSESSMENT_DATA = {
             { label: "Serious problem", value: 3 }
         ],
         getAnalysis: (score: number) => {
-            if (score <= 5) return { level: "Good", color: "text-emerald-500", desc: "Your sleep quality appears healthy." };
-            if (score <= 9) return { level: "Fair", color: "text-amber-500", desc: "Some sleep disturbances noted." };
-            return { level: "Poor", color: "text-red-500", desc: "Significant sleep issues. Consider improving sleep hygiene." };
+            if (score <= 5) return { level: "Good", color: "text-emerald-500", desc: "Your sleep quality is excellent! Keep maintaining your restorative sleep hygiene." };
+            if (score <= 9) return { level: "Fair", color: "text-amber-500", desc: "Some disturbances were noted. Improving your bedtime routine could help improve your rest." };
+            return { level: "Poor", color: "text-red-500", desc: "Significant sleep issues recorded. We recommend exploring our self-help resources for better sleep." };
         }
     }
 };

@@ -35,6 +35,8 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
     const [location, setLocation] = useState<any>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
+    const [feedback, setFeedback] = useState<any>(null);
+    const [recommendations, setRecommendations] = useState<any[]>([]);
 
     // Live Media States
     const [isRecording, setIsRecording] = useState(false);
@@ -179,13 +181,13 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
+            if (res.feedback) setFeedback(res.feedback);
+            if (res.recommendations) setRecommendations(res.recommendations);
+
             if (res.crisisFlag) {
                 alert("We noticed some concerning patterns. Please remember that crisis support is available 24/7 in the side menu.");
             }
             setShowSuccess(true);
-            setTimeout(() => {
-                onComplete();
-            }, 2500);
         } catch (error) {
             console.error("Mood Logging Error:", error);
             alert("Failed to sync your mood.");
@@ -232,7 +234,7 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
                                         <div className={cn("h-12 w-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-125", isSelected ? m.color : "text-muted-foreground")}>
                                             <Icon size={32} strokeWidth={isSelected ? 2.5 : 2} />
                                         </div>
-                                        <span className={cn("text-[9px] font-black uppercase tracking-widest", isSelected ? m.color : "text-muted-foreground")}>{m.label}</span>
+                                        <span className={cn("text-[8px] font-black uppercase tracking-widest", isSelected ? m.color : "text-muted-foreground")}>{m.label}</span>
                                     </button>
                                 );
                             })}
@@ -423,41 +425,66 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute inset-0 z-[100] flex items-center justify-center p-8 bg-background/95 backdrop-blur-3xl"
+                        className="absolute inset-0 z-[100] flex items-center justify-center p-6 bg-background/95 backdrop-blur-3xl overflow-y-auto"
                     >
                         <motion.div 
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            className="bg-card border-2 border-success/30 p-10 rounded-[2.5rem] shadow-[0_32px_80px_-20px_rgba(16,185,129,0.15)] text-center max-w-sm w-full relative overflow-hidden"
+                            className="bg-card glass border border-border p-10 rounded-[3rem] shadow-premium text-center max-w-lg w-full relative space-y-8"
                         >
-                            <div className="absolute inset-0 bg-success/5 pointer-events-none" />
-                            <div className="relative z-10 space-y-6">
-                                <motion.div
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    transition={{ type: "spring", damping: 12 }}
-                                    className="h-20 w-20 bg-success/10 rounded-full flex items-center justify-center mx-auto"
-                                >
-                                    <CheckCircle2 size={40} className="text-success" />
-                                </motion.div>
+                            <div className="space-y-6">
+                                <div className="h-16 w-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary">
+                                    <CheckCircle2 size={32} />
+                                </div>
 
-                                <div className="space-y-2">
-                                    <h2 className="text-2xl font-bold text-foreground tracking-tight">
+                                <div className="space-y-4 text-center">
+                                    <h2 className="text-3xl font-black text-foreground tracking-tight">
                                         Mood Sync Complete
                                     </h2>
-                                    <p className="text-sm text-muted-foreground font-medium">
-                                        Your entry has been securely saved to your journey log.
-                                    </p>
+                                    {feedback && (
+                                        <div className="p-6 rounded-[2rem] bg-muted/30 border border-border space-y-2">
+                                            <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{feedback.message}</p>
+                                            <p className="text-sm text-foreground/80 font-medium italic">"{feedback.description}"</p>
+                                        </div>
+                                    )}
                                 </div>
 
-                                <div className="h-1 bg-muted rounded-full overflow-hidden">
-                                    <motion.div 
-                                        initial={{ width: 0 }}
-                                        animate={{ width: "100%" }}
-                                        transition={{ duration: 2.2, ease: "linear" }}
-                                        className="h-full bg-success"
-                                    />
-                                </div>
+                                {recommendations.length > 0 && (
+                                    <div className="space-y-4">
+                                        <div className="flex items-center gap-2 justify-center">
+                                            <div className="h-0.5 bg-border flex-1" />
+                                            <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground shrink-0">Daily Recommendations</span>
+                                            <div className="h-0.5 bg-border flex-1" />
+                                        </div>
+                                        <div className="grid gap-3">
+                                            {recommendations.slice(0, 2).map((rec: any) => (
+                                                <div key={rec.id} className="flex items-center gap-4 p-4 rounded-2xl bg-muted/20 border border-border group text-left transition-all hover:bg-muted/40">
+                                                    <div className="h-10 w-10 rounded-xl bg-background border border-border flex items-center justify-center text-primary shrink-0 transition-transform group-hover:scale-110">
+                                                        {rec.icon === 'Users' && <Smile size={20} />}
+                                                        {rec.icon === 'Wind' && <Cloud size={20} />}
+                                                        {rec.icon === 'PhoneCall' && <CheckCircle2 size={20} />}
+                                                        {rec.icon === 'Clock' && <Clock size={20} />}
+                                                        {rec.icon === 'Moon' && <Moon size={20} />}
+                                                        {rec.icon === 'Star' && <Star size={20} />}
+                                                        {rec.icon === 'Zap' && <Zap size={20} />}
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="text-xs font-bold text-foreground">{rec.title}</h4>
+                                                        <p className="text-[10px] text-muted-foreground line-clamp-1">{rec.description}</p>
+                                                    </div>
+                                                    <ArrowRight size={14} className="ml-auto text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                <Button 
+                                    onClick={onComplete}
+                                    className="w-full h-14 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl shadow-primary/20"
+                                >
+                                    Continue Journey
+                                </Button>
                             </div>
                         </motion.div>
                     </motion.div>
@@ -466,3 +493,7 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
         </div>
     );
 }
+
+// Add necessary imports if missing
+import { Clock, Moon, Star, Zap } from "lucide-react";
+

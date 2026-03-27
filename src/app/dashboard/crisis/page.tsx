@@ -80,6 +80,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "University of Ghana (UG)",
         location: "Legon Campus, Accra",
+        coords: { lat: 5.6506, lng: -0.1870 },
         centre: "Careers and Counselling Centre",
         description: "Professional counselling services for all UG students. Walk-in and appointment-based sessions for academic stress, relationship issues, grief, and mental health. Also runs peer counselling.",
         contacts: [
@@ -92,6 +93,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "KNUST",
         location: "Kumasi, Ashanti Region",
+        coords: { lat: 6.6745, lng: -1.5716 },
         centre: "KNUST Counselling Center (KCC)",
         description: "Mental health facility with professional counselors and clinical psychologists. Offers individual and group counselling, crisis intervention, academic counselling, career guidance, and psychological assessments.",
         contacts: [
@@ -104,6 +106,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "UCC",
         location: "Cape Coast, Central Region",
+        coords: { lat: 5.1155, lng: -1.2884 },
         centre: "Counselling Unit",
         description: "Counselling for UCC students covering academic, vocational, and social/personal issues. Provides trauma counselling, stress management, peer-led support groups, and referral services.",
         contacts: [
@@ -116,6 +119,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "University of Education, Winneba (UEW)",
         location: "Winneba, Central Region",
+        coords: { lat: 5.3438, lng: -0.6231 },
         centre: "University Counselling Centre",
         description: "Psychological and academic counselling for UEW students. Located adjacent to the old Library (opposite Taxi Rank), North Campus. Offers orientation counselling, crisis support, and referrals.",
         contacts: [
@@ -129,6 +133,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "University for Development Studies (UDS)",
         location: "Tamale, Northern Region",
+        coords: { lat: 9.4072, lng: -0.8530 },
         centre: "Office of the Dean of Students' Affairs",
         description: "Counselling services across all UDS campuses. Offers crisis intervention, personal development programmes, group therapy, and referral to the Tamale Teaching Hospital.",
         contacts: [
@@ -142,6 +147,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "GIMPA",
         location: "Greenhill, Achimota, Accra",
+        coords: { lat: 5.6177, lng: -0.1912 },
         centre: "Student Affairs & Counselling",
         description: "Counselling support for GIMPA students. Individual sessions for personal and academic challenges. Career counselling and referral services also available.",
         contacts: [
@@ -154,6 +160,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "Ashesi University",
         location: "Berekuso, Eastern Region",
+        coords: { lat: 5.7597, lng: -0.2197 },
         centre: "Counselling & Coaching Center",
         description: "Trained on-campus counsellors available for confidential sessions in English and French. Mental health awareness campaigns, peer support networks, and wellness weeks.",
         contacts: [
@@ -166,6 +173,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "UPSA",
         location: "Legon, Accra",
+        coords: { lat: 5.6517, lng: -0.1783 },
         centre: "Student Services Unit",
         description: "Counselling services for UPSA students covering academic, emotional, and personal challenges. Workshops on stress management and exam preparation routinely held.",
         contacts: [
@@ -178,6 +186,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "GCTU",
         location: "Tesano, Accra",
+        coords: { lat: 5.5977, lng: -0.2312 },
         centre: "Student Affairs Office",
         description: "Counselling support for GCTU students. Offers individual sessions for personal development, career guidance, and mental health support.",
         contacts: [
@@ -189,6 +198,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "University of Health and Allied Sciences (UHAS)",
         location: "Ho, Volta Region",
+        coords: { lat: 6.6111, lng: 0.4703 },
         centre: "Student Affairs – Counselling Services",
         description: "Counselling and wellness services for UHAS students. Located at Ground Floor, Central Administration building. Close ties with Ho Teaching Hospital for psychiatric referrals.",
         contacts: [
@@ -201,6 +211,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "Accra College of Education (AcCE)",
         location: "East Legon, Accra",
+        coords: { lat: 5.6500, lng: -0.1500 },
         centre: "Student Affairs & Counselling",
         description: "Comprehensive support for teacher trainees. Offers academic, personal, and professional development counselling.",
         contacts: [
@@ -213,6 +224,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "Korle-Bu Nursing & Midwifery Training College",
         location: "Korle-Bu, Accra",
+        coords: { lat: 5.5391, lng: -0.2323 },
         centre: "Student Support Services",
         description: "Specialized support for healthcare trainees. Focuses on stress management, clinical anxiety, and academic excellence.",
         contacts: [
@@ -224,6 +236,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "Ghana Police Training School",
         location: "Tesano, Accra",
+        coords: { lat: 5.5925, lng: -0.2300 },
         centre: "NPATS Guidance & Counselling",
         description: "Mental health and resilience training for recruits and officers. Confidential support for work-related stress and personal challenges.",
         contacts: [
@@ -235,6 +248,7 @@ const UNIVERSITY_RESOURCES = [
     {
         name: "Ghana Armed Forces (GAF) Academy",
         location: "Teshie, Accra",
+        coords: { lat: 5.5864, lng: -0.1009 },
         centre: "GAF Counselling Centre",
         description: "Dedicated mental health support for military personnel and cadets. Extensive resources for PTSD, resilience, and family support.",
         contacts: [
@@ -271,9 +285,73 @@ const SELF_HELP_TIPS = [
 
 export default function CrisisPage() {
     const [expandedUni, setExpandedUni] = useState<number | null>(null);
+    const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+    const [isLocating, setIsLocating] = useState(false);
+    const [locationError, setLocationError] = useState<string | null>(null);
+    const [nearbyResources, setNearbyResources] = useState<any[]>([]);
 
     const handleCall = (number: string) => {
         window.open(`tel:${number.replace(/\s/g, "")}`, "_self");
+    };
+
+    // Haversine formula to calculate distance in KM
+    const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+        const R = 6371; // Radius of the earth in km
+        const dLat = (lat2 - lat1) * (Math.PI / 180);
+        const dLon = (lon2 - lon1) * (Math.PI / 180);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const d = R * c; // Distance in km
+        return d;
+    };
+
+    const findNearbyResources = () => {
+        setIsLocating(true);
+        setLocationError(null);
+
+        if (!navigator.geolocation) {
+            setLocationError("Geolocation is not supported by your browser");
+            setIsLocating(false);
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                setUserLocation({ lat: latitude, lng: longitude });
+
+                const resourcesWithDistance = UNIVERSITY_RESOURCES.map((uni) => ({
+                    ...uni,
+                    distance: calculateDistance(latitude, longitude, uni.coords.lat, uni.coords.lng),
+                }))
+                .sort((a, b) => a.distance - b.distance)
+                .slice(0, 3);
+
+                setNearbyResources(resourcesWithDistance);
+                setIsLocating(false);
+            },
+            (error) => {
+                let errorMessage = "Unable to retrieve your location. Please check your permissions.";
+                
+                if (error.code === error.PERMISSION_DENIED) {
+                    errorMessage = "Location access denied. Please enable location permissions in your browser settings.";
+                } else if (error.code === error.POSITION_UNAVAILABLE) {
+                    errorMessage = "Location information is unavailable. Please check your GPS or network connection.";
+                } else if (error.code === error.TIMEOUT) {
+                    errorMessage = "Location request timed out. Please try again.";
+                }
+
+                setLocationError(errorMessage);
+                setIsLocating(false);
+                
+                // Using console.warn instead of error for user-action related failures (like denying permission)
+                console.warn("Geolocation Issue - Code:", error.code, "Message:", error.message);
+            },
+            { timeout: 10000, enableHighAccuracy: true }
+        );
     };
 
     return (
@@ -330,6 +408,102 @@ export default function CrisisPage() {
                         </motion.button>
                     ))}
                 </div>
+
+                {/* Nearby Services Explorer */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="glass rounded-[3rem] p-8 md:p-10 border border-primary/20 shadow-premium relative overflow-hidden"
+                >
+                    <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
+                        <MapPin size={120} />
+                    </div>
+                    
+                    <div className="relative z-10 space-y-6">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div className="space-y-1">
+                                <h3 className="text-2xl font-black tracking-tight text-foreground">Nearby Support Services</h3>
+                                <p className="text-sm text-muted-foreground font-medium">Identify the closest professional help available to you.</p>
+                            </div>
+                            <Button 
+                                onClick={findNearbyResources} 
+                                disabled={isLocating}
+                                className="rounded-full px-8 h-12 font-black uppercase text-xs tracking-widest gap-2 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/30 hover:scale-[1.02] transition-transform active:scale-[0.98]"
+                            >
+                                {isLocating ? (
+                                    <>Locating...</>
+                                ) : (
+                                    <>
+                                        <MapPin size={14} />
+                                        Find Support Near Me
+                                    </>
+                                )}
+                            </Button>
+                        </div>
+
+                        {locationError && (
+                            <motion.div 
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-600 text-xs font-bold flex items-center gap-3"
+                            >
+                                <AlertTriangle size={16} />
+                                {locationError}
+                            </motion.div>
+                        )}
+
+                        <AnimatePresence mode="wait">
+                            {nearbyResources.length > 0 ? (
+                                <motion.div 
+                                    key="results"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="grid gap-4 sm:grid-cols-3 pt-4"
+                                >
+                                    {nearbyResources.map((res, i) => (
+                                        <motion.div
+                                            key={res.name}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: i * 0.1 }}
+                                            className="p-6 rounded-[2rem] bg-background/50 border border-border hover:border-primary/40 transition-all group"
+                                        >
+                                            <div className="flex flex-col h-full justify-between gap-4">
+                                                <div>
+                                                    <div className="flex items-center justify-between mb-2">
+                                                        <span className="text-[10px] font-black text-primary uppercase tracking-widest">{res.distance.toFixed(1)} km away</span>
+                                                        <MapPin size={12} className="text-primary opacity-50" />
+                                                    </div>
+                                                    <h4 className="font-bold text-foreground text-sm line-clamp-1 group-hover:text-primary transition-colors">{res.name}</h4>
+                                                    <p className="text-[10px] font-medium text-muted-foreground mt-1">{res.centre}</p>
+                                                </div>
+                                                <Button 
+                                                    size="sm" 
+                                                    variant="primary" // Fixed from "default" to match available variants
+                                                    onClick={() => handleCall(res.contacts[0].phone)}
+                                                    className="w-full rounded-xl text-xs font-black uppercase tracking-widest h-10 gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform active:scale-[0.98]"
+                                                >
+                                                    <Phone size={14} />
+                                                    Call Service
+                                                </Button>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </motion.div>
+                            ) : !isLocating && (
+                                <motion.div 
+                                    key="empty"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="h-32 flex flex-col items-center justify-center border-2 border-dashed border-border/40 rounded-[2rem] text-muted-foreground/50 italic text-sm"
+                                >
+                                    Enable location to see services closest to you.
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </motion.div>
 
                 {/* Regional Helplines */}
                 <div className="space-y-6">

@@ -42,9 +42,13 @@ export const createAssessment = async (req: AuthRequest, res: Response) => {
         });
 
         // Generate personalized recommendations
-        const recommendations = await RecommendationService.getPersonalizedRecommendations(userId);
+        const recommendationResult = await RecommendationService.getPersonalizedRecommendations(userId);
 
-        res.status(201).json({ assessment, recommendations });
+        res.status(201).json({ 
+            assessment, 
+            recommendations: recommendationResult.recommendations,
+            feedback: recommendationResult.feedback
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error creating assessment' });

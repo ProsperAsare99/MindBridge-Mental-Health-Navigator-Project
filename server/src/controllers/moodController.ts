@@ -5,6 +5,7 @@ import { AuthRequest } from '../middlewares/auth';
 import { ai } from '../lib/genkit-config';
 // import { MessageRole, University } from '@prisma/client';
 import { GamificationService } from '../services/gamificationService';
+import { RecommendationService } from '../services/recommendationService';
 import fs from 'fs';
 import path from 'path';
 
@@ -107,7 +108,15 @@ export const createMood = async (req: AuthRequest, res: Response) => {
         await GamificationService.updateMoodGarden(userId);
         const newAchievements = await GamificationService.checkAchievements(userId);
 
-        res.status(201).json({ ...mood, newAchievements });
+        // Generate personalized recommendations
+        const recommendationResult = await RecommendationService.getPersonalizedRecommendations(userId);
+
+        res.status(201).json({ 
+            ...mood, 
+            newAchievements,
+            recommendations: recommendationResult.recommendations,
+            feedback: recommendationResult.feedback
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error logging mood' });
