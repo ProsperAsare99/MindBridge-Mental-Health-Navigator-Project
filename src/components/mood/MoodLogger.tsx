@@ -44,6 +44,8 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
     const [recognition, setRecognition] = useState<any>(null);
     
     const [isCameraOpen, setIsCameraOpen] = useState(false);
+    const [activityLevel, setActivityLevel] = useState<'LOW' | 'MED' | 'HIGH'>('LOW');
+    const [motionData, setMotionData] = useState<number[]>([]);
     const videoRef = React.useRef<HTMLVideoElement>(null);
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
@@ -55,7 +57,33 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
                 setWeather({ temp: 21, condition: "Partly Cloudy", icon: "Cloud" });
             });
         }
+
+        // Accelerometer Logic
+        const handleMotion = (event: DeviceMotionEvent) => {
+            const acc = event.accelerationIncludingGravity;
+            if (acc) {
+                const total = Math.sqrt((acc.x || 0)**2 + (acc.y || 0)**2 + (acc.z || 0)**2);
+                setMotionData(prev => [...prev.slice(-10), total]);
+            }
+        };
+
+        if (typeof DeviceMotionEvent !== 'undefined' && (DeviceMotionEvent as any).requestPermission) {
+            // iOS requires permission
+        } else {
+            window.addEventListener('devicemotion', handleMotion);
+        }
+
+        return () => window.removeEventListener('devicemotion', handleMotion);
     }, []);
+
+    useEffect(() => {
+        if (motionData.length > 0) {
+            const avg = motionData.reduce((a, b) => a + b, 0) / motionData.length;
+            if (avg > 15) setActivityLevel('HIGH');
+            else if (avg > 11) setActivityLevel('MED');
+            else setActivityLevel('LOW');
+        }
+    }, [motionData]);
 
     // Audio Logic
     const startRecording = async () => {
@@ -176,6 +204,7 @@ export function MoodLogger({ onComplete }: { onComplete: () => void }) {
             if (location) formData.append('location', JSON.stringify(location));
             if (photo) formData.append('moodPhoto', photo);
             if (audio) formData.append('moodAudio', audio);
+            formData.append('activityLevel', activityLevel);
 
             const res = await api.post('/moods', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }

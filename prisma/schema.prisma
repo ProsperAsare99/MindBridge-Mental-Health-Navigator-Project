@@ -183,6 +183,7 @@ model MoodEntry {
   sentimentScore Float?
   sentimentLabel String?
   crisisFlag     Boolean   @default(false)
+  activityLevel  String?   // LOW, MED, HIGH
   
   createdAt      DateTime  @default(now())
   

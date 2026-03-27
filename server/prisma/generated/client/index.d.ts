@@ -7671,6 +7671,7 @@ export namespace Prisma {
     sentimentScore: number | null
     sentimentLabel: string | null
     crisisFlag: boolean | null
+    activityLevel: string | null
     createdAt: Date | null
   }
 
@@ -7690,6 +7691,7 @@ export namespace Prisma {
     sentimentScore: number | null
     sentimentLabel: string | null
     crisisFlag: boolean | null
+    activityLevel: string | null
     createdAt: Date | null
   }
 
@@ -7713,6 +7715,7 @@ export namespace Prisma {
     sentimentScore: number
     sentimentLabel: number
     crisisFlag: number
+    activityLevel: number
     createdAt: number
     _all: number
   }
@@ -7754,6 +7757,7 @@ export namespace Prisma {
     sentimentScore?: true
     sentimentLabel?: true
     crisisFlag?: true
+    activityLevel?: true
     createdAt?: true
   }
 
@@ -7773,6 +7777,7 @@ export namespace Prisma {
     sentimentScore?: true
     sentimentLabel?: true
     crisisFlag?: true
+    activityLevel?: true
     createdAt?: true
   }
 
@@ -7796,6 +7801,7 @@ export namespace Prisma {
     sentimentScore?: true
     sentimentLabel?: true
     crisisFlag?: true
+    activityLevel?: true
     createdAt?: true
     _all?: true
   }
@@ -7906,6 +7912,7 @@ export namespace Prisma {
     sentimentScore: number | null
     sentimentLabel: string | null
     crisisFlag: boolean
+    activityLevel: string | null
     createdAt: Date
     _count: MoodEntryCountAggregateOutputType | null
     _avg: MoodEntryAvgAggregateOutputType | null
@@ -7948,6 +7955,7 @@ export namespace Prisma {
     sentimentScore?: boolean
     sentimentLabel?: boolean
     crisisFlag?: boolean
+    activityLevel?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["moodEntry"]>
@@ -7972,6 +7980,7 @@ export namespace Prisma {
     sentimentScore?: boolean
     sentimentLabel?: boolean
     crisisFlag?: boolean
+    activityLevel?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["moodEntry"]>
@@ -7996,6 +8005,7 @@ export namespace Prisma {
     sentimentScore?: boolean
     sentimentLabel?: boolean
     crisisFlag?: boolean
+    activityLevel?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["moodEntry"]>
@@ -8020,10 +8030,11 @@ export namespace Prisma {
     sentimentScore?: boolean
     sentimentLabel?: boolean
     crisisFlag?: boolean
+    activityLevel?: boolean
     createdAt?: boolean
   }
 
-  export type MoodEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "mood" | "energy" | "sleep" | "social" | "anxiety" | "emotion" | "emotionIntensity" | "physicalSymptoms" | "photoUrl" | "audioUrl" | "weather" | "location" | "notes" | "tags" | "sentimentScore" | "sentimentLabel" | "crisisFlag" | "createdAt", ExtArgs["result"]["moodEntry"]>
+  export type MoodEntryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "mood" | "energy" | "sleep" | "social" | "anxiety" | "emotion" | "emotionIntensity" | "physicalSymptoms" | "photoUrl" | "audioUrl" | "weather" | "location" | "notes" | "tags" | "sentimentScore" | "sentimentLabel" | "crisisFlag" | "activityLevel" | "createdAt", ExtArgs["result"]["moodEntry"]>
   export type MoodEntryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -8059,6 +8070,7 @@ export namespace Prisma {
       sentimentScore: number | null
       sentimentLabel: string | null
       crisisFlag: boolean
+      activityLevel: string | null
       createdAt: Date
     }, ExtArgs["result"]["moodEntry"]>
     composites: {}
@@ -8503,6 +8515,7 @@ export namespace Prisma {
     readonly sentimentScore: FieldRef<"MoodEntry", 'Float'>
     readonly sentimentLabel: FieldRef<"MoodEntry", 'String'>
     readonly crisisFlag: FieldRef<"MoodEntry", 'Boolean'>
+    readonly activityLevel: FieldRef<"MoodEntry", 'String'>
     readonly createdAt: FieldRef<"MoodEntry", 'DateTime'>
   }
     
@@ -28924,6 +28937,7 @@ export namespace Prisma {
     sentimentScore: 'sentimentScore',
     sentimentLabel: 'sentimentLabel',
     crisisFlag: 'crisisFlag',
+    activityLevel: 'activityLevel',
     createdAt: 'createdAt'
   };
 
@@ -30019,6 +30033,7 @@ export namespace Prisma {
     sentimentScore?: FloatNullableFilter<"MoodEntry"> | number | null
     sentimentLabel?: StringNullableFilter<"MoodEntry"> | string | null
     crisisFlag?: BoolFilter<"MoodEntry"> | boolean
+    activityLevel?: StringNullableFilter<"MoodEntry"> | string | null
     createdAt?: DateTimeFilter<"MoodEntry"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -30043,6 +30058,7 @@ export namespace Prisma {
     sentimentScore?: SortOrderInput | SortOrder
     sentimentLabel?: SortOrderInput | SortOrder
     crisisFlag?: SortOrder
+    activityLevel?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
   }
@@ -30070,6 +30086,7 @@ export namespace Prisma {
     sentimentScore?: FloatNullableFilter<"MoodEntry"> | number | null
     sentimentLabel?: StringNullableFilter<"MoodEntry"> | string | null
     crisisFlag?: BoolFilter<"MoodEntry"> | boolean
+    activityLevel?: StringNullableFilter<"MoodEntry"> | string | null
     createdAt?: DateTimeFilter<"MoodEntry"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
@@ -30094,6 +30111,7 @@ export namespace Prisma {
     sentimentScore?: SortOrderInput | SortOrder
     sentimentLabel?: SortOrderInput | SortOrder
     crisisFlag?: SortOrder
+    activityLevel?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: MoodEntryCountOrderByAggregateInput
     _avg?: MoodEntryAvgOrderByAggregateInput
@@ -30125,6 +30143,7 @@ export namespace Prisma {
     sentimentScore?: FloatNullableWithAggregatesFilter<"MoodEntry"> | number | null
     sentimentLabel?: StringNullableWithAggregatesFilter<"MoodEntry"> | string | null
     crisisFlag?: BoolWithAggregatesFilter<"MoodEntry"> | boolean
+    activityLevel?: StringNullableWithAggregatesFilter<"MoodEntry"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"MoodEntry"> | Date | string
   }
 
@@ -31952,6 +31971,7 @@ export namespace Prisma {
     sentimentScore?: number | null
     sentimentLabel?: string | null
     crisisFlag?: boolean
+    activityLevel?: string | null
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutMoodEntriesInput
   }
@@ -31976,6 +31996,7 @@ export namespace Prisma {
     sentimentScore?: number | null
     sentimentLabel?: string | null
     crisisFlag?: boolean
+    activityLevel?: string | null
     createdAt?: Date | string
   }
 
@@ -31998,6 +32019,7 @@ export namespace Prisma {
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
     sentimentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     crisisFlag?: BoolFieldUpdateOperationsInput | boolean
+    activityLevel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutMoodEntriesNestedInput
   }
@@ -32022,6 +32044,7 @@ export namespace Prisma {
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
     sentimentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     crisisFlag?: BoolFieldUpdateOperationsInput | boolean
+    activityLevel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -32045,6 +32068,7 @@ export namespace Prisma {
     sentimentScore?: number | null
     sentimentLabel?: string | null
     crisisFlag?: boolean
+    activityLevel?: string | null
     createdAt?: Date | string
   }
 
@@ -32067,6 +32091,7 @@ export namespace Prisma {
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
     sentimentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     crisisFlag?: BoolFieldUpdateOperationsInput | boolean
+    activityLevel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -32090,6 +32115,7 @@ export namespace Prisma {
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
     sentimentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     crisisFlag?: BoolFieldUpdateOperationsInput | boolean
+    activityLevel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -34277,6 +34303,7 @@ export namespace Prisma {
     sentimentScore?: SortOrder
     sentimentLabel?: SortOrder
     crisisFlag?: SortOrder
+    activityLevel?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -34306,6 +34333,7 @@ export namespace Prisma {
     sentimentScore?: SortOrder
     sentimentLabel?: SortOrder
     crisisFlag?: SortOrder
+    activityLevel?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -34325,6 +34353,7 @@ export namespace Prisma {
     sentimentScore?: SortOrder
     sentimentLabel?: SortOrder
     crisisFlag?: SortOrder
+    activityLevel?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -37407,6 +37436,7 @@ export namespace Prisma {
     sentimentScore?: number | null
     sentimentLabel?: string | null
     crisisFlag?: boolean
+    activityLevel?: string | null
     createdAt?: Date | string
   }
 
@@ -37429,6 +37459,7 @@ export namespace Prisma {
     sentimentScore?: number | null
     sentimentLabel?: string | null
     crisisFlag?: boolean
+    activityLevel?: string | null
     createdAt?: Date | string
   }
 
@@ -38010,6 +38041,7 @@ export namespace Prisma {
     sentimentScore?: FloatNullableFilter<"MoodEntry"> | number | null
     sentimentLabel?: StringNullableFilter<"MoodEntry"> | string | null
     crisisFlag?: BoolFilter<"MoodEntry"> | boolean
+    activityLevel?: StringNullableFilter<"MoodEntry"> | string | null
     createdAt?: DateTimeFilter<"MoodEntry"> | Date | string
   }
 
@@ -43994,6 +44026,7 @@ export namespace Prisma {
     sentimentScore?: number | null
     sentimentLabel?: string | null
     crisisFlag?: boolean
+    activityLevel?: string | null
     createdAt?: Date | string
   }
 
@@ -44210,6 +44243,7 @@ export namespace Prisma {
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
     sentimentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     crisisFlag?: BoolFieldUpdateOperationsInput | boolean
+    activityLevel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -44232,6 +44266,7 @@ export namespace Prisma {
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
     sentimentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     crisisFlag?: BoolFieldUpdateOperationsInput | boolean
+    activityLevel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -44254,6 +44289,7 @@ export namespace Prisma {
     sentimentScore?: NullableFloatFieldUpdateOperationsInput | number | null
     sentimentLabel?: NullableStringFieldUpdateOperationsInput | string | null
     crisisFlag?: BoolFieldUpdateOperationsInput | boolean
+    activityLevel?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

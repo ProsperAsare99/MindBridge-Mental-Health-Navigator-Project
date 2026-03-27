@@ -64,6 +64,7 @@ export const getMoodInsight = async (req: AuthRequest, res: Response) => {
     try {
         if (!req.user || !req.userId) return res.status(401).json({ error: 'Not authenticated' });
         const userId = req.userId;
+        const now = new Date();
 
         // Fetch last 30 entries for comprehensive analysis
         const recentEntries = await prisma.moodEntry.findMany({
@@ -77,6 +78,22 @@ export const getMoodInsight = async (req: AuthRequest, res: Response) => {
                 insight: "Check in 3 more times to generate clinical insights.",
                 isPartial: true 
             });
+        }
+
+        // Engagement Pattern Analysis
+        const last7Days = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const prev7To14Days = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+
+        const [recentUsage, prevUsage] = await Promise.all([
+            prisma.usageLog.count({ where: { userId, timestamp: { gte: last7Days } } }),
+            prisma.usageLog.count({ where: { userId, timestamp: { gte: prev7To14Days, lt: last7Days } } })
+        ]);
+
+        let engagementInsight = "";
+        if (prevUsage > 0) {
+            const ratio = recentUsage / prevUsage;
+            if (ratio < 0.5) engagementInsight = "We've noticed a significant drop in your app engagement this week. ";
+            else if (ratio > 1.5) engagementInsight = "You've been much more active in your wellness journey lately! ";
         }
 
         const moods = recentEntries.map(e => e.mood);
@@ -119,7 +136,7 @@ export const getMoodInsight = async (req: AuthRequest, res: Response) => {
         }
 
         res.json({
-            insight: narrative,
+            insight: engagementInsight + narrative,
             metrics: {
                 avgMood: Number(avgMood.toFixed(1)),
                 volatility: Number(volatility.toFixed(1)),

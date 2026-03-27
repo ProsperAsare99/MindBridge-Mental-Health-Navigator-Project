@@ -23,7 +23,8 @@ export const createMood = async (req: AuthRequest, res: Response) => {
         emotionIntensity, 
         physicalSymptoms, 
         weather, 
-        location 
+        location,
+        activityLevel
     } = req.body;
 
     try {
@@ -49,7 +50,7 @@ export const createMood = async (req: AuthRequest, res: Response) => {
                 const result = await ai.generate({
                     prompt: `
                     Current System Time: ${timeContext}
-                    High Stress (Exam) Period: ${isHighStressPeriod()}
+                    High Stress (Exam) Period: ${await isHighStressPeriod()}
                     
                     Analyze the following journal entry for sentiment and potential crisis. 
                     Provide the result as a JSON object with:
@@ -99,7 +100,8 @@ export const createMood = async (req: AuthRequest, res: Response) => {
                 notes: note as string,
                 sentimentScore,
                 sentimentLabel,
-                crisisFlag
+                crisisFlag,
+                activityLevel: activityLevel as string
             }
         });
 
@@ -205,9 +207,25 @@ export const getProactiveNudges = async (req: AuthRequest, res: Response) => {
         });
 
         const nudges = [];
-        const isExamSeason = isHighStressPeriod();
+        const isExamSeason = await isHighStressPeriod();
         const now = new Date();
         const currentHour = now.getHours();
+
+        // Irregular Routine Detection
+        if (moods.length >= 10) {
+            const hours = moods.map(m => new Date(m.createdAt).getHours());
+            const meanHour = hours.reduce((a, b) => a + b, 0) / hours.length;
+            const hourDiff = Math.abs(currentHour - meanHour);
+
+            if (hourDiff > 4 && (currentHour > 22 || currentHour < 5)) {
+                nudges.push({
+                    type: 'routine',
+                    message: "Late-night activity detected.",
+                    suggestion: "It seems your routine is a bit irregular tonight. Consistency helps with sleep quality.",
+                    icon: 'Clock'
+                });
+            }
+        }
 
         if (moods.length >= 5) {
             // Pattern 1: Day of week dips

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/providers/SessionProvider";
 import { SearchProvider } from "@/components/providers/SearchProvider";
+import { AdaptiveThemeProvider } from "@/components/providers/AdaptiveThemeProvider";
 import { CommandMenu } from "@/components/search/command-menu";
 import { ConnectivityBanner } from "@/components/brand/ConnectivityBanner";
 
@@ -36,6 +37,7 @@ export default function RootLayout({
         <AuthProvider>
 
             <SearchProvider>
+              <AdaptiveThemeProvider>
               <ThemeProvider
                 attribute="class"
                 defaultTheme="system"
@@ -46,6 +48,7 @@ export default function RootLayout({
                 <CommandMenu />
                 <ConnectivityBanner />
               </ThemeProvider>
+              </AdaptiveThemeProvider>
             </SearchProvider>
 
         </AuthProvider>

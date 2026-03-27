@@ -202,6 +202,7 @@ exports.Prisma.MoodEntryScalarFieldEnum = {
   sentimentScore: 'sentimentScore',
   sentimentLabel: 'sentimentLabel',
   crisisFlag: 'crisisFlag',
+  activityLevel: 'activityLevel',
   createdAt: 'createdAt'
 };
 

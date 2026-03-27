@@ -53,15 +53,43 @@ export class RecommendationService {
         });
 
         // 2. Behavioral Analysis (Soft Sensors)
-        if (latestMoods.length > 0) {
+        const usageLogs = await prisma.usageLog.findMany({
+            where: { userId },
+            orderBy: { timestamp: 'desc' },
+            take: 1
+        });
+
+        const lastInteraction = usageLogs.length > 0 ? usageLogs[0].timestamp : (user?.joinDate || now);
+        const lastMood = latestMoods.length > 0 ? latestMoods[0].createdAt : (user?.joinDate || now);
+        
+        const lastActivityAt = new Date(Math.max(new Date(lastInteraction).getTime(), new Date(lastMood).getTime()));
+        const hoursSinceLastActivity = (now.getTime() - lastActivityAt.getTime()) / (1000 * 60 * 60);
+        const daysSinceLastActivity = hoursSinceLastActivity / 24;
+
+        if (daysSinceLastActivity > 2) {
+            feedback = {
+                tier: 'COPING',
+                message: "A Gentle Re-connection",
+                description: "You've been overlapping with isolation patterns. Even a tiny 30-second check-in can help break the cycle."
+            };
+            
+            recommendations.push({
+                id: 'behavioral-inactivity-nudge',
+                type: 'action',
+                title: 'Break the Silence',
+                description: 'Record one small thing that happened today.',
+                icon: 'Activity',
+                link: '/dashboard/mood'
+            });
+        } else if (latestMoods.length > 0) {
             const lastLog = latestMoods[0].createdAt;
             const daysSinceLastLog = (now.getTime() - new Date(lastLog).getTime()) / (1000 * 60 * 60 * 24);
 
             if (daysSinceLastLog > 3) {
                 feedback = {
                     tier: 'COPING',
-                    message: "We haven’t checked in for a while",
-                    description: "How are you feeling today? Taking a moment to log your mood can help you stay connected with your wellness."
+                    message: "Setting a Rhythm",
+                    description: "Consistency helps build a clearer picture of your wellness. Ready for a quick update?"
                 };
                 
                 recommendations.push({
@@ -82,7 +110,7 @@ export class RecommendationService {
             };
         }
 
-        // Assessment Skipping Detection
+        // 3. Assessment Skipping Detection
         const clinicalAssessments = assessments.filter(a => a.type === 'PHQ9' || a.type === 'GAD7');
         const lastClinicalAssessment = clinicalAssessments.length > 0 ? clinicalAssessments[0].createdAt : null;
         const daysSinceLastAssessment = lastClinicalAssessment 
@@ -100,7 +128,7 @@ export class RecommendationService {
             });
         }
 
-        // 3. Assessment-Based Recommendations & Feedback
+        // 4. Assessment-Based Recommendations & Feedback
         if (assessments.length > 0) {
             const latest = assessments[0];
             
@@ -177,7 +205,7 @@ export class RecommendationService {
             }
         }
 
-        // 3. Mood-Based Recommendations
+        // 5. Mood-Based Recommendations
         if (latestMoods.length > 0) {
             const avgMood = latestMoods.reduce((acc, curr) => acc + curr.mood, 0) / latestMoods.length;
             const avgAnxiety = latestMoods.reduce((acc, curr) => acc + (curr.anxiety || 0), 0) / latestMoods.length;
@@ -215,8 +243,8 @@ export class RecommendationService {
             }
         }
 
-        // 4. Academic Context
-        if (isHighStressPeriod()) {
+        // 6. Academic Context
+        if (await isHighStressPeriod()) {
             recommendations.push({
                 id: 'exam-circle',
                 type: 'circle',

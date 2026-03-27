@@ -9,6 +9,7 @@ import onboardingRoutes from './routes/onboardingRoutes';
 import analyticsRoutes from './routes/analyticsRoutes';
 import gamificationRoutes from './routes/gamificationRoutes';
 import socialRoutes from './routes/socialRoutes';
+import resourceRoutes from './routes/resourceRoutes';
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/onboarding', onboardingRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/gamification', gamificationRoutes);
 app.use('/api/social', socialRoutes);
+app.use('/api/resources', resourceRoutes);
 
 
 app.get('/health', (req, res) => {
