@@ -59,8 +59,8 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
     ];
 
     return (
-        <div className="min-h-screen relative font-sans text-foreground bg-background selection:bg-primary/20 overflow-x-hidden">
-            {/* Background Accents (Aurora Style) */}
+        <div className="min-h-screen relative font-sans text-foreground bg-transparent selection:bg-primary/20 overflow-x-hidden">
+            {/* Background Accents (Aurora Style) - Now Reactive to Theme */}
             <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
                 <motion.div 
                     animate={{ 
@@ -69,7 +69,7 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
                         y: [0, 20, 0]
                     }}
                     transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-[-5%] right-[-5%] h-[40%] w-[40%] rounded-full bg-foreground/5 blur-[120px]" 
+                    className="absolute top-[-5%] right-[-5%] h-[50%] w-[50%] rounded-full bg-primary/10 blur-[120px]" 
                 />
                 <motion.div 
                     animate={{ 
@@ -78,7 +78,7 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
                         y: [0, -10, 0]
                     }}
                     transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                    className="absolute bottom-[-5%] left-[-5%] h-[40%] w-[40%] rounded-full bg-foreground/5 blur-[120px]" 
+                    className="absolute bottom-[-5%] left-[-5%] h-[50%] w-[50%] rounded-full bg-accent/10 blur-[120px]" 
                 />
             </div>
 

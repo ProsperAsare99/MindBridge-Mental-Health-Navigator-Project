@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { api } from "@/lib/api";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 type ThemeMode = 'CALM' | 'ENERGY' | 'STABILITY' | 'DEFAULT';
@@ -21,9 +22,12 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function AdaptiveThemeProvider({ children }: { children: React.ReactNode }) {
     const { user } = useAuth();
+    const pathname = usePathname();
     const [mode, setMode] = useState<ThemeMode>('DEFAULT');
     const [isAdaptive, setIsAdaptive] = useState<boolean>(true);
     const [suggestedMode, setSuggestedMode] = useState<ThemeMode | null>(null);
+
+    const isLandingPage = pathname === '/';
 
     // Load preference from localStorage on mount
     useEffect(() => {
@@ -98,6 +102,12 @@ export function AdaptiveThemeProvider({ children }: { children: React.ReactNode 
     useEffect(() => {
         const root = window.document.documentElement;
         
+        // Exclude Landing Page
+        if (isLandingPage) {
+            root.removeAttribute('data-adaptive-mode');
+            return;
+        }
+
         // Always clear inline overrides to let data-attributes win
         const propsToRemove = [
             '--primary', '--accent', '--ring', '--dashboard-bg-gradient',
@@ -106,11 +116,15 @@ export function AdaptiveThemeProvider({ children }: { children: React.ReactNode 
         propsToRemove.forEach(prop => root.style.removeProperty(prop));
 
         if (mode !== 'DEFAULT' && isAdaptive) {
+            console.log(`[AdaptiveTheme] Applying mode: ${mode}`);
             root.setAttribute('data-adaptive-mode', mode);
         } else {
+            if (root.hasAttribute('data-adaptive-mode')) {
+                console.log(`[AdaptiveTheme] Clearing adaptive mode`);
+            }
             root.removeAttribute('data-adaptive-mode');
         }
-    }, [mode, isAdaptive]);
+    }, [mode, isAdaptive, isLandingPage]);
 
     return (
         <ThemeContext.Provider value={{ 
@@ -124,17 +138,19 @@ export function AdaptiveThemeProvider({ children }: { children: React.ReactNode 
         }}>
             {children}
             <AnimatePresence>
-                <ThemeSuggestionToast />
+                {!isLandingPage && <ThemeSuggestionToast />}
             </AnimatePresence>
         </ThemeContext.Provider>
     );
 }
 
 // Internal Suggestion Component
-// Internal Suggestion Component
 function ThemeSuggestionToast() {
     const { suggestedMode, applySuggestedMode, dismissSuggestion, isAdaptive } = useAdaptiveTheme();
-    if (!suggestedMode || suggestedMode === 'DEFAULT' || !isAdaptive) return null;
+    const pathname = usePathname();
+    const isLandingPage = pathname === '/';
+
+    if (!suggestedMode || suggestedMode === 'DEFAULT' || !isAdaptive || isLandingPage) return null;
 
     const themeDetails = {
         CALM: { name: 'Calm Mode', icon: '🌊', desc: 'Softer colors to support your wellness.' },
