@@ -98,54 +98,17 @@ export function AdaptiveThemeProvider({ children }: { children: React.ReactNode 
     useEffect(() => {
         const root = window.document.documentElement;
         
-        // Map modes to CSS variables - Premium, brand-consistent palettes
-        const themes = {
-            CALM: {
-                '--primary': '#0077b6', // Original Ocean Blue
-                '--accent': '#00b4d8',
-                '--dashboard-bg-gradient': 'linear-gradient(to bottom right, hsl(210, 40%, 96%), hsl(180, 20%, 94%))',
-                '--glass-bg': 'rgba(255, 255, 255, 0.65)',
-                '--card-shadow': '0 8px 30px rgba(0, 119, 182, 0.05)'
-            },
-            ENERGY: {
-                '--primary': '#0284c7', // Sky Blue 600
-                '--accent': '#38bdf8', // Sky Blue 400
-                '--dashboard-bg-gradient': 'linear-gradient(to bottom right, hsl(190, 60%, 96%), hsl(200, 50%, 94%))',
-                '--glass-bg': 'rgba(255, 255, 255, 0.7)',
-                '--card-shadow': '0 8px 30px rgba(2, 132, 199, 0.08)'
-            },
-            STABILITY: {
-                '--primary': '#6366f1', // Indigo 500
-                '--accent': '#818cf8', // Indigo 400
-                '--dashboard-bg-gradient': 'linear-gradient(to bottom right, hsl(260, 20%, 95%), hsl(240, 20%, 92%))',
-                '--glass-bg': 'rgba(255, 255, 255, 0.6)',
-                '--card-shadow': '0 8px 30px rgba(99, 102, 241, 0.05)'
-            },
-            DEFAULT: {}
-        };
+        // Always clear inline overrides to let data-attributes win
+        const propsToRemove = [
+            '--primary', '--accent', '--ring', '--dashboard-bg-gradient',
+            '--glass-bg', '--card-shadow'
+        ];
+        propsToRemove.forEach(prop => root.style.removeProperty(prop));
 
-        // Dark mode adjustments for atmospheric gradients
-        if (typeof window !== 'undefined' && window.document.documentElement.classList.contains('dark')) {
-            (themes.CALM as any)['--dashboard-bg-gradient'] = 'linear-gradient(to bottom right, #0a1118, #070e14)';
-            (themes.ENERGY as any)['--dashboard-bg-gradient'] = 'linear-gradient(to bottom right, #071219, #050d12)';
-            (themes.STABILITY as any)['--dashboard-bg-gradient'] = 'linear-gradient(to bottom right, #0f0a1d, #090614)';
-            (themes.CALM as any)['--glass-bg'] = 'rgba(20, 20, 21, 0.8)';
-            (themes.ENERGY as any)['--glass-bg'] = 'rgba(20, 20, 21, 0.8)';
-            (themes.STABILITY as any)['--glass-bg'] = 'rgba(20, 20, 21, 0.8)';
-        }
-
-        const currentTheme = themes[mode] as any;
         if (mode !== 'DEFAULT' && isAdaptive) {
-            Object.entries(currentTheme).forEach(([key, value]) => {
-                root.style.setProperty(key, value as string);
-            });
+            root.setAttribute('data-adaptive-mode', mode);
         } else {
-            // Comprehensive Reset to defaults
-            const propsToRemove = [
-                '--primary', '--accent', '--ring', '--dashboard-bg-gradient',
-                '--glass-bg', '--card-shadow'
-            ];
-            propsToRemove.forEach(prop => root.style.removeProperty(prop));
+            root.removeAttribute('data-adaptive-mode');
         }
     }, [mode, isAdaptive]);
 

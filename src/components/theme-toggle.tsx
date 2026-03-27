@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Moon, Sun, Monitor, Sparkles } from "lucide-react";
+import { Moon, Sun, Monitor, Zap } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useAdaptiveTheme } from "@/components/providers/AdaptiveThemeProvider";
 import { cn } from "@/lib/utils";
@@ -25,7 +25,7 @@ export function ModeToggle() {
         { id: 'light', icon: Sun, label: 'Light' },
         { id: 'dark', icon: Moon, label: 'Dark' },
         { id: 'system', icon: Monitor, label: 'System' },
-        { id: 'adaptive', icon: Sparkles, label: 'Adaptive' }
+        { id: 'adaptive', icon: Zap, label: 'Adaptive' }
     ];
 
     const handleSelect = (id: string) => {
