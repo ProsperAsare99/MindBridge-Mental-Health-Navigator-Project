@@ -11,7 +11,7 @@ import type { University } from '../../prisma/generated/client';
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export const register = async (req: Request, res: Response) => {
-    const { email, password, name, institution, studentId, course, phoneNumber } = req.body;
+    const { email, password, name, institution, studentId, course, phoneNumber, academicLevel } = req.body;
 
     if (!phoneNumber) {
         return res.status(400).json({ error: 'Phone number is required' });
@@ -37,6 +37,7 @@ export const register = async (req: Request, res: Response) => {
                 displayName: name,
                 university: mapInstitutionToUniversity(institution),
                 studentId,
+                academicLevel: academicLevel && !isNaN(parseInt(academicLevel)) ? parseInt(academicLevel) : undefined,
                 program: course,
                 phoneNumber,
                 isVerified: true
@@ -280,7 +281,7 @@ export const getMe = async (req: AuthRequest, res: Response) => {
 };
 
 export const updateProfile = async (req: AuthRequest, res: Response) => {
-    const { name, institution, studentId, course, phoneNumber } = req.body;
+    const { name, institution, studentId, course, phoneNumber, academicLevel } = req.body;
 
     try {
         if (!req.user) return res.status(401).json({ error: 'Not authenticated' });
@@ -300,6 +301,7 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
                 displayName: name,
                 university: institution ? mapInstitutionToUniversity(institution) : undefined,
                 studentId,
+                academicLevel: academicLevel && !isNaN(parseInt(academicLevel)) ? parseInt(academicLevel) : undefined,
                 program: course,
                 phoneNumber
             }
