@@ -70,32 +70,68 @@
 .dark {
   /* MindBridge Ocean Blue Theme - Dark Mode (CARBON & BLUE) */
   --background: #0a0a0b; /* Deeper, cleaner Carbon for higher focus */
-  --foreground: #d1d1c7; /* Muted Parchment for softer contrast */
-  --ash-grey: #e2e8f0; /* Soft White Ash for Dark Mode (Slate 200) */
-  --ash-stroke: #64748b; /* Stronger Ash for Dark Mode (Slate 500) */
+  --foreground: #f8fafc; /* Slate 50 - High contrast text */
+  --ash-grey: #e2e8f0; 
+  --ash-stroke: #64748b; 
 
-  --primary: #00b4d8; /* Muted Blue */
-  --primary-foreground: #141415;
+  --primary: #00b4d8; 
+  --primary-foreground: #0a0a0b;
 
-  --secondary: #27272a; 
-  --secondary-foreground: #d1d1c7;
+  --secondary: #1a1a1b; 
+  --secondary-foreground: #f8fafc;
 
-  --muted: #1a1a1b; 
-  --muted-foreground: #9ca3af; /* Gray 400 - Lighter for better contrast on Carbon */
+  --muted: #0f172a; /* Slate 900 */
+  --muted-foreground: #94a3b8; 
 
   --accent: #00b4d8;
-  --accent-foreground: #141415;
+  --accent-foreground: #0a0a0b;
 
-  --border: rgba(0, 180, 216, 0.1); /* Themed subtle blue border */
-  --input: rgba(0, 180, 216, 0.1);
+  --border: rgba(0, 180, 216, 0.15); 
+  --input: rgba(0, 180, 216, 0.15);
   --ring: #00b4d8;
 
-  --card: #1a1a1b; 
-  --card-foreground: #d1d1c7;
+  --card: #0f172a; 
+  --card-foreground: #f8fafc;
   --success: #10b981;
-  --success-foreground: #141415;
-  --surface-above: #27272a;
+  --success-foreground: #0a0a0b;
+  --surface-above: #1e293b;
 }
+
+/* Premium Utilities */
+.noise-bg {
+  position: relative;
+}
+
+.noise-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+.glass-morphism {
+  background: rgba(15, 23, 42, 0.3);
+  backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #f8fafc, #00b4d8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom Easing */
+:root {
+  --ease-premium: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Adaptive Theme Overrides... (keeping the rest as is) */
 
 /* Adaptive Theme Overrides (High Specificity to beat default theme classes) */
 html {
