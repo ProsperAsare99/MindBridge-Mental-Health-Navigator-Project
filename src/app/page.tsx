@@ -162,11 +162,13 @@ export default function Home() {
                 <div className="text-xs font-black uppercase tracking-[0.4em] text-primary">The Mission</div>
                 <h2 className="text-4xl md:text-6xl font-black text-white leading-tight tracking-tight">
                   Empowering <br />
-                  <span className="relative inline-block">
-                    Ghanaian
+                  <span className="relative inline-block font-black">
+                    <span className="bg-gradient-to-r from-[#EF3340] via-[#FFD700] to-[#009739] bg-clip-text text-transparent">
+                      Ghanaian
+                    </span>
                     <motion.svg 
                       viewBox="0 0 200 20" 
-                      className="absolute -bottom-2 left-0 w-full h-3 text-primary/30"
+                      className="absolute -bottom-2 left-0 w-full h-3 text-[#FFD700]/30"
                       initial={{ pathLength: 0, opacity: 0 }}
                       whileInView={{ pathLength: 1, opacity: 1 }}
                       transition={{ duration: 1, delay: 0.5 }}
