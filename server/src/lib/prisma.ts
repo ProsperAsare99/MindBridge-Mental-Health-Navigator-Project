@@ -46,21 +46,33 @@ export const getPrisma = (): PrismaClientType => {
     return _prisma;
 };
 
-export const testConnection = async (): Promise<boolean> => {
+export const testConnection = async (retries = 3): Promise<boolean> => {
     const client = getPrisma();
-    try {
-        // Simple query to verify connection
-        await client.$queryRaw`SELECT 1`;
-        console.log('[PRISMA] Database connection successful.');
-        return true;
-    } catch (error: any) {
-        console.error('[PRISMA ERROR] Database connection failed:', {
-            message: error.message,
-            code: error.code,
-            meta: error.meta
-        });
-        return false;
+    for (let i = 0; i < retries; i++) {
+        try {
+            await client.$queryRaw`SELECT 1`;
+            console.log('[PRISMA] Database connection successful.');
+            return true;
+        } catch (error: any) {
+            const isDnsError = error.code === 'ENOTFOUND' || error.message?.includes('getaddrinfo ENOTFOUND');
+            
+            if (isDnsError) {
+                console.error(`[PRISMA DNS ERROR] Attempt ${i + 1}/${retries}: Could not resolve database hostname. Verify your internet connection or check if your Neon project is PAUSED.`);
+            } else {
+                console.error(`[PRISMA ERROR] Attempt ${i + 1}/${retries}: Database connection failed:`, {
+                    message: error.message,
+                    code: error.code
+                });
+            }
+
+            if (i < retries - 1) {
+                const delay = Math.pow(2, i) * 1000;
+                console.log(`[PRISMA] Retrying in ${delay}ms...`);
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
     }
+    return false;
 };
 
 export default prismaProxy;

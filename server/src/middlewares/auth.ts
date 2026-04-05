@@ -75,8 +75,9 @@ export const authenticateToken = async (req: AuthRequest, res: Response, next: N
 
         if (isDbError) {
             return res.status(503).json({ 
-                error: 'Service temporarily unavailable due to database connectivity. Please try again in a moment.',
-                details: 'DB_CONNECTION_FAILURE'
+                error: 'MindBridge is currently experiencing database connectivity issues. This is usually due to a DNS failure or if the database is waking up from a paused state.',
+                details: 'DB_CONNECTION_FAILURE_ENOTFOUND_OR_TIMEOUT',
+                suggestion: 'Please verify your internet connection or check the Neon project status.'
             });
         }
         
