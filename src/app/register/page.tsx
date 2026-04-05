@@ -252,10 +252,9 @@ export default function RegisterPage() {
                                             <Hash className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/60 group-focus-within:text-primary transition-colors" />
                                             <input
                                                 type="text"
-                                                required
                                                 value={studentId}
                                                 onChange={(e) => setStudentId(e.target.value)}
-                                                placeholder="10XXXXXX"
+                                                placeholder="10XXXXXX (Optional)"
                                                 className="w-full py-4 pl-8 border-b border-white/20 bg-transparent focus:outline-none focus:border-primary transition-all text-sm font-bold text-white placeholder:text-muted-foreground/40"
                                             />
                                         </div>
