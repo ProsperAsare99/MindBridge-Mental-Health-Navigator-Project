@@ -1,1 +1,0 @@
-src/services/ai/conversationManagerService.ts(79,17): error TS2353: Object literal may only specify known properties, and 'metadata' does not exist in type 'Without<AIInteractionCreateInput, AIInteractionUncheckedCreateInput> & AIInteractionUncheckedCreateInput'.
