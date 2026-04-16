@@ -12,7 +12,10 @@ const createPrismaClient = (): PrismaClientType => {
         connectionString: process.env.DATABASE_URL,
         ssl: {
             rejectUnauthorized: false
-        }
+        },
+        max: 10,
+        idleTimeoutMillis: 30000,
+        connectionTimeoutMillis: 5000,
     });
 
     pool.on('error', (err: any) => {
@@ -40,8 +43,15 @@ const prismaProxy = new Proxy({} as PrismaClientType, {
 
 export const getPrisma = (): PrismaClientType => {
     if (!_prisma) {
+        const start = Date.now();
         console.log('[PRISMA] Lazy instantiating PrismaClient...');
-        _prisma = createPrismaClient();
+        try {
+            _prisma = createPrismaClient();
+            console.log(`[PRISMA] Client initialized in ${Date.now() - start}ms`);
+        } catch (error) {
+            console.error('[PRISMA FATAL] Failed to initialize PrismaClient:', error);
+            throw error;
+        }
     }
     return _prisma;
 };

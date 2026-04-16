@@ -43,6 +43,11 @@ class ApiClient {
         const response = await axiosInstance.delete(endpoint, config);
         return response.data;
     }
+
+    getBaseUrl(): string {
+        const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        return apiBase.split('/api')[0];
+    }
 }
 
 export const api = new ApiClient();

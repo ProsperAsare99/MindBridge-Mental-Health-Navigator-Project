@@ -30,6 +30,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSearch } from "@/components/providers/SearchProvider";
 import { DistressButton } from "@/components/ui/distress-button";
 import { MobileBottomNav } from "./MobileBottomNav";
+import { api } from "@/lib/api";
 
 interface DashboardShellProps {
     children: React.ReactNode;
@@ -169,7 +170,7 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
                                     <div className="h-9 w-9 rounded-xl bg-muted border border-border/50 flex items-center justify-center text-foreground font-bold group-hover:scale-105 transition-transform overflow-hidden">
                                         {user.image ? (
                                             <img
-                                                src={user.image.startsWith('http') ? user.image : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'}${user.image}`}
+                                                src={user.image.startsWith('http') ? user.image : `${api.getBaseUrl()}${user.image}`}
                                                 alt={user.name}
                                                 className="h-full w-full object-cover"
                                             />
@@ -243,7 +244,7 @@ export function DashboardShell({ children, user }: DashboardShellProps) {
                         >
                             {user?.image ? (
                                 <img
-                                    src={user.image.startsWith('http') ? user.image : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'}${user.image}`}
+                                    src={user.image.startsWith('http') ? user.image : `${api.getBaseUrl()}${user.image}`}
                                     alt={user.name}
                                     className="h-full w-full object-cover"
                                 />

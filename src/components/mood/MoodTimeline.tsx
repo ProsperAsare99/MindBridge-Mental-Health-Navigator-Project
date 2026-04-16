@@ -105,7 +105,7 @@ export function MoodTimeline({ entries, onRefresh }: MoodTimelineProps) {
                     const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                     const formattedTime = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 
-                    const baseUrl = process.env.NEXT_PUBLIC_API_URL?.split('/api')[0] || 'http://localhost:5000';
+                    const baseUrl = api.getBaseUrl();
                     const audioSrc = entry.audioUrl ? (entry.audioUrl.startsWith('http') ? entry.audioUrl : `${baseUrl}${entry.audioUrl}`) : null;
                     const photoSrc = entry.photoUrl ? (entry.photoUrl.startsWith('http') ? entry.photoUrl : `${baseUrl}${entry.photoUrl}`) : null;
 

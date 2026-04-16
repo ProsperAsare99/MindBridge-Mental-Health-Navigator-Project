@@ -32,7 +32,7 @@ import { QuickActions } from "@/components/dashboard/quick-actions";
 import { MoodInsight } from "@/components/dashboard/MoodInsight";
 import { TrendingUp } from "lucide-react";
 import { GamificationPortal } from "@/components/dashboard/GamificationPortal";
-import { DailyPerspective } from "@/components/dashboard/daily-perspective";
+import { DailyPerspective } from "@/components/dashboard/DailyPerspective";
 import { PersonalizedRecommendations } from "@/components/dashboard/PersonalizedRecommendations";
 import { CarePlanTimeline } from "@/components/dashboard/CarePlanTimeline";
 
